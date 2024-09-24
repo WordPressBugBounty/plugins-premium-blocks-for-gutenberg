@@ -1,0 +1,1 @@
+window.addEventListener("DOMContentLoaded",t=>{var e=document.querySelectorAll(".premium-button__wrap");e&&e.forEach(t=>{var e=t.getAttribute("data-icontype"),t=t.getAttribute("id");"svg"===e&&(t=(e=document.getElementById("premium-button-svg-"+t)).getAttribute("data-src"),e.innerHTML=t,e.firstElementChild)})});

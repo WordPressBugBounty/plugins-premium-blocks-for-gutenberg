@@ -1,0 +1,865 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "version": "0.1.0",
+    "name": "premium/form",
+    "title": "Form",
+    "category": "premium-blocks",
+    "description": "Send your visitors messages with a contact form.",
+    "textdomain": "premium-blocks-for-gutenberg",
+    "keywords": ["form", "contact form", "contact", "email", "email form"],
+    "attributes": {
+        "blockId": {
+            "type": "string"
+        },
+        "hideDesktop": {
+            "type": "boolean",
+            "default": false
+        },
+        "hideTablet": {
+            "type": "boolean",
+            "default": false
+        },
+        "hideMobile": {
+            "type": "boolean",
+            "default": false
+        },
+        "inputsStyle": {
+            "type": "string",
+            "default": "boxed"
+        },
+        "align": {
+            "type": "object",
+            "default": {
+                "Desktop": "left",
+                "Tablet": "left",
+                "Mobile": "left"
+            }
+        },
+        "successMessage": {
+            "type": "string",
+            "default": "Thank you for your message. It has been sent."
+        },
+        "errorMessage": {
+            "type": "string",
+            "default": "There was an error trying to send your message. Please try again later."
+        },
+        "buttonText": {
+            "type": "string",
+            "default": "Send Message"
+        },
+        "buttonAlign": {
+            "type": "object",
+            "default": {
+                "Desktop": "flex-start",
+                "Tablet": "flex-start",
+                "Mobile": "flex-start"
+            }
+        },
+        "buttonStyle": {
+            "type": "string",
+            "default": "primary"
+        },
+        "toEmail": {
+            "type": "string",
+            "default": ""
+        },
+        "fromName": {
+            "type": "string",
+            "default": ""
+        },
+        "ccEmail": {
+            "type": "string",
+            "default": ""
+        },
+        "bccEmail": {
+            "type": "string",
+            "default": ""
+        },
+        "subject": {
+            "type": "string",
+            "default": ""
+        },
+        "submitActions": {
+            "type": "object",
+            "default": {
+                "sendEmail": true,
+                "mailchimp": false,
+                "mailerlite": false,
+                "fluentCRM": false,
+                "redirect": false
+            }
+        },
+        "mailchimpApiKeyType": {
+            "type": "string",
+            "default": "default"
+        },
+        "mailchimpApiKey": {
+            "type": "string",
+            "default": ""
+        },
+        "mailchimpListId": {
+            "type": "string",
+            "default": ""
+        },
+        "mailchimpEmailField": {
+            "type": "string",
+            "default": ""
+        },
+        "mailchimpFirstNameField": {
+            "type": "string",
+            "default": ""
+        },
+        "mailchimpLastNameField": {
+            "type": "string",
+            "default": ""
+        },
+        "mailerliteApiTokenType": {
+            "type": "string",
+            "default": "default"
+        },
+        "mailerliteApiToken": {
+            "type": "string",
+            "default": ""
+        },
+        "mailerliteGroupId": {
+            "type": "string",
+            "default": ""
+        },
+        "mailerliteEmailField": {
+            "type": "string",
+            "default": ""
+        },
+        "mailerliteNameField": {
+            "type": "string",
+            "default": ""
+        },
+        "fluentCRMListIds": {
+            "type": "array",
+            "default": []
+        },
+        "fluentCRMEmailField": {
+            "type": "string",
+            "default": ""
+        },
+        "fluentCRMFirstNameField": {
+            "type": "string",
+            "default": ""
+        },
+        "fluentCRMLastNameField": {
+            "type": "string",
+            "default": ""
+        },
+        "fluentCRMTags": {
+            "type": "array",
+            "default": []
+        },
+        "redirectURL": {
+            "type": "string",
+            "default": ""
+        },
+        "enableRecaptcha": {
+            "type": "boolean",
+            "default": false
+        },
+        "recaptchaVersion": {
+            "type": "string",
+            "default": "v2"
+        },
+        "recaptchaV2SiteKey": {
+            "type": "string",
+            "default": ""
+        },
+        "recaptchaV3SiteKey": {
+            "type": "string",
+            "default": ""
+        },
+        "labelsTypography": {
+            "type": "object",
+            "default": {
+                "fontWeight": "Default",
+                "fontStyle": "",
+                "letterSpacing": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": "px"
+                },
+                "fontFamily": "Default",
+                "lineHeight": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": "px"
+                },
+                "textDecoration": "",
+                "textTransform": "",
+                "fontSize": {
+                    "Desktop": 16,
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": {
+                        "Desktop": "px",
+                        "Tablet": "px",
+                        "Mobile": "px"
+                    }
+                }
+            }
+        },
+        "labelsColors": {
+            "type": "object",
+            "default": {
+                "text": "",
+                "textHover": ""
+            }
+        },
+        "inputsTypography": {
+            "type": "object",
+            "default": {
+                "fontWeight": "Default",
+                "fontStyle": "",
+                "letterSpacing": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": "px"
+                },
+                "fontFamily": "Default",
+                "lineHeight": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": "px"
+                },
+                "textDecoration": "",
+                "textTransform": "",
+                "fontSize": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": {
+                        "Desktop": "px",
+                        "Tablet": "px",
+                        "Mobile": "px"
+                    }
+                }
+            }
+        },
+        "inputsColors": {
+            "type": "object",
+            "default": {
+                "text": "",
+                "textHover": "",
+                "textFocus": "",
+                "background": "",
+                "hoverBackground": "",
+                "focusBackground": "",
+                "borderHover": "",
+                "borderFocus": "var(--pbg-global-color1, #0085ba)",
+                "placeholder": "",
+                "placeholderHover": "",
+                "placeholderFocus": ""
+            }
+        },
+        "inputsBorder": {
+            "type": "object",
+            "default": {
+                "borderType": "solid",
+                "borderColor": "var(--pbg-global-color4, #e1e1e1)",
+                "borderWidth": {
+                    "Desktop": {
+                        "top": 1,
+                        "right": 1,
+                        "bottom": 1,
+                        "left": 1
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    }
+                },
+                "borderRadius": {
+                    "Desktop": {
+                        "top": 0,
+                        "right": 0,
+                        "bottom": 0,
+                        "left": 0
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    }
+                }
+            }
+        },
+        "inputsPadding": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            }
+        },
+        "inputsMargin": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            }
+        },
+        "radioColors": {
+            "type": "object",
+            "default": {
+                "background": "",
+                "element": "",
+                "focusBackground": "",
+                "elementFocus": ""
+            }
+        },
+        "radioBorder": {
+            "type": "object",
+            "default": {
+                "borderType": "solid",
+                "borderColor": "",
+                "borderWidth": {
+                    "Desktop": {
+                        "top": 1,
+                        "right": 1,
+                        "bottom": 1,
+                        "left": 1
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    }
+                },
+                "borderRadius": {
+                    "Desktop": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    }
+                }
+            }
+        },
+        "checkboxColors": {
+            "type": "object",
+            "default": {
+                "background": "",
+                "element": "",
+                "focusBackground": "",
+                "elementFocus": ""
+            }
+        },
+        "checkboxBorder": {
+            "type": "object",
+            "default": {
+                "borderType": "solid",
+                "borderColor": "",
+                "borderWidth": {
+                    "Desktop": {
+                        "top": 1,
+                        "right": 1,
+                        "bottom": 1,
+                        "left": 1
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    }
+                },
+                "borderRadius": {
+                    "Desktop": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    }
+                }
+            }
+        },
+        "buttonSize": {
+            "type": "string",
+            "default": "md"
+        },
+        "buttonTypography": {
+            "type": "object",
+            "default": {
+                "fontWeight": "Default",
+                "fontStyle": "",
+                "letterSpacing": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": "px"
+                },
+                "fontFamily": "Default",
+                "lineHeight": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": "px"
+                },
+                "textDecoration": "",
+                "textTransform": "",
+                "fontSize": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": {
+                        "Desktop": "px",
+                        "Tablet": "px",
+                        "Mobile": "px"
+                    }
+                }
+            }
+        },
+        "buttonColors": {
+            "type": "object",
+            "default": {
+                "text": "",
+                "textHover": "",
+                "backgroundHover": "",
+                "borderHover": ""
+            }
+        },
+        "buttonBackgroundOptions": {
+            "type": "object",
+            "default": {
+                "backgroundType": "color",
+                "backgroundColor": "",
+                "backgroundImageID": "",
+                "backgroundImageURL": "",
+                "backgroundPosition": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundRepeat": {
+                    "Desktop": "no-repeat",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundSize": {
+                    "Desktop": "cover",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "fixed": false,
+                "gradientLocationOne": "0",
+                "gradientColorTwo": "",
+                "gradientLocationTwo": "100",
+                "gradientType": "linear",
+                "gradientAngle": "180",
+                "gradientPosition": "center center"
+            }
+        },
+        "buttonBackgroundPresets": {
+            "type": "string",
+            "default": ""
+        },
+        "buttonBorder": {
+            "type": "object",
+            "default": {
+                "borderType": "none",
+                "borderColor": "",
+                "borderWidth": {
+                    "Desktop": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    }
+                },
+                "borderRadius": {
+                    "Desktop": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    }
+                }
+            }
+        },
+        "buttonPadding": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            }
+        },
+        "buttonMargin": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            }
+        },
+        "iconSize": {
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
+        },
+        "iconMargin": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "5",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
+        },
+        "iconPadding": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
+        },
+        "iconBorder": {
+            "type": "object",
+            "default": {
+                "borderColor": "",
+                "borderType": "",
+                "borderRadius": {
+                    "Desktop": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    }
+                },
+                "borderWidth": {
+                    "Desktop": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    }
+                }
+            },
+            "isStyle": true
+        },
+        "borderHoverColor": {
+            "type": "string",
+            "default": "",
+            "isStyle": true
+        },
+        "imgWidth": {
+            "type": "object",
+            "default": {
+                "Desktop": "150",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
+        },
+        "iconTypeSelect": {
+            "type": "string",
+            "default": "icon"
+        },
+        "iconBG": {
+            "type": "object",
+            "default": {
+                "backgroundType": "",
+                "backgroundColor": "",
+                "backgroundImageID": "",
+                "backgroundImageURL": "",
+                "backgroundPosition": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundRepeat": "",
+                "backgroundSize": "",
+                "fixed": false,
+                "gradientLocationOne": "0",
+                "gradientColorTwo": "",
+                "gradientLocationTwo": "100",
+                "gradientAngle": "180",
+                "gradientPosition": "center center",
+                "gradientType": "linear"
+            },
+            "isStyle": true
+        },
+        "iconColor": {
+            "type": "string",
+            "default": ""
+        },
+        "iconHoverBG": {
+            "type": "object",
+            "default": {
+                "backgroundType": "",
+                "backgroundColor": "",
+                "backgroundImageID": "",
+                "backgroundImageURL": "",
+                "backgroundPosition": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundRepeat": "",
+                "backgroundSize": "",
+                "fixed": false,
+                "gradientLocationOne": "0",
+                "gradientColorTwo": "",
+                "gradientLocationTwo": "100",
+                "gradientAngle": "180",
+                "gradientPosition": "center center",
+                "gradientType": "linear"
+            },
+            "isStyle": true
+        },
+        "iconHoverColor": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "providesContext": {
+        "iconSize": "iconSize"
+    }
+}

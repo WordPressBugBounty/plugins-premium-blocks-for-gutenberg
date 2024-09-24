@@ -1,0 +1,248 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "version": "0.1.0",
+    "name": "premium/lottie",
+    "title": "Lottie Animation",
+    "description": "Bring life to your Gutenberg web page using Premium Lottie Animation.",
+    "keywords": ["svg", "Animation", "canvas"],
+    "category": "premium-blocks",
+    "textdomain": "premium-blocks-for-gutenberg",
+    "attributes": {
+        "lottieId": {
+            "type": "string"
+        },
+        "blockId": {
+            "type": "string"
+        },
+        "lottieURl": {
+            "type": "string",
+            "default": ""
+        },
+        "lottieJson": {
+            "type": "object"
+        },
+        "loop": {
+            "type": "boolean",
+            "default": true
+        },
+        "reverse": {
+            "type": "boolean",
+            "default": false,
+            "isStyle": true
+        },
+        "speed": {
+            "type": "number",
+            "default": "1",
+            "isStyle": true
+        },
+        "trigger": {
+            "type": "string",
+            "default": "none"
+        },
+        "bottom": {
+            "type": "number",
+            "default": "0",
+            "isStyle": true
+        },
+        "top": {
+            "type": "number",
+            "default": "100",
+            "isStyle": true
+        },
+        "scrollSpeed": {
+            "type": "number",
+            "default": "4",
+            "isStyle": true
+        },
+        "rotate": {
+            "type": "number",
+            "default": 0,
+            "isStyle": true
+        },
+        "lottieAlign": {
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
+            },
+            "isStyle": true
+        },
+        "link": {
+            "type": "boolean",
+            "default": false
+        },
+        "url": {
+            "type": "string"
+        },
+        "target": {
+            "type": "boolean",
+            "default": false
+        },
+        "render": {
+            "type": "string",
+            "default": "svg"
+        },
+        "lottieStyles": {
+            "type": "array",
+            "default": [
+                {
+                    "backColor": "",
+                    "backOpacity": 1,
+                    "backHColor": "",
+                    "backHOpacity": 1
+                }
+            ],
+            "isStyle": true
+        },
+        "padding": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                },
+                "link": true
+            },
+            "isStyle": true
+        },
+        "margin": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                },
+                "link": true
+            },
+            "isStyle": true
+        },
+        "border": {
+            "type": "object",
+            "default": {
+                "borderType": "none",
+                "borderColor": "",
+                "borderWidth": {
+                    "Desktop": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "link": true
+                },
+                "borderRadius": {
+                    "Desktop": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "link": true
+                }
+            },
+            "isStyle": true
+        },
+        "filter": {
+            "type": "object",
+            "default": {
+                "contrast": "100",
+                "blur": "0",
+                "bright": "100",
+                "saturation": "100",
+                "hue": "0"
+            },
+            "isStyle": true
+        },
+        "filterHover": {
+            "type": "object",
+            "default": {
+                "contrast": "100",
+                "blur": "0",
+                "bright": "100",
+                "saturation": "100",
+                "hue": "0"
+            },
+            "isStyle": true
+        },
+        "size": {
+            "type": "object",
+            "default": {
+                "Desktop": "200",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
+        }
+    },
+    "editorScript": "pbg-blocks-js",
+    "editorStyle": "premium-blocks-editor-css"
+}

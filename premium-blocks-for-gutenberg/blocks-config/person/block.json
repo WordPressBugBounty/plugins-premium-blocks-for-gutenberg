@@ -1,0 +1,139 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "version": "0.1.0",
+    "name": "premium/person",
+    "title": "Team Members",
+    "description": "Show off your team members along with social links using Premium Team Members Block.",
+    "keywords": ["Team", "profile", "member", "person"],
+    "textdomain": "premium-blocks-for-gutenberg",
+    "category": "premium-blocks",
+    "attributes": {
+        "align": {
+            "type": "object",
+            "default": {
+                "Desktop": "center",
+                "Tablet": "center",
+                "Mobile": "center"
+            },
+            "isStyle": true
+        },
+        "contentColor": {
+            "type": "string",
+            "isStyle": true
+        },
+        "blockId": {
+            "type": "string"
+        },
+        "classMigrate": {
+            "type": "boolean",
+            "default": false
+        },
+        "multiPersonContent": {
+            "type": "array",
+            "default": [
+                {
+                    "id": 1,
+                    "personImgUrl": "",
+                    "personImgId": "",
+                    "name": "John Doe",
+                    "title": "Senior Developer",
+                    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper nulla non metus auctor fringilla",
+                    "socialIcon": false,
+                    "items": [
+                        {
+                            "label": "facebook",
+                            "link": false,
+                            "value": "#",
+                            "changeinput": "#"
+                        },
+                        {
+                            "label": "twitter",
+                            "link": false,
+                            "value": "#",
+                            "changeinput": "#"
+                        },
+                        {
+                            "label": "instagram",
+                            "link": false,
+                            "value": "#",
+                            "changeinput": "#"
+                        },
+                        {
+                            "label": "youtube",
+                            "link": false,
+                            "value": "#",
+                            "changeinput": "#"
+                        }
+                    ]
+                }
+            ]
+        },
+        "contentPadding": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                },
+                "link": true
+            },
+            "isStyle": true
+        },
+        "imgTagHeight": {
+            "type": "number",
+            "default": 0
+        },
+        "imgTagWidth": {
+            "type": "number",
+            "default": 0
+        },
+        "variation": {
+            "type": "object",
+            "default": {}
+        },
+        "showVariation": {
+            "type": "boolean",
+            "default": true
+        },
+        "HoverEffect": {
+            "type": "boolean",
+            "default": false
+        },
+        "bottomOffset": {
+            "type": "object",
+            "default": {
+                "Desktop": "20",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
+        }
+    },
+    "editorScript": "pbg-blocks-js",
+    "editorStyle": "premium-blocks-editor-css"
+}

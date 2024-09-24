@@ -1,0 +1,1 @@
+window.addEventListener("DOMContentLoaded",function(t){var e=document.querySelectorAll(".premium-icon");e&&e.forEach(function(t){var e=t.getAttribute("data-icontype"),t=t.getAttribute("id");if("svg"===e)return t=(e=document.getElementById("premium-icon-svg-"+t)).getAttribute("data-src"),e.innerHTML=t,e.firstElementChild})});

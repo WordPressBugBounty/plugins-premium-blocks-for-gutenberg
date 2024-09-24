@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "version": "0.1.0",
+    "name": "premium/instagram-feed",
+    "title": "Instagram Feed",
+    "category": "premium-blocks",
+    "textdomain": "premium-blocks-for-gutenberg",
+    "description": "Display your latest Instagram posts and feeds on your website.",
+    "keywords": ["instagram", "instagram-feed"],
+    "attributes": {
+        "blockId": {
+            "type": "string"
+        },
+        "accessToken": {
+            "type": "string"
+        },
+        "enableHeader": {
+            "type": "boolean",
+            "default": true
+        },
+        "headerBlockData": {
+            "type": "array",
+            "default": []
+        },
+        "cacheTime": {
+            "type": "string",
+            "default": "hour"
+        }
+    },
+    "providesContext": {
+        "accessToken": "accessToken",
+        "cacheTime": "cacheTime",
+        "posts": "posts"
+    }
+}

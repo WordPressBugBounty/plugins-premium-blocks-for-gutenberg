@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "premium/tab-item",
+    "title": "Tab Item",
+    "category": "premium-blocks",
+    "description": "For making advanced tabs with content.",
+    "parent": ["premium/tabs"],
+    "keywords": ["tab"],
+    "textdomain": "default",
+    "attributes": {
+        "blockId": {
+            "type": "string"
+        },
+        "tabId": {
+            "type": "integer"
+        },
+        "initialTabActive": {
+            "type": "number",
+            "default": 0
+        },
+        "alt": {
+            "type": "string",
+            "default": ""
+        },
+        "imgTagHeight": {
+            "type": "number",
+            "default": 0
+        },
+        "imgTagWidth": {
+            "type": "number",
+            "default": 0
+        },
+
+        "hideDesktop": {
+            "type": "boolean",
+            "default": false
+        },
+        "hideTablet": {
+            "type": "boolean",
+            "default": false
+        },
+        "hideMobile": {
+            "type": "boolean",
+            "default": false
+        },
+
+        "width": {
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
+            }
+        }
+    }
+}

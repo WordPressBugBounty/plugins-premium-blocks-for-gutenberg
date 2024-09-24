@@ -1,0 +1,1 @@
+window.addEventListener("DOMContentLoaded",function(t){var e=document.querySelectorAll(".premium-bullet-list__content-wrap");e&&e.forEach(function(t){var e=t.getAttribute("data-icontype"),t=t.getAttribute("id");if("svg"===e)return t=(e=document.getElementById("premium-list-item-svg-"+t)).getAttribute("data-src"),e.innerHTML=t,e.firstElementChild})});

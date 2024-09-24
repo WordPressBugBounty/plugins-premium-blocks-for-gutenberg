@@ -1,0 +1,5938 @@
+# Copyright (C) 2023 Leap13
+# This file is distributed under the GNU General Public License v3.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: Premium Blocks for Gutenberg 2.1.7\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/premium-blocks-for-gutenberg\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-10-31T10:55:04+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.9.0\n"
+"X-Domain: premium-blocks-for-gutenberg\n"
+
+#. Plugin Name of the plugin
+msgid "Premium Blocks for Gutenberg"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://premiumblocks.io/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Gutenberg blocks that will help you build amazing pages with the new WordPress Gutenberg editor."
+msgstr ""
+
+#. Author of the plugin
+#: assets/js/build/index.js:1
+#: src/blocks/testimonials/edit.js:80
+msgid "Leap13"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://leap13.com/"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:310
+#: admin/includes/pb-panel/class-pb-panel.php:311
+#: classes/class-pbg-blocks-helper.php:1494
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/blocks/Modal/deprecated.js:47
+#: src/blocks/Modal/deprecated.js:56
+#: src/global-settings/src/post-editor-sidebar/index.js:300
+#: src/global-settings/src/screens/ColorsScreen.js:19
+#: src/global-settings/src/site-editor-sidebar/index.js:300
+msgid "Premium Blocks"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:411
+msgid "Accordion"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:420
+msgid "Banner"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:429
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/TypographyScreen.js:166
+msgid "Buttons"
+msgstr ""
+
+#. translators: %s: file name
+#: admin/includes/pb-panel/class-pb-panel.php:440
+#: assets/js/build/index.js:2
+#: src/blocks/counter/edit.js:102
+msgid "Counter"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:449
+msgid "Dual Heading"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:458
+msgid "Heading"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:467
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:222
+#: src/blocks/button/edit.js:480
+#: src/blocks/button/edit.js:738
+#: src/blocks/heading/edit.js:257
+#: src/blocks/heading/edit.js:936
+#: src/blocks/heading/edit.js:1594
+#: src/blocks/icon/edit.js:107
+#: src/blocks/icon/edit.js:265
+#: src/blocks/image-separator/edit.js:91
+#: src/blocks/list-item/edit.js:57
+#: src/blocks/Modal/inspector.js:241
+#: src/blocks/Modal/inspector.js:390
+#: src/blocks/svg-draw/edit.js:102
+#: src/blocks/svg-draw/edit.js:192
+msgid "Icon"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:476
+msgid "Icon Box"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:485
+msgid "Google Maps"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:494
+#: assets/js/build/index.js:1
+#: src/blocks/pricing-table/edit.js:46
+msgid "Pricing Table"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:503
+msgid "Section"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:512
+msgid "Testimonials"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:522
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:403
+#: src/blocks/video-box/edit.js:859
+msgid "Video Box"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:532
+msgid "Fancy Text"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:542
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:357
+msgid "Lottie Animation"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:551
+msgid "Modal Box"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:561
+msgid "Image Separator"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:571
+msgid "Bullet List"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:581
+msgid "Team Members"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:590
+#: assets/js/build/index.js:1
+#: src/blocks/count-up/edit.js:94
+#: src/blocks/dual-heading/edit.js:566
+#: src/blocks/icon-box/edit.js:262
+#: src/blocks/instagram-feed-posts/edit.js:466
+#: src/blocks/Modal/inspector.js:1188
+#: src/blocks/price/edit.js:103
+#: src/blocks/price/edit.js:142
+#: src/blocks/testimonials/edit.js:256
+msgid "Container"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:600
+msgid "Content Switcher"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:610
+msgid "Instagram Feed"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:620
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/index.js:20
+msgid "Post Carousel"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:629
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-grid/index.js:16
+msgid "Post Grid"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:638
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:229
+#: src/blocks/heading/edit.js:261
+#: src/blocks/icon/edit.js:114
+#: src/blocks/image-separator/edit.js:98
+#: src/blocks/list-item/edit.js:64
+#: src/blocks/Modal/inspector.js:248
+#: src/blocks/Modal/inspector.js:343
+msgid "Image"
+msgstr ""
+
+#: admin/includes/pb-panel/class-pb-panel.php:649
+msgid "SVG Draw"
+msgstr ""
+
+#: classes/class-pbg-blocks-helper.php:1796
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:111
+msgid "Full"
+msgstr ""
+
+#: global-settings/class-pbg-global-settings.php:649
+#: global-settings/class-pbg-global-settings.php:883
+msgid "Config Premium Blocks For Gutenberg Global Typography Settings"
+msgstr ""
+
+#: global-settings/class-pbg-global-settings.php:673
+#: global-settings/class-pbg-global-settings.php:747
+#: global-settings/class-pbg-global-settings.php:789
+#: global-settings/class-pbg-global-settings.php:871
+msgid "Config Premium Blocks For Gutenberg Global Colors Settings"
+msgstr ""
+
+#: global-settings/class-pbg-global-settings.php:776
+msgid "Config Premium Blocks For Gutenberg Global Color Palette Settings"
+msgstr ""
+
+#: global-settings/class-pbg-global-settings.php:837
+msgid "Config Premium Blocks For Gutenberg Global Layout Settings"
+msgstr ""
+
+#: includes/plugin.php:59
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/NavMenu.js:23
+msgid "Settings"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/welcome.js:186
+msgid "Join The Community"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/welcome.js:192
+msgid "Join our Facebook group and be part of the community. Collaborate, interact, and suggest! You and your thoughts are more than welcome."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/welcome.js:260
+msgid "Learn How to Use Premium Blocks"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/welcome.js:266
+msgid "Take a step forward to Premium Blocks for Gutenberg. Get started now by visiting the plugin’s knowledge base. "
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/welcome.js:320
+msgid "Need Help? Open a Support Ticket"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/welcome.js:326
+msgid "Premium Blocks support team is always here to help, open a support ticket with your inquiry and you will get an answer shortly!"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/welcome.js:396
+msgid "Subscribe to Premium Blocks Newsletter"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/welcome.js:402
+msgid "Sign up to Premium Blocks newsletter and be the first to receive the latest updates, features, and news right under your footsteps!"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/welcome.js:45
+#: admin/includes/pb-panel/assets/js/src/tabs/welcome.js:88
+msgid "Invalid Email Address..."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/welcome.js:75
+msgid "Thanks for your subscribe!"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/welcome.js:423
+msgid "Submit"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/common/SingleOption.js:51
+#: admin/includes/pb-panel/assets/js/src/tabs/Blocks/filterTabs.js:90
+#: admin/includes/pb-panel/assets/js/src/tabs/Blocks/filterTabs.js:137
+#: admin/includes/pb-panel/assets/js/src/tabs/GlobalFeatures.js:32
+#: admin/includes/pb-panel/assets/js/src/tabs/performance.js:34
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:33
+msgid "Settings saved."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/Blocks/filterTabs.js:178
+msgid "Activate All"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/Blocks/filterTabs.js:181
+msgid "Deactivate All"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:57
+msgid "Google Maps API Key:"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:63
+msgid "Premium Maps Block requires Google API key to be entered. If you don’t have one,"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:72
+msgid "Click Here"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:77
+msgid "to get your key."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:88
+msgid "API Key"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:106
+msgid "Enable Maps API JS File"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:114
+msgid "This will Enable the API JS file if it's not included by another theme or plugin."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:123
+msgid "Enable Font Awesome Icons"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:131
+msgid "This will load Font Awesome Icons to be used within Premium Blocks."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:137
+#: assets/js/build/index.js:1
+#: src/blocks/lottie/container.js:94
+msgid "Allow JSON Uploads"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:145
+msgid "This option will be used to upload JSON files in lottie animation block."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:151
+msgid "Enable Global Setting SideBar in Post Editor"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:159
+msgid "This option will be used to Enable Global Setting SideBar in Post Editor."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:166
+msgid "Enable Global Setting SideBar in Site Editor"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:174
+msgid "This option will be used to Enable Global Setting SideBar in Site Editor."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:185
+msgid "Asset File Generation"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/setting.js:193
+msgid "Premium Blocks loads CSS inline by default. Enable this option to generate separate CSS file for Premium blocks for Gutenberg blocks."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/rollback.js:25
+#: admin/includes/pb-panel/assets/js/src/tabs/rollback.js:76
+msgid "Rollback to Previous Version"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/rollback.js:64
+msgid " Warning: Please backup your database before making the rollback."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:16
+msgid "WordPress Environment"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:26
+msgid "Home URL"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:32
+msgid "WP Version"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:41
+msgid "WP Multisite"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:56
+msgid "WP Memory Limit"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:65
+msgid "We recommend setting wp memory at least 64MB."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:74
+msgid "Theme Version"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:83
+msgid "WP Path"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:89
+msgid "WP Debug Mode"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:104
+msgid "Language"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:114
+msgid "Server Environment"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:124
+msgid "Server Info"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:133
+msgid "PHP Version"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:141
+msgid "Couldn't determine PHP version because phpversion() doesn't exist."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:151
+msgid "PHP Memory Limit"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:160
+msgid "PHP Post Max Size"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:169
+msgid "PHP Time Limit"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:179
+msgid "We recommend setting max execution time at least 60."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:188
+msgid "PHP Max Input Vars"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:197
+msgid "SUHOSIN Installed"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:212
+msgid "MySQL Version"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:227
+msgid "Active Plugins"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:249
+msgid "Visit plugin homepage"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/system.js:263
+msgid "by"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/GlobalFeatures.js:53
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:1256
+#: src/blocks/post/post-carousel/inspector.js:272
+#: src/blocks/post/post-grid/inspector.js:257
+msgid "Equal Height"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/GlobalFeatures.js:61
+msgid "Make your blocks the same height with just ONE click."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/GlobalFeatures.js:67
+#: assets/js/build/entrance-animation.js:1
+#: src/global-features/entrance-animation/edit/components/EntranceAnimation.js:102
+msgid "Entrance Animation"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/GlobalFeatures.js:75
+msgid "Apply entrance animation on any Premium Blocks for Gutenberg block."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/GlobalFeatures.js:80
+msgid "Apply to All Gutenberg Blocks"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/GlobalFeatures.js:87
+msgid "This option will be used to Apply Entrance Animation to All Gutenberg Blocks."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/GlobalFeatures.js:94
+msgid "Copy & Paste Styles"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/GlobalFeatures.js:102
+msgid "Copy and paste styles from one block to another."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/performance.js:67
+msgid "Load Google Fonts Locally"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/performance.js:75
+msgid "This option will be used to load google fonts locally in your website."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/performance.js:80
+msgid "Preload Local Fonts"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/performance.js:87
+msgid "This option will be used to preload local fonts in your website."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/performance.js:94
+msgid "Allow Only Selected Fonts"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/performance.js:101
+msgid "Use this option to show only limited number of fonts in the block settings."
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/NavMenu.js:8
+msgid "Welcome"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/NavMenu.js:13
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:1276
+msgid "Blocks"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/NavMenu.js:18
+msgid "Global Features"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/NavMenu.js:28
+msgid "Performance"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/NavMenu.js:33
+msgid "Version Control"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/build/index.js:1
+#: admin/includes/pb-panel/assets/js/src/tabs/NavMenu.js:38
+msgid "System Info"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/src/common/SingleOption.js:83
+msgid " Block"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/src/common/SingleOption.js:92
+msgid "Guidelines"
+msgstr ""
+
+#: admin/includes/pb-panel/assets/js/src/layout/Header.js:11
+msgid "Knowledge Base    "
+msgstr ""
+
+#: assets/js/build/copy-paste-style.js:1
+#: src/global-features/copy-paste-style/index.js:126
+msgid "Premium Copy/Paste"
+msgstr ""
+
+#: assets/js/build/copy-paste-style.js:1
+#: src/global-features/copy-paste-style/index.js:142
+msgid "Copy Styles"
+msgstr ""
+
+#. Translators: %d: Number of blocks being copied.
+#: assets/js/build/copy-paste-style.js:3
+#: src/global-features/copy-paste-style/index.js:148
+msgid "Copied %d block style to clipboard."
+msgid_plural "Copied %d blocks styles to clipboard."
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/js/build/copy-paste-style.js:3
+#: src/global-features/copy-paste-style/index.js:43
+msgid "Unable to paste styles. This feature is only available on secure (https) sites in supporting browsers."
+msgstr ""
+
+#: assets/js/build/copy-paste-style.js:3
+#: src/global-features/copy-paste-style/index.js:56
+msgid "Unable to paste styles. Please allow browser clipboard permissions before continuing."
+msgstr ""
+
+#. translators: %d: number of blocks.
+#: assets/js/build/copy-paste-style.js:4
+#: src/global-features/copy-paste-style/index.js:85
+msgid "Styles pasted to %d block."
+msgid_plural "Styles pasted to %d blocks."
+msgstr[0] ""
+msgstr[1] ""
+
+#: assets/js/build/copy-paste-style.js:4
+#: src/global-features/copy-paste-style/index.js:72
+msgid "Unable to paste styles. The copied content is invalid."
+msgstr ""
+
+#: assets/js/build/copy-paste-style.js:4
+#: src/global-features/copy-paste-style/index.js:166
+msgid "Paste Styles"
+msgstr ""
+
+#: assets/js/build/entrance-animation.js:1
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:1236
+#: src/blocks/container/edit.js:1244
+#: src/blocks/Modal/inspector.js:667
+#: src/global-features/entrance-animation/edit/components/EntranceAnimation.js:108
+msgid "Animation"
+msgstr ""
+
+#: assets/js/build/entrance-animation.js:1
+#: src/global-features/entrance-animation/edit/components/EntranceAnimation.js:118
+msgid "Easing"
+msgstr ""
+
+#: assets/js/build/entrance-animation.js:1
+#: assets/js/build/index.js:1
+#: src/blocks/price/edit.js:134
+#: src/blocks/price/edit.js:266
+#: src/components/Animation.js:111
+#: src/global-features/entrance-animation/edit/components/EntranceAnimation.js:135
+msgid "Duration"
+msgstr ""
+
+#: assets/js/build/entrance-animation.js:1
+#: assets/js/build/index.js:2
+#: src/blocks/counter/edit.js:141
+#: src/components/Animation.js:120
+#: src/global-features/entrance-animation/edit/components/EntranceAnimation.js:144
+msgid "Delay"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:145
+#: src/blocks/button/edit.js:204
+#: src/blocks/icon-group/edit.js:58
+#: src/blocks/icon/edit.js:140
+#: src/blocks/image/Setting.js:132
+#: src/blocks/image/Setting.js:302
+#: src/blocks/instagram-feed-posts/edit.js:119
+#: src/blocks/instagram-feed-posts/edit.js:184
+#: src/blocks/instagram-feed-posts/edit.js:344
+#: src/blocks/lottie/edit.js:296
+#: src/blocks/Modal/inspector.js:80
+#: src/blocks/post/post-carousel/inspector.js:148
+#: src/blocks/post/post-grid/inspector.js:149
+#: src/components/Animation.js:84
+msgid "None"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:84
+msgid "Fade In Down"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:88
+msgid "Fade In Up"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:92
+msgid "Fade In"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:96
+msgid "Fade In Left"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:100
+msgid "Fade In Right"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:104
+msgid "Zoom In Down"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:108
+msgid "Zoom In Up"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:149
+#: src/blocks/image/Setting.js:136
+#: src/blocks/instagram-feed-posts/edit.js:345
+#: src/blocks/Modal/inspector.js:112
+msgid "Zoom In"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:116
+msgid "Zoom In Left"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:120
+msgid "Zoom In Right"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:124
+msgid "Bouncing In Down"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:128
+msgid "Bouncing In Up"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:132
+msgid "Bouncing In"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:136
+msgid "Bouncing In Left"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:140
+msgid "Bouncing In Right"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:144
+msgid "Slide In Up"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:148
+msgid "Slide In Left"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:152
+msgid "Slide In Right"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:156
+msgid "Slide In Down"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:160
+msgid "Rotating Up Left"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:164
+msgid "Rotating Up Right"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:168
+msgid "Rotating In"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:172
+msgid "Rotating In Left"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:176
+msgid "Rotating In Right"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:180
+#: src/components/Animation.js:87
+msgid "Bounce"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:184
+msgid "Flash"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/icon-group/edit.js:62
+#: src/blocks/icon/edit.js:144
+#: src/blocks/Modal/inspector.js:188
+msgid "Pulse"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:192
+msgid "Rubber Band"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:196
+msgid "Head Shake"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:200
+msgid "Swing"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:204
+msgid "Tada"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/icon-group/edit.js:82
+#: src/blocks/icon/edit.js:164
+#: src/blocks/Modal/inspector.js:208
+msgid "Wobble"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:212
+msgid "Jolle"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:216
+msgid "Light Speed"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:220
+msgid "Roll In"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:226
+msgid "Fast"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:504
+#: src/blocks/bullet-list/edit.js:641
+#: src/blocks/bullet-list/edit.js:773
+#: src/blocks/button/edit.js:572
+#: src/blocks/container/edit.js:951
+#: src/blocks/container/edit.js:1082
+#: src/blocks/heading/edit.js:302
+#: src/blocks/icon-box/edit.js:279
+#: src/blocks/icon-group/edit.js:352
+#: src/blocks/image-separator/edit.js:437
+#: src/blocks/image/Setting.js:493
+#: src/blocks/instagram-feed-posts/edit.js:369
+#: src/blocks/instagram-feed-posts/edit.js:526
+#: src/blocks/instagram-feed-posts/edit.js:586
+#: src/blocks/lottie/edit.js:506
+#: src/blocks/Modal/inspector.js:230
+#: src/blocks/Modal/inspector.js:731
+#: src/blocks/Modal/inspector.js:842
+#: src/blocks/Modal/inspector.js:912
+#: src/blocks/Modal/inspector.js:954
+#: src/blocks/Modal/inspector.js:1092
+#: src/blocks/post/post-carousel/inspector.js:1124
+#: src/blocks/post/post-carousel/inspector.js:1314
+#: src/blocks/post/post-grid/inspector.js:1174
+#: src/blocks/post/post-grid/inspector.js:1269
+#: src/blocks/post/post-grid/inspector.js:1537
+#: src/blocks/video-box/edit.js:508
+#: src/components/icon-controls.js:77
+#: src/components/premium-typo.js:97
+msgid "Normal"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:234
+msgid "Slow"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:236
+#: src/blocks/heading/edit.js:265
+#: src/blocks/icon/edit.js:121
+#: src/blocks/image-separator/edit.js:105
+#: src/blocks/list-item/edit.js:71
+#: src/blocks/lottie/edit.js:484
+#: src/blocks/Modal/inspector.js:255
+#: src/blocks/svg-draw/edit.js:109
+msgid "SVG"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:243
+#: src/blocks/heading/edit.js:269
+#: src/blocks/icon/edit.js:128
+#: src/blocks/image-separator/edit.js:112
+#: src/blocks/list-item/edit.js:78
+#: src/blocks/lottie/container.js:45
+#: src/blocks/lottie/container.js:60
+#: src/blocks/lottie/container.js:69
+#: src/blocks/Modal/edit.js:465
+#: src/blocks/Modal/inspector.js:262
+msgid "Lottie"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/lottie/edit.js:289
+#: src/blocks/Modal/inspector.js:324
+#: src/blocks/Modal/inspector.js:329
+msgid "Trigger"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:560
+#: src/blocks/Modal/inspector.js:336
+msgid "Button"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:301
+#: src/blocks/heading/edit.js:1299
+#: src/blocks/Modal/inspector.js:350
+#: src/blocks/Modal/inspector.js:521
+msgid "Text"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:364
+msgid "On Page Load"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:378
+msgid "Button text"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:507
+#: src/blocks/heading/edit.js:963
+#: src/blocks/icon-box/edit.js:178
+#: src/blocks/Modal/inspector.js:419
+msgid "Icon Position"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:125
+#: src/blocks/button/edit.js:514
+#: src/blocks/heading/edit.js:277
+#: src/blocks/Modal/inspector.js:428
+msgid "Before"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:121
+#: src/blocks/button/edit.js:521
+#: src/blocks/heading/edit.js:281
+#: src/blocks/Modal/inspector.js:435
+msgid "After"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:470
+#: src/blocks/Modal/inspector.js:451
+msgid "Button Size"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:114
+#: src/blocks/Modal/inspector.js:458
+msgid "Small"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:118
+#: src/blocks/Modal/inspector.js:465
+msgid "Medium"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:122
+#: src/blocks/Modal/inspector.js:472
+msgid "Large"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:308
+#: src/blocks/bullet-list/edit.js:110
+#: src/blocks/button/edit.js:126
+#: src/blocks/content-switcher/edit.js:149
+#: src/blocks/dual-heading/edit.js:80
+#: src/blocks/Modal/inspector.js:479
+msgid "Block"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:537
+msgid "Make Sure that allow \"JSON file Upload \" from "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:518
+#: src/blocks/Modal/inspector.js:552
+#: src/blocks/svg-draw/edit.js:278
+#: src/blocks/video-box/edit.js:301
+#: src/components/select-icon.js:182
+msgid "Loop"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/lottie/edit.js:262
+#: src/blocks/Modal/inspector.js:566
+#: src/components/select-icon.js:202
+msgid "Reverse"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:580
+msgid "Only Play on Hover"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:598
+msgid "the Button will be removed in the preview mode "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:604
+msgid "Delay in Popup Display (Sec)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: assets/js/build/index.js:2
+#: src/blocks/buttons/edit.js:97
+#: src/blocks/content-switcher/edit.js:299
+#: src/blocks/counter/edit.js:185
+#: src/blocks/dual-heading/edit.js:245
+#: src/blocks/heading/edit.js:1239
+#: src/blocks/icon-box/edit.js:222
+#: src/blocks/icon-group/edit.js:292
+#: src/blocks/icon/edit.js:319
+#: src/blocks/image-separator/edit.js:310
+#: src/blocks/image/Setting.js:205
+#: src/blocks/lottie/edit.js:438
+#: src/blocks/Modal/inspector.js:623
+#: src/blocks/person/edit.js:129
+#: src/blocks/post/post-carousel/inspector.js:770
+#: src/blocks/post/post-grid/inspector.js:676
+#: src/blocks/post/post-grid/inspector.js:979
+#: src/blocks/svg-draw/edit.js:418
+#: src/blocks/testimonials/edit.js:143
+msgid "Alignment"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: assets/js/build/index.js:2
+#: src/blocks/accordion/edit.js:328
+#: src/blocks/author/edit.js:139
+#: src/blocks/badge/edit.js:93
+#: src/blocks/banner/edit.js:394
+#: src/blocks/bullet-list/edit.js:447
+#: src/blocks/bullet-list/edit.js:526
+#: src/blocks/buttons/edit.js:99
+#: src/blocks/content-switcher/edit.js:306
+#: src/blocks/counter/edit.js:158
+#: src/blocks/dual-heading/edit.js:218
+#: src/blocks/fancy-text/edit.js:396
+#: src/blocks/fancy-text/edit.js:621
+#: src/blocks/heading/edit.js:983
+#: src/blocks/heading/edit.js:1109
+#: src/blocks/heading/edit.js:1212
+#: src/blocks/icon-box/edit.js:71
+#: src/blocks/icon-box/edit.js:229
+#: src/blocks/icon-group/edit.js:294
+#: src/blocks/icon/edit.js:326
+#: src/blocks/image-separator/edit.js:312
+#: src/blocks/image/Setting.js:212
+#: src/blocks/image/Setting.js:255
+#: src/blocks/lottie/edit.js:420
+#: src/blocks/maps/edit.js:701
+#: src/blocks/Modal/inspector.js:630
+#: src/blocks/person/edit.js:136
+#: src/blocks/post/post-carousel/inspector.js:741
+#: src/blocks/post/post-grid/inspector.js:647
+#: src/blocks/post/post-grid/inspector.js:950
+#: src/blocks/price/edit.js:108
+#: src/blocks/section/edit.js:214
+#: src/blocks/svg-draw/edit.js:425
+#: src/blocks/testimonials/edit.js:150
+#: src/blocks/text/edit.js:155
+#: src/components/Animation.js:34
+#: src/components/Animation.js:39
+#: src/components/premium-responsive-spacing.js:112
+msgid "Left"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: assets/js/build/index.js:2
+#: src/blocks/accordion/edit.js:336
+#: src/blocks/author/edit.js:147
+#: src/blocks/banner/edit.js:402
+#: src/blocks/bullet-list/edit.js:455
+#: src/blocks/bullet-list/edit.js:494
+#: src/blocks/bullet-list/edit.js:534
+#: src/blocks/buttons/edit.js:100
+#: src/blocks/container/edit.js:655
+#: src/blocks/container/edit.js:708
+#: src/blocks/container/edit.js:862
+#: src/blocks/content-switcher/edit.js:314
+#: src/blocks/counter/edit.js:166
+#: src/blocks/dual-heading/edit.js:226
+#: src/blocks/fancy-text/edit.js:404
+#: src/blocks/fancy-text/edit.js:629
+#: src/blocks/heading/edit.js:991
+#: src/blocks/heading/edit.js:1117
+#: src/blocks/heading/edit.js:1220
+#: src/blocks/icon-box/edit.js:237
+#: src/blocks/icon-group/edit.js:295
+#: src/blocks/icon/edit.js:334
+#: src/blocks/image-separator/edit.js:313
+#: src/blocks/image/Setting.js:220
+#: src/blocks/image/Setting.js:263
+#: src/blocks/lottie/edit.js:425
+#: src/blocks/maps/edit.js:709
+#: src/blocks/Modal/inspector.js:638
+#: src/blocks/person/edit.js:144
+#: src/blocks/post/post-carousel/inspector.js:749
+#: src/blocks/post/post-carousel/inspector.js:788
+#: src/blocks/post/post-grid/inspector.js:655
+#: src/blocks/post/post-grid/inspector.js:694
+#: src/blocks/post/post-grid/inspector.js:958
+#: src/blocks/price/edit.js:108
+#: src/blocks/section/edit.js:222
+#: src/blocks/svg-draw/edit.js:433
+#: src/blocks/testimonials/edit.js:158
+#: src/blocks/text/edit.js:155
+#: src/components/Animation.js:37
+msgid "Center"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: assets/js/build/index.js:2
+#: src/blocks/accordion/edit.js:344
+#: src/blocks/author/edit.js:155
+#: src/blocks/badge/edit.js:101
+#: src/blocks/banner/edit.js:410
+#: src/blocks/bullet-list/edit.js:463
+#: src/blocks/bullet-list/edit.js:542
+#: src/blocks/buttons/edit.js:101
+#: src/blocks/content-switcher/edit.js:322
+#: src/blocks/counter/edit.js:174
+#: src/blocks/dual-heading/edit.js:234
+#: src/blocks/fancy-text/edit.js:412
+#: src/blocks/fancy-text/edit.js:637
+#: src/blocks/heading/edit.js:999
+#: src/blocks/heading/edit.js:1125
+#: src/blocks/heading/edit.js:1228
+#: src/blocks/icon-box/edit.js:75
+#: src/blocks/icon-box/edit.js:245
+#: src/blocks/icon-group/edit.js:296
+#: src/blocks/icon/edit.js:342
+#: src/blocks/image-separator/edit.js:314
+#: src/blocks/image/Setting.js:228
+#: src/blocks/image/Setting.js:271
+#: src/blocks/lottie/edit.js:430
+#: src/blocks/maps/edit.js:717
+#: src/blocks/Modal/inspector.js:646
+#: src/blocks/person/edit.js:152
+#: src/blocks/post/post-carousel/inspector.js:757
+#: src/blocks/post/post-grid/inspector.js:663
+#: src/blocks/post/post-grid/inspector.js:966
+#: src/blocks/price/edit.js:108
+#: src/blocks/section/edit.js:230
+#: src/blocks/svg-draw/edit.js:441
+#: src/blocks/testimonials/edit.js:166
+#: src/blocks/text/edit.js:155
+#: src/components/Animation.js:33
+#: src/components/Animation.js:38
+#: src/components/premium-responsive-spacing.js:113
+msgid "Right"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:290
+#: src/blocks/accordion/edit.js:484
+#: src/blocks/Modal/inspector.js:662
+#: src/blocks/person/edit.js:169
+msgid "Content"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1376
+#: src/blocks/Modal/inspector.js:678
+msgid "Animation Duration"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:693
+msgid "Triger"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:571
+#: src/blocks/content-switcher/edit.js:347
+#: src/blocks/instagram-feed-posts/edit.js:577
+#: src/blocks/lottie/edit.js:386
+#: src/blocks/Modal/inspector.js:701
+#: src/blocks/post/post-carousel/inspector.js:1556
+#: src/blocks/testimonials/edit.js:191
+#: src/components/icon-controls.js:55
+#: src/components/premium-background.js:191
+msgid "Size"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/author/edit.js:289
+#: src/blocks/badge/edit.js:149
+#: src/blocks/bullet-list/edit.js:779
+#: src/blocks/bullet-list/edit.js:799
+#: src/blocks/bullet-list/edit.js:895
+#: src/blocks/fancy-text/edit.js:674
+#: src/blocks/fancy-text/edit.js:741
+#: src/blocks/heading/edit.js:334
+#: src/blocks/heading/edit.js:1399
+#: src/blocks/heading/edit.js:1688
+#: src/blocks/icon-group/edit.js:359
+#: src/blocks/image/Setting.js:585
+#: src/blocks/instagram-feed-posts/edit.js:474
+#: src/blocks/instagram-feed-posts/edit.js:588
+#: src/blocks/instagram-feed-posts/edit.js:600
+#: src/blocks/Modal/inspector.js:738
+#: src/blocks/Modal/inspector.js:848
+#: src/blocks/Modal/inspector.js:1099
+#: src/blocks/post/post-carousel/inspector.js:979
+#: src/blocks/post/post-carousel/inspector.js:1026
+#: src/blocks/post/post-carousel/inspector.js:1215
+#: src/blocks/post/post-carousel/inspector.js:1320
+#: src/blocks/post/post-carousel/inspector.js:1525
+#: src/blocks/post/post-carousel/inspector.js:1548
+#: src/blocks/post/post-grid/inspector.js:1029
+#: src/blocks/post/post-grid/inspector.js:1076
+#: src/blocks/post/post-grid/inspector.js:1275
+#: src/blocks/post/post-grid/inspector.js:1318
+#: src/blocks/post/post-grid/inspector.js:1361
+#: src/blocks/post/post-grid/inspector.js:1438
+#: src/blocks/post/post-grid/inspector.js:1543
+#: src/blocks/price/edit.js:166
+#: src/blocks/price/edit.js:195
+#: src/blocks/price/edit.js:224
+#: src/blocks/price/edit.js:253
+#: src/blocks/price/edit.js:282
+#: src/blocks/text/edit.js:197
+#: src/blocks/video-box/edit.js:748
+#: src/components/icon-controls.js:84
+#: src/components/premium-shape.js:159
+msgid "Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:420
+#: src/blocks/accordion/edit.js:513
+#: src/blocks/accordion/edit.js:594
+#: src/blocks/badge/edit.js:155
+#: src/blocks/banner/edit.js:597
+#: src/blocks/bullet-list/edit.js:647
+#: src/blocks/bullet-list/edit.js:678
+#: src/blocks/button/edit.js:637
+#: src/blocks/button/edit.js:641
+#: src/blocks/content-switcher/edit.js:510
+#: src/blocks/content-switcher/edit.js:613
+#: src/blocks/fancy-text/edit.js:685
+#: src/blocks/fancy-text/edit.js:752
+#: src/blocks/heading/edit.js:1439
+#: src/blocks/heading/edit.js:1452
+#: src/blocks/icon-group/edit.js:372
+#: src/blocks/lottie/edit.js:509
+#: src/blocks/lottie/edit.js:537
+#: src/blocks/Modal/inspector.js:753
+#: src/blocks/Modal/inspector.js:1113
+#: src/blocks/post/post-carousel/inspector.js:1236
+#: src/blocks/post/post-carousel/inspector.js:1333
+#: src/blocks/post/post-carousel/inspector.js:1426
+#: src/blocks/post/post-carousel/inspector.js:1572
+#: src/blocks/post/post-grid/inspector.js:1286
+#: src/blocks/post/post-grid/inspector.js:1329
+#: src/blocks/post/post-grid/inspector.js:1372
+#: src/blocks/post/post-grid/inspector.js:1459
+#: src/blocks/post/post-grid/inspector.js:1556
+#: src/blocks/post/post-grid/inspector.js:1649
+#: src/blocks/price/edit.js:172
+#: src/blocks/price/edit.js:201
+#: src/blocks/price/edit.js:230
+#: src/blocks/price/edit.js:259
+#: src/blocks/price/edit.js:288
+#: src/blocks/pricing-table/edit.js:153
+#: src/blocks/video-box/edit.js:534
+#: src/blocks/video-box/edit.js:687
+#: src/blocks/video-box/edit.js:770
+msgid "Background Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:443
+#: src/blocks/accordion/edit.js:542
+#: src/blocks/banner/edit.js:687
+#: src/blocks/bullet-list/edit.js:596
+#: src/blocks/button/edit.js:701
+#: src/blocks/content-switcher/edit.js:549
+#: src/blocks/content-switcher/edit.js:653
+#: src/blocks/content-switcher/edit.js:714
+#: src/blocks/count-up/edit.js:116
+#: src/blocks/dual-heading/edit.js:397
+#: src/blocks/dual-heading/edit.js:530
+#: src/blocks/dual-heading/edit.js:581
+#: src/blocks/heading/edit.js:1553
+#: src/blocks/icon-box/edit.js:316
+#: src/blocks/icon-group/edit.js:441
+#: src/blocks/icon/edit.js:417
+#: src/blocks/instagram-feed-posts/edit.js:377
+#: src/blocks/instagram-feed-posts/edit.js:413
+#: src/blocks/instagram-feed-posts/edit.js:480
+#: src/blocks/lottie/edit.js:565
+#: src/blocks/maps/edit.js:753
+#: src/blocks/Modal/inspector.js:770
+#: src/blocks/Modal/inspector.js:824
+#: src/blocks/Modal/inspector.js:861
+#: src/blocks/Modal/inspector.js:895
+#: src/blocks/Modal/inspector.js:918
+#: src/blocks/Modal/inspector.js:937
+#: src/blocks/Modal/inspector.js:1167
+#: src/blocks/Modal/inspector.js:1248
+#: src/blocks/post/post-carousel/inspector.js:1070
+#: src/blocks/post/post-carousel/inspector.js:1346
+#: src/blocks/post/post-carousel/inspector.js:1391
+#: src/blocks/post/post-carousel/inspector.js:1440
+#: src/blocks/post/post-grid/inspector.js:1120
+#: src/blocks/post/post-grid/inspector.js:1299
+#: src/blocks/post/post-grid/inspector.js:1342
+#: src/blocks/post/post-grid/inspector.js:1385
+#: src/blocks/post/post-grid/inspector.js:1569
+#: src/blocks/post/post-grid/inspector.js:1614
+#: src/blocks/post/post-grid/inspector.js:1663
+#: src/blocks/pricing-table/edit.js:172
+#: src/blocks/section/edit.js:266
+#: src/blocks/section/edit.js:278
+#: src/blocks/svg-draw/edit.js:567
+#: src/blocks/text/edit.js:208
+#: src/blocks/video-box/edit.js:419
+#: src/blocks/video-box/edit.js:603
+#: src/components/icon-controls.js:163
+#: src/components/premium-border.js:52
+msgid "Border"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:524
+#: src/blocks/bullet-list/edit.js:672
+#: src/blocks/bullet-list/edit.js:793
+#: src/blocks/button/edit.js:613
+#: src/blocks/container/edit.js:1007
+#: src/blocks/container/edit.js:1098
+#: src/blocks/icon-box/edit.js:295
+#: src/blocks/icon-group/edit.js:387
+#: src/blocks/image-separator/edit.js:447
+#: src/blocks/image/Setting.js:517
+#: src/blocks/instagram-feed-posts/edit.js:405
+#: src/blocks/instagram-feed-posts/edit.js:539
+#: src/blocks/instagram-feed-posts/edit.js:598
+#: src/blocks/lottie/edit.js:303
+#: src/blocks/lottie/edit.js:534
+#: src/blocks/Modal/inspector.js:784
+#: src/blocks/Modal/inspector.js:874
+#: src/blocks/Modal/inspector.js:931
+#: src/blocks/Modal/inspector.js:969
+#: src/blocks/Modal/inspector.js:1128
+#: src/blocks/post/post-carousel/inspector.js:1140
+#: src/blocks/post/post-carousel/inspector.js:1359
+#: src/blocks/post/post-grid/inspector.js:1190
+#: src/blocks/post/post-grid/inspector.js:1312
+#: src/blocks/post/post-grid/inspector.js:1582
+#: src/blocks/video-box/edit.js:555
+#: src/components/icon-controls.js:109
+msgid "Hover"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/icon-group/edit.js:394
+#: src/blocks/Modal/inspector.js:791
+#: src/blocks/Modal/inspector.js:880
+#: src/blocks/Modal/inspector.js:1135
+#: src/blocks/post/post-carousel/inspector.js:1365
+#: src/blocks/post/post-grid/inspector.js:1588
+#: src/components/icon-controls.js:116
+msgid "Hover Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:806
+#: src/blocks/Modal/inspector.js:1149
+msgid "Background Hover Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:431
+#: src/blocks/accordion/edit.js:528
+#: src/blocks/banner/edit.js:614
+#: src/blocks/banner/edit.js:657
+#: src/blocks/bullet-list/edit.js:816
+#: src/blocks/button/edit.js:689
+#: src/blocks/content-switcher/edit.js:526
+#: src/blocks/content-switcher/edit.js:629
+#: src/blocks/dual-heading/edit.js:385
+#: src/blocks/dual-heading/edit.js:518
+#: src/blocks/fancy-text/edit.js:713
+#: src/blocks/heading/edit.js:1701
+#: src/blocks/Modal/inspector.js:998
+#: src/blocks/text/edit.js:203
+#: src/blocks/video-box/edit.js:708
+#: src/blocks/video-box/edit.js:790
+msgid "Text Shadow"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: assets/js/build/index.js:2
+#: src/blocks/accordion/edit.js:471
+#: src/blocks/accordion/edit.js:556
+#: src/blocks/accordion/edit.js:624
+#: src/blocks/banner/edit.js:701
+#: src/blocks/bullet-list/edit.js:622
+#: src/blocks/bullet-list/edit.js:726
+#: src/blocks/button/edit.js:727
+#: src/blocks/buttons/edit.js:158
+#: src/blocks/container/edit.js:1181
+#: src/blocks/content-switcher/edit.js:563
+#: src/blocks/content-switcher/edit.js:668
+#: src/blocks/content-switcher/edit.js:739
+#: src/blocks/count-up/edit.js:130
+#: src/blocks/counter/edit.js:235
+#: src/blocks/counter/edit.js:291
+#: src/blocks/counter/edit.js:348
+#: src/blocks/dual-heading/edit.js:423
+#: src/blocks/dual-heading/edit.js:556
+#: src/blocks/dual-heading/edit.js:610
+#: src/blocks/fancy-text/edit.js:787
+#: src/blocks/heading/edit.js:1583
+#: src/blocks/icon-box/edit.js:343
+#: src/blocks/icon-group/edit.js:454
+#: src/blocks/icon/edit.js:440
+#: src/blocks/image/Setting.js:608
+#: src/blocks/instagram-feed-posts/edit.js:398
+#: src/blocks/instagram-feed-posts/edit.js:427
+#: src/blocks/instagram-feed-posts/edit.js:498
+#: src/blocks/instagram-feed-posts/edit.js:621
+#: src/blocks/lottie/edit.js:576
+#: src/blocks/maps/edit.js:622
+#: src/blocks/maps/edit.js:686
+#: src/blocks/maps/edit.js:779
+#: src/blocks/Modal/inspector.js:1013
+#: src/blocks/Modal/inspector.js:1175
+#: src/blocks/Modal/inspector.js:1256
+#: src/blocks/person/edit.js:194
+#: src/blocks/post/post-carousel/inspector.js:1254
+#: src/blocks/post/post-carousel/inspector.js:1408
+#: src/blocks/post/post-carousel/inspector.js:1501
+#: src/blocks/post/post-grid/inspector.js:1400
+#: src/blocks/post/post-grid/inspector.js:1477
+#: src/blocks/post/post-grid/inspector.js:1631
+#: src/blocks/post/post-grid/inspector.js:1724
+#: src/blocks/pricing-table/edit.js:186
+#: src/blocks/section/edit.js:312
+#: src/blocks/svg-draw/edit.js:590
+#: src/blocks/testimonials/edit.js:280
+#: src/blocks/text/edit.js:213
+#: src/blocks/video-box/edit.js:616
+#: src/blocks/video-box/edit.js:718
+#: src/blocks/video-box/edit.js:800
+#: src/components/icon-controls.js:186
+msgid "Padding"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:1030
+msgid "Triger Icon"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:1035
+msgid "Icon Spacing"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:1069
+msgid "Upper Close Button"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: assets/js/build/index.js:2
+#: src/blocks-extra-options/layout-options.js:37
+#: src/blocks/bullet-list/edit.js:861
+#: src/blocks/heading/edit.js:1311
+#: src/blocks/Modal/inspector.js:1077
+#: src/blocks/Modal/inspector.js:1193
+#: src/components/icon-controls.js:34
+msgid "Width"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:1205
+msgid "Max Height"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:1220
+#: src/components/Premium-Background-Control.js:218
+msgid "Background Type"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/Modal/inspector.js:1230
+msgid "Outer Background"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion-item/edit.js:90
+#: src/blocks/accordion/deprecated.js:241
+#: src/blocks/accordion/edit.js:32
+#: src/blocks/accordion/edit.js:41
+#: src/blocks/maps/deprecated.js:59
+#: src/blocks/maps/deprecated.js:180
+#: src/blocks/maps/deprecated.js:317
+msgid "Awesome Title"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:181
+#: src/blocks/banner/edit.js:250
+#: src/blocks/button/edit.js:402
+#: src/blocks/container/edit.js:416
+#: src/blocks/dual-heading/edit.js:119
+#: src/blocks/instagram-feed-header/edit.js:183
+#: src/blocks/post/post-carousel/inspector.js:219
+#: src/blocks/post/post-grid/inspector.js:204
+msgid "General"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:186
+msgid "Collapse Others"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:192
+msgid "Expand First Item"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:199
+#: src/blocks/accordion/edit.js:398
+#: src/blocks/banner/edit.js:429
+#: src/blocks/banner/edit.js:552
+#: src/blocks/fancy-text/edit.js:271
+#: src/blocks/heading/edit.js:920
+#: src/blocks/heading/edit.js:1344
+#: src/blocks/list-item/edit.js:133
+#: src/blocks/maps/edit.js:572
+msgid "Title"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:207
+#: src/blocks/author/edit.js:84
+#: src/blocks/author/edit.js:185
+#: src/blocks/banner/edit.js:439
+#: src/blocks/content-switcher/edit.js:236
+#: src/blocks/dual-heading/edit.js:130
+#: src/blocks/heading/edit.js:1150
+#: src/blocks/post/post-carousel/inspector.js:634
+#: src/blocks/post/post-grid/inspector.js:540
+#: src/blocks/text/edit.js:82
+msgid "H1"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:214
+#: src/blocks/author/edit.js:91
+#: src/blocks/author/edit.js:192
+#: src/blocks/banner/edit.js:446
+#: src/blocks/content-switcher/edit.js:243
+#: src/blocks/dual-heading/edit.js:137
+#: src/blocks/heading/edit.js:1157
+#: src/blocks/post/post-carousel/inspector.js:641
+#: src/blocks/post/post-grid/inspector.js:547
+#: src/blocks/text/edit.js:89
+msgid "H2"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:221
+#: src/blocks/author/edit.js:98
+#: src/blocks/author/edit.js:199
+#: src/blocks/banner/edit.js:453
+#: src/blocks/content-switcher/edit.js:250
+#: src/blocks/dual-heading/edit.js:144
+#: src/blocks/heading/edit.js:1164
+#: src/blocks/post/post-carousel/inspector.js:648
+#: src/blocks/post/post-grid/inspector.js:554
+#: src/blocks/text/edit.js:96
+msgid "H3"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:228
+#: src/blocks/author/edit.js:105
+#: src/blocks/author/edit.js:206
+#: src/blocks/banner/edit.js:460
+#: src/blocks/content-switcher/edit.js:257
+#: src/blocks/dual-heading/edit.js:151
+#: src/blocks/heading/edit.js:1171
+#: src/blocks/post/post-carousel/inspector.js:655
+#: src/blocks/post/post-grid/inspector.js:561
+#: src/blocks/text/edit.js:103
+msgid "H4"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:235
+#: src/blocks/author/edit.js:112
+#: src/blocks/author/edit.js:213
+#: src/blocks/banner/edit.js:467
+#: src/blocks/content-switcher/edit.js:264
+#: src/blocks/dual-heading/edit.js:158
+#: src/blocks/heading/edit.js:1178
+#: src/blocks/post/post-carousel/inspector.js:662
+#: src/blocks/post/post-grid/inspector.js:568
+#: src/blocks/text/edit.js:110
+msgid "H5"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:242
+#: src/blocks/author/edit.js:119
+#: src/blocks/author/edit.js:220
+#: src/blocks/banner/edit.js:474
+#: src/blocks/content-switcher/edit.js:271
+#: src/blocks/dual-heading/edit.js:165
+#: src/blocks/heading/edit.js:1185
+#: src/blocks/post/post-carousel/inspector.js:669
+#: src/blocks/post/post-grid/inspector.js:575
+#: src/blocks/text/edit.js:117
+msgid "H6"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:252
+#: src/blocks/author/edit.js:129
+#: src/blocks/author/edit.js:230
+#: src/blocks/heading/edit.js:1202
+msgid "Title Tag"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:262
+msgid "LTR"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:270
+msgid "RTL"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:281
+#: src/blocks/button/edit.js:426
+#: src/blocks/container/edit.js:635
+#: src/components/Animation.js:99
+msgid "Direction"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:318
+#: src/blocks/text/edit.js:225
+#: src/components/Premium-Background-Control.js:223
+#: src/components/select-icon.js:104
+msgid "Type"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:355
+#: src/blocks/author/edit.js:166
+#: src/blocks/banner/edit.js:421
+#: src/blocks/bullet-list/edit.js:555
+#: src/blocks/container/edit.js:917
+#: src/blocks/fancy-text/edit.js:389
+#: src/blocks/fancy-text/edit.js:614
+#: src/blocks/section/edit.js:241
+msgid "Align Content"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:363
+#: src/blocks/accordion/edit.js:566
+msgid "Arrow"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:371
+msgid "In"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:378
+msgid "Out"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:388
+#: src/blocks/badge/edit.js:110
+#: src/components/premium-background.js:173
+msgid "Position"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: assets/js/build/index.js:2
+#: src/blocks/accordion/edit.js:409
+#: src/blocks/accordion/edit.js:502
+#: src/blocks/author/edit.js:317
+#: src/blocks/banner/edit.js:568
+#: src/blocks/banner/edit.js:644
+#: src/blocks/button/edit.js:579
+#: src/blocks/button/edit.js:620
+#: src/blocks/content-switcher/edit.js:494
+#: src/blocks/content-switcher/edit.js:597
+#: src/blocks/counter/edit.js:262
+#: src/blocks/counter/edit.js:319
+#: src/blocks/dual-heading/edit.js:311
+#: src/blocks/dual-heading/edit.js:493
+#: src/blocks/instagram-feed-posts/edit.js:454
+#: src/blocks/maps/edit.js:588
+#: src/blocks/maps/edit.js:652
+msgid "Text Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:454
+msgid "Rows Gap"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:583
+msgid "Arrow Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion/edit.js:606
+#: src/blocks/image-separator/edit.js:502
+#: src/blocks/instagram-feed-posts/edit.js:612
+#: src/blocks/post/post-carousel/inspector.js:1477
+#: src/blocks/post/post-carousel/inspector.js:1580
+#: src/blocks/post/post-grid/inspector.js:1700
+msgid "Border Radius"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:99
+#: src/blocks/bullet-list/edit.js:129
+#: src/blocks/bullet-list/edit.js:486
+#: src/blocks/heading/edit.js:285
+#: src/blocks/heading/edit.js:292
+#: src/blocks/instagram-feed-posts/edit.js:198
+#: src/blocks/lottie/edit.js:370
+#: src/blocks/post/post-carousel/inspector.js:780
+#: src/blocks/post/post-grid/inspector.js:686
+#: src/blocks/price/edit.js:65
+#: src/blocks/section/edit.js:88
+#: src/components/premium-responsive-spacing.js:110
+msgid "Top"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:103
+#: src/blocks/price/edit.js:70
+#: src/blocks/section/edit.js:91
+msgid "Middle"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:107
+#: src/blocks/bullet-list/edit.js:502
+#: src/blocks/heading/edit.js:296
+#: src/blocks/instagram-feed-posts/edit.js:191
+#: src/blocks/lottie/edit.js:354
+#: src/blocks/post/post-carousel/inspector.js:796
+#: src/blocks/post/post-grid/inspector.js:702
+#: src/blocks/price/edit.js:75
+#: src/blocks/section/edit.js:95
+#: src/components/premium-responsive-spacing.js:111
+msgid "Bottom"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:118
+#: src/blocks/heading/edit.js:219
+msgid "Style 1"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:122
+#: src/blocks/heading/edit.js:223
+msgid "Style 2"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:126
+#: src/blocks/heading/edit.js:227
+msgid "Style 3"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:130
+#: src/blocks/heading/edit.js:231
+msgid "Style 4"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:134
+#: src/blocks/heading/edit.js:235
+msgid "Style 5"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:138
+#: src/blocks/heading/edit.js:239
+msgid "Style 6"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:153
+#: src/blocks/image/Setting.js:140
+#: src/blocks/instagram-feed-posts/edit.js:346
+msgid "Zoom Out"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:157
+#: src/blocks/image/Setting.js:144
+#: src/blocks/instagram-feed-posts/edit.js:347
+#: src/blocks/post/post-carousel/inspector.js:151
+#: src/blocks/post/post-grid/inspector.js:152
+msgid "Scale"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:161
+#: src/blocks/image/Setting.js:148
+msgid "Gray Scale"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:165
+#: src/blocks/image/Setting.js:152
+#: src/blocks/instagram-feed-posts/edit.js:349
+#: src/blocks/post/post-carousel/inspector.js:153
+#: src/blocks/post/post-grid/inspector.js:154
+msgid "Blur"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:169
+#: src/blocks/image/Setting.js:156
+#: src/blocks/post/post-carousel/inspector.js:154
+#: src/blocks/post/post-grid/inspector.js:155
+msgid "Bright"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:173
+#: src/blocks/image/Setting.js:160
+#: src/blocks/instagram-feed-posts/edit.js:350
+#: src/blocks/post/post-carousel/inspector.js:155
+#: src/blocks/post/post-grid/inspector.js:156
+msgid "Sepia"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:180
+#: src/blocks/bullet-list/deprecated.js:214
+#: src/blocks/bullet-list/deprecated.js:616
+#: src/blocks/button/deprecated.js:274
+#: src/blocks/container/edit.js:542
+#: src/blocks/count-up/deprecated.js:410
+#: src/blocks/count-up/deprecated.js:445
+#: src/blocks/count-up/deprecated.js:536
+#: src/blocks/count-up/deprecated.js:552
+#: src/blocks/dual-heading/deprecated.js:395
+#: src/blocks/dual-heading/deprecated.js:523
+#: src/blocks/heading/deprecated/v1.js:94
+#: src/blocks/heading/deprecated/v1.js:175
+#: src/blocks/heading/edit.js:215
+#: src/blocks/icon-box/deprecated.js:470
+#: src/blocks/icon-box/deprecated.js:494
+#: src/components/premium-typo.js:111
+#: src/components/premium-typo.js:113
+#: src/components/premium-typo.js:131
+#: src/components/premium-typo.js:149
+#: src/components/premium-typo.js:167
+#: src/components/premium-typo.js:185
+#: src/components/typography/default-data.js:4
+msgid "Default"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:184
+#: src/blocks/image/Setting.js:330
+msgid "Custom"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:236
+#: src/blocks/video-box/edit.js:226
+msgid "Refresh this button when it conflict with other buttons styles"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:267
+msgid "Remove Image"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/author/edit.js:237
+#: src/blocks/banner/edit.js:273
+#: src/blocks/dual-heading/edit.js:193
+#: src/blocks/heading/edit.js:1246
+#: src/blocks/icon/edit.js:285
+#: src/blocks/image-separator/edit.js:323
+#: src/blocks/list-item/edit.js:160
+#: src/blocks/lottie/edit.js:446
+#: src/blocks/svg-draw/edit.js:384
+msgid "Link"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:292
+#: src/blocks/button/edit.js:547
+#: src/blocks/dual-heading/edit.js:204
+#: src/blocks/icon/edit.js:307
+#: src/blocks/lottie/edit.js:466
+#: src/blocks/svg-draw/edit.js:406
+msgid "Open link in new tab"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:303
+msgid "Banner Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:314
+msgid "Always Hovered"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:324
+#: src/blocks/image/Setting.js:542
+#: src/blocks/instagram-feed-posts/edit.js:339
+msgid "Image Hover Effect"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:337
+#: src/blocks/bullet-list/edit.js:878
+#: src/blocks/image-separator/edit.js:250
+#: src/blocks/post/post-carousel/inspector.js:594
+#: src/blocks/post/post-grid/inspector.js:495
+#: src/blocks/section/edit.js:158
+msgid "Height"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:349
+msgid "Min Height (PX)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:367
+msgid "Vertical Align"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:381
+msgid "Hide Description on Mobiles"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:485
+#: src/blocks/container/edit.js:561
+#: src/blocks/content-switcher/edit.js:229
+#: src/blocks/dual-heading/edit.js:175
+msgid "HTML Tag"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:495
+#: src/blocks/buttons/edit.js:78
+#: src/blocks/fancy-text/edit.js:324
+#: src/blocks/icon-box/edit.js:172
+#: src/blocks/icon-group/edit.js:287
+#: src/blocks/image/Setting.js:174
+#: src/blocks/list-item/edit.js:125
+#: src/blocks/lottie/edit.js:233
+#: src/blocks/person/edit.js:111
+#: src/blocks/section/edit.js:105
+#: src/blocks/testimonials/edit.js:138
+msgid "General Settings"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:510
+#: src/blocks/heading/edit.js:314
+#: src/blocks/instagram-feed-posts/edit.js:205
+#: src/blocks/video-box/edit.js:374
+#: src/blocks/video-box/edit.js:431
+msgid "Overlay"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:530
+msgid "Hover Overlay"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:582
+#: src/blocks/post/post-carousel/inspector.js:1192
+#: src/blocks/post/post-grid/inspector.js:1242
+msgid "Separator Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:628
+#: src/blocks/maps/edit.js:636
+msgid "Description"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:669
+#: src/blocks/content-switcher/edit.js:689
+#: src/blocks/icon/edit.js:393
+#: src/blocks/svg-draw/edit.js:543
+msgid "Container Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:728
+msgid "Premium Banner "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/banner/edit.js:732
+#: src/blocks/image-separator/edit.js:585
+#: src/blocks/Modal/edit.js:412
+msgid "Upload an image file, pick one from your media library, or add one with a URL."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:77
+msgid "Title #1"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:84
+msgid "Title #2"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:91
+msgid "Title #3"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:114
+#: src/blocks/content-switcher/edit.js:153
+#: src/blocks/dual-heading/edit.js:76
+msgid "Inline"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:136
+#: src/components/premium-border.js:55
+msgid "Solid"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:140
+#: src/components/premium-border.js:58
+msgid "Double"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:144
+#: src/components/premium-border.js:56
+msgid "Dotted"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:148
+#: src/components/premium-border.js:57
+msgid "Dashed"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:152
+msgid "Groove"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/badge/edit.js:67
+#: src/blocks/bullet-list/edit.js:425
+#: src/blocks/post/post-carousel/inspector.js:626
+#: src/blocks/post/post-grid/inspector.js:532
+msgid "Display Options"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:433
+msgid "Layout Type"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:474
+#: src/blocks/maps/edit.js:728
+#: src/blocks/price/edit.js:111
+msgid "Align"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:515
+msgid "Bullet Alignment"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:564
+msgid "Bullet Position"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:575
+#: src/blocks/bullet-list/edit.js:840
+#: src/blocks/price/edit.js:129
+#: src/blocks/price/edit.js:237
+msgid "Divider"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:588
+msgid "General Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: assets/js/build/index.js:2
+#: src/blocks/bullet-list/edit.js:610
+#: src/blocks/bullet-list/edit.js:714
+#: src/blocks/bullet-list/edit.js:829
+#: src/blocks/button/edit.js:715
+#: src/blocks/buttons/edit.js:151
+#: src/blocks/container/edit.js:1169
+#: src/blocks/content-switcher/edit.js:726
+#: src/blocks/counter/edit.js:223
+#: src/blocks/counter/edit.js:279
+#: src/blocks/counter/edit.js:336
+#: src/blocks/dual-heading/edit.js:411
+#: src/blocks/dual-heading/edit.js:544
+#: src/blocks/dual-heading/edit.js:598
+#: src/blocks/fancy-text/edit.js:775
+#: src/blocks/heading/edit.js:1571
+#: src/blocks/icon-group/edit.js:447
+#: src/blocks/icon/edit.js:428
+#: src/blocks/image/Setting.js:596
+#: src/blocks/instagram-feed-posts/edit.js:391
+#: src/blocks/instagram-feed-posts/edit.js:491
+#: src/blocks/lottie/edit.js:590
+#: src/blocks/maps/edit.js:608
+#: src/blocks/maps/edit.js:672
+#: src/blocks/maps/edit.js:767
+#: src/blocks/post/post-carousel/inspector.js:1266
+#: src/blocks/post/post-carousel/inspector.js:1513
+#: src/blocks/post/post-grid/inspector.js:1415
+#: src/blocks/post/post-grid/inspector.js:1489
+#: src/blocks/post/post-grid/inspector.js:1736
+#: src/blocks/section/edit.js:300
+#: src/blocks/svg-draw/edit.js:578
+#: src/blocks/text/edit.js:212
+#: src/components/icon-controls.js:174
+msgid "Margin"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:632
+msgid "Item Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:695
+#: src/blocks/container/edit.js:1104
+#: src/blocks/icon-box/edit.js:301
+msgid "Hover Box Shadow"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:736
+msgid "Bullet Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:758
+#: src/blocks/post/post-carousel/inspector.js:968
+#: src/blocks/post/post-grid/inspector.js:1018
+msgid "Title Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/bullet-list/edit.js:848
+msgid "Divider Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/buttons/edit.js:83
+msgid "Gap Between Buttons"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/buttons/edit.js:111
+#: src/blocks/icon-group/edit.js:47
+msgid "Horizontal"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/buttons/edit.js:119
+#: src/blocks/icon-group/edit.js:51
+msgid "Vertical"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/buttons/edit.js:130
+#: src/blocks/icon-group/edit.js:303
+msgid "Group Alignment"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/buttons/edit.js:140
+#: src/blocks/icon-group/edit.js:312
+msgid "Group Styles"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:227
+msgid "Desktop"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:231
+msgid "Tablet"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:235
+msgid "Mobile"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:286
+msgid "Select Container Structure"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:427
+#: src/blocks/container/edit.js:466
+#: src/blocks/heading/edit.js:1330
+#: src/blocks/section/edit.js:74
+msgid "Full Width"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:434
+msgid "boxed"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:444
+msgid "Container Width"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:452
+#: src/blocks/section/edit.js:128
+msgid "Content Width"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:459
+#: src/blocks/section/edit.js:71
+msgid "Boxed"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:483
+#: src/blocks/section/edit.js:143
+msgid "Max Width"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:501
+msgid "Custom Width"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:519
+#: src/blocks/section/edit.js:84
+#: src/blocks/section/edit.js:171
+msgid "Min Height"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:535
+msgid "Overflow"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:549
+msgid "Hidden"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:583
+msgid "Flex Properties"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:592
+msgid "Row"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:602
+msgid "Column"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:612
+msgid "Row Reverse"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:622
+msgid "Column Reverse"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:645
+#: src/blocks/container/edit.js:698
+#: src/blocks/container/edit.js:852
+msgid "Flex Start"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:665
+#: src/blocks/container/edit.js:718
+#: src/blocks/container/edit.js:872
+msgid "Flex End"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:675
+msgid "Stretch"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:688
+msgid "Align Items"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:728
+#: src/blocks/container/edit.js:882
+msgid "Space Between"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:738
+#: src/blocks/container/edit.js:892
+msgid "Space Around"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:748
+#: src/blocks/container/edit.js:902
+msgid "Space Evenly"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:761
+msgid "Justify Items"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:771
+msgid "Wrap"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:790
+msgid "No Wrap"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:813
+msgid "Wrap Reverse"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:839
+msgid "Wrap Items"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:929
+#: src/blocks/instagram-feed-posts/edit.js:371
+#: src/blocks/instagram-feed-posts/edit.js:407
+#: src/blocks/section/edit.js:251
+#: src/components/icon-controls.js:97
+#: src/components/icon-controls.js:132
+msgid "Background"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:944
+msgid "Background Overlay"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:968
+#: src/blocks/container/edit.js:1024
+#: src/blocks/image/Setting.js:499
+#: src/blocks/image/Setting.js:523
+#: src/blocks/testimonials/edit.js:219
+msgid "Opacity"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:1052
+msgid "Transition Duration"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:1128
+#: src/blocks/content-switcher/edit.js:462
+#: src/blocks/fancy-text/edit.js:764
+msgid "Spacing"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:1137
+msgid "Column Gap"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:1153
+msgid "Row Gap"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:1195
+msgid "Shape Divider"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:1202
+msgid "Top Shape"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:1217
+msgid "Bottom Shape"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:1263
+msgid "Enable Equal Height"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:1311
+msgid "Blocks Elements"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/container/edit.js:1361
+msgid "Enable Equal Height on"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/content-switcher/edit.js:209
+msgid "Switcher"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/content-switcher/edit.js:217
+msgid "Show Labels"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/content-switcher/edit.js:286
+#: src/blocks/dual-heading/edit.js:182
+#: src/blocks/text/edit.js:74
+msgid "Display"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/content-switcher/edit.js:339
+msgid "Switcher Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/content-switcher/edit.js:362
+msgid "Controller Background"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/content-switcher/edit.js:377
+msgid "Switcher Background"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/content-switcher/edit.js:390
+msgid "Controller Shadow"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/content-switcher/edit.js:401
+msgid "Switcher Shadow"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/content-switcher/edit.js:413
+msgid "Controller Border Radius"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/content-switcher/edit.js:435
+msgid "Switcher Border Radius"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/content-switcher/edit.js:478
+msgid "First Label"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/content-switcher/edit.js:581
+msgid "Second Label"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/count-up/deprecated.js:402
+#: src/blocks/count-up/edit.js:66
+msgid "Premium Count Up"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/dual-heading/edit.js:255
+msgid "First Heading"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/dual-heading/edit.js:271
+#: src/blocks/dual-heading/edit.js:449
+msgid "Clipped"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/dual-heading/edit.js:283
+#: src/blocks/dual-heading/edit.js:463
+msgid "Animated"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/dual-heading/edit.js:295
+#: src/blocks/dual-heading/edit.js:475
+#: src/blocks/heading/edit.js:1712
+msgid "Stroke"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/dual-heading/edit.js:433
+msgid "Second Heading"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:61
+msgid "Fancy String"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:199
+msgid "Typing"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:208
+#: src/blocks/fancy-text/edit.js:203
+#: src/components/Animation.js:86
+msgid "Slide"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:332
+msgid "Prefix Text"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:368
+msgid "Add New Item"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:379
+msgid "Suffix Text"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:429
+msgid "Additional Settings"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:437
+msgid "Effect"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:450
+msgid "Type Speed"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:461
+msgid "Set typing effect speed in milliseconds."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:467
+msgid "Back Speed"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:478
+msgid "Set a speed for backspace effect in milliseconds."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:484
+msgid "Start Delay"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:495
+msgid "If you set it on 5000 milliseconds, the first word/string will appear after 5 seconds."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:501
+msgid "Back Delay"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:512
+msgid "If you set it on 5000 milliseconds, the word/string will remain visible for 5 seconds before backspace effect."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:528
+msgid "Show Cursor"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:541
+msgid "Cursor Mark"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:557
+msgid "Please note that Slide effect works only on frontend"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:563
+#: src/blocks/lottie/edit.js:272
+msgid "Animation Speed"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:575
+msgid "Set a duration value in milliseconds for slide effect."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:581
+msgid "Pause Time"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:592
+msgid "How long should the word/string stay visible? Set a value in milliseconds."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:598
+msgid "Pause on Hover"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:608
+msgid "If you enabled this option, the slide will be paused when mouseover."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:658
+msgid "Fancy Text Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:699
+msgid "Cursor Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/fancy-text/edit.js:725
+msgid "Prefix & Suffix Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:243
+msgid "Style 7"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:247
+msgid "Style 8"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:251
+msgid "Style 9"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:306
+msgid "Multiply"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:310
+msgid "Screen"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:318
+msgid "Darken"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:322
+msgid "Lighten"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:326
+msgid "Color Dodge"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:330
+msgid "Saturation"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:338
+msgid "Luminosity"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:456
+#: src/blocks/heading/edit.js:925
+#: src/blocks/lottie/edit.js:501
+#: src/components/inspectorTabs.js:71
+#: src/components/inspectorTabs.js:74
+#: src/components/premium-typo.js:472
+msgid "Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1012
+msgid "Icon Alignment"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1025
+msgid "Stripe Position"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1038
+msgid "Stripe Width"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1055
+msgid "Stripe Height"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1072
+msgid "Stripe Top Spacing"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1089
+msgid "Stripe Bottom Spacing"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1138
+msgid "Stripe Alignment"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1192
+msgid "Div"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/author/edit.js:248
+#: src/blocks/button/edit.js:537
+#: src/blocks/heading/edit.js:1258
+#: src/blocks/icon/edit.js:297
+#: src/blocks/image-separator/edit.js:331
+#: src/blocks/list-item/edit.js:167
+#: src/blocks/lottie/edit.js:456
+#: src/blocks/svg-draw/edit.js:396
+#: src/blocks/video-box/edit.js:254
+msgid "URL"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1268
+#: src/blocks/image-separator/edit.js:337
+msgid "Enter URL"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1275
+msgid "Open Link in new Tab"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1287
+msgid "background Text"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1323
+msgid "Auto"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1351
+msgid "Animation Delay"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1361
+#: src/blocks/lottie/edit.js:254
+#: src/components/select-icon.js:194
+msgid "This option works only on the preview page"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1411
+msgid "Shiny Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1426
+msgid "Blur Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1465
+#: src/blocks/heading/edit.js:1478
+msgid "Line Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1491
+msgid "Triangle Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1506
+msgid "Stripe Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1520
+msgid "Shadow"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1532
+msgid "Blur Shadow Value (px)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1621
+msgid "Background Text"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/badge/edit.js:127
+#: src/blocks/heading/edit.js:1637
+msgid "Horizontal Offset"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/badge/edit.js:118
+#: src/blocks/heading/edit.js:1654
+msgid "Vertical Offset"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1672
+#: src/blocks/text/edit.js:173
+msgid "Rotate (degrees)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1725
+#: src/blocks/svg-draw/edit.js:500
+msgid "Stroke Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1740
+msgid "Stroke Full Width"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/heading/edit.js:1759
+msgid "Blend Mode"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: assets/js/build/index.js:2
+#: src/blocks-extra-options/layout-options.js:51
+#: src/blocks/heading/edit.js:1770
+msgid "z-index"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/icon-box/variations.js:20
+#: src/blocks/icon-box/variations.js:62
+#: src/blocks/icon-box/variations.js:103
+#: src/blocks/icon-box/variations.js:148
+msgid "dashicons star-empty"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/icon-box/variations.js:26
+#: src/blocks/icon-box/variations.js:69
+#: src/blocks/icon-box/variations.js:112
+#: src/blocks/icon-box/variations.js:158
+msgid "Premium Title"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/icon-box/variations.js:35
+#: src/blocks/icon-box/variations.js:78
+#: src/blocks/icon-box/variations.js:121
+#: src/blocks/icon-box/variations.js:167
+msgid "Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/icon-group/edit.js:66
+#: src/blocks/icon/edit.js:148
+#: src/components/Animation.js:91
+msgid "Rotate"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/icon-group/edit.js:70
+#: src/blocks/icon/edit.js:152
+msgid "3D Rotate"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/icon-group/edit.js:74
+#: src/blocks/icon/edit.js:156
+msgid "Buzz"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/icon-group/edit.js:78
+#: src/blocks/icon/edit.js:160
+msgid "Drop Shadow"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/icon/edit.js:357
+#: src/blocks/svg-draw/edit.js:458
+msgid "Icon Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:416
+#: src/blocks/icon-group/edit.js:428
+#: src/blocks/icon/edit.js:365
+msgid "Hover Effect"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:228
+#: src/blocks/image-separator/edit.js:431
+#: src/blocks/post/post-carousel/inspector.js:870
+#: src/blocks/post/post-grid/inspector.js:778
+msgid "Separator"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:269
+msgid "Image Fit"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:277
+#: src/blocks/image-separator/edit.js:396
+#: src/blocks/post/post-carousel/inspector.js:160
+#: src/blocks/post/post-grid/inspector.js:161
+msgid "Cover"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:278
+#: src/blocks/image/Setting.js:362
+#: src/blocks/post/post-carousel/inspector.js:164
+#: src/blocks/post/post-grid/inspector.js:165
+msgid "Fill"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:279
+#: src/blocks/image-separator/edit.js:395
+#: src/blocks/post/post-carousel/inspector.js:168
+#: src/blocks/post/post-grid/inspector.js:169
+msgid "Contain"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:286
+msgid "Gutter (%)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:304
+msgid "-50% is default. Increase to push the image outside or decrease to pull the image inside."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:340
+msgid "Open links in new tab"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:353
+msgid "Mask Image Shape"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:387
+#: src/blocks/image/Setting.js:351
+msgid "Mask Size"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:401
+#: src/blocks/image/Setting.js:369
+msgid "Mask Position"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:410
+#: src/blocks/image/Setting.js:378
+#: src/components/Premium-Background-Control.js:400
+msgid "Center Center"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:414
+msgid "Top Center"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:418
+msgid "Bottom Center"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:449
+msgid "Hover CSS Filters"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:476
+#: src/blocks/post/post-carousel/inspector.js:1451
+#: src/blocks/post/post-grid/inspector.js:1674
+msgid "Advanced Border Radius"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:486
+#: src/blocks/post/post-carousel/inspector.js:1461
+#: src/blocks/post/post-grid/inspector.js:1684
+msgid "Apply custom radius values. Get the radius value from here"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image-separator/edit.js:581
+msgid "Premium Image Separator"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-header/edit.js:153
+msgid "Follow Me"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-header/edit.js:195
+msgid "Box Shadow"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:112
+msgid "Item"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:126
+msgid "Redirection"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:133
+#: src/blocks/instagram-feed-posts/edit.js:507
+msgid "Lightbox"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:143
+msgid "Click Action"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:161
+msgid "Open in a New Tab"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:175
+msgid "Show Videos On Click"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image/Setting.js:569
+#: src/blocks/instagram-feed-posts/edit.js:215
+#: src/blocks/instagram-feed-posts/edit.js:438
+msgid "Caption"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:224
+msgid "Maximum Words Number"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: assets/js/build/index.js:2
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/blocks-extra-options/layout-options.js:33
+#: src/blocks/instagram-feed-posts/edit.js:230
+#: src/blocks/instagram-feed/edit.js:213
+#: src/components/inspectorTabs.js:61
+#: src/components/inspectorTabs.js:63
+#: src/global-settings/src/screens/RootScreen.js:31
+#: src/global-settings/src/screens/RootScreen.js:33
+msgid "Layout"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:234
+msgid "Maximum Images Number"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:241
+#: src/blocks/post/post-grid/index.js:23
+msgid "Grid"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:248
+msgid "Masonry"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:255
+#: src/blocks/post/post-carousel/inspector.js:461
+msgid "Carousel"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:265
+msgid "Items Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:281
+#: src/blocks/post/post-carousel/inspector.js:477
+msgid "Auto Play"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:287
+#: src/blocks/post/post-carousel/inspector.js:482
+msgid "Autoplay Speed"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:289
+msgid "Autoplay Speed means at which time the next slide should come. Set a value in milliseconds (ms)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:295
+#: src/blocks/post/post-carousel/inspector.js:539
+msgid "Arrows Position"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:304
+msgid "Arrows Vertical Position"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:316
+msgid "Image Height"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:327
+msgid "1"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:328
+msgid "2"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:329
+msgid "3"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:330
+msgid "4"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:331
+msgid "5"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:332
+msgid "6"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:336
+msgid "Images per Row"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:348
+msgid "Grayscale"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:351
+msgid "Brightness"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:352
+msgid "Transform"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:365
+msgid "Item Box"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:447
+msgid "Overlay Background"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:511
+#: src/blocks/post/post-carousel/inspector.js:1099
+#: src/blocks/post/post-grid/inspector.js:1149
+msgid "Overlay Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:517
+msgid "Arrows Size"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:528
+#: src/blocks/instagram-feed-posts/edit.js:541
+msgid "Arrows Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:534
+#: src/blocks/instagram-feed-posts/edit.js:547
+msgid "Arrows Background"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:554
+msgid "Arrows Border Radius"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:563
+msgid "Arrows Padding"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed-posts/edit.js:573
+#: src/blocks/post/post-carousel/inspector.js:1543
+msgid "Carousel Arrows"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed/edit.js:200
+msgid "Access Credentials"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed/edit.js:204
+msgid "Log in with Instagram"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/instagram-feed/edit.js:224
+msgid "Enable Header"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/lottie/container.js:31
+msgid "Add Lottie animations and files to your website. You can see sample Lottie animations"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/lottie/container.js:61
+#: src/blocks/Modal/edit.js:466
+msgid "Add Lottie animations and files to your website."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/lottie/container.js:70
+#: src/blocks/video-box/edit.js:863
+msgid "Enter URL to embed here…"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/lottie/container.js:78
+#: src/blocks/video-box/edit.js:870
+msgid "Embed"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/lottie/container.js:86
+msgid "Upload"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/lottie/container.js:95
+#: src/blocks/Modal/deprecated.js:36
+msgid "Close"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/lottie/container.js:99
+msgid "This file type is not permitted for security reasons. Would you still like to enable JSON uploads?"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/lottie/container.js:101
+msgid "You can enable JSON uploads from Settings."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/lottie/container.js:103
+msgid "You will have to refresh the page after changing JSON upload settings."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:242
+msgid "Road Map"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:246
+msgid "Satellite"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:250
+msgid "Terrain"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:254
+msgid "Hybrid"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:265
+msgid "Center Location"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:273
+msgid "Longitude"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:279
+msgid "Get your location coordinates from"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:288
+#: src/blocks/maps/edit.js:552
+msgid "here"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:299
+msgid "Latitude"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:310
+msgid "Marker"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:318
+msgid "Enable Marker"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:326
+msgid "Disable marker is applied on page reload"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:334
+msgid "Max Width (PX)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:350
+msgid "Description opened by default"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:362
+msgid "Custom Marker Icon"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:376
+msgid "Marker Title"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:389
+msgid "Marker Description"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:426
+msgid "Controls"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:434
+msgid "Map Type"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:445
+msgid "Map Height (PX)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:459
+#: src/components/Animation.js:88
+msgid "Zoom"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:473
+msgid "Map Type Controls"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:483
+msgid "Zoom Controls"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:493
+msgid "Street View Control"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:506
+msgid "Full Screen Control"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:518
+msgid "Scroll Wheel Zoom"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:529
+#: src/blocks/maps/edit.js:737
+msgid "Map"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:537
+msgid "Maps Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:543
+msgid "Get your custom styling from"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:815
+msgid "Maps"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:819
+msgid "Premium Maps requires an API key."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/maps/edit.js:824
+msgid "Add API key here"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/person/variations.js:23
+#: src/blocks/person/variations.js:203
+#: src/blocks/person/variations.js:360
+msgid "zoomin"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/person/variations.js:61
+#: src/blocks/person/variations.js:214
+#: src/blocks/person/variations.js:402
+#: src/blocks/testimonials/edit.js:68
+msgid "John Doe"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/person/variations.js:94
+#: src/blocks/person/variations.js:247
+#: src/blocks/person/variations.js:431
+msgid "Senior Developer"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/person/variations.js:127
+#: src/blocks/person/variations.js:280
+#: src/blocks/person/variations.js:464
+msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:149
+#: src/blocks/post/post-grid/inspector.js:150
+msgid "Zoom in"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:150
+#: src/blocks/post/post-grid/inspector.js:151
+msgid "Zoom out"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:152
+#: src/blocks/post/post-grid/inspector.js:153
+msgid "GrayScale"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image/Setting.js:164
+#: src/blocks/post/post-carousel/inspector.js:156
+#: src/blocks/post/post-grid/inspector.js:157
+msgid "Translate"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:173
+#: src/blocks/post/post-grid/inspector.js:174
+msgid "All"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/icon-box/edit.js:158
+#: src/blocks/person/edit.js:97
+#: src/blocks/post/post-carousel/inspector.js:204
+#: src/blocks/post/post-grid/inspector.js:995
+msgid "Edit variations"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:225
+#: src/blocks/post/post-grid/inspector.js:210
+msgid "If content height is larger than image height, then you may need to increase image height from Featured Image tab"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:231
+#: src/blocks/post/post-grid/inspector.js:216
+msgid "Content Offset"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:247
+#: src/blocks/post/post-grid/inspector.js:232
+msgid "Number of Columns"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:261
+#: src/blocks/post/post-grid/inspector.js:246
+msgid "Number of Posts Per Page"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:270
+#: src/blocks/post/post-grid/inspector.js:255
+msgid "Set the number of per page"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:283
+#: src/blocks/post/post-grid/inspector.js:268
+msgid "Note: Above setting will only take effect once you are on the live page, and not while you're editing."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:297
+#: src/blocks/post/post-grid/inspector.js:281
+msgid "Categories Filter Rule"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:311
+#: src/blocks/post/post-carousel/inspector.js:323
+#: src/blocks/post/post-grid/inspector.js:295
+#: src/blocks/post/post-grid/inspector.js:307
+msgid "Categories Filter"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:334
+#: src/blocks/post/post-grid/inspector.js:318
+msgid "Author Filter Rule"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:349
+#: src/blocks/post/post-carousel/inspector.js:361
+#: src/blocks/post/post-grid/inspector.js:333
+#: src/blocks/post/post-grid/inspector.js:345
+msgid "Author Filter"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:372
+#: src/blocks/post/post-grid/inspector.js:356
+msgid "Post Filter Rule"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:386
+#: src/blocks/post/post-carousel/inspector.js:398
+#: src/blocks/post/post-grid/inspector.js:370
+#: src/blocks/post/post-grid/inspector.js:382
+msgid "Post Filter"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:412
+#: src/blocks/post/post-grid/inspector.js:396
+msgid "Ignore Sticky Posts"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:425
+#: src/blocks/post/post-grid/inspector.js:409
+msgid "Offset"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:444
+#: src/blocks/post/post-grid/inspector.js:428
+msgid "If Posts Not Found"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:450
+#: src/blocks/post/post-grid/inspector.js:434
+msgid "Display Message"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:466
+msgid "Pause On Hover"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:504
+msgid "Slides To Scroll"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:511
+msgid "Center Mode"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:518
+msgid "Slides' Spacing"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:525
+msgid "Navigation Dots"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:532
+msgid "Navigation Arrows"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:549
+#: src/blocks/post/post-grid/inspector.js:450
+msgid "Featured Image"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image/Setting.js:190
+#: src/blocks/post/post-carousel/inspector.js:572
+#: src/blocks/post/post-grid/inspector.js:473
+msgid "Image Size"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:580
+#: src/blocks/post/post-grid/inspector.js:481
+msgid "Overlay Effect"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:679
+#: src/blocks/post/post-grid/inspector.js:585
+msgid "Title HTML Tag"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:687
+#: src/blocks/post/post-grid/inspector.js:593
+msgid "Show Author Image"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:693
+#: src/blocks/post/post-grid/inspector.js:599
+msgid "Author Image Position"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:708
+#: src/blocks/post/post-grid/inspector.js:614
+msgid "Column Spacing"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:723
+#: src/blocks/post/post-grid/inspector.js:629
+msgid "Row Spacing"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:809
+#: src/blocks/post/post-grid/inspector.js:715
+#: src/blocks/price/edit.js:158
+#: src/blocks/price/edit.js:187
+#: src/blocks/price/edit.js:216
+#: src/blocks/price/edit.js:245
+#: src/blocks/price/edit.js:274
+msgid "Vertical Alignment"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:819
+#: src/blocks/post/post-grid/inspector.js:729
+msgid "Post Options "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:827
+#: src/blocks/post/post-grid/inspector.js:737
+msgid " Show Author "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:834
+#: src/blocks/post/post-grid/inspector.js:742
+msgid " Show Date "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:841
+#: src/blocks/post/post-grid/inspector.js:749
+msgid " Show Category"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:852
+#: src/blocks/post/post-grid/inspector.js:760
+msgid "Show Comments "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:861
+#: src/blocks/post/post-grid/inspector.js:769
+msgid "Open Links in New Tab"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:872
+#: src/blocks/post/post-grid/inspector.js:780
+msgid "Default (Dot)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:873
+#: src/blocks/post/post-grid/inspector.js:781
+msgid "Space"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:874
+#: src/blocks/post/post-grid/inspector.js:782
+msgid "Comma"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:875
+#: src/blocks/post/post-grid/inspector.js:783
+msgid "Dash"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:876
+#: src/blocks/post/post-grid/inspector.js:784
+msgid "Pipe"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:885
+#: src/blocks/post/post-grid/inspector.js:796
+msgid "Post Content"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:893
+#: src/blocks/post/post-grid/inspector.js:804
+msgid "Show Post Content"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:922
+#: src/blocks/post/post-grid/inspector.js:833
+msgid "Excerpt Length"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:987
+#: src/blocks/post/post-grid/inspector.js:1037
+msgid " Hover Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:998
+#: src/blocks/post/post-grid/inspector.js:1048
+msgid "Bottom Spacing"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1015
+#: src/blocks/post/post-grid/inspector.js:1065
+msgid "Categories "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1037
+#: src/blocks/post/post-grid/inspector.js:1087
+msgid "Hover Color "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1048
+#: src/blocks/post/post-grid/inspector.js:1098
+msgid "Background Color "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1059
+#: src/blocks/post/post-grid/inspector.js:1109
+msgid "Background Hover Color "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/image/Setting.js:443
+#: src/blocks/post/post-carousel/inspector.js:1083
+#: src/blocks/post/post-grid/inspector.js:1133
+msgid "Image Style"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1088
+#: src/blocks/post/post-grid/inspector.js:1138
+msgid "Plus Sign Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/button/edit.js:661
+#: src/blocks/post/post-carousel/inspector.js:1111
+#: src/blocks/post/post-grid/inspector.js:1161
+#: src/components/icon-controls.js:143
+#: src/components/premium-border.js:93
+msgid "Border Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1158
+#: src/blocks/post/post-grid/inspector.js:1208
+msgid "Meta"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1170
+#: src/blocks/post/post-grid/inspector.js:1220
+msgid "Metadata Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1181
+#: src/blocks/post/post-grid/inspector.js:1231
+msgid "Links Hover Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1204
+#: src/blocks/post/post-grid/inspector.js:1427
+msgid "Content Box"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1223
+#: src/blocks/post/post-grid/inspector.js:1446
+msgid "Text Margin"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1297
+#: src/blocks/post/post-grid/inspector.js:1520
+msgid "Button Spacing "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/icon-group/edit.js:409
+#: src/blocks/post/post-carousel/inspector.js:1378
+#: src/blocks/post/post-grid/inspector.js:1601
+msgid "Hover Background Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1419
+#: src/blocks/post/post-grid/inspector.js:1642
+msgid "Box "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1520
+msgid "Carousel Dots"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/inspector.js:1533
+msgid "Active Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/index.js:21
+msgid "Display your posts in a sliding carousel layout."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/index.js:23
+#: src/blocks/post/post-grid/index.js:22
+msgid "post"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-carousel/index.js:24
+msgid "carousel"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-grid/index.js:17
+msgid "Display your posts in Grid layout."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/post/post-title/index.js:24
+msgid "(Untitled)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/pricing-table/edit.js:84
+msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/pricing-table/edit.js:96
+msgid "Get Started"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/pricing-table/edit.js:148
+msgid "Table"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/section/edit.js:34
+msgid "Insert your text or select a block "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/section/edit.js:80
+msgid "Fit to Screen"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/section/edit.js:113
+msgid "Stretch Section"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/section/edit.js:121
+msgid "This option stretches the section to the full width of the page using JS. You will need to reload the page after you enable this option for the first time."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/section/edit.js:196
+msgid "Content Position"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/section/edit.js:200
+msgid "If you have two or more inner columns then this option will work only on the preview page"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/section/edit.js:289
+msgid "Spacings"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:210
+msgid "Enable SVG Draw"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:221
+msgid "Reverse SVG Animation"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:231
+msgid "Start Point (%)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:242
+msgid "End Point (%)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:252
+msgid "How this animation should work?"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:255
+msgid "Complete Draw When Visible On Viewport"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:256
+msgid "Draw On Scroll"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:257
+msgid "Draw On Hover"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:268
+msgid "Speed"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:269
+msgid "Higher value means slower animation"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:288
+msgid "Yoyo Effect"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:302
+msgid "When the draw should start?"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:305
+msgid "Top of Viewport Hits The Block"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:306
+msgid "Center of Viewport Hits The Block"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:307
+msgid "Custom Offset"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:317
+#: src/blocks/svg-draw/edit.js:331
+msgid "Offset (%)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:340
+msgid "Decrease Draw Speed By"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:351
+msgid "Draw All Paths Together"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:361
+msgid "Restart Animation On Scroll Up"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:371
+msgid "Fill Color After Draw"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:484
+msgid "Stroke Width"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:515
+msgid "After Draw Stroke Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/svg-draw/edit.js:526
+msgid "After Draw Fill Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/testimonials/edit.js:56
+msgid "Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum. Nullam id dolor id nibh ultricies vehicula ut id elit. Donec id elit non mi porta gravida at eget metus."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/testimonials/edit.js:183
+msgid "Quotations"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/testimonials/edit.js:208
+msgid "Quotations Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/testimonials/edit.js:234
+msgid "Top Icon Position"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/testimonials/edit.js:246
+msgid "Bottom Icon Position"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:141
+msgid "Youtube"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:145
+msgid "Vimeo"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:149
+msgid "Daily Motion"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:153
+msgid "Self Hosted"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:239
+#: src/components/Premium-Background-Control.js:209
+#: src/components/Premium-Background-Control.js:503
+msgid "Video"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:244
+msgid "Video Type"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:269
+msgid "Choose File"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:286
+msgid "Autoplay"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:294
+msgid "This option effect works when Overlay Image option is disabled"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:312
+msgid "Mute"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:323
+msgid "Player Controls"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:334
+msgid "Overlay Image"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:344
+msgid "Aspect Ratio"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:362
+#: src/blocks/video-box/edit.js:635
+msgid "Video Description"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:449
+msgid "Play Icon"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:457
+msgid "Enable Play Icon"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:471
+msgid "Size (PX)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:489
+msgid "Vertical Offset (%)"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:515
+msgid "Icon Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:562
+msgid "Icon Hover Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:581
+msgid "Icon Hover Background Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:643
+msgid "Vertical Position"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:664
+msgid "Description Color"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:732
+msgid "Video Caption"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:840
+msgid "Video Box "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:844
+msgid "Enter URL For Video"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/video-box/edit.js:880
+msgid "Please Click Insert to Select Video "
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/accordion-item/edit.js:117
+msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/price/edit.js:114
+#: src/blocks/price/edit.js:150
+msgid "Slashed Price"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/price/edit.js:119
+#: src/blocks/price/edit.js:179
+msgid "Currency"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/price/edit.js:124
+#: src/blocks/price/edit.js:208
+msgid "Price"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/list-item/edit.js:138
+msgid "Show Bullet"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/list-item/edit.js:172
+msgid "Open in new tab"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/text/edit.js:124
+msgid "DIV"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/text/edit.js:131
+msgid "SPAN"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/text/edit.js:138
+msgid "P"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/text/edit.js:148
+msgid "Text Tag"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/text/edit.js:158
+msgid "Text Align"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/badge/edit.js:139
+#: src/blocks/text/edit.js:164
+msgid "General Styles"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/badge/edit.js:72
+msgid "Text Width"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/badge/edit.js:81
+msgid "Badge Size"
+msgstr ""
+
+#: assets/js/build/index.js:1
+#: src/blocks/badge/edit.js:179
+msgid "Popular"
+msgstr ""
+
+#: assets/js/build/index.js:2
+#: src/blocks/counter/edit.js:107
+#: src/blocks/counter/edit.js:246
+msgid "Prefix"
+msgstr ""
+
+#: assets/js/build/index.js:2
+#: src/blocks/counter/edit.js:117
+#: src/blocks/counter/edit.js:303
+msgid "Suffix"
+msgstr ""
+
+#: assets/js/build/index.js:2
+#: src/blocks/counter/edit.js:127
+msgid "Counting Time"
+msgstr ""
+
+#: assets/js/build/index.js:2
+#: src/blocks/counter/edit.js:135
+msgid "Set counting time in milliseconds, for example: 1000"
+msgstr ""
+
+#: assets/js/build/index.js:2
+#: src/blocks/counter/edit.js:149
+msgid "Set delay in milliseconds, for example: 10"
+msgstr ""
+
+#: assets/js/build/index.js:2
+#: src/blocks/counter/edit.js:195
+msgid "Number"
+msgstr ""
+
+#: assets/js/build/index.js:2
+#: src/blocks/counter/edit.js:208
+msgid "Number Color"
+msgstr ""
+
+#: assets/js/build/pbg.js:1
+#: src/components/order-control.js:9
+msgid "Newest to Oldest"
+msgstr ""
+
+#: assets/js/build/pbg.js:1
+#: src/components/order-control.js:13
+msgid "Oldest to Newest"
+msgstr ""
+
+#: assets/js/build/pbg.js:1
+#: src/components/order-control.js:16
+msgid "A → Z"
+msgstr ""
+
+#: assets/js/build/pbg.js:1
+#: src/components/order-control.js:17
+msgid "Z → A"
+msgstr ""
+
+#: assets/js/build/pbg.js:1
+#: src/components/order-control.js:19
+msgid "Last Modified to Oldest"
+msgstr ""
+
+#: assets/js/build/pbg.js:1
+#: src/components/order-control.js:23
+msgid "Oldest Modified to Last"
+msgstr ""
+
+#: assets/js/build/pbg.js:1
+#: src/components/order-control.js:27
+msgid "Menu Order"
+msgstr ""
+
+#: assets/js/build/pbg.js:1
+#: src/components/order-control.js:30
+msgid "Random"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/components/header.js:29
+msgid "Navigate to the previous view"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/components/AdvancedColorControl.js:128
+msgid "Name"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/components/AdvancedColorControl.js:149
+msgid "Reset"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/components/AdvancedColorControl.js:151
+msgid "This will reset the current color to the default one."
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/ColorsScreen.js:14
+msgid "Theme Defaults"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/ColorsScreen.js:16
+msgid "Activate theme colors as the default color palette in the premium blocks color control."
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/ColorsScreen.js:21
+msgid "Activate Premium Blocks color palette as the default color palette in the premium blocks color control and apply the current color palette colors to the blocks."
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/ColorsScreen.js:26
+#: src/global-settings/src/screens/RootScreen.js:16
+#: src/global-settings/src/screens/RootScreen.js:19
+msgid "Colors"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/ColorsScreen.js:27
+msgid "Manage your website colors based on your default theme colors or Premium Blocks color palette."
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/ColorsScreen.js:32
+msgid "Select a default color palette"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/ColorsScreen.js:41
+#: src/global-settings/src/screens/TypographyScreen.js:185
+msgid "Apply to Native Gutenberg Blocks"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/LayoutSettingsScreen.js:16
+msgid "Layout Settings"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/LayoutSettingsScreen.js:19
+msgid "Control the space between Gutenberg blocks. The default value is 20px."
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/LayoutSettingsScreen.js:20
+msgid "Block Spacing"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/LayoutSettingsScreen.js:23
+msgid "Manage container default width and devices breakpoints."
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/LayoutSettingsScreen.js:24
+msgid "Container Max Width"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/LayoutSettingsScreen.js:25
+msgid "Tablet Breakpoint"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/LayoutSettingsScreen.js:26
+msgid "Mobile Breakpoint"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/RootScreen.js:24
+msgid "Typography styles"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/components/premium-typo.js:272
+#: src/global-settings/src/screens/RootScreen.js:26
+#: src/global-settings/src/screens/TypographyScreen.js:56
+msgid "Typography"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/TypographyScreen.js:57
+msgid "Manage the typography settings for different elements."
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/TypographyScreen.js:72
+msgid "Heading 1"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/TypographyScreen.js:88
+msgid "Heading 2"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/TypographyScreen.js:104
+msgid "Heading 3"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/TypographyScreen.js:120
+msgid "Heading 4"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/TypographyScreen.js:136
+msgid "Heading 5"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/TypographyScreen.js:152
+msgid "Heading 6"
+msgstr ""
+
+#: global-settings/build/post-editor-sidebar/index.js:1
+#: global-settings/build/site-editor-sidebar/index.js:1
+#: src/global-settings/src/screens/TypographyScreen.js:180
+msgid "Paragraphs"
+msgstr ""
+
+#: src/blocks/author/edit.js:76
+#: src/blocks/author/edit.js:276
+msgid "Author"
+msgstr ""
+
+#: src/blocks/author/edit.js:174
+#: src/blocks/author/edit.js:301
+msgid "Company"
+msgstr ""
+
+#: src/blocks/author/edit.js:260
+msgid "Open Link in a New Tab"
+msgstr ""
+
+#: src/blocks/author/edit.js:330
+msgid "Dash Color"
+msgstr ""
+
+#: src/blocks/banner/deprecated.js:364
+msgid "Cool Description!!"
+msgstr ""
+
+#: src/blocks/button/deprecated.js:200
+msgid "Premium Button"
+msgstr ""
+
+#: src/blocks/button/edit.js:133
+msgid "Top to Bottom"
+msgstr ""
+
+#: src/blocks/button/edit.js:137
+msgid "Bottom to Top"
+msgstr ""
+
+#: src/blocks/button/edit.js:141
+msgid "Left to Right"
+msgstr ""
+
+#: src/blocks/button/edit.js:145
+msgid "Right to Left"
+msgstr ""
+
+#: src/blocks/button/edit.js:152
+msgid "Shutter out Horizontal"
+msgstr ""
+
+#: src/blocks/button/edit.js:156
+msgid "Shutter out Vertical"
+msgstr ""
+
+#: src/blocks/button/edit.js:160
+msgid "Scaled Shutter Vertical"
+msgstr ""
+
+#: src/blocks/button/edit.js:167
+msgid "Scaled Shutter Horizontal"
+msgstr ""
+
+#: src/blocks/button/edit.js:174
+msgid "Tilted Left"
+msgstr ""
+
+#: src/blocks/button/edit.js:178
+msgid "Tilted Right"
+msgstr ""
+
+#: src/blocks/button/edit.js:185
+msgid "Radial In"
+msgstr ""
+
+#: src/blocks/button/edit.js:189
+msgid "Radial Out"
+msgstr ""
+
+#: src/blocks/button/edit.js:193
+msgid "Rectangle In"
+msgstr ""
+
+#: src/blocks/button/edit.js:197
+msgid "Rectangle Out"
+msgstr ""
+
+#: src/blocks/button/edit.js:212
+msgid "Shutter"
+msgstr ""
+
+#: src/blocks/button/edit.js:216
+#: src/components/Premium-Background-Control.js:93
+msgid "Radial"
+msgstr ""
+
+#: src/blocks/button/edit.js:441
+msgid "Shutter Direction"
+msgstr ""
+
+#: src/blocks/icon-box/edit.js:190
+#: src/blocks/icon-box/edit.js:206
+msgid "Icon Range"
+msgstr ""
+
+#: src/blocks/icon-box/edit.js:329
+msgid "Margin (PX)"
+msgstr ""
+
+#: src/blocks/icon-group/edit.js:317
+msgid "Icons Size"
+msgstr ""
+
+#: src/blocks/icon-group/edit.js:335
+msgid "Icons Gap"
+msgstr ""
+
+#: src/blocks/image/Setting.js:242
+msgid "Enable Caption"
+msgstr ""
+
+#: src/blocks/image/Setting.js:248
+msgid "Caption Alignment"
+msgstr ""
+
+#: src/blocks/image/Setting.js:287
+msgid "Mask"
+msgstr ""
+
+#: src/blocks/image/Setting.js:295
+msgid "Mask Shape"
+msgstr ""
+
+#: src/blocks/image/Setting.js:306
+msgid "Circle"
+msgstr ""
+
+#: src/blocks/image/Setting.js:310
+msgid "Flower"
+msgstr ""
+
+#: src/blocks/image/Setting.js:314
+msgid "Hexagon"
+msgstr ""
+
+#: src/blocks/image/Setting.js:318
+msgid "Sketch"
+msgstr ""
+
+#: src/blocks/image/Setting.js:322
+msgid "triangle "
+msgstr ""
+
+#: src/blocks/image/Setting.js:326
+msgid "Blob "
+msgstr ""
+
+#: src/blocks/image/Setting.js:358
+msgid "Fit"
+msgstr ""
+
+#: src/blocks/image/Setting.js:374
+#: src/components/Premium-Background-Control.js:393
+msgid "Center Top"
+msgstr ""
+
+#: src/blocks/image/Setting.js:382
+#: src/components/Premium-Background-Control.js:407
+msgid "Center Bottom"
+msgstr ""
+
+#: src/blocks/image/Setting.js:386
+#: src/components/Premium-Background-Control.js:414
+msgid "Left Top"
+msgstr ""
+
+#: src/blocks/image/Setting.js:390
+#: src/components/Premium-Background-Control.js:421
+msgid "Left Center"
+msgstr ""
+
+#: src/blocks/image/Setting.js:394
+#: src/components/Premium-Background-Control.js:428
+msgid "Left Bottom"
+msgstr ""
+
+#: src/blocks/image/Setting.js:398
+#: src/components/Premium-Background-Control.js:435
+msgid "Right Top"
+msgstr ""
+
+#: src/blocks/image/Setting.js:402
+#: src/components/Premium-Background-Control.js:442
+msgid "Right Center"
+msgstr ""
+
+#: src/blocks/image/Setting.js:406
+#: src/components/Premium-Background-Control.js:449
+msgid "Right Bottom"
+msgstr ""
+
+#: src/blocks/image/Setting.js:412
+msgid "Mask Repeat"
+msgstr ""
+
+#: src/blocks/image/Setting.js:419
+msgid "No Repeat"
+msgstr ""
+
+#: src/blocks/image/Setting.js:423
+#: src/components/Animation.js:105
+#: src/components/premium-background.js:182
+msgid "Repeat"
+msgstr ""
+
+#: src/blocks/image/Setting.js:427
+msgid "Repeat-X"
+msgstr ""
+
+#: src/blocks/image/Setting.js:431
+msgid "Repeat-Y"
+msgstr ""
+
+#: src/blocks/image/Setting.js:458
+msgid "Custom Image Width"
+msgstr ""
+
+#: src/blocks/image/Setting.js:475
+msgid "Custom Image Height"
+msgstr ""
+
+#: src/blocks/lottie/edit.js:241
+msgid "Change Animation"
+msgstr ""
+
+#: src/blocks/lottie/edit.js:244
+msgid "loop"
+msgstr ""
+
+#: src/blocks/lottie/edit.js:310
+msgid "Scroll"
+msgstr ""
+
+#: src/blocks/lottie/edit.js:317
+msgid "Viewport"
+msgstr ""
+
+#: src/blocks/lottie/edit.js:332
+msgid "Scroll Speed"
+msgstr ""
+
+#: src/blocks/lottie/edit.js:403
+msgid "Rotate (Degree)"
+msgstr ""
+
+#: src/blocks/lottie/edit.js:478
+msgid "Render As"
+msgstr ""
+
+#: src/blocks/lottie/edit.js:485
+msgid "Canvas"
+msgstr ""
+
+#: src/blocks/lottie/edit.js:487
+msgid ""
+"Set render type to canvas if you're having performance issues on the page.\n"
+"                    This setting will only take effect once you are on the live page, and not while you're editing.\n"
+"                    "
+msgstr ""
+
+#: src/blocks/maps/deprecated.js:63
+#: src/blocks/maps/deprecated.js:184
+#: src/blocks/maps/deprecated.js:321
+msgid "Cool Description"
+msgstr ""
+
+#: src/blocks/Modal/deprecated.js:33
+#: src/blocks/Modal/edit.js:100
+msgid "Modal Box Title"
+msgstr ""
+
+#: src/blocks/Modal/deprecated.js:345
+msgid "Modal Box Content"
+msgstr ""
+
+#: src/blocks/Modal/edit.js:411
+msgid "Premium Modal "
+msgstr ""
+
+#: src/blocks/person/edit.js:119
+msgid "Hover Content Effect On Image"
+msgstr ""
+
+#: src/blocks/person/edit.js:177
+msgid "Bottom Offset"
+msgstr ""
+
+#: src/blocks/post/post-grid/inspector.js:881
+#: src/blocks/post/post-grid/inspector.js:1254
+msgid "Pagination"
+msgstr ""
+
+#: src/blocks/post/post-grid/inspector.js:898
+msgid "Pagination Presets"
+msgstr ""
+
+#: src/blocks/post/post-grid/inspector.js:902
+msgid "Page Limit"
+msgstr ""
+
+#: src/blocks/post/post-grid/inspector.js:908
+msgid "Enable Pagination Next/Prev Strings"
+msgstr ""
+
+#: src/blocks/post/post-grid/inspector.js:920
+msgid "Previous Page String"
+msgstr ""
+
+#: src/blocks/post/post-grid/inspector.js:932
+msgid "Next Page String"
+msgstr ""
+
+#: src/blocks/post/post-grid/inspector.js:1355
+msgid "Active"
+msgstr ""
+
+#: src/components/Animation.js:28
+msgid "DownLeft"
+msgstr ""
+
+#: src/components/Animation.js:29
+msgid "DownRight"
+msgstr ""
+
+#: src/components/Animation.js:30
+msgid "UpLeft"
+msgstr ""
+
+#: src/components/Animation.js:31
+msgid "UpRight"
+msgstr ""
+
+#: src/components/Animation.js:35
+#: src/components/Animation.js:40
+msgid "Up"
+msgstr ""
+
+#: src/components/Animation.js:36
+#: src/components/Animation.js:41
+msgid "Down"
+msgstr ""
+
+#: src/components/Animation.js:85
+msgid "Fade"
+msgstr ""
+
+#: src/components/Animation.js:89
+msgid "Flip"
+msgstr ""
+
+#: src/components/Animation.js:90
+msgid "Fold"
+msgstr ""
+
+#: src/components/Animation.js:107
+msgid "Once"
+msgstr ""
+
+#: src/components/Animation.js:131
+msgid "Curve"
+msgstr ""
+
+#: src/components/Animation.js:134
+msgid "Ease-in-out"
+msgstr ""
+
+#: src/components/Animation.js:135
+msgid "Ease"
+msgstr ""
+
+#: src/components/Animation.js:136
+msgid "Ease-in"
+msgstr ""
+
+#: src/components/Animation.js:137
+msgid "Ease-out"
+msgstr ""
+
+#: src/components/Animation.js:138
+#: src/components/Premium-Background-Control.js:92
+msgid "Linear"
+msgstr ""
+
+#: src/components/genicon.js:44
+msgid "Please Enable Font Awesome Icons from "
+msgstr ""
+
+#: src/components/genicon.js:50
+msgid "Plugin settings"
+msgstr ""
+
+#: src/components/inspectorTabs.js:82
+#: src/components/inspectorTabs.js:85
+msgid "Advanced"
+msgstr ""
+
+#: src/components/Premium-Background-Control.js:119
+msgid "Transparent"
+msgstr ""
+
+#: src/components/Premium-Background-Control.js:153
+msgid "Classic"
+msgstr ""
+
+#: src/components/Premium-Background-Control.js:180
+msgid "Gradient"
+msgstr ""
+
+#: src/components/Premium-Background-Control.js:299
+msgid "Gradient Color 1"
+msgstr ""
+
+#: src/components/Premium-Background-Control.js:310
+#: src/components/Premium-Background-Control.js:330
+msgid "Location"
+msgstr ""
+
+#: src/components/Premium-Background-Control.js:319
+msgid "Gradient Color 2"
+msgstr ""
+
+#: src/components/Premium-Background-Control.js:340
+#: src/components/Premium-Background-Control.js:347
+msgid "Gradient Type"
+msgstr ""
+
+#: src/components/Premium-Background-Control.js:369
+msgid "Gradient Angle"
+msgstr ""
+
+#: src/components/Premium-Background-Control.js:385
+msgid "Gradient Position"
+msgstr ""
+
+#: src/components/Premium-Background-Control.js:465
+msgid "Video Source"
+msgstr ""
+
+#: src/components/Premium-Background-Control.js:473
+msgid "Local"
+msgstr ""
+
+#: src/components/Premium-Background-Control.js:480
+msgid "External"
+msgstr ""
+
+#: src/components/Premium-Background-Control.js:492
+msgid "Video URL"
+msgstr ""
+
+#: src/components/premium-responsive-tabs.js:25
+msgid "Hide in Desktop"
+msgstr ""
+
+#: src/components/premium-responsive-tabs.js:30
+msgid "Hide in Tablet"
+msgstr ""
+
+#: src/components/premium-responsive-tabs.js:35
+msgid "Hide in Mobile"
+msgstr ""
+
+#: src/components/premium-shape.js:173
+msgid "Shape Width"
+msgstr ""
+
+#: src/components/premium-shape.js:191
+msgid "Shape Height"
+msgstr ""
+
+#: src/components/premium-shape.js:202
+msgid "Flip Divider"
+msgstr ""
+
+#: src/components/premium-shape.js:215
+msgid "Invert"
+msgstr ""
+
+#: src/components/premium-shape.js:228
+msgid "Bring to front"
+msgstr ""
+
+#: src/components/premium-typo.js:101
+msgid "Italic"
+msgstr ""
+
+#: src/components/premium-typo.js:105
+msgid "Oblique"
+msgstr ""
+
+#: src/components/premium-typo.js:405
+msgid "Font Size"
+msgstr ""
+
+#: src/components/premium-typo.js:427
+msgid "Line Height (PX)"
+msgstr ""
+
+#: src/components/premium-typo.js:449
+msgid "Letter Spacing (PX)"
+msgstr ""
+
+#: src/components/PremiumShadow.js:35
+msgid "Inset"
+msgstr ""
+
+#: src/components/PremiumShadow.js:36
+msgid "Outline"
+msgstr ""
+
+#: src/components/select-icon.js:112
+#: src/components/select-icon.js:126
+msgid "Select Icon"
+msgstr ""
+
+#: src/components/select-icon.js:176
+msgid "Lottie Url"
+msgstr ""
+
+#: src/components/typography/fontList.js:99
+msgid "Google  Fonts"
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:40
+msgid ""
+"Buttons background color \n"
+"& Links hover color"
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:41
+msgid "Headings & Links color"
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:42
+msgid "Body text"
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:43
+msgid "Borders color"
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:44
+msgid "Body background, a tint for Input fields"
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:48
+msgid "Footer text color"
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:49
+msgid "Footer background color"
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:189
+msgid "Select Another Palette"
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:271
+msgid "Save New Palette"
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:343
+msgid "Warning"
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:349
+msgid "You are about to delete "
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:349
+msgid ". This palette cannot be restored, are you sure you want to delete it?"
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:355
+msgid "No"
+msgstr ""
+
+#: src/global-settings/src/components/color-palette.js:359
+msgid "Yes"
+msgstr ""
+
+#: src/global-settings/src/components/color-palettes/AddPaletteContainer.js:35
+msgid "palette name"
+msgstr ""
+
+#: src/global-settings/src/components/color-palettes/AddPaletteContainer.js:39
+msgid "name your palette"
+msgstr ""
+
+#: src/global-settings/src/components/color-palettes/AddPaletteContainer.js:46
+msgid "palette type"
+msgstr ""
+
+#: src/global-settings/src/components/color-palettes/AddPaletteContainer.js:55
+msgid "Light"
+msgstr ""
+
+#: src/global-settings/src/components/color-palettes/AddPaletteContainer.js:65
+msgid "Dark"
+msgstr ""
+
+#: src/global-settings/src/components/color-palettes/AddPaletteContainer.js:78
+msgid "Save Palette"
+msgstr ""
+
+#: src/global-settings/src/components/color-palettes/ColorPalettesModal.js:57
+#: src/global-settings/src/components/color-palettes/ColorPalettesModal.js:86
+msgid "Palette #%s"
+msgstr ""
+
+#: src/global-settings/src/components/color-palettes/ColorPalettesModal.js:76
+msgid "Default palettes"
+msgstr ""
+
+#: src/global-settings/src/components/color-palettes/PalettePreview.js:97
+msgid "Custom Color"
+msgstr ""
+
+#: src/global-settings/src/components/color-palettes/PalettePreview.js:116
+msgid "Add Color"
+msgstr ""
+
+#: blocks-config/accordion/block.json
+msgctxt "block title"
+msgid "Accordion"
+msgstr ""
+
+#: blocks-config/accordion/block.json
+msgctxt "block description"
+msgid "Display collapsed content like FAQs using Premium Accordion Block."
+msgstr ""
+
+#: blocks-config/banner/block.json
+msgctxt "block title"
+msgid "Banner"
+msgstr ""
+
+#: blocks-config/banner/block.json
+msgctxt "block description"
+msgid "Create attractive banners along with Heading, Description, and CTA using Premium Banner."
+msgstr ""
+
+#: blocks-config/banner/block.json
+#: blocks-config/image-separator/block.json
+msgctxt "block keyword"
+msgid "image"
+msgstr ""
+
+#: blocks-config/banner/block.json
+msgctxt "block keyword"
+msgid "photo"
+msgstr ""
+
+#: blocks-config/bullet-list/block.json
+msgctxt "block title"
+msgid "Bullet List"
+msgstr ""
+
+#: blocks-config/bullet-list/block.json
+msgctxt "block description"
+msgid "Organize your website’s content with attractive lists using Premium Bullet List Block."
+msgstr ""
+
+#: blocks-config/bullet-list/block.json
+msgctxt "block keyword"
+msgid "icon list"
+msgstr ""
+
+#: blocks-config/bullet-list/block.json
+msgctxt "block keyword"
+msgid "image list"
+msgstr ""
+
+#: blocks-config/bullet-list/block.json
+msgctxt "block keyword"
+msgid "bullet list"
+msgstr ""
+
+#: blocks-config/buttons/block.json
+msgctxt "block title"
+msgid "Buttons"
+msgstr ""
+
+#: blocks-config/buttons/block.json
+#: src/blocks/button/block.json
+msgctxt "block description"
+msgid "Add stylish buttons to your Gutenberg page using Premium Button Block."
+msgstr ""
+
+#: blocks-config/buttons/block.json
+#: src/blocks/button/block.json
+msgctxt "block keyword"
+msgid "button"
+msgstr ""
+
+#: blocks-config/buttons/block.json
+msgctxt "block keyword"
+msgid "groups"
+msgstr ""
+
+#: blocks-config/container/block.json
+msgctxt "block title"
+msgid "Container"
+msgstr ""
+
+#: blocks-config/container/block.json
+msgctxt "block description"
+msgid "Organize your Gutenberg Blocks into rows and sections."
+msgstr ""
+
+#: blocks-config/container/block.json
+msgctxt "block keyword"
+msgid "row"
+msgstr ""
+
+#: blocks-config/container/block.json
+msgctxt "block keyword"
+msgid "container"
+msgstr ""
+
+#: blocks-config/content-switcher/block.json
+msgctxt "block title"
+msgid "Content Switcher"
+msgstr ""
+
+#: blocks-config/content-switcher/block.json
+#: src/blocks/switcher-child/block.json
+msgctxt "block description"
+msgid "Toggle between two different content using Premium Content Switcher Block."
+msgstr ""
+
+#: blocks-config/content-switcher/block.json
+msgctxt "block keyword"
+msgid "content"
+msgstr ""
+
+#: blocks-config/content-switcher/block.json
+msgctxt "block keyword"
+msgid "switcher"
+msgstr ""
+
+#: blocks-config/count-up/block.json
+msgctxt "block title"
+msgid "Counter"
+msgstr ""
+
+#: blocks-config/count-up/block.json
+msgctxt "block description"
+msgid "Show off your facts and figures in an elegant way using Premium CountUp Block."
+msgstr ""
+
+#: blocks-config/count-up/block.json
+msgctxt "block keyword"
+msgid "number"
+msgstr ""
+
+#: blocks-config/count-up/block.json
+msgctxt "block keyword"
+msgid "count down"
+msgstr ""
+
+#: blocks-config/count-up/block.json
+msgctxt "block keyword"
+msgid "count up"
+msgstr ""
+
+#: blocks-config/count-up/block.json
+msgctxt "block keyword"
+msgid "counter"
+msgstr ""
+
+#: blocks-config/dual-heading/block.json
+msgctxt "block title"
+msgid "Dual Heading"
+msgstr ""
+
+#: blocks-config/dual-heading/block.json
+msgctxt "block description"
+msgid "Use Premium Dual Heading Block to create one heading with two different styles."
+msgstr ""
+
+#: blocks-config/dual-heading/block.json
+#: blocks-config/heading/block.json
+msgctxt "block keyword"
+msgid "title"
+msgstr ""
+
+#: blocks-config/dual-heading/block.json
+msgctxt "block keyword"
+msgid "heading"
+msgstr ""
+
+#: blocks-config/dual-heading/block.json
+msgctxt "block keyword"
+msgid "text"
+msgstr ""
+
+#: blocks-config/fancy-text/block.json
+msgctxt "block title"
+msgid "Fancy Text"
+msgstr ""
+
+#: blocks-config/fancy-text/block.json
+msgctxt "block description"
+msgid "Insert animated headlines across your Gutenberg page using Premium Fancy Text Block."
+msgstr ""
+
+#: blocks-config/fancy-text/block.json
+msgctxt "block keyword"
+msgid "fancy-text"
+msgstr ""
+
+#: blocks-config/fancy-text/block.json
+msgctxt "block keyword"
+msgid "animated-text"
+msgstr ""
+
+#: blocks-config/fancy-text/block.json
+msgctxt "block keyword"
+msgid "animated"
+msgstr ""
+
+#: blocks-config/heading/block.json
+msgctxt "block title"
+msgid "Heading"
+msgstr ""
+
+#: blocks-config/heading/block.json
+msgctxt "block description"
+msgid "Grab your website visitors’ attention with stylish headings using Premium Heading Block.asw"
+msgstr ""
+
+#: blocks-config/heading/block.json
+msgctxt "block keyword"
+msgid "Heading"
+msgstr ""
+
+#: blocks-config/icon-box/block.json
+msgctxt "block title"
+msgid "Icon Box"
+msgstr ""
+
+#: blocks-config/icon-box/block.json
+msgctxt "block description"
+msgid "Add informative info boxes along with Icon, Description, and CTA using Premium Icon Box Block."
+msgstr ""
+
+#: blocks-config/icon-box/block.json
+#: blocks-config/icon/block.json
+#: blocks-config/svg-draw/block.json
+msgctxt "block keyword"
+msgid "Icon"
+msgstr ""
+
+#: blocks-config/icon-box/block.json
+#: blocks-config/icon/block.json
+#: blocks-config/svg-draw/block.json
+msgctxt "block keyword"
+msgid "Font Awesome"
+msgstr ""
+
+#: blocks-config/icon-box/block.json
+msgctxt "block keyword"
+msgid "Box"
+msgstr ""
+
+#: blocks-config/icon/block.json
+msgctxt "block title"
+msgid "Icon"
+msgstr ""
+
+#: blocks-config/icon/block.json
+msgctxt "block description"
+msgid "Decorate your Gutenberg website using Premium Icon Block."
+msgstr ""
+
+#: blocks-config/image-separator/block.json
+msgctxt "block title"
+msgid "Image Separator"
+msgstr ""
+
+#: blocks-config/image-separator/block.json
+msgctxt "block description"
+msgid "Separate between your Gutenberg sections using Premium Image Separator Block."
+msgstr ""
+
+#: blocks-config/image-separator/block.json
+msgctxt "block keyword"
+msgid "seperator"
+msgstr ""
+
+#: blocks-config/instagram-feed/block.json
+msgctxt "block title"
+msgid "Instagram Feed"
+msgstr ""
+
+#: blocks-config/instagram-feed/block.json
+msgctxt "block description"
+msgid "Display your latest Instagram posts and feeds on your website."
+msgstr ""
+
+#: blocks-config/instagram-feed/block.json
+msgctxt "block keyword"
+msgid "instagram"
+msgstr ""
+
+#: blocks-config/instagram-feed/block.json
+msgctxt "block keyword"
+msgid "instagram-feed"
+msgstr ""
+
+#: blocks-config/lottie/block.json
+msgctxt "block title"
+msgid "Lottie Animation"
+msgstr ""
+
+#: blocks-config/lottie/block.json
+msgctxt "block description"
+msgid "Bring life to your Gutenberg web page using Premium Lottie Animation."
+msgstr ""
+
+#: blocks-config/lottie/block.json
+msgctxt "block keyword"
+msgid "svg"
+msgstr ""
+
+#: blocks-config/lottie/block.json
+msgctxt "block keyword"
+msgid "Animation"
+msgstr ""
+
+#: blocks-config/lottie/block.json
+msgctxt "block keyword"
+msgid "canvas"
+msgstr ""
+
+#: blocks-config/maps/block.json
+msgctxt "block title"
+msgid "Maps"
+msgstr ""
+
+#: blocks-config/maps/block.json
+msgctxt "block description"
+msgid "Embed Google Maps to your Gutenberg page using Premium Maps Block."
+msgstr ""
+
+#: blocks-config/maps/block.json
+msgctxt "block keyword"
+msgid "google"
+msgstr ""
+
+#: blocks-config/maps/block.json
+msgctxt "block keyword"
+msgid "maps"
+msgstr ""
+
+#: blocks-config/Modal/block.json
+msgctxt "block title"
+msgid "Modal Box"
+msgstr ""
+
+#: blocks-config/Modal/block.json
+msgctxt "block description"
+msgid "Easily, get creative modal popups on your WordPress website using Premium Modal Box Block."
+msgstr ""
+
+#: blocks-config/Modal/block.json
+msgctxt "block keyword"
+msgid "modal"
+msgstr ""
+
+#: blocks-config/Modal/block.json
+msgctxt "block keyword"
+msgid "popup"
+msgstr ""
+
+#: blocks-config/person/block.json
+msgctxt "block title"
+msgid "Team Members"
+msgstr ""
+
+#: blocks-config/person/block.json
+msgctxt "block description"
+msgid "Show off your team members along with social links using Premium Team Members Block."
+msgstr ""
+
+#: blocks-config/person/block.json
+msgctxt "block keyword"
+msgid "Team"
+msgstr ""
+
+#: blocks-config/person/block.json
+msgctxt "block keyword"
+msgid "profile"
+msgstr ""
+
+#: blocks-config/person/block.json
+msgctxt "block keyword"
+msgid "member"
+msgstr ""
+
+#: blocks-config/person/block.json
+msgctxt "block keyword"
+msgid "person"
+msgstr ""
+
+#: blocks-config/pricing-table/block.json
+msgctxt "block title"
+msgid "Pricing Table"
+msgstr ""
+
+#: blocks-config/pricing-table/block.json
+msgctxt "block description"
+msgid "Display your pricing plans in an elegant way using Premium Pricing Table Block."
+msgstr ""
+
+#: blocks-config/pricing-table/block.json
+msgctxt "block keyword"
+msgid "Pricing"
+msgstr ""
+
+#: blocks-config/pricing-table/block.json
+msgctxt "block keyword"
+msgid "Pricing Table"
+msgstr ""
+
+#: blocks-config/section/block.json
+msgctxt "block title"
+msgid "Section"
+msgstr ""
+
+#: blocks-config/section/block.json
+msgctxt "block description"
+msgid "Engage your Gutenberg blocks using Premium Section Block."
+msgstr ""
+
+#: blocks-config/section/block.json
+msgctxt "block keyword"
+msgid "section"
+msgstr ""
+
+#: blocks-config/svg-draw/block.json
+msgctxt "block title"
+msgid "SVG Draw"
+msgstr ""
+
+#: blocks-config/svg-draw/block.json
+msgctxt "block description"
+msgid "Draw SVG with animation"
+msgstr ""
+
+#: blocks-config/svg-draw/block.json
+msgctxt "block keyword"
+msgid "SVG"
+msgstr ""
+
+#: blocks-config/svg-draw/block.json
+msgctxt "block keyword"
+msgid "SVG Draw"
+msgstr ""
+
+#: blocks-config/testimonials/block.json
+msgctxt "block title"
+msgid "Testimonial"
+msgstr ""
+
+#: blocks-config/testimonials/block.json
+msgctxt "block description"
+msgid "Proof your success by displaying customer reviews using Premium Testimonials Block."
+msgstr ""
+
+#: blocks-config/testimonials/block.json
+msgctxt "block keyword"
+msgid "testimonial"
+msgstr ""
+
+#: blocks-config/testimonials/block.json
+msgctxt "block keyword"
+msgid "Quote"
+msgstr ""
+
+#: blocks-config/video-box/block.json
+msgctxt "block title"
+msgid "Video Box"
+msgstr ""
+
+#: blocks-config/video-box/block.json
+msgctxt "block description"
+msgid "Embed YouTube, Vimeo, Dailymotion, or upload a Custom Video using Premium Video Box Block.zz"
+msgstr ""
+
+#: blocks-config/video-box/block.json
+msgctxt "block keyword"
+msgid "video"
+msgstr ""
+
+#: src/blocks/button/block.json
+msgctxt "block title"
+msgid "Button"
+msgstr ""
+
+#: src/blocks/switcher-child/block.json
+msgctxt "block title"
+msgid "Switcher Child"
+msgstr ""
