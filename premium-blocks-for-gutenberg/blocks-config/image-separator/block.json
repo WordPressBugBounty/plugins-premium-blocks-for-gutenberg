@@ -12,6 +12,10 @@
         "blockId": {
             "type": "string"
         },
+        "cover": {
+            "type": "string",
+            "default": ""
+        },
         "imgTagHeight": {
             "type": "number",
             "default": ""

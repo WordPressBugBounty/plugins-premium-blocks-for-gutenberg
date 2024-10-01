@@ -1104,7 +1104,7 @@ class PBG_Blocks_Helper {
 			),
 			'premium/tab-item'           => array(
 				'name'       => 'tab-item',
-				'style_func' => 'get_premium_tab_item_css',
+				'style_func' => '',
 			),
 			);
 
@@ -2104,6 +2104,7 @@ public function premium_get_wp_local_fonts(){
 			'shapes'            => $this->getSvgShapes(),
 			'localFonts'		=> $this->premium_get_wp_local_fonts(),
 			'masks'             => PREMIUM_BLOCKS_URL . 'assets/icons/masks',
+			'plugin_url'		=>PREMIUM_BLOCKS_URL,
 			'admin_url'         => admin_url(),
 			'all_taxonomy'      => $this->get_related_taxonomy(),
 			'image_sizes'       => $this->get_image_sizes(),

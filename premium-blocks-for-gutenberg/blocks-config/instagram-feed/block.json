@@ -12,6 +12,10 @@
         "blockId": {
             "type": "string"
         },
+        "cover": {
+            "type": "string",
+            "default": ""
+        },
         "accessToken": {
             "type": "string"
         },

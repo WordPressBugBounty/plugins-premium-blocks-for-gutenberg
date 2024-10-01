@@ -53,7 +53,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				return;
 			}
 			register_block_type_from_metadata(
-				PREMIUM_BLOCKS_PATH . '/blocks-config/post-carousel',
+				PREMIUM_BLOCKS_PATH . '/blocks-config/post-carousel/block.json',
 				array(
 					'render_callback' => array( $this, 'get_post_carousel_content' ),
 					'editor_style'    => 'premium-blocks-editor-css',
@@ -61,7 +61,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				)
 			);
 			register_block_type_from_metadata(
-				PREMIUM_BLOCKS_PATH . '/blocks-config/post-grid',
+				PREMIUM_BLOCKS_PATH . '/blocks-config/post-grid/block.json',
 				array(
 					'render_callback' => array( $this, 'get_post_grid_content' ),
 					'editor_style'    => 'premium-blocks-editor-css',
@@ -687,6 +687,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 
 			if ( isset( self::$settings['carousel'] ) ) {
 				foreach ( self::$settings['carousel'] as $key => $value ) {
+					var_dump($key);
 					$dots         = ( 'dots' === $value['navigationDots'] || 'arrows_dots' === $value['navigationDots'] ) ? true : false;
 					$arrows       = ( 'arrows' === $value['navigationArrow'] || 'arrows_dots' === $value['navigationArrow'] ) ? true : false;
 					$tcolumns     = ( isset( $value['columns']['Tablet'] ) ) ? $value['columns']['Tablet'] : 2;
@@ -696,11 +697,11 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 					$slideToScroll = ( isset( $value['slideToScroll'] ) );
 					$is_rtl        = is_rtl();
 					?>
-								<script type="text/javascript" id= <?php echo esc_html( $value['blockId'] ); ?> >
+								<script type="text/javascript"  id="<?php echo esc_attr( $key ); ?>" >
 								
 								jQuery( document ).ready( function( $ ) {
 									var cols = parseInt( '<?php echo esc_html( $value['columns']['Desktop'] ); ?>' );
-									var $scope = $('.<?php   echo esc_html( $value['blockId'] ); ?> ').find( '.premium-post-carousel' );
+									var $scope = $('.<?php   echo esc_html( $key ); ?> ').find( '.premium-post-carousel' );
 									if ( cols >= $scope.children().length ) {
 										return;
 									}

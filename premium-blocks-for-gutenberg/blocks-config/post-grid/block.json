@@ -12,6 +12,10 @@
             "type": "string",
             "default": "classic"
         },
+        "cover": {
+            "type": "string",
+            "default": ""
+        },
         "variation": {
             "type": "object",
             "default": {}

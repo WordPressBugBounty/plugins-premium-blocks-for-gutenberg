@@ -35,7 +35,7 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 		$fancy_typography = $attr['fancyTextTypography'];
 		$fancy_size       = $fancy_typography['fontSize'];
 
-		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title ' );
+		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide ul li , .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
 		$css->render_typography( $attr['fancyTextTypography'], 'Desktop' );
 		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .typed-cursor' );
 		$css->add_property( 'font-size', $css->render_range( $fancy_size, 'Desktop' ) );
@@ -106,7 +106,7 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 		$fancy_typography = $attr['fancyTextTypography'];
 		$fancy_size       = $fancy_typography['fontSize'];
 
-		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title ' );
+		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide ul li , .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
 		$css->render_typography( $attr['fancyTextTypography'], 'Tablet' );
 		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .typed-cursor' );
 		$css->add_property( 'font-size', $css->render_range( $fancy_size, 'Tablet' ) );
@@ -153,7 +153,7 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 		$fancy_typography = $attr['fancyTextTypography'];
 		$fancy_size       = $fancy_typography['fontSize'];
 
-		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title ' );
+		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide ul li , .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
 		$css->render_typography( $attr['fancyTextTypography'], 'Mobile' );
 		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .typed-cursor' );
 		$css->add_property( 'font-size', $css->render_range( $fancy_size, 'Mobile' ) );

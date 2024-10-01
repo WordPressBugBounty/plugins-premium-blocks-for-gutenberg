@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 2.1.33
+Stable tag: 2.1.34
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -111,11 +111,27 @@ If you want to contribute, go to our [Premium Blocks for Gutenberg GitHub Reposi
 
 No. You cannot use Premium Blocks without Gutenberg as it's a blocks plugin for Gutenberg.
 
-= Does it work with any WordPress theme? =
+= Will Premium Blocks for Gutenberg work with any WordPress theme? =
 
 Yes it will work with any WordPress theme as long as you are using Gutenberg as a page editor.
 
+= Will this plugin affect my website’s performance? =
+
+Premium Blocks is optimized for performance, and you can selectively enable only the blocks/features you need to keep your website running smoothly.
+
+= How can I report security bugs? =
+
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/premium-blocks-for-gutenberg)
+
+
 == Changelog ==
+= 2.1.34 =
+- Updated: POT file for translation compatibility and readiness.
+- Fixed: Inherited unit values for responsive devices.
+- Fixed: Image size issue in the Instagram Gutenberg block.
+- Fixed: Line-height issue in the animated text Gutenberg block.
+- Fixed: Alignment icon in modal box block functionality.
+
 = 2.1.33 =
 - Fixed: Compatibility issues with synced patterns.
 - Fixed: Styling issues for Text Block on the front end.

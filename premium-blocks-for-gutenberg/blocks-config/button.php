@@ -17,7 +17,10 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 		$css->set_selector( '.' . $unique_id . '> .premium-button  a' );
 		$css->render_typography( $typography, 'Desktop' );
 	}
-
+	if ( isset( $attr['btnWidth'] ) ) {
+		$css->set_selector( '.' . $unique_id  );
+		$css->add_property('width',$css->get_responsive_css($attr['btnWidth'] , 'Desktop' ));
+	}
     if ( isset( $attr['boxShadow'] ) ) {
 		$css->set_selector( '.' . $unique_id . '> .premium-button  ' );
         $css->add_property( 'box-shadow', $css->render_shadow( $attr['boxShadow'] ));
@@ -200,6 +203,11 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 		$css->set_selector( '.' . $unique_id . '> .premium-button  a' );
 		$css->render_typography( $typography, 'Tablet' );
 	}
+	if ( isset( $attr['btnWidth'] ) ) {
+		$css->set_selector( '.' . $unique_id  );
+		$css->add_property('width',$css->get_responsive_css($attr['btnWidth'] , 'Tablet' ));
+	}
+
 
 	if ( isset( $attr['padding'] ) ) {
 		$padding = $attr['padding'];
@@ -311,6 +319,12 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 		$css->set_selector( '.' . $unique_id . '> .premium-button  a' );
 		$css->render_typography( $typography, 'Mobile' );
 	}
+
+	if ( isset( $attr['btnWidth'] ) ) {
+		$css->set_selector( '.' . $unique_id  );
+		$css->add_property('width',$css->get_responsive_css($attr['btnWidth'] , 'Mobile' ));
+	}
+
 
 	if ( isset( $attr['padding'] ) ) {
 		$padding = $attr['padding'];

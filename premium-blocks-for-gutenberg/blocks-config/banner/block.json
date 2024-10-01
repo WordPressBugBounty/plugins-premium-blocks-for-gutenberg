@@ -13,6 +13,10 @@
             "type": "string",
             "default": ""
         },
+        "cover": {
+            "type": "string",
+            "default": ""
+        },
         "borderBanner": {
             "type": "boolean",
             "default": false,

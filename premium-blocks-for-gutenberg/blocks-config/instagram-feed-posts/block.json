@@ -33,7 +33,7 @@
             "isStyle": true
         },
         "columnHeight": {
-            "type": "number",
+            "type": "object",
             "default": {
                 "Desktop": "",
                 "Tablet": "",
