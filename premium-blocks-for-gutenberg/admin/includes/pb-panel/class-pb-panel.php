@@ -72,14 +72,30 @@ if ( ! class_exists( 'Pb_Panel' ) ) {
 			add_filter( 'pb_integrations_options', array( $this, 'add_default_integrations_options' ) );
 			add_action( 'admin_post_premium_gutenberg_rollback', array( $this, 'post_premium_gutenberg_rollback_new' ) );
 			add_action( 'wp_ajax_pb-mail-subscribe', array( $this, 'subscribe_mail' ) );
-			add_action( 'admin_enqueue_scripts', array( $this, 'pa_admin_page_scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'pb_admin_page_scripts' ) );
 			add_filter( 'plugin_action_links_' . PREMIUM_BLOCKS_BASENAME, array( $this, 'add_action_links' ) );
+
 		}
+
+
 
 		// Enqueue dashboard menu required assets
 		// Enqueue icon for plugin in dashboard
-		public function pa_admin_page_scripts() {
+		public function pb_admin_page_scripts() {
 			wp_enqueue_style( 'pbg-icon', PREMIUM_BLOCKS_URL . 'admin/assets/pbg-font/css/pbg-font.css' );
+			wp_enqueue_style( 'pb-dashboard-css', PREMIUM_BLOCKS_URL . 'admin/assets/dashboard.css' );
+			wp_enqueue_script(
+				'pb-dashboard-js', // Unique handle for the script
+				PREMIUM_BLOCKS_URL . 'admin/assets/js/pb-dashboard.js', // Path to the JavaScript file
+				array('jquery'), // Dependencies (e.g., jQuery)
+				'1.0.0', // Version of the script
+				true // Load the script in the footer
+			);
+			// // Pass data to the script (if necessary)
+			// wp_localize_script('pb-dashboard-js', 'pbgData', array(
+			// 	'ajaxUrl' => admin_url('admin-ajax.php')
+			// ));
+
 		}
 		public function add_action_links( $links ) {
 			$default_url = admin_url( 'page=' . $this->menu_slug );

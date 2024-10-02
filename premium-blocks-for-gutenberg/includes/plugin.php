@@ -35,7 +35,9 @@ if ( ! class_exists( 'PBG_Plugin' ) ) {
 			$this->pbg_setup();
 			add_filter( 'plugin_action_links_' . PREMIUM_BLOCKS_BASENAME, array( $this, 'add_action_links' ), 10, 2 );
 			add_action( 'plugins_loaded', array( $this, 'load_plugin' ) );
-			 add_filter('wp_img_tag_add_loading_attr', array( $this, 'gspb_skip_lazy_load' ) , 10, 3);
+			add_filter('wp_img_tag_add_loading_attr', array( $this, 'gspb_skip_lazy_load' ) , 10, 3);
+			// Register Activation hooks.
+			register_activation_hook( PREMIUM_BLOCKS_FILE, array( $this, 'set_transient' ) );
 
 			if ( ! $this->is_gutenberg_active() ) {
 				return;
@@ -80,6 +82,52 @@ if ( ! class_exists( 'PBG_Plugin' ) ) {
 			 load_plugin_textdomain( 'premium-blocks-for-gutenberg', false, dirname( PREMIUM_BLOCKS_BASENAME ) . '/languages/' );
 		}
 
+		/**
+		 * Set transient for admin review notice
+		 *
+		 * @since 3.1.7
+		 * @access public
+		 *
+		 * @return void
+		 */
+		public function set_transient() {
+
+			$cache_key = 'premium_notice_' . PREMIUM_BLOCKS_VERSION;
+
+			$expiration = 3600 * 72;
+
+			set_transient( $cache_key, true, $expiration );
+
+			$install_time = get_option( 'pb_install_time' );
+
+			if ( ! $install_time ) {
+
+				$current_time = date( 'j F, Y', time() );
+
+				update_option( 'pb_install_time', $current_time );
+
+				$api_url = 'https://feedback.premiumblocks.io/wp-json/install/v2/add';
+
+				$response = wp_safe_remote_request(
+					$api_url,
+					array(
+						'headers'     => array(
+							'Content-Type' => 'application/json',
+						),
+						'body'        => wp_json_encode(
+							array(
+								'time' => $current_time,
+							)
+						),
+						'timeout'     => 20,
+						'method'      => 'POST',
+						'httpversion' => '1.1',
+					)
+				);
+
+			}
+		}
+
 		/*
 		 * Load necessary files
 		 *
@@ -113,7 +161,10 @@ if ( ! class_exists( 'PBG_Plugin' ) ) {
 
 			if ( is_admin() ) {
 				require_once PREMIUM_BLOCKS_PATH . 'admin/includes/rollback.php';
+				require_once PREMIUM_BLOCKS_PATH . 'admin/includes/feedback.php';
+				
 			}
+			
 			require_once PREMIUM_BLOCKS_PATH . 'admin/includes/pb-panel/class-pb-panel.php';
 
 			require_once PREMIUM_BLOCKS_PATH . 'classes/class-pbg-blocks-helper.php';

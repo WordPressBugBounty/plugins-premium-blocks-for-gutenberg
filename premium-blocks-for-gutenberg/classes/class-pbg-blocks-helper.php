@@ -236,6 +236,10 @@ class PBG_Blocks_Helper {
 
 		// After post update, update the _pbg_blocks_version post meta.
 		add_action( 'save_post', array( $this, 'update_post_meta' ), 10, 3 );
+		if (is_admin()) {
+			add_action('init', array($this, 'init_admin_features'));
+		}
+		
 	}
 
 	/**
@@ -278,6 +282,19 @@ class PBG_Blocks_Helper {
 		// Send mailerlite groups.
 		wp_send_json_success( array( 'groups' => $mailerlite_groups ) );
 	}
+
+	/**
+		 * Checks user credentials for specific action
+		 *
+		 * @since 2.6.8
+		 *
+		 * @param string $action action.
+		 *
+		 * @return boolean
+		 */
+		public static function check_user_can( $action ) {
+			return current_user_can( $action );
+		}
 
 	/**
 	 * Get mailchimp lists
@@ -471,7 +488,11 @@ class PBG_Blocks_Helper {
 		);
 	}
 
-
+	public function init_admin_features() {
+		if (self::check_user_can('install_plugins')) {
+			Feedback::get_instance();
+		}
+	}
 	/**
 	 * Mailerlite Subscribe
 	 */

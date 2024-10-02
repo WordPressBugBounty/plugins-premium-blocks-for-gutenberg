@@ -1,0 +1,106 @@
+.pb-deactivation-popup {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  visibility: visible;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+}
+.pb-deactivation-popup.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.pb-deactivation-popup .overlay {
+  position: relative;
+  padding: 20px;
+  background: #fff;
+  overflow: auto;
+  max-height: 90%;
+  max-width: 90%;
+  border-radius: 10px;
+  transform: translateY(0);
+}
+.pb-deactivation-popup * {
+  transition: all 0.2s ease-in-out;
+}
+.pb-deactivation-popup .close {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 6px;
+  right: 6px;
+  width: 30px;
+  height: 30px;
+  color: #252c59;
+  background: #f7f7f7;
+  border-radius: 10px;
+  z-index: 1;
+}
+.pb-deactivation-popup .body {
+  position: relative;
+  display: block;
+  max-width: 360px;
+  background: #fff;
+  border-radius: 10px;
+}
+.pb-deactivation-popup .body .title-wrap {
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+.pb-deactivation-popup .body .pb-img-wrap {
+  margin-right: 10px;
+}
+.pb-deactivation-popup .body img {
+  width: 140px;
+}
+.pb-deactivation-popup .body section {
+  margin-bottom: 10px;
+}
+.pb-deactivation-popup .body .options-wrap {
+  padding: 10px;
+  border-radius: 10px;
+  background: #f3f3f3;
+}
+.pb-deactivation-popup .body .options-wrap:not([type=radio]):not([type=checkbox]) {
+  width: 100%;
+}
+.pb-deactivation-popup .body .options-wrap textarea {
+  max-height: 150px;
+  min-height: 50px;
+}
+.pb-deactivation-popup .body .options-wrap label {
+  display: block;
+  margin-bottom: 5px;
+}
+.pb-deactivation-popup .body .buttons-wrap {
+  text-align: right;
+}
+.pb-deactivation-popup .body .pb-deactivate-btn {
+  color: rgb(60, 67, 74);
+  background-color: #f3f3f3;
+  border: 0;
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+}
+.pb-deactivation-popup .body .pb-deactivate-btn:hover {
+  color: #fff;
+  background-color: #00a5e5;
+}
+.pb-deactivation-popup .messages-wrap p {
+  margin: 5px 0;
+}
+
+.options-wrap.pa-info-notice {
+  background-color: #f0f7ff !important;
+}
