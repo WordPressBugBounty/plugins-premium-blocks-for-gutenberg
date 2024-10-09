@@ -173,11 +173,9 @@ function get_premium_modal_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['imageWidth']['Desktop'] ) ) {
 		$css->set_selector( '.' . $unique_id . '> .premium-modal-trigger-container img' );
 		$css->add_property( 'width', $css->render_range( $attr['imageWidth'], 'Desktop' ) );
-		$css->add_property( 'height', $css->render_range( $attr['imageWidth'], 'Desktop' ) );
 
 		$css->set_selector( '.' . $unique_id . '> .premium-modal-trigger-container ' . '> .premium-lottie-animation' );
 		$css->add_property( 'width', $css->render_range( $attr['imageWidth'], 'Desktop' ) );
-		$css->add_property( 'height', $css->render_range( $attr['imageWidth'], 'Desktop' ) );
 	}
 	if ( isset( $attr['triggerFilter'] ) ) {
 		$css->set_selector( '.' . $unique_id . '> .premium-modal-trigger-container ' . '> .premium-lottie-animation' );
@@ -425,11 +423,9 @@ function get_premium_modal_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['imageWidth']['Tablet'] ) ) {
 		$css->set_selector( '.' . $unique_id . '> .premium-modal-trigger-container img' );
 		$css->add_property( 'width', $css->render_range( $attr['imageWidth'], 'Tablet' ) );
-		$css->add_property( 'height', $css->render_range( $attr['imageWidth'], 'Tablet' ) );
 
 		$css->set_selector( '.' . $unique_id . '> .premium-modal-trigger-container ' . '> .premium-lottie-animation' );
 		$css->add_property( 'width', $css->render_range( $attr['imageWidth'], 'Tablet' ) );
-		$css->add_property( 'height', $css->render_range( $attr['imageWidth'], 'Tablet' ) );
 	}
 
 	// Style For Button Trigger
@@ -627,11 +623,9 @@ function get_premium_modal_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['imageWidth']['Mobile'] ) ) {
 		$css->set_selector( '.' . $unique_id . '> .premium-modal-trigger-container img' );
 		$css->add_property( 'width', $css->render_range( $attr['imageWidth'], 'Mobile' ) );
-		$css->add_property( 'height', $css->render_range( $attr['imageWidth'], 'Mobile' ) );
 
 		$css->set_selector( '.' . $unique_id . '> .premium-modal-trigger-container ' . '> .premium-lottie-animation' );
 		$css->add_property( 'width', $css->render_range( $attr['imageWidth'], 'Mobile' ) );
-		$css->add_property( 'height', $css->render_range( $attr['imageWidth'], 'Mobile' ) );
 	}
 
 	// Style For Button Trigger

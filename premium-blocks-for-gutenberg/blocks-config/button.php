@@ -92,7 +92,7 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 		$css->add_property( 'fill',isset( $attr['iconColor'] )? $attr['iconColor'] : $attr['btnStyles'][0]['textColor'] );
 		$css->set_selector( '.' . $unique_id . ' .premium-button  .premium-button-icon:not(.icon-type-fe) svg *' );
 		$css->add_property( 'fill', isset( $attr['iconColor'] )? $attr['iconColor'] : $attr['btnStyles'][0]['textColor'] );
-		$css->set_selector( '.' . $unique_id . ' .premium-button  .premium-button-svg-class svg *' );
+		$css->set_selector( '.' . $unique_id . ' .premium-button  .premium-button-svg-class svg path' );
 		$css->add_property( 'fill',isset( $attr['iconColor'] )? $attr['iconColor'] : $attr['btnStyles'][0]['textColor'] );
 	}
 	if ( isset( $attr['iconHoverColor'] ) ) {
@@ -105,8 +105,7 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 		$css->set_selector( '.' . $unique_id . ' .premium-button:hover .premium-button-icon:not(.icon-type-fe) svg *' );
 		$css->add_property( 'color', $attr['iconHoverColor'] );
 		$css->add_property( 'fill', $attr['iconHoverColor'] );
-		$css->set_selector( '.' . $unique_id . ' .premium-button:hover .premium-button-svg-class svg *' );
-		$css->add_property( 'color', $attr['iconHoverColor'] );
+		$css->set_selector( '.' . $unique_id . ' .premium-button:hover .premium-button-svg-class svg path' );
 		$css->add_property( 'fill', $attr['iconHoverColor'] );
 	}
 	if ( isset( $attr['iconHoverBG'] ) ) {

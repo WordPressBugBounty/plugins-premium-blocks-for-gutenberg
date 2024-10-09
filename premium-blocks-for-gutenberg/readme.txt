@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 2.1.35
+Stable tag: 2.1.36
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,6 +125,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.1.36 =
+- Fixed: Modal Box Block Styling Issues.
+- Fixed: Button Block Styling Issues.
+
 = 2.1.35 =
 - Tweak: Added feedback form on plugin deactivation.
 - Fixed: An issue where the "Clear" action did not restore the default value as expected in range cntrol.
