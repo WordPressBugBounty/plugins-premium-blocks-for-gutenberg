@@ -194,7 +194,7 @@ class PBG_Blocks_Helper {
 		// Enqueue Frontend Scripts.
 		add_action( 'wp_enqueue_scripts', array( $this, 'add_blocks_frontend_assets' ), 10 );
 		// Register Premium Blocks category.
-		add_filter( 'block_categories_all', array( $this, 'register_premium_category' ), 10, 2 );
+		add_filter( 'block_categories_all', array( $this, 'register_premium_category' ), 9999991, 2 );
 		// Generate Blocks Stylesheet.
 		// add_action( 'wp', array( $this, 'generate_stylesheet' ), 99 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'generate_stylesheet' ), 20 );

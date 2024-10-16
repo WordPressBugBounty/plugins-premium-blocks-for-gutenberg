@@ -687,7 +687,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 
 			if ( isset( self::$settings['carousel'] ) ) {
 				foreach ( self::$settings['carousel'] as $key => $value ) {
-					var_dump($key);
+				
 					$dots         = ( 'dots' === $value['navigationDots'] || 'arrows_dots' === $value['navigationDots'] ) ? true : false;
 					$arrows       = ( 'arrows' === $value['navigationArrow'] || 'arrows_dots' === $value['navigationArrow'] ) ? true : false;
 					$tcolumns     = ( isset( $value['columns']['Tablet'] ) ) ? $value['columns']['Tablet'] : 2;
