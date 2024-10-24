@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 2.1.37
+Stable tag: 2.1.38
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,6 +125,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.1.38 =
+- Fixed: Gutenberg Button Block Width issue.
+
 = 2.1.37 =
 - Tweak: Added image width option in Testimonial block.
 - Fixed: Tab content now moves with title using toolbar arrows.

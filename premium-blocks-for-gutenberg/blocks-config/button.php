@@ -199,7 +199,7 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 	// Button Style
 	if ( isset( $attr['typography'] ) ) {
 		$typography = $attr['typography'];
-		$css->set_selector( '.' . $unique_id . '> .premium-button  a' );
+		$css->set_selector( '.' . $unique_id . '> .premium-button a' );
 		$css->render_typography( $typography, 'Tablet' );
 	}
 	if ( isset( $attr['btnWidth'] ) ) {
