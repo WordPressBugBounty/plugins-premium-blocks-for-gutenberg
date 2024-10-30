@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 2.1.38
+Stable tag: 2.1.39
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,6 +125,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.1.39 =
+- Tweak: Enable both positive and negative values for rotation options.
+
 = 2.1.38 =
 - Fixed: Gutenberg Button Block Width issue.
 
