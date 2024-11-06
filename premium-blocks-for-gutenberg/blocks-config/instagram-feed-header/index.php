@@ -37,6 +37,12 @@ function get_premium_instagram_feed_header_css( $attributes, $unique_id ) {
 		$css->add_property( 'margin', $css->render_spacing( $margin['Desktop'], isset($margin['unit']['Desktop'])? $margin['unit']['Desktop']:$margin['unit']) );
 	}
 
+	if ( isset( $attributes['background'] ) ) {
+		$css->set_selector( '.' . $unique_id );
+	    $css->render_background( $attributes['background'], 'Desktop' );
+
+    }
+
 	$css->start_media_query( 'tablet' );
 	// Tablet Styles.
 	if ( isset( $attributes['border'] ) ) {
