@@ -1399,8 +1399,8 @@ class PBG_Blocks_Helper {
 		if ( isset( $attrs['blockMargin'] ) ) {
 			$block_margin = $attrs['blockMargin'];
 
-			$css->set_selector( ".{$block_id}" );
-			$css->add_property( 'margin', $css->render_string($css->render_spacing( $block_margin['Desktop'],$block_margin['unit']['Desktop']),' !important' ));
+			$css->set_selector( ":root:has(.{$block_id}) .{$block_id}" );
+			$css->add_property( 'margin', $css->render_string($css->render_spacing( $block_margin['Desktop'],$block_margin['unit']['Desktop'])));
 		}
 		if ( isset( $attrs['blockPadding'] ) ) {
 			$block_padding = $attrs['blockPadding'];
