@@ -14,7 +14,7 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['typography'] ) ) {
 		$typography = $attr['typography'];
-		$css->set_selector( '.' . $unique_id . '> .premium-button  a' );
+		$css->set_selector( '.' . $unique_id . '> .premium-button' );
 		$css->render_typography( $typography, 'Desktop' );
 	}
 	if ( isset( $attr['btnWidth'] ) ) {
@@ -22,11 +22,11 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 		$css->add_property('width',$css->get_responsive_css($attr['btnWidth'] , 'Desktop' ));
 	}
     if ( isset( $attr['boxShadow'] ) ) {
-		$css->set_selector( '.' . $unique_id . '> .premium-button  ' );
+		$css->set_selector( '.' . $unique_id . '> .premium-button' );
         $css->add_property( 'box-shadow', $css->render_shadow( $attr['boxShadow'] ));
     }
     if ( isset( $attr['boxShadowHover'] ) ) {
-		$css->set_selector( '.' . $unique_id . '> .premium-button:hover  ' );
+		$css->set_selector( '.' . $unique_id . '> .premium-button:hover' );
         $css->add_property( 'box-shadow', $css->render_shadow( $attr['boxShadowHover'] ));
     }
 
@@ -48,7 +48,7 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 		$border_width  = $border['borderWidth'];
 		$border_radius = $border['borderRadius'];
 
-		$css->set_selector( '#' . $unique_id . '> .premium-button , #' . $unique_id.'.premium-button' );
+		$css->set_selector( '#' . $unique_id . '> .premium-button' );
 		$css->add_property( 'border-width', $css->render_spacing( $border_width['Desktop'], 'px' ) );
 		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Desktop'], 'px' ) );
 		$css->add_property( 'border-style', "{$border['borderType']}" );
@@ -58,7 +58,7 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 	}
 	if ( isset( $attr['backgroundOptions'] ) ) {
 
-		$css->set_selector( '#' . $unique_id . '> .premium-button , #' . $unique_id.'.premium-button' );
+		$css->set_selector( '#' . $unique_id . '> .premium-button' );
 		$css->render_background( $attr['backgroundOptions'], 'Desktop' );
 	}
 
@@ -199,7 +199,7 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 	// Button Style
 	if ( isset( $attr['typography'] ) ) {
 		$typography = $attr['typography'];
-		$css->set_selector( '.' . $unique_id . '> .premium-button a' );
+		$css->set_selector( '.' . $unique_id . '> .premium-button' );
 		$css->render_typography( $typography, 'Tablet' );
 	}
 	if ( isset( $attr['btnWidth'] ) ) {
@@ -230,7 +230,7 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
 	}
 	if ( isset( $attr['backgroundOptions'] ) ) {
-		$css->set_selector( '.' . $unique_id . '> .premium-button , #' . $unique_id.'.premium-button' );
+		$css->set_selector( '.' . $unique_id . '> .premium-button' );
 		$css->render_background( $attr['backgroundOptions'], 'Tablet' );
 
 	}
@@ -315,7 +315,7 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 	// Button Style
 	if ( isset( $attr['typography'] ) ) {
 		$typography = $attr['typography'];
-		$css->set_selector( '.' . $unique_id . '> .premium-button  a' );
+		$css->set_selector( '.' . $unique_id . '> .premium-button' );
 		$css->render_typography( $typography, 'Mobile' );
 	}
 
@@ -347,7 +347,7 @@ function get_premium_button_css_style( $attr, $unique_id ) {
 		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
 	}
 	if ( isset( $attr['backgroundOptions'] ) ) {
-		$css->set_selector( '.' . $unique_id . '> .premium-button , #' . $unique_id.'.premium-button'  );
+		$css->set_selector( '.' . $unique_id . '> .premium-button'  );
 		$css->render_background( $attr['backgroundOptions'], 'Mobile' );
 
 	}

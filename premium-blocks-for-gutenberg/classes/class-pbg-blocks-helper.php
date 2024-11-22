@@ -1119,6 +1119,10 @@ class PBG_Blocks_Helper {
 				'name'       => 'form-hidden',
 				'style_func' => null,
 			),
+			'premium/gallery'           => array(
+				'name'       => 'gallery',
+				'style_func' => null,
+			),
 			'premium/tabs'           => array(
 				'name'       => 'tabs',
 				'style_func' => 'get_premium_tabs_css_style',
@@ -1400,7 +1404,7 @@ class PBG_Blocks_Helper {
 			$block_margin = $attrs['blockMargin'];
 
 			$css->set_selector( ":root:has(.{$block_id}) .{$block_id}" );
-			$css->add_property( 'margin', $css->render_string($css->render_spacing( $block_margin['Desktop'],$block_margin['unit']['Desktop'])));
+			$css->add_property( 'margin', $css->render_spacing( $block_margin['Desktop'],$block_margin['unit']['Desktop']));
 		}
 		if ( isset( $attrs['blockPadding'] ) ) {
 			$block_padding = $attrs['blockPadding'];
@@ -1414,10 +1418,19 @@ class PBG_Blocks_Helper {
 			$css->set_selector( ".{$block_id}" );
 			$css->add_property( 'width', $css->render_range( $attrs['pbgWidth'], 'Tablet' ) . ' !important' );
 		}
+
 		if ( isset( $attrs['blockMargin'] ) ) {
 			$block_margin = $attrs['blockMargin'];
-			$css->set_selector( ".{$block_id}" );
+
+			$css->set_selector( ":root:has(.{$block_id}) .{$block_id}" );
 			$css->add_property( 'margin', $css->render_spacing( $block_margin['Tablet'],$block_margin['unit']['Tablet']) );
+		}
+
+    if ( isset( $attrs['blockPadding'] ) ) {
+			$block_padding = $attrs['blockPadding'];
+
+			$css->set_selector( ".{$block_id}" );
+			$css->add_property( 'padding', $css->render_string($css->render_spacing( $block_padding['Tablet'],$block_padding['unit']['Tablet']),' !important' ));
 		}
 		$css->stop_media_query();
 
@@ -1430,10 +1443,17 @@ class PBG_Blocks_Helper {
 
 		if ( isset( $attrs['blockMargin'] ) ) {
 			$block_margin = $attrs['blockMargin'];
-			$css->set_selector( ".{$block_id}" );
+
+			$css->set_selector( ":root:has(.{$block_id}) .{$block_id}" );
 			$css->add_property( 'margin', $css->render_spacing( $block_margin['Mobile'],$block_margin['unit']['Mobile']) );
 		}
 
+    if ( isset( $attrs['blockPadding'] ) ) {
+			$block_padding = $attrs['blockPadding'];
+
+			$css->set_selector( ".{$block_id}" );
+			$css->add_property( 'padding', $css->render_string($css->render_spacing( $block_padding['Mobile'],$block_padding['unit']['Mobile']),' !important' ));
+		}
 		$css->stop_media_query();
 
 		return $css->css_output();

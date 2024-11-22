@@ -267,7 +267,7 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['titlemargin'] ) ) {
 		$title_margin = $attr['titlemargin'];
-		$css->set_selector( '.' . $unique_id . ' > .premium-bullet-list' . '> .premium-bullet-list__wrapper' . ' > .premium-bullet-list__content-wrap, ' . $unique_id . ' > .premium-bullet-list' . '> .premium-bullet-list__wrapper' . ' > a' . ' > .premium-bullet-list__content-wrap' );
+		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__label-wrap');
 		$css->add_property( 'margin', $css->render_spacing( $title_margin['Desktop'], isset($title_margin['unit']['Desktop'])?$title_margin['unit']['Desktop']:$title_margin['unit'] ) );
 	}
 
@@ -466,7 +466,7 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['titlemargin'] ) ) {
 		$title_margin = $attr['titlemargin'];
-		$css->set_selector( '.' . $unique_id . ' > .premium-bullet-list' . '> .premium-bullet-list__wrapper' . ' > .premium-bullet-list__content-wrap, ' . $unique_id . ' > .premium-bullet-list' . '> .premium-bullet-list__wrapper' . ' > a' . ' > .premium-bullet-list__content-wrap' );
+		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__label-wrap');
 		$css->add_property( 'margin', $css->render_spacing( $title_margin['Tablet'], isset( $title_margin['unit']['Tablet'])?$title_margin['unit']['Tablet']:$title_margin['unit'] ) );
 	}
 
@@ -653,7 +653,7 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['titlemargin'] ) ) {
 		$title_margin = $attr['titlemargin'];
-		$css->set_selector( '.' . $unique_id . ' > .premium-bullet-list' . '> .premium-bullet-list__wrapper' . ' > .premium-bullet-list__content-wrap, ' . $unique_id . ' > .premium-bullet-list' . '> .premium-bullet-list__wrapper' . ' > a' . ' > .premium-bullet-list__content-wrap' );
+		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__label-wrap');
 		$css->add_property( 'margin', $css->render_spacing( $title_margin['Mobile'], isset( $title_margin['unit']['Mobile'] )? $title_margin['unit']['Mobile'] : $title_margin['unit']) );
 	}
 

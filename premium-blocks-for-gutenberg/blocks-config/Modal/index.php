@@ -18,6 +18,10 @@
 function get_premium_modal_css_style( $attr, $unique_id ) {
 	$css = new Premium_Blocks_css();
 
+  $css->set_selector( '.' . $unique_id . '.premium-popup__modal_wrap');
+  $css->add_property('padding', "0 !important");
+  $css->add_property('margin', "0 !important");
+
 	if ( isset( $attr['align']['Desktop'] ) ) {
 
         $content_align      = $css->get_responsive_css( $attr['align'], 'Desktop' );

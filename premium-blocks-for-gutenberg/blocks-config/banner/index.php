@@ -29,27 +29,27 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
 	}
 	// Style.
 	if ( isset( $attr['contentAlign'] ) ) {
-		$css->set_selector( $unique_id . '> .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' );
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Desktop' ) );
-		$css->set_selector( $unique_id . '> .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' );
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Desktop' ) );
 	}
 
 	if ( isset( $attr['titleTypography'] ) ) {
-		$css->set_selector( $unique_id . '> .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
 		$css->render_typography( $attr['titleTypography'], 'Desktop' );
 	}
 
 	// Desc Style
 	if ( isset( $attr['descTypography'] ) ) {
-		$css->set_selector( $unique_id . '> .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
 		$css->render_typography( $attr['descTypography'], 'Desktop' );
 	}
 
 	// Container Style
 	if ( isset( $attr['padding'] ) ) {
 		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
+		$css->set_selector( $unique_id . ' .premium-banner' );
 		$css->add_property( 'padding', $css->render_spacing( $padding['Desktop'],isset( $padding['unit']['Desktop'])?$padding['unit']['Desktop']:$padding['unit'] ) );
 	}
 
@@ -58,7 +58,7 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
 		$border_width  = $border['borderWidth'];
 		$border_radius = $border['borderRadius'];
 
-		$css->set_selector( $unique_id . ' > .premium-banner__inner' );
+		$css->set_selector( $unique_id . '  .premium-banner__inner' );
 		$css->add_property( 'border-width', $css->render_spacing( $border_width['Desktop'], 'px' ) );
 		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Desktop'], 'px' ) );
 	}
@@ -66,20 +66,20 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
 	$css->start_media_query( 'tablet' );
 
 	if ( isset( $attr['contentAlign'] ) ) {
-		$css->set_selector( $unique_id . '> .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' );
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Tablet' ) );
-		$css->set_selector( $unique_id . '> .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' );
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Tablet' ) );
 	}
 
 	if ( isset( $attr['titleTypography'] ) ) {
-		$css->set_selector( $unique_id . '> .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
 		$css->render_typography( $attr['titleTypography'], 'Tablet' );
 	}
 
 	// Desc Style
 	if ( isset( $attr['descTypography'] ) ) {
-		$css->set_selector( $unique_id . '> .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
 		$css->render_typography( $attr['descTypography'], 'Tablet' );
 	}
 
@@ -95,7 +95,7 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
 		$border_width  = $border['borderWidth'];
 		$border_radius = $border['borderRadius'];
 
-		$css->set_selector( $unique_id . ' > .premium-banner__inner' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' );
 		$css->add_property( 'border-width', $css->render_spacing( $border_width['Tablet'], 'px' ) );
 		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
 	}
@@ -105,20 +105,20 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
 	$css->start_media_query( 'mobile' );
 
 	if ( isset( $attr['contentAlign'] ) ) {
-		$css->set_selector( $unique_id . '> .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' );
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Mobile' ) );
-		$css->set_selector( $unique_id . '> .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' );
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Mobile' ) );
 	}
 
 	if ( isset( $attr['titleTypography'] ) ) {
-		$css->set_selector( $unique_id . '> .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
 		$css->render_typography( $attr['titleTypography'], 'Mobile' );
 	}
 
 	// Desc Style
 	if ( isset( $attr['descTypography'] ) ) {
-		$css->set_selector( $unique_id . '> .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
 		$css->render_typography( $attr['descTypography'], 'Mobile' );
 	}
 
@@ -134,7 +134,7 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
 		$border_width  = $border['borderWidth'];
 		$border_radius = $border['borderRadius'];
 
-		$css->set_selector( $unique_id . ' > .premium-banner__inner' );
+		$css->set_selector( $unique_id . ' .premium-banner__inner' );
 		$css->add_property( 'border-width', $css->render_spacing( $border_width['Mobile'], 'px' ) );
 		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
 	}

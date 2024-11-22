@@ -39,7 +39,7 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 
 	}
 	if ( isset( $attr['containerHoverBackground'] ) ) {
-		$css->set_selector( '.' . $unique_id . ':hover' );
+		$css->set_selector( '.' . $unique_id . ":hover");
 		$css->render_background( $attr['containerHoverBackground'], 'Desktop' );
 
 	}
@@ -81,7 +81,7 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 	}
 
 	if ( isset( $attr['containerHoverShadow'] )  ) {
-		$css->set_selector( '.' . $unique_id . ':hover' );
+		$css->set_selector( '.' . $unique_id . ":hover");
 		$css->add_property( 'box-shadow', $css->render_shadow( $attr['containerHoverShadow'] ) );
 	}
 
@@ -135,7 +135,7 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 
 	}
 	if ( isset( $attr['containerHoverBackground'] ) ) {
-		$css->set_selector( '.' . $unique_id . ':hover' );
+		$css->set_selector( '.' . $unique_id . ":hover");
 		$css->render_background( $attr['containerHoverBackground'], 'Tablet' );
 	}
 
@@ -191,7 +191,7 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 	}
 
 	if ( isset( $attr['containerHoverBackground'] ) ) {
-		$css->set_selector( '.' . $unique_id . ':hover' );
+		$css->set_selector( '.' . $unique_id . ":hover");
 		$css->render_background( $attr['containerHoverBackground'], 'Mobile' );
 	}
 

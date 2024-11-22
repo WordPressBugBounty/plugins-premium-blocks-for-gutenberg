@@ -58,7 +58,7 @@ function get_premium_button_group_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['groupMargin'] ) ) {
 		$groupMargin = $attr['groupMargin'];
-		$css->set_selector( $unique_id  );
+		$css->set_selector( $unique_id . ' .premium-button-group_wrap' );
 		$css->add_property( 'margin', $css->render_spacing( $groupMargin['Desktop'], isset($groupMargin['unit']['Desktop'])?$groupMargin['unit']['Desktop']:$groupMargin['unit']  ) );
 	}
 
@@ -104,7 +104,7 @@ function get_premium_button_group_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['groupMargin'] ) ) {
 		$groupMargin = $attr['groupMargin'];
-		$css->set_selector( $unique_id  );
+		$css->set_selector( $unique_id . ' .premium-button-group_wrap' );
 		$css->add_property( 'margin', $css->render_spacing( $groupMargin['Tablet'], isset($groupMargin['unit']['Tablet'])?$groupMargin['unit']['Tablet']:$groupMargin['unit']  ) );
 	}
 
@@ -151,7 +151,7 @@ function get_premium_button_group_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['groupMargin'] ) ) {
 		$groupMargin = $attr['groupMargin'];
-		$css->set_selector( $unique_id  );
+    $css->set_selector( $unique_id . ' .premium-button-group_wrap' );
 		$css->add_property( 'margin', $css->render_spacing( $groupMargin['Mobile'], isset($groupMargin['unit']['Mobile'])?$groupMargin['unit']['Mobile']:$groupMargin['unit']  ) );
 	}
 	$css->stop_media_query();
