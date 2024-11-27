@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 2.1.42
+Stable tag: 2.1.43
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,6 +125,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.1.43 =
+- Fixed: Map style doesn't work properly.
+- Fixed: Icon width for lottie type issue.
+- Fixed: Advanced options don't work in tabs block.
+
 = 2.1.42 =
 - Fixed: Icon Box Wrapper link doesn't work.
 - Fixed: Banner Block Console error with Entrance animation option.

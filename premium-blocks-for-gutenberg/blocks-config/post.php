@@ -188,7 +188,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				 * @since 0.0.1
 				 */
 		public function get_post_html( $attributes, $query, $type ) {
-
+        
 				$wrap = array(
 					'premium-blog-wrap',
 					'premium-blog-even',
@@ -199,7 +199,12 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 					$outerwrap = array(
 						'premium-blog',
 						$attributes['blockId'],
-						'wp-block-premium-post-' . $type
+						'wp-block-premium-post-' . $type,
+            $attributes['className'],
+            isset($attributes['hideDesktop']) ? 'premium-desktop-hidden' : '',
+            isset($attributes['hideTablet']) ? 'premium-tablet-hidden' : '',
+            isset($attributes['hideMobile']) ? 'premium-mobile-hidden' : '',
+            
 
 					);
 
@@ -756,6 +761,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			$media_query['mobile']  = apply_filters( 'Premium_BLocks_mobile_media_query', '(max-width: 767px)' );
 			$media_query['tablet']  = apply_filters( 'Premium_BLocks_tablet_media_query', '(max-width: 1024px)' );
 			$media_query['desktop'] = apply_filters( 'Premium_BLocks_tablet_media_query', '(min-width: 1025px)' );
+      // var_dump($attr);
 			if ( isset( $attr['columns'] ) && ! empty( $attr['columns']['Desktop'] ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
 				$css->add_property( 'width', 'calc(100% / ' . $attr['columns']['Desktop'] . ')' );
@@ -948,11 +954,11 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			}
 			if(isset($attr['hoverEffect']) &&($attr['hoverEffect']=="zoomin" ||$attr['hoverEffect']=="zoomout"||$attr['hoverEffect']=="scale"||$attr['hoverEffect']=="trans")){
 
-			if ( isset( $attr['Hoverfilter'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container:hover img' );
-				$css->add_property('filter', $css->render_filter($attr['Hoverfilter'] )		);
-			}
-		}
+        if ( isset( $attr['Hoverfilter'] ) ) {
+          $css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container:hover img' );
+          $css->add_property('filter', $css->render_filter($attr['Hoverfilter'] )		);
+        }
+		  }
 			if ( isset( $attr['colorOverlay'] ) ) {
 				$css->set_selector( '.' . $unique_id . '  .premium-blog-thumbnail-overlay  , .' . $unique_id . ' .premium-blog-framed-effect , .' . $unique_id . ' .premium-blog-bordered-effect, .' . $unique_id . ' .premium-blog-squares-effect:before , .' . $unique_id . ' .premium-blog-squares-effect:after , .' . $unique_id . '  .premium-blog-squares-square-container:before, .' . $unique_id . ' .premium-blog-squares-square-container:after' );
 				$css->add_property( 'background-color', $css->render_color( $attr['colorOverlay'] ) );

@@ -14,7 +14,7 @@
         },
         "mapStyle": {
             "type": "string",
-            "default": "[]",
+            "default": "",
             "isStyle": true
         },
         "mapType": {

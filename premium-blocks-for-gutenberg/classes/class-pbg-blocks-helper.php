@@ -1053,11 +1053,11 @@ class PBG_Blocks_Helper {
 			),
 			'premium/post-carousel'         => array(
 				'name'       => 'post',
-				'style_func' => array( 'PBG_Post', 'get_premium_post_css_style' ),
+				'style_func' => array( new PBG_POST(), 'get_premium_post_css_style' ),
 			),
 			'premium/post-grid'             => array(
 				'name'       => 'post',
-				'style_func' => null,
+				'style_func' => array( new PBG_POST(), 'get_premium_post_css_style' ),
 			),
 			'premium/post'                  => array(
 				'name'       => 'post',
@@ -1518,8 +1518,8 @@ class PBG_Blocks_Helper {
 		$style_func = $block_data['style_func'];
 
 		$attr       = $this->get_block_attributes( $block );
+    
 		if ( ! empty( $style_func ) ) {
-
 			$unique_id = $this->get_block_unique_id( $block_name, $attr );
 			if ( ! is_callable( $style_func ) ) {
 				return;
@@ -2356,7 +2356,7 @@ public function premium_get_wp_local_fonts(){
 				}
 				if ( 'pricing-table' === $slug || 'icon-box' === $slug ||'count-up'=== $slug   ) {
 					require_once PREMIUM_BLOCKS_PATH . 'blocks-config/buttons/index.php';
-					require_once PREMIUM_BLOCKS_PATH . 'blocks-config/button.php';
+					require_once PREMIUM_BLOCKS_PATH . 'blocks-config/button/index.php';
 					require_once PREMIUM_BLOCKS_PATH . 'blocks-config/bullet-list/index.php';
 					require_once PREMIUM_BLOCKS_PATH . 'blocks-config/section/index.php';
 					require_once PREMIUM_BLOCKS_PATH . 'blocks-config/icon/index.php';
@@ -2383,7 +2383,7 @@ public function premium_get_wp_local_fonts(){
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/text.php';
 
 			} elseif ( $slug === 'buttons' ) {
-				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/button.php';
+				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/button/index.php';
 			} elseif ( $slug === 'instagram-feed' ) {
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/instagram-feed-header/index.php';
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/instagram-feed-posts/index.php';

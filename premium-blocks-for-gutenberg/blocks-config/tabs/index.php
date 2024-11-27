@@ -343,12 +343,12 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
          if ( isset( $attr['containerMargin'] ) ) {
             $container_margin = $attr['containerMargin'];
             $css->set_selector( $unique_id );
-            $css->add_property( 'margin',$css->render_string( $css->render_spacing( $container_margin['Desktop'],  $container_margin['unit']['Desktop']  )," !important") );
+            $css->add_property( 'margin',$css->render_spacing( $container_margin['Desktop'],  $container_margin['unit']['Desktop']));
         }
         if ( isset( $attr['containerPadding'] ) ) {
             $container_padding = $attr['containerPadding'];
             $css->set_selector( $unique_id );
-            $css->add_property( 'padding',$css->render_string( $css->render_spacing( $container_padding['Desktop'],  $container_padding['unit']['Desktop']  ) ," !important"));
+            $css->add_property( 'padding',$css->render_spacing( $container_padding['Desktop'],  $container_padding['unit']['Desktop']));
         }
         if ( isset( $attr['containerBorder'] ) ) {
             $border        = $attr['containerBorder'];
@@ -611,12 +611,12 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
          if ( isset( $attr['containerMargin'] ) ) {
             $container_margin = $attr['containerMargin'];
             $css->set_selector( $unique_id );
-            $css->add_property( 'margin',$css->render_string( $css->render_spacing( $container_margin['Tablet'],  $container_margin['unit']['Tablet']  )," !important") );
+            $css->add_property( 'margin', $css->render_spacing( $container_margin['Tablet'],  $container_margin['unit']['Tablet']));
         }
         if ( isset( $attr['containerPadding'] ) ) {
             $container_padding = $attr['containerPadding'];
             $css->set_selector( $unique_id );
-            $css->add_property( 'padding',$css->render_string( $css->render_spacing( $container_padding['Tablet'],  $container_padding['unit']['Tablet']  ) ," !important"));
+            $css->add_property( 'padding', $css->render_spacing( $container_padding['Tablet'],  $container_padding['unit']['Tablet']));
         }
         if ( isset( $attr['containerBorder'] ) ) {
             $border        = $attr['containerBorder'];
@@ -880,12 +880,12 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
              if ( isset( $attr['containerMargin'] ) ) {
                 $container_margin = $attr['containerMargin'];
                 $css->set_selector( $unique_id );
-                $css->add_property( 'margin',$css->render_string( $css->render_spacing( $container_margin['Mobile'],  $container_margin['unit']['Mobile']  )," !important") );
+                $css->add_property( 'margin', $css->render_spacing( $container_margin['Mobile'],  $container_margin['unit']['Mobile']));
             }
             if ( isset( $attr['containerPadding'] ) ) {
                 $container_padding = $attr['containerPadding'];
                 $css->set_selector( $unique_id );
-                $css->add_property( 'padding',$css->render_string( $css->render_spacing( $container_padding['Mobile'],  $container_padding['unit']['Mobile']  ) ," !important"));
+                $css->add_property( 'padding', $css->render_spacing( $container_padding['Mobile'],  $container_padding['unit']['Mobile']));
             }
             if ( isset( $attr['containerBorder'] ) ) {
                 $border        = $attr['containerBorder'];

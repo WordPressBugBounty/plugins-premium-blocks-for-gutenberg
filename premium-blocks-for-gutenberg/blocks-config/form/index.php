@@ -100,7 +100,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['inputsMargin'] ) ) {
 		$inputs_margin = $attr['inputsMargin'];
-		$css->set_selector( ".{$unique_id}.premium-form .premium-form-field-wrap" );
+		$css->set_selector( ".{$unique_id}.premium-form .premium-form-input" );
 		$css->add_property( 'margin', $css->render_spacing( $inputs_margin['Desktop'], $inputs_margin['unit']['Desktop'] ) );
 	}
 
@@ -368,7 +368,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['inputsMargin'] ) ) {
 		$inputs_margin = $attr['inputsMargin'];
-		$css->set_selector( ".{$unique_id}.premium-form .premium-form-field-wrap" );
+		$css->set_selector( ".{$unique_id}.premium-form .premium-form-input" );
 		$css->add_property( 'margin', $css->render_spacing( $inputs_margin['Tablet'], $inputs_margin['unit']['Tablet'] ) );
 	}
 
@@ -542,7 +542,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['inputsMargin'] ) ) {
 		$inputs_margin = $attr['inputsMargin'];
-		$css->set_selector( ".{$unique_id}.premium-form .premium-form-field-wrap" );
+		$css->set_selector( ".{$unique_id}.premium-form .premium-form-input" );
 		$css->add_property( 'margin', $css->render_spacing( $inputs_margin['Mobile'], $inputs_margin['unit']['Mobile'] ) );
 	}
 
