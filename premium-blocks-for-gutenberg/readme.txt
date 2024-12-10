@@ -3,9 +3,9 @@ Contributors: leap13
 Tags: gutenberg editor, gutenberg blocks, blocks, gutenberg addon, gutenberg free blocks
 Donate link: https://leap13.com
 Requires at least: 5.0
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.1.43
+Stable tag: 2.1.44
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,9 +125,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.1.44 =
+- Fixed: Icon Box Styles issues.
+- Fixed: Gallery Block Styles issues in the editor area.
+- Fixed: Form Block ReCAPTCHA and submit button issues.
+
 = 2.1.43 =
 - Fixed: Map style doesn't work properly.
-- Fixed: Icon width for lottie type issue.
+- Fixed: Icon width for lottie type.
 - Fixed: Advanced options don't work in tabs block.
 
 = 2.1.42 =

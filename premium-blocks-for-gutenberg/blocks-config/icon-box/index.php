@@ -22,7 +22,7 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['containerMargin'] ) ) {
 		$container_margin = $attr['containerMargin'];
 		$container_margin_unit=isset($container_margin['unit']['Desktop'])?$container_margin['unit']['Desktop']:$container_margin['unit'];
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->add_property( 'margin', $css->render_string($css->render_spacing( $container_margin['Desktop'], $container_margin_unit ) , '!important' ));
 	}
 
@@ -30,22 +30,22 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 		$container_padding = $attr['containerPadding'];
 		$container_padding_unit=isset($container_padding['unit']['Desktop'])?$container_padding['unit']['Desktop']:$container_padding['unit'];
 
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->add_property( 'padding', $css->render_string( $css->render_spacing( $container_padding['Desktop'], $container_padding_unit ), '!important' ) );
 	}
 	if ( isset( $attr['containerBackground'] ) ) {
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->render_background( $attr['containerBackground'], 'Desktop' );
 
 	}
 	if ( isset( $attr['containerHoverBackground'] ) ) {
-		$css->set_selector( '.' . $unique_id . ":hover");
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content:hover");
 		$css->render_background( $attr['containerHoverBackground'], 'Desktop' );
 
 	}
 
 	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
 
 		$css->set_selector( '.' . $unique_id . ' .premium-button-group' );
@@ -66,7 +66,7 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 		$container_border_width  = $container_border['borderWidth'];
 		$container_border_radius = $container_border['borderRadius'];
 
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->add_property( 'border-width', $css->render_spacing( $container_border_width['Desktop'], 'px' ) );
 		$css->add_property( 'border-radius', $css->render_spacing( $container_border_radius['Desktop'], 'px' ) );
 		if(isset($container_border['borderColor'])){
@@ -76,12 +76,12 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 	}
 
 	if ( isset( $attr['containerShadow'] ) ) {
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->add_property( 'box-shadow', $css->render_shadow( $attr['containerShadow'] ) );
 	}
 
 	if ( isset( $attr['containerHoverShadow'] )  ) {
-		$css->set_selector( '.' . $unique_id . ":hover");
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content:hover");
 		$css->add_property( 'box-shadow', $css->render_shadow( $attr['containerHoverShadow'] ) );
 	}
 
@@ -118,7 +118,7 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['containerMargin'] ) ) {
 		$container_margin = $attr['containerMargin'];
 		$container_margin_unit=isset($container_margin['unit']['Tablet'])?$container_margin['unit']['Tablet']:$container_margin['unit'];
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->add_property( 'margin', $css->render_string($css->render_spacing( $container_margin['Tablet'], $container_margin_unit ) , '!important' ));
 	}
 
@@ -126,21 +126,21 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 		$container_padding = $attr['containerPadding'];
 		$container_padding_unit=isset($container_padding['unit']['Tablet'])?$container_padding['unit']['Tablet']:$container_padding['unit'];
 
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->add_property( 'padding', $css->render_string( $css->render_spacing( $container_padding['Tablet'], $container_padding_unit ), '!important' ) );
 	}
 	if ( isset( $attr['containerBackground'] ) ) {
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->render_background( $attr['containerBackground'], 'Tablet' );
 
 	}
 	if ( isset( $attr['containerHoverBackground'] ) ) {
-		$css->set_selector( '.' . $unique_id . ":hover");
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content:hover");
 		$css->render_background( $attr['containerHoverBackground'], 'Tablet' );
 	}
 
 	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
 
 		$css->set_selector( '.' . $unique_id . ' .premium-button-group' );
@@ -161,7 +161,7 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 		$container_border_width  = $container_border['borderWidth'];
 		$container_border_radius = $container_border['borderRadius'];
 
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->add_property( 'border-width', $css->render_spacing( $container_border_width['Tablet'], 'px' ) );
 		$css->add_property( 'border-radius', $css->render_spacing( $container_border_radius['Tablet'], 'px' ) );
 	}
@@ -172,7 +172,7 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['containerMargin'] ) ) {
 		$container_margin = $attr['containerMargin'];
 		$container_margin_unit=isset($container_margin['unit']['Mobile'])?$container_margin['unit']['Mobile']:$container_margin['unit'];
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->add_property( 'margin', $css->render_string($css->render_spacing( $container_margin['Mobile'], $container_margin_unit ) , '!important' ));
 	}
 
@@ -180,23 +180,23 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 		$container_padding = $attr['containerPadding'];
 		$container_padding_unit=isset($container_padding['unit']['Mobile'])?$container_padding['unit']['Mobile']:$container_padding['unit'];
 
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->add_property( 'padding', $css->render_string( $css->render_spacing( $container_padding['Mobile'], $container_padding_unit ), '!important' ) );
 	}	
 	
 	if ( isset( $attr['containerBackground'] ) ) {
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->render_background( $attr['containerBackground'], 'Mobile' );
 
 	}
 
 	if ( isset( $attr['containerHoverBackground'] ) ) {
-		$css->set_selector( '.' . $unique_id . ":hover");
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content:hover");
 		$css->render_background( $attr['containerHoverBackground'], 'Mobile' );
 	}
 
 	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
 
 		$css->set_selector( '.' . $unique_id . ' .premium-button-group' );
@@ -217,7 +217,7 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 		$container_border_width  = $container_border['borderWidth'];
 		$container_border_radius = $container_border['borderRadius'];
 
-		$css->set_selector( '.' . $unique_id );
+		$css->set_selector( '.' . $unique_id . " .premium-icon-box-content");
 		$css->add_property( 'border-width', $css->render_spacing( $container_border_width['Mobile'], 'px' ) );
 		$css->add_property( 'border-radius', $css->render_spacing( $container_border_radius['Mobile'], 'px' ) );
 	}
