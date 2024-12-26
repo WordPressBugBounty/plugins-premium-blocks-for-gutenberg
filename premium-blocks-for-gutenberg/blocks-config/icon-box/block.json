@@ -254,12 +254,12 @@
         },
         "iconRange": {
             "type": "number",
-            "default": 0,
+            "default": 50,
             "isStyle": true
         },
         "iconHorRange": {
             "type": "number",
-            "default": 20,
+            "default": 30,
             "isStyle": true
         }
     },

@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.1.44
+Stable tag: 2.1.45
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,6 +125,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.1.45 =
+- Fixed: Vertical layout issue in the Tabs block.
+- Fixed: Console error for premium Gutenberg blocks in the editor.
+- Fixed: Gallery display issue in hidden sections.
+
 = 2.1.44 =
 - Fixed: Icon Box Styles issues.
 - Fixed: Gallery Block Styles issues in the editor area.

@@ -94,7 +94,9 @@
             "type": "string",
             "default": "dot"
         },
-
+        "queryId": {
+            "type": "number"
+        },
         "query": {
             "type": "object",
             "default": {

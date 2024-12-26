@@ -359,7 +359,7 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
         }
         if ( isset( $attr['containerBoxShadow'] ) ) {
             $css->set_selector( $unique_id );
-            $css->add_property( 'text-shadow', $css->render_shadow( $attr['containerBoxShadow'] ) );
+            $css->add_property( 'box-shadow', $css->render_shadow( $attr['containerBoxShadow'] ) );
         }
 
 

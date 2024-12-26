@@ -72,7 +72,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 
 
 		public function get_post_grid_content( $attributes, $content, $block ) {
-			$page_key = isset( $attributes['queryId'] ) ? 'query-' . $attributes['queryId'] . '-page' : 'query-page';
+			$page_key = isset( $attributes['queryId'] ) ? 'pbg-query-' . $attributes['queryId'] . '-p' : 'query-page';
 			$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 
 			$block_helpers = pbg_blocks_helper();
@@ -112,7 +112,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				}
 			}
 
-			 $query = $block_helpers->get_query( $attributes, 'grid' );
+			 $query = $block_helpers->get_query( $attributes, 'grid', $page );
 			self::$settings['grid'][ $attributes['blockId'] ] = $attributes;
 
 			ob_start();
@@ -123,7 +123,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 		}
 
 		public function get_post_carousel_content( $attributes, $content, $block ) {
-			$page_key = isset( $attributes['queryId'] ) ? 'query-' . $attributes['queryId'] . '-page' : 'query-page';
+			$page_key = isset( $attributes['queryId'] ) ? 'pbg-query-' . $attributes['queryId'] . '-p' : 'query-page';
 			$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 
 			$block_helpers = pbg_blocks_helper();
@@ -200,12 +200,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 						'premium-blog',
 						$attributes['blockId'],
 						'wp-block-premium-post-' . $type,
-            $attributes['className'],
-            isset($attributes['hideDesktop']) ? 'premium-desktop-hidden' : '',
-            isset($attributes['hideTablet']) ? 'premium-tablet-hidden' : '',
-            isset($attributes['hideMobile']) ? 'premium-mobile-hidden' : '',
-            
-
+            isset($attributes['className']) ? $attributes['className'] : '',
 					);
 
 					?>
@@ -411,14 +406,13 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 
 		public function render_premium_pagination($query,$attributes) {
 			$block_helpers = pbg_blocks_helper();
-
-			$page= $block_helpers->get_paged( $query );
+      
+      $page_key = isset( $attributes['queryId'] ) ? 'pbg-query-' . $attributes['queryId'] . '-p' : 'query-page';
+			$paged               =  empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];;
 
 			$permalink_structure = get_option( 'permalink_structure' );
 			$base                = untrailingslashit( wp_specialchars_decode( get_pagenum_link() ) );
 			$base                = $block_helpers->build_base_url( $permalink_structure, $base );
-			$format              = $block_helpers->paged_format( $permalink_structure, $base );
-			$paged               = $block_helpers->get_paged( $query );
 			$p_limit             = $attributes['pageLimit'];
 			$page_limit          = min( $p_limit, $query->max_num_pages );
 			$page_limit          = isset( $page_limit ) ? $page_limit :  $attributes['query']['perPage'];
@@ -426,7 +420,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			$links = paginate_links(
 				array(
 					'base'      => $base . '%_%',
-					'format'    => $format,
+					'format'    => "?$page_key=%#%",
 					'current'   => ( ! $paged ) ? 1 : $paged,
 					'total'     => $page_limit,
 					'type'      => 'array',
@@ -761,7 +755,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			$media_query['mobile']  = apply_filters( 'Premium_BLocks_mobile_media_query', '(max-width: 767px)' );
 			$media_query['tablet']  = apply_filters( 'Premium_BLocks_tablet_media_query', '(max-width: 1024px)' );
 			$media_query['desktop'] = apply_filters( 'Premium_BLocks_tablet_media_query', '(min-width: 1025px)' );
-      // var_dump($attr);
+      
 			if ( isset( $attr['columns'] ) && ! empty( $attr['columns']['Desktop'] ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
 				$css->add_property( 'width', 'calc(100% / ' . $attr['columns']['Desktop'] . ')' );

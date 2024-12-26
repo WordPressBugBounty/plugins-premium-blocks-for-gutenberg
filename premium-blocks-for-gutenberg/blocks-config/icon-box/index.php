@@ -51,7 +51,7 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 		$css->set_selector( '.' . $unique_id . ' .premium-button-group' );
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
 
-		$css->set_selector( '.' . $unique_id . ' .premium-button-group .premium-button-group_wrap' );
+		$css->set_selector( '.' . $unique_id . ' .premium-button-group_wrap' );
 		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
 
 		$css->set_selector( '.' . $unique_id . ' .premium-icon-container' );
@@ -86,31 +86,13 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 	}
 
 	if ( isset( $attr['iconRange'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .is-style-var1-icon .premium-icon' );
-		$css->add_property( 'left', $css->render_string( $attr['iconRange'], '% !important' ) );
-
-		$css->set_selector( '.' . $unique_id . ' .is-style-var1-icon img' );
-		$css->add_property( 'left', $css->render_string( $attr['iconRange'], '% !important' ) );
-
-		$css->set_selector( '.' . $unique_id . ' .is-style-var1-icon .premium-icon-svg-class' );
-		$css->add_property( 'left', $css->render_string( $attr['iconRange'], '% !important' ) );
-
-		$css->set_selector( '.' . $unique_id . ' .is-style-var1-icon .premium-lottie-animation svg' );
+		$css->set_selector( '.' . $unique_id . ' .is-style-var1-icon' );
 		$css->add_property( 'left', $css->render_string( $attr['iconRange'], '% !important' ) );
 	}
 
 	if ( isset( $attr['iconHorRange'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .is-style-horizontal1-icon .premium-icon' );
-		$css->add_property( 'margin-top', $css->render_string( $attr['iconHorRange'], 'px !important' ) );
-
-		$css->set_selector( '.' . $unique_id . ' .is-style-horizontal1-icon img' );
-		$css->add_property( 'margin-top', $css->render_string( $attr['iconHorRange'], 'px !important' ) );
-
-		$css->set_selector( '.' . $unique_id . ' .is-style-horizontal1-icon .premium-icon-svg-class' );
-		$css->add_property( 'margin-top', $css->render_string( $attr['iconHorRange'], 'px !important' ) );
-
-		$css->set_selector( '.' . $unique_id . ' .is-style-horizontal1-icon .premium-lottie-animation svg' );
-		$css->add_property( 'margin-top', $css->render_string( $attr['iconHorRange'], 'px !important' ) );
+		$css->set_selector( '.' . $unique_id . ' .is-style-horizontal1-icon' );
+		$css->add_property( 'top', $css->render_string( $attr['iconHorRange'], '% !important' ) );
 	}
 
 	$css->start_media_query( 'tablet' );
@@ -146,7 +128,7 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 		$css->set_selector( '.' . $unique_id . ' .premium-button-group' );
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
 
-		$css->set_selector( '.' . $unique_id . ' .premium-button-group .premium-button-group_wrap' );
+		$css->set_selector( '.' . $unique_id . ' .premium-button-group_wrap' );
 		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
 
 		$css->set_selector( '.' . $unique_id . ' .premium-icon-container' );
@@ -202,7 +184,7 @@ function get_premium_icon_box_css_style( $attr, $unique_id ) {
 		$css->set_selector( '.' . $unique_id . ' .premium-button-group' );
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
 
-		$css->set_selector( '.' . $unique_id . ' .premium-button-group .premium-button-group_wrap' );
+		$css->set_selector( '.' . $unique_id . ' .premium-button-group_wrap' );
 		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
 
 		$css->set_selector( '.' . $unique_id . ' .premium-icon-container' );

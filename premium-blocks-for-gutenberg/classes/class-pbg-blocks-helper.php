@@ -2811,10 +2811,15 @@ public function premium_get_wp_local_fonts(){
 			}
 		} else {
 			$url_params = wp_parse_url( $base, PHP_URL_QUERY );
-
-			if ( empty( $url_params ) ) {
+			
+      if ( empty( $url_params ) ) {
 				$base = trailingslashit( $base );
 			}
+
+      if ( count( $_GET ) > 0 ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $base = explode("?", $base)[0];
+			}
+
 		}
 
 		return $base;
@@ -2851,7 +2856,7 @@ public function premium_get_wp_local_fonts(){
 	 * @param string $block_type The Block Type.
 	 * @since 1.8.2
 	 */
-	public static function get_query( $attributes, $block_type ) {
+	public static function get_query( $attributes, $block_type, $page = 1 ) {
 		// Block type is grid/masonry/carousel/timeline.
 		$query_args     = array(
 			'posts_per_page' => ( isset( $attributes['query']['perPage'] ) ) ? $attributes['query']['perPage'] : 6,
@@ -2898,19 +2903,8 @@ public function premium_get_wp_local_fonts(){
 		}
 		if ( isset( $attributes['pagination'] ) && true === $attributes['pagination'] ) {
 
-			if ( get_query_var( 'paged' ) ) {
-
-				$paged = get_query_var( 'paged' );
-
-			} elseif ( get_query_var( 'page' ) ) {
-
-				$paged = get_query_var( 'page' );
-
-			} else {
-
-				$paged = isset( $attributes['paged'] ) ? $attributes['paged'] : 1;
-
-			}
+      $paged = isset( $attributes['paged'] ) ? $attributes['paged'] : $page;
+			
 			$query_args['posts_per_page'] = $attributes['query']['perPage'];
 			$query_args['paged']          = $paged;
 
