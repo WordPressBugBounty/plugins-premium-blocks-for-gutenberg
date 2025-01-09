@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.1.45
+Stable tag: 2.1.46
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,6 +125,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.1.46 =
+- Fixed: Resolved deprecation warnings for RichText in some Premium Gutenberg Blocks.
+- Fixed: Addressed Metro Style issue in Media Gallery Block.
+- Fixed: Style issues with the FSLightbox library in the Gallery and Instagram Blocks.
+- Tweak: Improved compatibility for better integration with other components.
+- Tweak: Various updates for enhanced functionality.
+
 = 2.1.45 =
 - Fixed: Vertical layout issue in the Tabs block.
 - Fixed: Console error for premium Gutenberg blocks in the editor.

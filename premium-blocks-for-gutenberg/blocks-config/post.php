@@ -262,7 +262,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			while ( $query->have_posts() ) {
 				$query->the_post();
 
-				$thumb = ( ! has_post_thumbnail()  ||  !$attributes['displayPostImage'] ) ? 'empty-thumb' : '';
+				$thumb = !$attributes['displayPostImage'] ? 'empty-thumb' : '';
 				$contentWrap     = array( 'premium-blog-content-wrapper',$thumb);
 				// Filter to modify the attributes based on content requirement.
 				$attributes = apply_filters( 'premium_post_alter_attributes', $attributes, get_the_ID() );
@@ -327,12 +327,10 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 		}
 
 		public function render_image( $attributes ) {
-			if ( ! $attributes['displayPostImage'] ) {
+			if ( ! $attributes['displayPostImage'] && $attributes['style'] !== "banner" ) {
 				return;
 			}
-			if ( ! get_the_post_thumbnail_url() ) {
-				return;
-			}
+	
 			$attributes['displayPostImage']
 						= array(
 							'id' => get_post_thumbnail_id(),
@@ -361,16 +359,24 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			<div class="premium-blog-thumb-effect-wrapper">
 				<div class="<?php echo esc_html( implode( ' ', $wrapImage ) ); ?>">
 				 <?php
+					if ( in_array( $attributes['style'], array( 'modern', 'cards' ), true ) ) {
+						?>
+              <a href="<?php esc_url(  get_the_permalink() ); ?>" >
+            <?php
+					}
+
+          if(get_post_thumbnail_id()){
+            echo wp_get_attachment_image( get_post_thumbnail_id(), $attributes['imageSize'] );
+          }else{
+            $default_img = PREMIUM_BLOCKS_URL . 'assets/img/author.jpg';
+            ?>  
+              <img src="<?php echo esc_url( $default_img ); ?>" />
+            <?php
+          }
 
 					if ( in_array( $attributes['style'], array( 'modern', 'cards' ), true ) ) {
 						?>
-					<a href="<?php esc_url(  get_the_permalink() ); ?>" >
-				<?php
-					}
-					echo wp_get_attachment_image( get_post_thumbnail_id(), $attributes['imageSize'] );
-					if ( in_array( $attributes['style'], array( 'modern', 'cards' ), true ) ) {
-						?>
-				</a>
+				      </a>
 						<?php
 					}
 					?>

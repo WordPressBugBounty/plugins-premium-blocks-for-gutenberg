@@ -804,16 +804,7 @@ class PBG_Blocks_Helper {
 		$media_query['desktop'] = apply_filters( 'Premium_BLocks_tablet_media_query', '(min-width: 1025px)' );
 
 		if ( isset( $block['attrs']['clickAction'] ) && 'lightBox' === $block['attrs']['clickAction'] ) {
-			$images_lightbox_js = PREMIUM_BLOCKS_URL . 'assets/js/lib/fslightbox.min.js';
-			$fsligntbox_css     = PREMIUM_BLOCKS_URL . 'assets/css/minified/fslightbox.min.css';
-
-			wp_enqueue_style(
-				'create-block-imagegallery-fslightbox-style',
-				$fsligntbox_css,
-				array(),
-				PREMIUM_BLOCKS_VERSION,
-				true
-			);
+			$images_lightbox_js = PREMIUM_BLOCKS_URL . 'assets/js/lib/fslightbox.js';
 
 			wp_enqueue_script(
 				'image-gallery-fslightbox-js',

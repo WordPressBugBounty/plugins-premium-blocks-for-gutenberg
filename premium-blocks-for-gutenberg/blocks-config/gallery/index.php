@@ -4,13 +4,10 @@
     //Frontend Style
  
     $images_loaded_js = PREMIUM_BLOCKS_URL . 'assets/js/lib/imageLoaded.min.js';
-    $images_lightbox_js = PREMIUM_BLOCKS_URL . 'assets/js/lib/fslightbox.min.js';
+    $images_lightbox_js = PREMIUM_BLOCKS_URL . 'assets/js/lib/fslightbox.js';
 
 
     $style_css = PREMIUM_BLOCKS_URL . 'assets/css/minified/gallery.min.css';
-    $fsligntbox_css = PREMIUM_BLOCKS_URL . 'assets/css/minified/fslightbox.min.css';
-
-
 
     wp_register_style(
         'create-block-imagegallery-block-frontend-style',
@@ -25,12 +22,6 @@
         array( 'jquery' ),
         PREMIUM_BLOCKS_VERSION,
         true
-    );
-    wp_register_style(
-        'create-block-imagegallery-fslightbox-style',
-        $fsligntbox_css,
-        array(),
-        PREMIUM_BLOCKS_VERSION,
     );
 
     wp_register_script(

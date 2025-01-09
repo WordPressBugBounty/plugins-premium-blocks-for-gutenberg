@@ -104,20 +104,20 @@
             "isStyle": true
         },
         "title": {
-            "type": "array",
-            "source": "children",
+            "type": "string",
+            "source": "html",
             "selector": ".premium-banner__title",
-            "default": ["Awesome title"]
+            "default": "Awesome title"
         },
         "titleTag": {
             "type": "string",
             "default": "h3"
         },
         "desc": {
-            "type": "array",
-            "source": "children",
+            "type": "string",
+            "source": "html",
             "selector": ".premium-banner__desc",
-            "default": ["Cool Description !!"]
+            "default": "Cool Description !!"
         },
         "contentAlign": {
             "type": "object",

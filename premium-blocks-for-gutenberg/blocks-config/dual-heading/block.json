@@ -21,14 +21,14 @@
             }
         },
         "firstHeading": {
-            "type": "array",
-            "source": "children",
+            "type": "string",
+            "source": "html",
             "default": "Premium ",
             "selector": ".premium-dheading-block__first"
         },
         "secondHeading": {
-            "type": "array",
-            "source": "children",
+            "type": "string",
+            "source": "html",
             "default": "Blocks",
             "selector": ".premium-dheading-block__second"
         },
