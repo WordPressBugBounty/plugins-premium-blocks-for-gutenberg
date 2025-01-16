@@ -761,7 +761,6 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			$media_query['mobile']  = apply_filters( 'Premium_BLocks_mobile_media_query', '(max-width: 767px)' );
 			$media_query['tablet']  = apply_filters( 'Premium_BLocks_tablet_media_query', '(max-width: 1024px)' );
 			$media_query['desktop'] = apply_filters( 'Premium_BLocks_tablet_media_query', '(min-width: 1025px)' );
-      
 			if ( isset( $attr['columns'] ) && ! empty( $attr['columns']['Desktop'] ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
 				$css->add_property( 'width', 'calc(100% / ' . $attr['columns']['Desktop'] . ')' );

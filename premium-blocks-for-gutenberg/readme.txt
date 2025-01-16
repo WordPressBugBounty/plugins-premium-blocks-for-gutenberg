@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.1.46
+Stable tag: 2.1.47
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,6 +125,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.1.47 =
+- Fixed: Issue with open/close states for the accordion block in the editor.
+
 = 2.1.46 =
 - Fixed: Resolved deprecation warnings for RichText in some Premium Gutenberg Blocks.
 - Fixed: Addressed Metro Style issue in Media Gallery Block.
