@@ -45,7 +45,7 @@ function get_premium_container_css_style( $attr, $unique_id ) {
     $css->add_property( 'row-gap', isset( $attr['rowGutter']['Desktop'] ) ? $css->render_range( $attr['rowGutter'], 'Desktop' ) : '20px' );
     $css->add_property( 'column-gap', isset( $attr['columnGutter']['Desktop'] ) ? $css->render_range( $attr['columnGutter'], 'Desktop' ) : '20px' );
 
-    $css->set_selector( '.wp-block-premium-container.premium-is-root-container  .premium-container-inner-blocks-wrap .premium-container-' . $unique_id . '  > .premium-container-inner-blocks-wrap , .wp-block-premium-container.premium-is-root-container  .premium-container-inner-blocks-wrap .premium-block-' . $unique_id . '  > .premium-container-inner-blocks-wrap  , .premium-container-' . $unique_id . '  > .premium-container-inner-blocks-wrap' );
+    $css->set_selector( '.wp-block-premium-container.premium-is-root-container  .premium-container-inner-blocks-wrap .premium-container-' . $unique_id . '  > .premium-container-inner-blocks-wrap , .wp-block-premium-container.premium-is-root-container  .premium-container-inner-blocks-wrap .premium-block-' . $unique_id . '  > .premium-container-inner-blocks-wrap , .premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap' );
 
     if ( isset( $attr['minHeight'] ) ) {
         $css->add_property( 'min-height', $css->render_range( $attr['minHeight'], 'Desktop' ) );
@@ -221,7 +221,7 @@ function get_premium_container_css_style( $attr, $unique_id ) {
     $css->add_property( 'row-gap', isset( $attr['rowGutter']['Tablet'] ) ? $css->render_range( $attr['rowGutter'], 'Tablet' ) : '20px' );
     $css->add_property( 'column-gap', isset( $attr['columnGutter']['Tablet'] ) ? $css->render_range( $attr['columnGutter'], 'Tablet' ) : '20px' );
 
-    $css->set_selector( '.wp-block-premium-container.premium-is-root-container  .premium-container-inner-blocks-wrap .premium-container-' . $unique_id . '  > .premium-container-inner-blocks-wrap , .wp-block-premium-container.premium-is-root-container  .premium-container-inner-blocks-wrap .premium-block-' . $unique_id . '  > .premium-container-inner-blocks-wrap' );
+    $css->set_selector( '.wp-block-premium-container.premium-is-root-container  .premium-container-inner-blocks-wrap .premium-container-' . $unique_id . '  > .premium-container-inner-blocks-wrap , .wp-block-premium-container.premium-is-root-container  .premium-container-inner-blocks-wrap .premium-block-' . $unique_id . '  > .premium-container-inner-blocks-wrap , .premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap' );
     if ( isset( $attr['minHeight'] ) ) {
         $css->add_property( 'min-height', $css->render_range( $attr['minHeight'], 'Tablet' ) );
     }
@@ -351,7 +351,7 @@ function get_premium_container_css_style( $attr, $unique_id ) {
     $css->add_property( 'row-gap', isset( $attr['rowGutter']['Mobile'] ) ? $css->render_range( $attr['rowGutter'], 'Mobile' ) : '20px' );
     $css->add_property( 'column-gap', isset( $attr['columnGutter']['Mobile'] ) ? $css->render_range( $attr['columnGutter'], 'Mobile' ) : '20px' );
 
-    $css->set_selector( '.wp-block-premium-container.premium-is-root-container  .premium-container-inner-blocks-wrap .premium-container-' . $unique_id . '  > .premium-container-inner-blocks-wrap , .wp-block-premium-container.premium-is-root-container  .premium-container-inner-blocks-wrap .premium-block-' . $unique_id . '  > .premium-container-inner-blocks-wrap' );
+    $css->set_selector( '.wp-block-premium-container.premium-is-root-container  .premium-container-inner-blocks-wrap .premium-container-' . $unique_id . '  > .premium-container-inner-blocks-wrap , .wp-block-premium-container.premium-is-root-container  .premium-container-inner-blocks-wrap .premium-block-' . $unique_id . '  > .premium-container-inner-blocks-wrap , .premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap' );
     if ( isset( $attr['minHeight'] ) ) {
         $css->add_property( 'min-height', $css->render_range( $attr['minHeight'], 'Mobile' ) );
     }

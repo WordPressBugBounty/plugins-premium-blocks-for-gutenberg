@@ -108,23 +108,16 @@ function render_block_pbg_count_up( $attributes, $content, $block ) {
 	// Enqueue frontend JS/CSS.
 	if ( $block_helpers->it_is_not_amp() ) {
 		wp_enqueue_script(
-			'pbg-waypoints',
-			PREMIUM_BLOCKS_URL . 'assets/js/lib/jquery.waypoints.js',
-			array( 'jquery' ),
-			PREMIUM_BLOCKS_VERSION,
-			true
-		);
-		wp_enqueue_script(
 			'pbg-counter',
-			PREMIUM_BLOCKS_URL . 'assets/js/lib/countUpmin.js',
-			array( 'jquery' ),
+			PREMIUM_BLOCKS_URL . 'assets/js/lib/countUp.umd.js',
+			array(),
 			PREMIUM_BLOCKS_VERSION,
 			true
 		);
 		wp_enqueue_script(
 			'pbg-countup',
 			PREMIUM_BLOCKS_URL . 'assets/js/minified/countup.min.js',
-			array( 'jquery' ),
+			array(),
 			PREMIUM_BLOCKS_VERSION,
 			true
 		);

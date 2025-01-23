@@ -647,7 +647,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$wrapbutton     = 'premium-blog-excerpt-link-wrap';
 				$wrapbutton    .= ( isset( $attributes['fullWidth'] ) && $attributes['fullWidth'] ) ? ' premium-blog-full-link' : '';
 				$wrapper_class = get_block_wrapper_attributes( array( 'class' => trim( $wrapbutton ) ) );
-				$button_content = '<span class="premium-blog-excerpt-link " href="' . esc_url( get_the_permalink() ) . '">' . wp_kses_post( $attributes['readMoreText'] ) . '</span>';
+				$button_content = '<a class="premium-blog-excerpt-link wp-block-button__link" href="' . esc_url( get_the_permalink() ) . '">' . wp_kses_post( $attributes['readMoreText'] ) . '</a>';
 				$content       .= sprintf(
 					'<div %1$s>%2$s</div>',
 					$wrapper_class,
@@ -790,10 +790,14 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
 				$css->add_property( 'padding-right','calc(' . $css->render_range( $attr['columnGap'], 'Desktop' ).'/2 )' );
 				$css->add_property( 'padding-left','calc(' . $css->render_range( $attr['columnGap'], 'Desktop' ).'/2 )'  );
+				
+        $css->set_selector( '.' . $unique_id . '.premium-blog-grid .premium-blog-wrap' );
+				$css->add_property( 'margin-right','calc(-' . $css->render_range( $attr['columnGap'], 'Desktop' ).'/2 )' );
+				$css->add_property( 'margin-left','calc(-' . $css->render_range( $attr['columnGap'], 'Desktop' ).'/2 )'  );
 			}
 			if ( isset( $attr['rowGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
-				$css->add_property( 'margin-bottom', $css->render_range( $attr['rowGap'], 'Desktop' ) );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-wrap' );
+				$css->add_property( 'row-gap', $css->render_range( $attr['rowGap'], 'Desktop' ) );
 			}
 
 			if ( isset( $attr['margin'] ) ) {
@@ -969,11 +973,11 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			// excerpt
 
 			if ( isset( $attr['btnTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap .premium-blog-excerpt-link' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->render_typography( $attr['btnTypography'], 'Desktop' );
 			}
 			if ( isset( $attr['buttonSpacing'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap ' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'margin-top', $css->render_range( $attr['buttonSpacing'], 'Desktop' ) );
 			}
 			if ( isset( $attr['btnBorder'] ) ) {
@@ -982,7 +986,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$content_border_color  = $attr['btnBorder']['borderColor'];
 				$content_border_type   = $attr['btnBorder']['borderType'];
 
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'border-color', $css->render_color( $content_border_color ) );
 				$css->add_property( 'border-style',$css->render_string( $content_border_type ,''));
 
@@ -995,7 +999,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$content_border_color  = $attr['btnBorderHover']['borderColor'];
 				$content_border_type   = $attr['btnBorderHover']['borderType'];
 
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap:hover' );
+				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link:hover' );
 				if($content_border_type !=="none"){
 					$css->add_property( 'border-color', $css->render_color( $content_border_color ) );
 					$css->add_property( 'border-style',$css->render_string( $content_border_type ,'' ));
@@ -1007,24 +1011,24 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			}
 			if ( isset( $attr['btnPadding'] ) ) {
 				$button_padding = $attr['btnPadding'];
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap ' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'padding', $css->render_spacing( $button_padding['Desktop'],  isset($button_padding['unit']['Desktop'] )?$button_padding['unit']['Desktop']:$button_padding['unit']) );
 			}
 
 			if ( isset( $attr['buttonColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap .premium-blog-excerpt-link' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'color', $css->render_color( $attr['buttonColor'] ) );
 			}
 			if ( isset( $attr['buttonBackground'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap ' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'background-color', $css->render_color( $attr['buttonBackground'] ) );
 			}
 			if ( isset( $attr['buttonhover'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap:hover .premium-blog-excerpt-link' );
+				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link:hover' );
 				$css->add_property( 'color', $css->render_color( $attr['buttonhover'] ) );
 			}
 			if ( isset( $attr['hoverBackground'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap:hover' );
+				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link:hover' );
 				$css->add_property( 'background-color', $css->render_color( $attr['hoverBackground'] ) );
 			}
 			if ( isset( $attr['arrowSize'] ) ) {
@@ -1213,13 +1217,17 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			}
 			if ( isset( $attr['columnGap'] ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
-				$css->add_property( 'padding-right', $css->render_range( $attr['columnGap'], 'Tablet' ) );
-				$css->add_property( 'padding-left', $css->render_range( $attr['columnGap'], 'Tablet' ) );
+				$css->add_property( 'padding-right','calc(' . $css->render_range( $attr['columnGap'], 'Tablet' ).'/2 )' );
+				$css->add_property( 'padding-left','calc(' . $css->render_range( $attr['columnGap'], 'Tablet' ).'/2 )'  );
+
+        $css->set_selector( '.' . $unique_id . '.premium-blog-grid .premium-blog-wrap' );
+				$css->add_property( 'margin-right','calc(-' . $css->render_range( $attr['columnGap'], 'Tablet' ).'/2 )' );
+				$css->add_property( 'margin-left','calc(-' . $css->render_range( $attr['columnGap'], 'Tablet' ).'/2 )'  );
 
 			}
 			if ( isset( $attr['rowGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
-				$css->add_property( 'margin-bottom', $css->render_range( $attr['rowGap'], 'Tablet' ) );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-wrap' );
+				$css->add_property( 'row-gap', $css->render_range( $attr['rowGap'], 'Tablet' ) );
 			}
 
 			if ( isset( $attr['margin'] ) ) {
@@ -1314,11 +1322,11 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			// excerpt
 
 			if ( isset( $attr['btnTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap .premium-blog-excerpt-link' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->render_typography( $attr['btnTypography'], 'Tablet' );
 			}
 			if ( isset( $attr['buttonSpacing'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap .premium-blog-excerpt-link' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'margin-top', $css->render_range( $attr['buttonSpacing'], 'Tablet' ) );
 			}
 			if ( isset( $attr['btnBorder'] ) ) {
@@ -1327,7 +1335,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$content_border_color  = $attr['btnBorder']['borderColor'];
 				$content_border_type   = $attr['btnBorder']['borderType'];
 
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap .premium-blog-excerpt-link' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'border-color', $css->render_color( $content_border_color ) );
 				$css->add_property( 'border-style', $content_border_type );
 
@@ -1340,7 +1348,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$content_border_color  = $attr['btnBorderHover']['borderColor'];
 				$content_border_type   = $attr['btnBorderHover']['borderType'];
 
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap  .premium-blog-excerpt-link:hover' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link:hover' );
 				$css->add_property( 'border-color', $css->render_color( $content_border_color ) );
 				$css->add_property( 'border-style', $content_border_type );
 
@@ -1349,7 +1357,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			}
 			if ( isset( $attr['btnPadding'] ) ) {
 				$button_padding = $attr['btnPadding'];
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap .premium-blog-excerpt-link' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'padding', $css->render_spacing( $button_padding['Tablet'], isset( $button_padding['unit']['Tablet'])? $button_padding['unit']['Tablet']: $button_padding['unit'] ) );
 			}
 			if ( isset( $attr['catBorder'] ) ) {
@@ -1417,13 +1425,16 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			}
 			if ( isset( $attr['columnGap'] ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
-				$css->add_property( 'padding-right', $css->render_range( $attr['columnGap'], 'Mobile' ) );
-				$css->add_property( 'padding-left', $css->render_range( $attr['columnGap'], 'Mobile' ) );
+				$css->add_property( 'padding-right','calc(' . $css->render_range( $attr['columnGap'], 'Mobile' ).'/2 )' );
+				$css->add_property( 'padding-left','calc(' . $css->render_range( $attr['columnGap'], 'Mobile' ).'/2 )'  );
 
+        $css->set_selector( '.' . $unique_id . '.premium-blog-grid .premium-blog-wrap' );
+				$css->add_property( 'margin-right','calc(-' . $css->render_range( $attr['columnGap'], 'Mobile' ).'/2 )' );
+				$css->add_property( 'margin-left','calc(-' . $css->render_range( $attr['columnGap'], 'Mobile' ).'/2 )'  );
 			}
 			if ( isset( $attr['rowGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
-				$css->add_property( 'margin-bottom', $css->render_range( $attr['rowGap'], 'Mobile' ) );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-wrap' );
+				$css->add_property( 'row-gap', $css->render_range( $attr['rowGap'], 'Mobile' ) );
 			}
 
 			if ( isset( $attr['margin'] ) ) {
@@ -1519,11 +1530,11 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			// excerpt
 
 			if ( isset( $attr['btnTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap .premium-blog-excerpt-link' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->render_typography( $attr['btnTypography'], 'Mobile' );
 			}
 			if ( isset( $attr['buttonSpacing'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap .premium-blog-excerpt-link' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'margin-top', $css->render_range( $attr['buttonSpacing'], 'Mobile' ) );
 			}
 			if ( isset( $attr['btnBorder'] ) ) {
@@ -1532,7 +1543,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$content_border_color  = $attr['btnBorder']['borderColor'];
 				$content_border_type   = $attr['btnBorder']['borderType'];
 
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap .premium-blog-excerpt-link' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'border-color', $css->render_color( $content_border_color ) );
 				$css->add_property( 'border-style', $content_border_type );
 
@@ -1545,7 +1556,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$content_border_color  = $attr['btnBorderHover']['borderColor'];
 				$content_border_type   = $attr['btnBorderHover']['borderType'];
 
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap  .premium-blog-excerpt-link:hover' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link:hover' );
 				$css->add_property( 'border-color', $css->render_color( $content_border_color ) );
 				$css->add_property( 'border-style', $content_border_type );
 
@@ -1554,7 +1565,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			}
 			if ( isset( $attr['btnPadding'] ) ) {
 				$button_padding = $attr['btnPadding'];
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link-wrap .premium-blog-excerpt-link' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'padding', $css->render_spacing( $button_padding['Mobile'],isset($button_padding['unit']['Mobile'])?$button_padding['unit']['Mobile']:$button_padding['unit']  ) );
 			}
 			if ( isset( $attr['catBorder'] ) ) {
