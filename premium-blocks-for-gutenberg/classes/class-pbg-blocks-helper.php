@@ -824,14 +824,6 @@ class PBG_Blocks_Helper {
 			true
 		);
 
-		// carousel slick css.
-		wp_enqueue_style(
-			'premium-instagram-feed-view',
-			PREMIUM_BLOCKS_URL . 'assets/js/build/instagram-feed/view.css',
-			array(),
-			PREMIUM_BLOCKS_VERSION
-		);
-
 		wp_localize_script(
 			'premium-instagram-feed-view',
 			'PBGPRO_InstaFeed',
@@ -1044,11 +1036,11 @@ class PBG_Blocks_Helper {
 			),
 			'premium/post-carousel'         => array(
 				'name'       => 'post',
-				'style_func' => array( new PBG_POST(), 'get_premium_post_css_style' ),
+				'style_func' => array( 'PBG_Post', 'get_premium_post_css_style' ),
 			),
 			'premium/post-grid'             => array(
 				'name'       => 'post',
-				'style_func' => array( new PBG_POST(), 'get_premium_post_css_style' ),
+				'style_func' => array( 'PBG_Post', 'get_premium_post_css_style' ),
 			),
 			'premium/post'                  => array(
 				'name'       => 'post',
@@ -1512,14 +1504,16 @@ class PBG_Blocks_Helper {
     
 		if ( ! empty( $style_func ) ) {
 			$unique_id = $this->get_block_unique_id( $block_name, $attr );
-			if ( ! is_callable( $style_func ) ) {
-				return;
-			}
 			if ( is_array( $style_func ) ) {
 				$class      = $style_func[0];
 				$instance   = $class::get_instance();
 				$style_func = array( $instance, $style_func[1] );
 			}
+      
+      if ( ! is_callable( $style_func ) ) {
+				return;
+			}
+      
 			$css = call_user_func( $style_func, $attr, $unique_id );
 
 			if ( apply_filters( 'Premium_BLocks_blocks_render_inline_css', true, $block_data['name'], $unique_id ) ) {
@@ -1908,7 +1902,6 @@ class PBG_Blocks_Helper {
 		}
 		$generate_css->pbg_add_css( 'assets/css/minified/blockseditor.min.css' );
 		$generate_css->pbg_add_css( 'assets/css/minified/editorpanel.min.css' );
-		$generate_css->pbg_add_css( 'assets/css/minified/carousel.min.css' );
 		$is_rtl = is_rtl() ? true : false;
 		$is_rtl ? $generate_css->pbg_add_css( 'assets/css/minified/style-blocks-rtl.min.css' ) : '';
 
@@ -1951,6 +1944,7 @@ class PBG_Blocks_Helper {
 				}
 				if ( 'post-carousel' === $slug || 'post-grid' === $slug || 'post-masonary' === $slug ) {
 					$generate_css->pbg_add_css( 'assets/css/minified/post.min.css' );
+					$generate_css->pbg_add_css( 'assets/css/minified/splide.min.css' );
 				} elseif ( 'form' === $slug ) {
 					$generate_css->pbg_add_css( 'assets/css/minified/form-toggle.min.css' );
 					$generate_css->pbg_add_css( 'assets/css/minified/form-checkbox.min.css' );
@@ -1959,6 +1953,7 @@ class PBG_Blocks_Helper {
 					$generate_css->pbg_add_css( 'assets/css/minified/form-phone.min.css' );
 					$generate_css->pbg_add_css( 'assets/css/minified/form-select.min.css' );
 				}
+
 
 				$generate_css->pbg_add_css( "assets/css/minified/{$slug}.min.css" );
 			}

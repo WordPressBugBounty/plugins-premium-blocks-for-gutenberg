@@ -212,44 +212,45 @@ function get_premium_instagram_feed_posts_css( $attr, $unique_id ) {
 	// Carousel.
 	if ( isset( $attr['layoutStyle'] ) && $attr['layoutStyle'] === 'carousel' ) {
 		if ( isset( $attr['arrowsBorderRadius'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-arrow" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow" );
 			$css->add_property( 'border-radius', $css->render_range( $attr['arrowsBorderRadius'], 'Desktop' ) );
 		}
 		if ( isset( $attr['arrowsPadding'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-arrow" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow" );
 			$css->add_property( 'padding', $css->render_spacing( $attr['arrowsPadding']['Desktop'], isset( $attr['arrowsPadding']['unit']['Desktop'] ) ? $attr['arrowsPadding']['unit']['Desktop'] : $attr['arrowsPadding']['unit'] ) );
 		}
 		if ( isset( $attr['arrowsBackground'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-arrow" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow" );
 			$css->render_background( $attr['arrowsBackground'], $css );
 		}
 		if ( isset( $attr['arrowsPosition'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow.slick-next" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow.splide__arrow--next" );
 			$css->add_property( 'right', $css->render_range( $attr['arrowsPosition'], 'Desktop' ) );
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow.slick-prev" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow.splide__arrow--prev" );
 			$css->add_property( 'left', $css->render_range( $attr['arrowsPosition'], 'Desktop' ) );
 		}
 		if ( isset( $attr['arrowsVerticalPosition'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow.slick-next" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow.splide__arrow--next" );
 			$css->add_property( 'top', $css->render_range( $attr['arrowsVerticalPosition'], 'Desktop' ) );
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow.slick-prev" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow.splide__arrow--prev" );
 			$css->add_property( 'top', $css->render_range( $attr['arrowsVerticalPosition'], 'Desktop' ) );
 		}
 		if ( isset( $attr['arrowsHoverBackground'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow:hover" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow:hover" );
 			$css->render_background( $attr['arrowsHoverBackground'], $css );
 		}
 		if ( isset( $attr['arrowsColor'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow:before" );
-			$css->add_property( 'color', $attr['arrowsColor'] );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow svg" );
+			$css->add_property( 'fill', $attr['arrowsColor'] );
 		}
 		if ( isset( $attr['arrowsSize'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow:before" );
-			$css->add_property( 'font-size', $css->render_range( $attr['arrowsSize'], 'Desktop' ) );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow svg" );
+			$css->add_property( 'width', $css->render_range( $attr['arrowsSize'], 'Desktop' ) );
+			$css->add_property( 'height', $css->render_range( $attr['arrowsSize'], 'Desktop' ) );
 		}
 		if ( isset( $attr['arrowsHoverColor'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow:hover:before" );
-			$css->add_property( 'color', $attr['arrowsHoverColor'] );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow:hover svg" );
+			$css->add_property( 'fill', $attr['arrowsHoverColor'] );
 		}
 	}
 
@@ -353,28 +354,29 @@ function get_premium_instagram_feed_posts_css( $attr, $unique_id ) {
 	// Carousel.
 	if ( isset( $attr['layoutStyle'] ) && $attr['layoutStyle'] === 'carousel' ) {
 		if ( isset( $attr['arrowsBorderRadius'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-arrow" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow" );
 			$css->add_property( 'border-radius', $css->render_range( $attr['arrowsBorderRadius'], 'Tablet' ) );
 		}
 		if ( isset( $attr['arrowsPadding'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-arrow" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow" );
 			$css->add_property( 'padding', $css->render_spacing( $attr['arrowsPadding']['Tablet'], isset( $attr['arrowsPadding']['unit']['Tablet'] ) ? $attr['arrowsPadding']['unit']['Tablet'] : $attr['arrowsPadding']['unit'] ) );
 		}
 		if ( isset( $attr['arrowsPosition'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow.slick-next" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow.splide__arrow--next" );
 			$css->add_property( 'right', $css->render_range( $attr['arrowsPosition'], 'Tablet' ) );
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow.slick-prev" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow.splide__arrow--prev" );
 			$css->add_property( 'left', $css->render_range( $attr['arrowsPosition'], 'Tablet' ) );
 		}
 		if ( isset( $attr['arrowsVerticalPosition'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow.slick-next" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow.splide__arrow--next" );
 			$css->add_property( 'top', $css->render_range( $attr['arrowsVerticalPosition'], 'Tablet' ) );
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow.slick-prev" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow.splide__arrow--prev" );
 			$css->add_property( 'top', $css->render_range( $attr['arrowsVerticalPosition'], 'Tablet' ) );
 		}
 		if ( isset( $attr['arrowsSize'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow:before" );
-			$css->add_property( 'font-size', $css->render_range( $attr['arrowsSize'], 'Tablet' ) );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow svg" );
+			$css->add_property( 'width', $css->render_range( $attr['arrowsSize'], 'Tablet' ) );
+			$css->add_property( 'height', $css->render_range( $attr['arrowsSize'], 'Tablet' ) );
 		}
 	}
 
@@ -480,28 +482,29 @@ function get_premium_instagram_feed_posts_css( $attr, $unique_id ) {
 	// Carousel.
 	if ( isset( $attr['layoutStyle'] ) && $attr['layoutStyle'] === 'carousel' ) {
 		if ( isset( $attr['arrowsBorderRadius'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-arrow" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow" );
 			$css->add_property( 'border-radius', $css->render_range( $attr['arrowsBorderRadius'], 'Mobile' ) );
 		}
 		if ( isset( $attr['arrowsPadding'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-arrow" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow" );
 			$css->add_property( 'padding', $css->render_spacing( $attr['arrowsPadding']['Mobile'], isset( $attr['arrowsPadding']['unit']['Mobile'] ) ? $attr['arrowsPadding']['unit']['Mobile'] : $attr['arrowsPadding']['unit'] ) );
 		}
 		if ( isset( $attr['arrowsPosition'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow.slick-next" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow.splide__arrow--next" );
 			$css->add_property( 'right', $css->render_range( $attr['arrowsPosition'], 'Mobile' ) );
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow.slick-prev" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow.splide__arrow--prev" );
 			$css->add_property( 'left', $css->render_range( $attr['arrowsPosition'], 'Mobile' ) );
 		}
 		if ( isset( $attr['arrowsVerticalPosition'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow.slick-next" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow.splide__arrow--next" );
 			$css->add_property( 'top', $css->render_range( $attr['arrowsVerticalPosition'], 'Mobile' ) );
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow.slick-prev" );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow.splide__arrow--prev" );
 			$css->add_property( 'top', $css->render_range( $attr['arrowsVerticalPosition'], 'Mobile' ) );
 		}
 		if ( isset( $attr['arrowsSize'] ) ) {
-			$css->set_selector( ".{$unique_id} .pbg-insta-feed .slick-slider .slick-arrow:before" );
-			$css->add_property( 'font-size', $css->render_range( $attr['arrowsSize'], 'Mobile' ) );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed .splide .splide__arrows .splide__arrow svg" );
+			$css->add_property( 'width', $css->render_range( $attr['arrowsSize'], 'Mobile' ) );
+			$css->add_property( 'height', $css->render_range( $attr['arrowsSize'], 'Mobile' ) );
 		}
 	}
 
@@ -551,6 +554,7 @@ function pbg_get_instagram_posts( $access_token ) {
 function pbg_get_instagram_posts_markup( $posts, $attr ) {
 	$posts_markup = '';
 	$max_posts    = ( ! empty( $attr['maxImageNumbers'] ) ) ? $attr['maxImageNumbers'] : 6;
+  $layout_style = ( ! empty( $attr['layoutStyle'] ) ) ? $attr['layoutStyle'] : 'grid';
 	$posts        = $posts['data'] ?? array();
 	$posts        = array_slice( $posts, 0, $max_posts );
 	foreach ( $posts ?? array() as $post ) {
@@ -587,7 +591,7 @@ function pbg_get_instagram_posts_markup( $posts, $attr ) {
 		if ( 'lightBox' === $attr['clickAction'] ) {
 			$content = sprintf(
 				'<a href="%s" data-fslightbox="pbg-insta-feed">%s</a>',
-				$thumbnail_url ? $thumbnail_url : $media_url,
+				$media_url ? $media_url : $thumbnail_url,
 				$content
 			);
 		}
@@ -608,22 +612,25 @@ function pbg_get_instagram_posts_markup( $posts, $attr ) {
 		);
 		$redirect_link     = sprintf( '<a href="%s" target="_blank" rel="noopener noreferrer" class="pbg-insta-feed-link"></a>', $permalink );
 		$lowercase_media   = strtolower( $media_type );
-		$post_markup       = sprintf(
-			'<div class="%1$s">
-				<div class="pbg-insta-feed-media %2$s">
-					%3$s
-					%4$s
-					%5$s
-					%6$s
-				</div>
-			</div>',
-			implode( ' ', $classes ),
-			"pbg-insta-{$lowercase_media}-wrap",
-			'top' === $attr['captionStyle'] ? $caption_markup : '',
-			$content,
-			'redirection' === $attr['clickAction'] ? $redirect_link : '',
-			'bottom' === $attr['captionStyle'] || 'overlay' === $attr['captionStyle'] ? $caption_markup : ''
-		);
+    
+    $post_markup       = sprintf(
+      ($layout_style === "carousel" ? '<li class="splide__slide">' : '') .
+      '<div class="%1$s">
+        <div class="pbg-insta-feed-media %2$s">
+          %3$s
+          %4$s
+          %5$s
+          %6$s
+        </div>
+      </div>' . ($layout_style === "carousel" ? '</li>' : ''),
+      implode( ' ', $classes ),
+      "pbg-insta-{$lowercase_media}-wrap",
+      'top' === $attr['captionStyle'] ? $caption_markup : '',
+      $content,
+      'redirection' === $attr['clickAction'] ? $redirect_link : '',
+      'bottom' === $attr['captionStyle'] || 'overlay' === $attr['captionStyle'] ? $caption_markup : ''
+    );
+  
 
 		$posts_markup .= $post_markup;
 	}
@@ -661,13 +668,20 @@ function render_block_pbg_instagram_feed_posts( $attributes, $content, $block ) 
 
 	// Block css file from "assets/css" after run grunt task.
 	if ( 'carousel' === $layout_style ) {
-		wp_enqueue_style(
-			'premium-instagram-feed-carousel',
-			PREMIUM_BLOCKS_URL . 'assets/css/minified/carousel.min.css',
-			array(),
-			PREMIUM_BLOCKS_VERSION,
-			'all'
-		);
+    wp_enqueue_style(
+      'pbg-splide',
+      PREMIUM_BLOCKS_URL . 'assets/css/minified/splide.min.css',
+      array(),
+      PREMIUM_BLOCKS_VERSION,
+      'all'
+    );
+    wp_enqueue_script(
+      'pbg-splide',
+      PREMIUM_BLOCKS_URL . 'assets/js/lib/splide.min.js',
+      array(),
+      PREMIUM_BLOCKS_VERSION,
+      true
+    );
 	}
 	$classes = array( 'pbg-insta-feed' );
 	if ( 'none' !== $image_effect ) {
@@ -688,7 +702,7 @@ function render_block_pbg_instagram_feed_posts( $attributes, $content, $block ) 
 			%2$s
 		</div>',
 		implode( ' ', $classes ),
-		'masonry' === $layout_style ? '<div class="pbg-masonry-container">' . $posts_markup . '</div>' : '<div class="pbg-insta-posts-wrap">' . $posts_markup . '</div>'
+		'masonry' === $layout_style ? '<div class="pbg-masonry-container">' . $posts_markup . '</div>' : ('carousel' === $layout_style ? '<section class="pbg-insta-posts-wrap splide" aria-label="premium-instagram-feed-carousel"><div class="splide__track"><ul class="splide__list">' . $posts_markup . '</ul></div></section>' : '<div class="pbg-insta-posts-wrap">' . $posts_markup . '</div>')
 	);
 
 	$container_attributes = get_block_wrapper_attributes(

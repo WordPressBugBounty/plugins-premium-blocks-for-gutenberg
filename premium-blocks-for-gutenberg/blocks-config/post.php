@@ -39,7 +39,6 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 		 * Constructor
 		 */
 		public function __construct() {
-
 			add_action( 'init', array( $this, 'register_blocks' ) );
 			add_action( 'wp_ajax_premium_post_pagination', array( $this, 'post_pagination' ) );
 			add_action( 'wp_ajax_nopriv_premium_post_pagination', array( $this, 'post_pagination' ) );
@@ -86,13 +85,13 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 					true
 				);
 			
-					wp_enqueue_script(
-						'PBG_POST_GRID',
-						PREMIUM_BLOCKS_URL . 'assets/js/minified/post.min.js',
-						array( 'jquery' ),
-						PREMIUM_BLOCKS_VERSION,
-						true
-					);
+        wp_enqueue_script(
+          'PBG_POST_GRID',
+          PREMIUM_BLOCKS_URL . 'assets/js/minified/post.min.js',
+          array( 'jquery' ),
+          PREMIUM_BLOCKS_VERSION,
+          true
+        );
 				
 			}
 			if ( isset( $attributes['blockId'] ) && ! empty( $attributes['blockId'] ) ) {
@@ -136,9 +135,15 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 						PREMIUM_BLOCKS_VERSION,
 						true
 					);
-					wp_enqueue_script(
-						'pbg-slick',
-						PREMIUM_BLOCKS_URL . 'assets/js/lib/slick.min.js',
+          wp_enqueue_style(
+            'pbg-splide',
+            PREMIUM_BLOCKS_URL . 'assets/css/minified/splide.min.css',
+            array(),
+            PREMIUM_BLOCKS_VERSION,
+          );
+          wp_enqueue_script(
+						'pbg-splide',
+						PREMIUM_BLOCKS_URL . 'assets/js/lib/splide.min.js',
 						array( 'jquery' ),
 						PREMIUM_BLOCKS_VERSION,
 						true
@@ -173,6 +178,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			self::$settings['carousel'][ $attributes['blockId'] ] = $attributes;
 
 			ob_start();
+
 			$this->get_post_html( $attributes, $query, 'carousel' );
 			// Output the post markup.
 			return ob_get_clean();
@@ -188,8 +194,10 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				 * @since 0.0.1
 				 */
 		public function get_post_html( $attributes, $query, $type ) {
-        
+        if(! $query->have_posts()) return;
+
 				$wrap = array(
+          $type === "carousel" ? 'splide' : '',
 					'premium-blog-wrap',
 					'premium-blog-even',
 					'premium-post-' . $type,
@@ -207,11 +215,57 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 
    
 			<div class="<?php echo esc_html( implode( ' ', $outerwrap ) ); ?>">
-				<div class="<?php echo esc_html( implode( ' ', $wrap ) ); ?>"  >
-					<?php
-					$this->posts_articles_markup( $query, $attributes );
-					?>
-			</div>
+				<section class="<?php echo esc_html( implode( ' ', $wrap ) ); ?>" aria-label="<?php echo esc_attr("premium-blog-carousel") ?>" >
+          <?php 
+            if($type === "carousel"){
+              ?>
+              <?php if(isset($attributes['navigationArrow']) && $attributes['navigationArrow']){
+                ?>
+                  <div class="splide__arrows">
+                    <button
+                        class="splide__arrow splide__arrow--prev"
+                    >
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 256 512"
+                            class="pbg-post-carousel-icons"
+                        >
+                            <path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path>
+                        </svg>
+                    </button>
+                    <button
+                        class="splide__arrow splide__arrow--next"
+                    >
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 256 512"
+                            className="pbg-post-carousel-icons"
+                        >
+                            <path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path>
+                        </svg>
+                    </button>
+                  </div>
+                <?php
+              } ?>
+                <div class="splide__track">
+                <ul class="splide__list">
+              <?php
+            }
+          ?>
+              <?php
+                $this->posts_articles_markup( $query, $attributes, $type );
+              ?>
+              <?php 
+              if($type === "carousel"){
+                ?>
+                </ul>
+                </div>
+                <?php
+              }
+              ?>
+			</section>
 			<?php
 
 							if ( ( isset( $attributes['pagination'] ) && true === $attributes['pagination'] ) ) {
@@ -238,12 +292,10 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				 * @param array  $attributes Array of block attributes.
 				 * @since 1.18.1
 				 */
-		public function posts_articles_markup( $query, $attributes ) {
-			if ( ! $query->have_posts() ) {
-				return ' ';
-			}
-				$post_not_found = $query->found_posts;
-				$style          = $attributes['style'];
+		public function posts_articles_markup( $query, $attributes, $type ) {		
+      $post_not_found = $query->found_posts;
+      $style          = $attributes['style'];
+
 			if ( 0 === $post_not_found ) {
 				?>
 				<p class="premium-post__no-posts">
@@ -267,7 +319,13 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				// Filter to modify the attributes based on content requirement.
 				$attributes = apply_filters( 'premium_post_alter_attributes', $attributes, get_the_ID() );
 				?>
-				<div class="<?php echo esc_html( implode( ' ', $postOuter ) ); ?>">
+        <?php if($type === "carousel"){
+          ?>    
+          <li class="splide__slide">
+          <?php
+        } 
+        ?>
+        <div class="<?php echo esc_html( implode( ' ', $postOuter ) ); ?>">
 					<div class="<?php echo esc_html( implode( ' ', $postContainer ) ); ?>">
 						<?php $this->render_image( $attributes ); ?>
 						<?php if ( 'cards' === $attributes['style'] ) : ?>
@@ -320,7 +378,13 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 						</div>
 					</div>
 				</div>
-					<?php
+        <?php if($type === "carousel"){
+          ?>
+            </li>
+          <?php
+        } 
+        ?>
+			  <?php
 			}
 
 			wp_reset_postdata();
@@ -657,6 +721,32 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			echo $content;
 		}
 
+		public  function pbg_get_excerpt_text(  $content, $length_fallback ) {
+
+			// If there's an excerpt provided from meta, use it.
+			$excerpt = $content;
+
+			if ( empty( $excerpt ) ) { // If no excerpt provided from meta.
+				$max_excerpt = 100;
+				// If the content present on post, then trim it and use that.
+				if ( ! empty( $content ) ) {
+					$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $content, $max_excerpt ) );
+				}
+			}
+			// Trim the excerpt.
+			if ( ! empty( $excerpt ) ) {
+				$excerpt = explode( ' ', $excerpt );
+				if ( count( $excerpt ) > $length_fallback ) {
+					$excerpt = implode( ' ', array_slice( $excerpt, 0, $length_fallback ) ) . '...';
+				} else {
+					$excerpt = implode( ' ', $excerpt );
+				}
+			}
+
+			return empty( $excerpt ) ? '' : $excerpt;
+		}
+
+
 				/**
 				 * Function runder Button
 				 *
@@ -665,88 +755,75 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				 * @return void
 				 */
 		public function render_post_content( $source, $excerpt_length, $cta_type ) {
-
 			$excerpt = '';
 			if ( 'Post Full Content' === $source ) {
 				// Print post full content.
 				$excerpt = get_the_content();
 			} else {
 
-				$excerpt = trim( get_the_excerpt() );
-				$words   = explode( ' ', $excerpt, $excerpt_length + 1 );
-				if ( count( $words ) > $excerpt_length ) {
-					if ( ! has_excerpt() ) {
-						array_pop( $words );
-							array_push( $words, '…' );
-						
-					}
-				}
-				$excerpt = implode( ' ', $words );
+				$excerpt = $this->pbg_get_excerpt_text( get_the_excerpt(),$excerpt_length );
 			}
-
 			return $excerpt;
 		}
 
 
 		public function add_post_dynamic_script() {
-
-			if ( isset( self::$settings['carousel'] ) ) {
+      $css                    = new Premium_Blocks_css();
+      
+      if ( isset( self::$settings['carousel'] ) ) {
 				foreach ( self::$settings['carousel'] as $key => $value ) {
-				
-					$dots         = ( 'dots' === $value['navigationDots'] || 'arrows_dots' === $value['navigationDots'] ) ? true : false;
-					$arrows       = ( 'arrows' === $value['navigationArrow'] || 'arrows_dots' === $value['navigationArrow'] ) ? true : false;
+          var_dump($value['navigationArrow']);
 					$tcolumns     = ( isset( $value['columns']['Tablet'] ) ) ? $value['columns']['Tablet'] : 2;
 					$mcolumns     = ( isset( $value['columns']['Mobile'] ) ) ? $value['columns']['Mobile'] : 1;
 					$equal_height = isset( $value['equalHeight'] ) ? $value['equalHeight'] : '';
-
 					$slideToScroll = ( isset( $value['slideToScroll'] ) );
 					$is_rtl        = is_rtl();
 					?>
 								<script type="text/javascript"  id="<?php echo esc_attr( $key ); ?>" >
-								
-								jQuery( document ).ready( function( $ ) {
-									var cols = parseInt( '<?php echo esc_html( $value['columns']['Desktop'] ); ?>' );
-									var $scope = $('.<?php   echo esc_html( $key ); ?> ').find( '.premium-post-carousel' );
-									if ( cols >= $scope.children().length ) {
-										return;
-									}
-									var setting = {
-									'slidesToShow' :cols,
-									'slidesToScroll' :<?php echo esc_html( $value['slideToScroll'] ); ?> ,
-									'autoplaySpeed' : <?php echo esc_html( $value['autoplaySpeed'] ); ?>,
-									'autoplay' : Boolean( '<?php echo esc_html( $value['Autoplay'] ); ?>' ),
-									'infinite' : Boolean( '<?php echo esc_html( $value['infiniteLoop'] ); ?>' ),
-									'pauseOnHover' : Boolean( '<?php echo esc_html( $value['pauseOnHover'] ); ?>' ),
-									'arrows' : Boolean( '<?php echo esc_html( $value['navigationArrow'] ); ?>' ),
-									'dots' : Boolean( '<?php echo esc_html( $value['navigationDots'] ); ?>' ),
-									'rtl' : Boolean( '<?php echo esc_html( $is_rtl ); ?>' ),
-									'prevArrow' : '<button type=\"button\" data-role=\"none\" class=\"slick-prev\" aria-label=\"Previous\" tabindex=\"0\" role=\"button\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 256 512\"><path d=\"M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z\"></path></svg><\/button>',
-									'nextArrow' : '<button type=\"button\" data-role=\"none\" class=\"slick-next\" aria-label=\"Next\" tabindex=\"0\" role=\"button\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 256 512\"><path d=\"M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z\"></path></svg><\/button>',
-	
-									'responsive' : [
-										{
-											'breakpoint' : 1024,
-											'settings' : {
-												'slidesToShow' : <?php echo esc_html( $tcolumns ); ?> ,
-												'slidesToScroll' : 1,
-											}
-										},
-										{
-											'breakpoint' : 767,
-											'settings' : {
-												'slidesToShow' :<?php echo esc_html( $mcolumns ); ?>,
-												'slidesToScroll' : 1,
-											}
-										}
-									]
-													};
-									$scope.imagesLoaded( function() {
-									$scope.not('.slick-initialized').slick(
-										setting
-									);
-									});
-									var enableEqualHeight = ( '<?php echo esc_html( $equal_height ); ?>' );
-								})
+                  document.addEventListener( 'DOMContentLoaded', function() {
+                    let cols = parseInt('<?php echo esc_html( $value['columns']['Desktop'] ); ?>');
+                    let tabletGap = Boolean('<?php echo esc_html($value['columnGap']['Tablet']) ?>');
+                    let mobileGap = Boolean('<?php echo esc_html($value['columnGap']['Mobile']) ?>');
+	                  let scope = document.querySelector('.<?php echo esc_html( $key );?> .splide .splide__track .splide__list');
+                    
+                    if(cols > scope.children.length){
+                      cols = 1;
+                    }
+
+                    const carouselSettings = {
+                      type: '<?php echo esc_html( $value['infiniteLoop'] ? "loop" : "slide" ); ?>',
+                      perPage: cols,
+                      perMove: <?php echo esc_html( $value['slideToScroll'] ); ?>,
+                      autoplay: Boolean( '<?php echo esc_html( $value['Autoplay'] ); ?>' ),
+                      pauseOnHover: Boolean( '<?php echo esc_html( $value['pauseOnHover'] ); ?>' ),
+                      arrows: Boolean( '<?php echo esc_html( $value['navigationArrow'] ); ?>' ),
+                      pagination: Boolean( '<?php echo esc_html( $value['navigationDots'] ); ?>' ),
+                      interval: <?php echo esc_html( $value['autoplaySpeed'] ); ?>,
+                      speed: 500,
+                      focus: 0,
+                      omitEnd: true,
+                      direction: '<?php echo esc_html( $is_rtl ? "rtl" : "ltr" ); ?>',
+                      gap: '<?php echo esc_html($value['columnGap']['Desktop']) . esc_html($value['columnGap']['unit']['Desktop']); ?>',
+                      breakpoints : {
+                        1024: {
+                          perPage: <?php echo esc_html( $tcolumns <= $value['query']['perPage'] ? $tcolumns : 1); ?>,
+                          perMove: 1,
+                          ...(tabletGap ? {gap: '<?php echo esc_html($value['columnGap']['Tablet']) . esc_html($value['columnGap']['unit']['Tablet']); ?>'} : {})
+                        },
+                        767: {
+                          perPage: <?php echo esc_html( $mcolumns <= $value['query']['perPage'] ? $tcolumns : 1); ?>,
+                          perMove: 1,
+                          ...(mobileGap ? {gap: '<?php echo esc_html($value['columnGap']['Mobile']) . esc_html($value['columnGap']['unit']['Mobile']); ?>'} : {})
+                        }
+                      },
+                    };
+
+                    imagesLoaded(scope, function(){
+                      var splide = new Splide( '.<?php echo esc_html($key) ?> .splide', carouselSettings);
+                      splide.mount();
+                    })
+                    
+                  });
 								</script>
 				
 					<?php
@@ -761,8 +838,9 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			$media_query['mobile']  = apply_filters( 'Premium_BLocks_mobile_media_query', '(max-width: 767px)' );
 			$media_query['tablet']  = apply_filters( 'Premium_BLocks_tablet_media_query', '(max-width: 1024px)' );
 			$media_query['desktop'] = apply_filters( 'Premium_BLocks_tablet_media_query', '(min-width: 1025px)' );
+      
 			if ( isset( $attr['columns'] ) && ! empty( $attr['columns']['Desktop'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
+				$css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
 				$css->add_property( 'width', 'calc(100% / ' . $attr['columns']['Desktop'] . ')' );
 			}
 			if ( isset( $attr['plusColor'] ) ) {
@@ -771,7 +849,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'background-color', $css->render_string( $css->render_color( $attr['plusColor'] ), ' !important' ) );
 			}
 			if ( isset( $attr['borderedColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-link:before ,' . $unique_id . ' .premium-blog-post-link:after' );
+				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-link:before, .' . $unique_id . ' .premium-blog-post-link:after' );
 				$css->add_property( 'border-color', $css->render_color( $attr['borderedColor'] ) );
 			}
 			if ( isset( $attr['contentOffset'] ) ) {
@@ -787,11 +865,11 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'justify-content', $css->get_responsive_css( $attr['verticalAlign'], 'Desktop'  ) );
 			}
 			if ( isset( $attr['columnGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
+				$css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
 				$css->add_property( 'padding-right','calc(' . $css->render_range( $attr['columnGap'], 'Desktop' ).'/2 )' );
 				$css->add_property( 'padding-left','calc(' . $css->render_range( $attr['columnGap'], 'Desktop' ).'/2 )'  );
 				
-        $css->set_selector( '.' . $unique_id . '.premium-blog-grid .premium-blog-wrap' );
+        $css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
 				$css->add_property( 'margin-right','calc(-' . $css->render_range( $attr['columnGap'], 'Desktop' ).'/2 )' );
 				$css->add_property( 'margin-left','calc(-' . $css->render_range( $attr['columnGap'], 'Desktop' ).'/2 )'  );
 			}
@@ -875,7 +953,6 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
 				$css->render_typography( $attr['contentTypography'], 'Desktop' );
 			}
-
 			if ( isset( $attr['contentMargin'] ) ) {
 				$content_spacing = $attr['contentMargin'];
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
@@ -1032,48 +1109,48 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'background-color', $css->render_color( $attr['hoverBackground'] ) );
 			}
 			if ( isset( $attr['arrowSize'] ) ) {
-				$css->set_selector( '.' . $unique_id . '   .slick-arrow svg ' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow svg' );
 				$css->add_property( 'width',$css->render_string($attr['arrowSize'], 'px') );
 				$css->add_property( 'height',$css->render_string($attr['arrowSize'], 'px') );
 
 			}
 			if ( isset( $attr['arrowColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . '   .slick-arrow svg' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow svg' );
 				$css->add_property( 'fill',$css->render_color( $attr['arrowColor'] ));
-				$css->set_selector( '.' . $unique_id . '   .slick-arrow ' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
 				$css->add_property( 'fill',$css->render_color( $attr['arrowColor'] ));
 			}
 			if ( isset( $attr['arrowPadding'] ) && !empty($attr['arrowPadding']) ) {
 				$arrowPadding=$attr['arrowPadding'];
-				$css->set_selector( '.' . $unique_id . '   .slick-arrow' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
 				$css->add_property( 'padding', $css->render_spacing( $arrowPadding['Desktop'], isset($arrowPadding['unit']['Desktop'])?$arrowPadding['unit']['Desktop']:$arrowPadding['unit']  ) );
 			}
 			if ( isset( $attr['arrowBack'] ) ) {
-				$css->set_selector( '.' . $unique_id . '   .slick-arrow ' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow ' );
 				$css->add_property( 'background-color', $css->render_color($attr['arrowBack']) );
 			}
 			if ( isset( $attr['arrowPosition'] ) ) {
-				$css->set_selector( '.' . $unique_id . '     .slick-prev' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--prev, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--next');
 				$css->add_property( 'left', $css->render_range( $attr['arrowPosition'], 'Desktop' ) );
-				$css->set_selector( '.' . $unique_id . '     .slick-next' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--next, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--prev');
 				$css->add_property( 'right', $css->render_range( $attr['arrowPosition'], 'Desktop' ) );
 			}
 			if ( isset( $attr['arrowBorderRadius'] ) && !empty($attr['arrowBorderRadius']) ) {
-				$css->set_selector( '.' . $unique_id . '   .slick-arrow  ' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
 				$css->add_property( 'border-radius', $attr['arrowBorderRadius'] . 'px' );
 			}
 			if ( isset( $attr['dotsColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . '   ul.slick-dots li button:before' );
-				$css->add_property( 'color', $css->render_color( $attr['dotsColor'] ));
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
+				$css->add_property( 'background-color', $css->render_color( $attr['dotsColor'] ));
 			}
 			if ( isset( $attr['dotMargin'] ) ) {
 				$dotMargin=$attr['dotMargin'];
-				$css->set_selector( '.' . $unique_id . '   ul.slick-dots ' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
 				$css->add_property( 'margin', $css->render_spacing( $dotMargin['Desktop'], isset($dotMargin['unit']['Desktop'])?$dotMargin['unit']['Desktop']:$dotMargin['unit']  ) );
 			}
 			if ( isset( $attr['dotsActiveColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . '   .slick-dots li.slick-active button:before' );
-				$css->add_property( 'color',$css->render_color( $attr['dotsActiveColor'] ));
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page.is-active' );
+				$css->add_property( 'background-color',$css->render_color( $attr['dotsActiveColor'] ));
 			}
 
 			if ( isset( $attr['catTypography'] ) ) {
@@ -1176,11 +1253,11 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			}
 			//active
 			if (isset($attr['paginationActiveColor'])) {
-				$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container span.current');
+				$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container span.page-numbers.current');
 				$css->add_property('color',  $css->render_color($attr["paginationActiveColor"]));
 			}
 			if (isset($attr['paginationActiveBack'])) {
-				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.current');
+				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.page-numbers.current');
 				$css->add_property('background-color',  $css->render_color($attr["paginationActiveBack"]));
 			}
 			if (isset($attr['paginationActiveBorder'])) {
@@ -1189,7 +1266,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$content_border_color = $attr['paginationActiveBorder']['borderColor'];
 				$content_border_type = $attr['paginationActiveBorder']['borderType'];
 		
-				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.current');
+				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.page-numbers.current');
 				$css->add_property('border-color', $css->render_color($content_border_color));
 				$css->add_property('border-style', $content_border_type);
 				$css->add_property('border-width', $css->render_spacing($content_border_width['Desktop'], 'px'));
@@ -1211,16 +1288,16 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'justify-content', $attr['verticalAlign']['Tablet'] );
 			}
 			if ( isset( $attr['columns'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
+				$css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
 				$css->add_property( 'width', 'calc(100% / ' . $attr['columns']['Tablet'] . ')' );
 
 			}
 			if ( isset( $attr['columnGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
+				$css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
 				$css->add_property( 'padding-right','calc(' . $css->render_range( $attr['columnGap'], 'Tablet' ).'/2 )' );
 				$css->add_property( 'padding-left','calc(' . $css->render_range( $attr['columnGap'], 'Tablet' ).'/2 )'  );
 
-        $css->set_selector( '.' . $unique_id . '.premium-blog-grid .premium-blog-wrap' );
+        $css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
 				$css->add_property( 'margin-right','calc(-' . $css->render_range( $attr['columnGap'], 'Tablet' ).'/2 )' );
 				$css->add_property( 'margin-left','calc(-' . $css->render_range( $attr['columnGap'], 'Tablet' ).'/2 )'  );
 
@@ -1392,13 +1469,13 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			}
 			if ( isset( $attr['dotMargin'] ) ) {
 				$dotMargin=$attr['dotMargin'];
-				$css->set_selector( '.' . $unique_id . '   ul.slick-dots ' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
 				$css->add_property( 'margin', $css->render_spacing( $dotMargin['Tablet'], isset($dotMargin['unit']['Tablet'])?$dotMargin['unit']['Tablet']:$dotMargin['unit']  ) );
 			}
 			if ( isset( $attr['arrowPosition'] ) ) {
-				$css->set_selector( '.' . $unique_id . '     .slick-prev' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--prev, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--next');
 				$css->add_property( 'left', $css->render_range( $attr['arrowPosition'], 'Tablet' ) );
-				$css->set_selector( '.' . $unique_id . '     .slick-next' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--next, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--prev');
 				$css->add_property( 'right', $css->render_range( $attr['arrowPosition'], 'Tablet' ) );
 			}
 
@@ -1419,16 +1496,16 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'justify-content', $attr['verticalAlign']['Mobile'] );
 			}
 			if ( isset( $attr['columns'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
+				$css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
 				$css->add_property( 'width', 'calc(100% / ' . $attr['columns']['Mobile'] . ')' );
 
 			}
 			if ( isset( $attr['columnGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
+				$css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
 				$css->add_property( 'padding-right','calc(' . $css->render_range( $attr['columnGap'], 'Mobile' ).'/2 )' );
 				$css->add_property( 'padding-left','calc(' . $css->render_range( $attr['columnGap'], 'Mobile' ).'/2 )'  );
 
-        $css->set_selector( '.' . $unique_id . '.premium-blog-grid .premium-blog-wrap' );
+        $css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
 				$css->add_property( 'margin-right','calc(-' . $css->render_range( $attr['columnGap'], 'Mobile' ).'/2 )' );
 				$css->add_property( 'margin-left','calc(-' . $css->render_range( $attr['columnGap'], 'Mobile' ).'/2 )'  );
 			}
@@ -1598,13 +1675,13 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			}
 			if ( isset( $attr['dotMargin'] ) ) {
 				$dotMargin=$attr['dotMargin'];
-				$css->set_selector( '.' . $unique_id . '   ul.slick-dots ' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
 				$css->add_property( 'margin', $css->render_spacing( $dotMargin['Mobile'], isset($dotMargin['unit']['Mobile'])?$dotMargin['unit']['Mobile']:$dotMargin['unit']  ) );
 			}
 			if ( isset( $attr['arrowPosition'] ) ) {
-				$css->set_selector( '.' . $unique_id . '     .slick-prev' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--prev, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--next');
 				$css->add_property( 'left', $css->render_range( $attr['arrowPosition'], 'Mobile' ) );
-				$css->set_selector( '.' . $unique_id . '     .slick-next' );
+				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--next, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--prev');
 				$css->add_property( 'right', $css->render_range( $attr['arrowPosition'], 'Mobile' ) );
 			}
 

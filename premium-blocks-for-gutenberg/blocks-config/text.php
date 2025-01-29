@@ -26,7 +26,7 @@
 
     if ( isset( $attributes['align'] ) ) {
        $content_align      = $css->get_responsive_css( $attributes['align'], 'Desktop' );
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id} " );
         $css->add_property( 'align-self', $css->render_align_self($content_align) );
 	}
 
@@ -42,7 +42,7 @@
 		$border_width  = $attributes['border']['borderWidth'];
 		$border_radius = $attributes['border']['borderRadius'];
 
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->add_property( 'border-width', $css->render_spacing( $border_width['Desktop'], 'px' ) );
 		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Desktop'], 'px' ) );
 		$css->add_property( 'border-style', $css->render_string( $border['borderType'] ) );
@@ -55,18 +55,18 @@
 	if ( isset( $attributes['padding'] ) ) {
 		$padding = $attributes['padding'];
 
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->add_property( 'padding', $css->render_spacing( $padding['Desktop'], isset($padding['unit']['Desktop'])?$padding['unit']['Desktop']:$padding['unit']  ));
 	}
 	if ( isset( $attributes['background'] ) ) {
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->render_background( $attributes['background'], 'Desktop' );
 
 	}
 	if ( isset( $attributes['margin'] ) ) {
 		$margin = $attributes['margin'];
 
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->add_property( 'margin', $css->render_spacing( $margin['Desktop'], isset($margin['unit']['Desktop'])?$margin['unit']['Desktop']:$margin['unit'] ));
 	}
 
@@ -79,7 +79,7 @@
 	if ( isset( $attributes['rotateText'] ) ) {
 		$rotate_text = $attributes['rotateText'];
 		$value       = $css->render_range( $rotate_text, 'Desktop' );
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->add_property( 'transform', "rotate({$value})!important" );
 	}
 
@@ -93,14 +93,14 @@
 
     if ( isset( $attributes['align'] ) ) {
        $content_align      = $css->get_responsive_css( $attributes['align'], 'Tablet' );
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id} " );
         $css->add_property( 'align-self', $css->render_align_self($content_align) );
 	}
 
 	if ( isset( $attributes['typography'] ) ) {
 		$typography = $attributes['typography'];
 
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->render_typography( $typography, 'Tablet' );
 	}
 
@@ -117,26 +117,26 @@
 	if ( isset( $attributes['padding'] ) ) {
 		$padding = $attributes['padding'];
 
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->add_property( 'padding', $css->render_spacing( $padding['Tablet'], isset($padding['unit']['Tablet'])?$padding['unit']['Tablet']:$padding['unit'] ));
 	}
 
 	if ( isset( $attributes['margin'] ) ) {
 		$margin = $attributes['margin'];
 
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->add_property( 'margin', $css->render_spacing( $margin['Tablet'], isset($margin['unit']['Tablet'])?$margin['unit']['Tablet']:$margin['unit'] ));
 	}
 
 	if ( isset( $attributes['background'] ) ) {
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->render_background( $attributes['background'], 'Tablet' );
 	}
 
 	if ( isset( $attributes['rotateText'] ) ) {
 		$rotate_text = $attributes['rotateText'];
 		$value       = $css->render_range( $rotate_text, 'Tablet' );
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->add_property( 'transform', "rotate({$value})!important" );
 	}
 
@@ -152,7 +152,7 @@
 
         if ( isset( $attributes['align'] ) ) {
        $content_align      = $css->get_responsive_css( $attributes['align'], 'Mobile' );
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id} " );
         $css->add_property( 'align-self', $css->render_align_self($content_align) );
 	}
 
@@ -168,7 +168,7 @@
 		$border_width  = $attributes['border']['borderWidth'];
 		$border_radius = $attributes['border']['borderRadius'];
 
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->add_property( 'border-width', $css->render_spacing( $border_width['Mobile'], 'px' ) );
 		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
 	}
@@ -176,12 +176,12 @@
 	if ( isset( $attributes['padding'] ) ) {
 		$padding = $attributes['padding'];
 
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->add_property( 'padding', $css->render_spacing( $padding['Mobile'], isset($padding['unit']['Mobile'])?$padding['unit']['Mobile']:$padding['unit'] ));
 	}
 
 	if ( isset( $attributes['background'] ) ) {
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->render_background( $attributes['background'], 'Mobile' );
 
 	}
@@ -189,14 +189,14 @@
 	if ( isset( $attributes['margin'] ) ) {
 		$margin = $attributes['margin'];
 
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->add_property( 'margin', $css->render_spacing( $margin['Mobile'], isset($margin['unit']['Mobile'])?$margin['unit']['Mobile']:$margin['unit'] ));
 	}
 
 	if ( isset( $attributes['rotateText'] ) ) {
 		$rotate_text = $attributes['rotateText'];
 		$value       = $css->render_range( $rotate_text, 'Mobile' );
-		$css->set_selector( ".{$unique_id} .premium-text-wrap" );
+		$css->set_selector( ".{$unique_id}" );
 		$css->add_property( 'transform', "rotate({$value})!important" );
 	}
 

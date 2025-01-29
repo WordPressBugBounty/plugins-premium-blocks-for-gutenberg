@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.1.48
+Stable tag: 2.1.49
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,6 +125,15 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.1.49 =
+- Fixed: Container block not working with latest version for gutenberg.
+- Fixed: line heigh style issue in the text block.
+- Fixed: Excerpt link doesn't work in the post grid and masonry.
+- Fixed: doublicate block doesn't work properly.
+- Fixed: Instagram feed doesn't work and can't access the login page.
+- Tweak: Improve the bullet list block.
+- Tweak: Update carousel library in the post carousel and instagram blocks.
+
 = 2.1.48 =
 - Tweak: Update Lottie Library to improve compatibility with the latest WordPress version.
 - Fixed: Counter Block editor issues.
