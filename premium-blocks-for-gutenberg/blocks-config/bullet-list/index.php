@@ -267,8 +267,32 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['titlemargin'] ) ) {
 		$title_margin = $attr['titlemargin'];
-		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__label-wrap');
+		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__label');
 		$css->add_property( 'margin', $css->render_spacing( $title_margin['Desktop'], isset($title_margin['unit']['Desktop'])?$title_margin['unit']['Desktop']:$title_margin['unit'] ) );
+	}
+
+  // style for description 
+  if ( isset( $attr['descriptionStyles'])) {
+		$description_styles = $attr['descriptionStyles'];
+		$css->set_selector( ".{$unique_id} .premium-bullet-list__description" );
+		$css->add_property( 'color', $css->render_color( $description_styles['color'] ) );
+
+		$css->set_selector( ".{$unique_id} .premium-bullet-list__wrapper:hover .premium-bullet-list__label-wrap .premium-bullet-list__description" );
+		$css->add_property( 'color', $css->render_string( $css->render_color( $description_styles['hoverColor'] ), '!important' ) );
+	}
+
+	if ( isset( $attr['descriptionTypography'] ) ) {
+		$description_typography = $attr['descriptionTypography'];
+
+		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__description');
+		$css->render_typography( $description_typography, 'Desktop' );
+		
+	}
+
+	if ( isset( $attr['descriptionMargin'] ) ) {
+		$description_margin = $attr['descriptionMargin'];
+		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__description');
+		$css->add_property( 'margin', $css->render_spacing( $description_margin['Desktop'], isset($description_margin['unit']['Desktop'])?$description_margin['unit']['Desktop']:$description_margin['unit'] ) );
 	}
 
 	// style for divider
@@ -466,8 +490,21 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['titlemargin'] ) ) {
 		$title_margin = $attr['titlemargin'];
-		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__label-wrap');
+		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__label');
 		$css->add_property( 'margin', $css->render_spacing( $title_margin['Tablet'], isset( $title_margin['unit']['Tablet'])?$title_margin['unit']['Tablet']:$title_margin['unit'] ) );
+	}
+  // style for description 
+	if ( isset( $attr['descriptionTypography'] ) ) {
+		$description_typography = $attr['descriptionTypography'];
+
+		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__description');
+		$css->render_typography( $description_typography, 'Tablet' );
+		
+	}
+	if ( isset( $attr['descriptionMargin'] ) ) {
+		$description_margin = $attr['descriptionMargin'];
+		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__description');
+		$css->add_property( 'margin', $css->render_spacing( $description_margin['Tablet'], isset($description_margin['unit']['Tablet'])?$description_margin['unit']['Tablet']:$description_margin['unit'] ) );
 	}
 
 	// style for divider
@@ -653,8 +690,21 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['titlemargin'] ) ) {
 		$title_margin = $attr['titlemargin'];
-		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__label-wrap');
+		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__label');
 		$css->add_property( 'margin', $css->render_spacing( $title_margin['Mobile'], isset( $title_margin['unit']['Mobile'] )? $title_margin['unit']['Mobile'] : $title_margin['unit']) );
+	}
+  // style for description 
+	if ( isset( $attr['descriptionTypography'] ) ) {
+		$description_typography = $attr['descriptionTypography'];
+
+		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__description');
+		$css->render_typography( $description_typography, 'Mobile' );
+		
+	}
+	if ( isset( $attr['descriptionMargin'] ) ) {
+		$description_margin = $attr['descriptionMargin'];
+		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__description');
+		$css->add_property( 'margin', $css->render_spacing( $description_margin['Mobile'], isset($description_margin['unit']['Mobile'])?$description_margin['unit']['Mobile']:$description_margin['unit'] ) );
 	}
 
 	// style for divider

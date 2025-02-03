@@ -772,7 +772,6 @@ if ( ! class_exists( 'PBG_Post' ) ) {
       
       if ( isset( self::$settings['carousel'] ) ) {
 				foreach ( self::$settings['carousel'] as $key => $value ) {
-          var_dump($value['navigationArrow']);
 					$tcolumns     = ( isset( $value['columns']['Tablet'] ) ) ? $value['columns']['Tablet'] : 2;
 					$mcolumns     = ( isset( $value['columns']['Mobile'] ) ) ? $value['columns']['Mobile'] : 1;
 					$equal_height = isset( $value['equalHeight'] ) ? $value['equalHeight'] : '';
@@ -800,8 +799,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
                       pagination: Boolean( '<?php echo esc_html( $value['navigationDots'] ); ?>' ),
                       interval: <?php echo esc_html( $value['autoplaySpeed'] ); ?>,
                       speed: 500,
-                      focus: 0,
-                      omitEnd: true,
+                      ...(<?php echo esc_html( $value['slideToScroll'] ); ?> == 1 ? { focus: 0, omitEnd: true } : {}),
                       direction: '<?php echo esc_html( $is_rtl ? "rtl" : "ltr" ); ?>',
                       gap: '<?php echo esc_html($value['columnGap']['Desktop']) . esc_html($value['columnGap']['unit']['Desktop']); ?>',
                       breakpoints : {
@@ -874,7 +872,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'margin-left','calc(-' . $css->render_range( $attr['columnGap'], 'Desktop' ).'/2 )'  );
 			}
 			if ( isset( $attr['rowGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-wrap' );
+				$css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
 				$css->add_property( 'row-gap', $css->render_range( $attr['rowGap'], 'Desktop' ) );
 			}
 
@@ -1303,7 +1301,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 
 			}
 			if ( isset( $attr['rowGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-wrap' );
+				$css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
 				$css->add_property( 'row-gap', $css->render_range( $attr['rowGap'], 'Tablet' ) );
 			}
 
@@ -1510,7 +1508,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'margin-left','calc(-' . $css->render_range( $attr['columnGap'], 'Mobile' ).'/2 )'  );
 			}
 			if ( isset( $attr['rowGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-wrap' );
+				$css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
 				$css->add_property( 'row-gap', $css->render_range( $attr['rowGap'], 'Mobile' ) );
 			}
 

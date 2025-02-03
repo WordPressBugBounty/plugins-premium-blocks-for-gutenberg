@@ -771,7 +771,7 @@ function render_block_pbg_modal( $attributes, $content, $block ) {
 		wp_enqueue_script(
 			'pbg-modal-box',
 			PREMIUM_BLOCKS_URL . 'assets/js/minified/modal-box.min.js',
-			array('jquery'),
+			array(),
 			PREMIUM_BLOCKS_VERSION,
 			true
 		);

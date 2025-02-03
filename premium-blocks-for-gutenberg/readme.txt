@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.1.49
+Stable tag: 2.1.50
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,6 +125,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.1.50 =
+- Improved: Bullet List block for better usability.
+- Fixed: Heading style issue in the Accordion block.
+- Fixed: Height issue in the Post Carousel block.
+- Fixed: Style issue with the close icon in the Modal Popup block.
+
 = 2.1.49 =
 - Fixed: Container block not working with latest version for gutenberg.
 - Fixed: line heigh style issue in the text block.
