@@ -806,11 +806,15 @@ if ( ! class_exists( 'PBG_Post' ) ) {
                         1024: {
                           perPage: <?php echo esc_html( $tcolumns <= $value['query']['perPage'] ? $tcolumns : 1); ?>,
                           perMove: 1,
+                          focus: 0,
+                          omiteEnd: true,
                           ...(tabletGap ? {gap: '<?php echo esc_html($value['columnGap']['Tablet']) . esc_html($value['columnGap']['unit']['Tablet']); ?>'} : {})
                         },
                         767: {
-                          perPage: <?php echo esc_html( $mcolumns <= $value['query']['perPage'] ? $tcolumns : 1); ?>,
+                          perPage: <?php echo esc_html( $mcolumns <= $value['query']['perPage'] ? $mcolumns : 1); ?>,
                           perMove: 1,
+                          focus: 0,
+                          omiteEnd: true,
                           ...(mobileGap ? {gap: '<?php echo esc_html($value['columnGap']['Mobile']) . esc_html($value['columnGap']['unit']['Mobile']); ?>'} : {})
                         }
                       },

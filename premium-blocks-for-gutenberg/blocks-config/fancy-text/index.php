@@ -203,17 +203,11 @@ function render_block_pbg_fancy_text( $attributes, $content, $block ) {
 			PREMIUM_BLOCKS_VERSION,
 			true
 		);
-		wp_enqueue_script(
-			'pbg-vticker',
-			PREMIUM_BLOCKS_URL . 'assets/js/lib/vticker.js',
-			array( 'jquery' ),
-			PREMIUM_BLOCKS_VERSION,
-			true
-		);
+		
 		wp_enqueue_script(
 			'pbg-fancy-text',
 			PREMIUM_BLOCKS_URL . 'assets/js/minified/fancy-text.min.js',
-			array( 'jquery', 'pbg-typed','pbg-vticker' ),
+			array( 'jquery', 'pbg-typed' ),
 			PREMIUM_BLOCKS_VERSION,
 			true
 		);

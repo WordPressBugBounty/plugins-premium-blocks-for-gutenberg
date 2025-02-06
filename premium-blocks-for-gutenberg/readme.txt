@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.1.50
+Stable tag: 2.1.51
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,6 +125,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.1.51 =
+- Tweak: Added visual effects for the Animated Text block.
+- Fixed: column styling issues in the Post Carousel block.
+
 = 2.1.50 =
 - Improved: Bullet List block for better usability.
 - Fixed: Heading style issue in the Accordion block.
