@@ -20,13 +20,13 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['fancyMargin'] ) ) {
 		$fancyMargin = $attr['fancyMargin'];
 
-		$css->set_selector( '.' . $unique_id . "> .premium-fancy-text");
+		$css->set_selector( '.' . $unique_id);
 		$css->add_property( 'margin', $css->render_spacing( $fancyMargin['Desktop'], isset( $fancyMargin['unit']['Desktop'])?$fancyMargin['unit']['Desktop']:$fancyMargin['unit'] ) );
 	}
 	if ( isset( $attr['fancyPadding'] ) ) {
 		$fancyPadding = $attr['fancyPadding'];
 
-		$css->set_selector( '.' . $unique_id . "> .premium-fancy-text");
+		$css->set_selector( '.' . $unique_id);
 		$css->add_property( 'padding', $css->render_spacing( $fancyPadding['Desktop'], isset( $fancyPadding['unit']['Desktop'])?$fancyPadding['unit']['Desktop']:$fancyPadding['unit'] ) );
 	}
 
@@ -92,13 +92,13 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['fancyMargin'] ) ) {
 		$fancyMargin = $attr['fancyMargin'];
 
-		$css->set_selector( '.' . $unique_id . "> .premium-fancy-text");
+		$css->set_selector( '.' . $unique_id);
 		$css->add_property( 'margin', $css->render_spacing( $fancyMargin['Tablet'], isset( $fancyMargin['unit']['Tablet'])?$fancyMargin['unit']['Tablet']:$fancyMargin['unit'] ) );
 	}
 	if ( isset( $attr['fancyPadding'] ) ) {
 		$fancyPadding = $attr['fancyPadding'];
 
-		$css->set_selector( '.' . $unique_id . "> .premium-fancy-text");
+		$css->set_selector( '.' . $unique_id);
 		$css->add_property( 'padding', $css->render_spacing( $fancyPadding['Tablet'], isset( $fancyPadding['unit']['Tablet'])?$fancyPadding['unit']['Tablet']:$fancyPadding['unit'] ) );
 	}
 
@@ -139,13 +139,13 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['fancyMargin'] ) ) {
 		$fancyMargin = $attr['fancyMargin'];
 
-		$css->set_selector( '.' . $unique_id . "> .premium-fancy-text");
+		$css->set_selector( '.' . $unique_id);
 		$css->add_property( 'margin', $css->render_spacing( $fancyMargin['Mobile'], isset( $fancyMargin['unit']['Mobile'])?$fancyMargin['unit']['Mobile']:$fancyMargin['unit'] ) );
 	}
 	if ( isset( $attr['fancyPadding'] ) ) {
 		$fancyPadding = $attr['fancyPadding'];
 
-		$css->set_selector( '.' . $unique_id . "> .premium-fancy-text");
+		$css->set_selector( '.' . $unique_id);
 		$css->add_property( 'padding', $css->render_spacing( $fancyPadding['Mobile'], isset( $fancyPadding['unit']['Mobile'])?$fancyPadding['unit']['Mobile']:$fancyPadding['unit'] ) );
 	}
 
