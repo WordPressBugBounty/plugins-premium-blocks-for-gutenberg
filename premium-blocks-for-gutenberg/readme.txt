@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.1.52
+Stable tag: 2.1.53
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,8 +125,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.1.53 =
+- Fixed: Bullet List block alignment issue.
+- Fixed: Gradient background not applying correctly to the Container block in Editor.
+
 = 2.1.52 =
-Fixed: Line height issue in animated text block.
+- Fixed: Line height issue in animated text block.
 
 = 2.1.51 =
 - Tweak: Added visual effects for the Animated Text block.

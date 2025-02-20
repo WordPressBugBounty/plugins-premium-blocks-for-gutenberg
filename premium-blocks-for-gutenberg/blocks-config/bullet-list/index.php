@@ -19,13 +19,17 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 	$css = new Premium_Blocks_css();
 
 	// Style for wrapper.
-	if ( isset( $attr['generalStyles'] ) && isset( $attr['generalStyles'][0]['generalBackgroundColor'] ) ) {
+	if ( isset( $attr['generalStyles']) && isset($attr['generalStyles'][0]) ) {
 		$general_styles = $attr['generalStyles'][0];
-		$css->set_selector( ".{$unique_id} > .premium-bullet-list > .premium-bullet-list__wrapper" );
-		$css->add_property( 'background-color', $css->render_color( $general_styles['generalBackgroundColor'] ) );
+    if(isset($general_styles['generalBackgroundColor'])){
+      $css->set_selector( ".{$unique_id} > .premium-bullet-list > .premium-bullet-list__wrapper" );
+      $css->add_property( 'background-color', $css->render_color( $general_styles['generalBackgroundColor'] ) );  
+    }
 
-		$css->set_selector( ".{$unique_id} .premium-bullet-list__wrapper:hover" );
-		$css->add_property( 'background-color', $css->render_color( $general_styles['generalHoverBackgroundColor'] ) );
+    if(isset($general_styles['generalHoverBackgroundColor'])){
+      $css->set_selector( ".{$unique_id} .premium-bullet-list__wrapper:hover" );
+      $css->add_property( 'background-color', $css->render_color( $general_styles['generalHoverBackgroundColor'] ) );  
+    }
 	}
 
 	if ( isset( $attr['boxShadow'] ) ) {
@@ -64,8 +68,10 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 		$content_flex_direction = 'right' === $content_align ? 'column' : 'column';
 		$content_flex_position  = 'after' === $icon_position ? 'row-reverse' : '';
 		$content_flex_direction = 'top' === $icon_position ? $content_flex_direction : $content_flex_position;
-
-	
+    
+	  $css->set_selector( '.' . $unique_id );
+		$css->add_property( 'text-align', $content_align );
+    $css->add_property( 'align-self',  $css->render_align_self($content_align) );
 		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list' );
 		$css->add_property( 'justify-content', $content_flex_align );
 		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__wrapper' );
@@ -241,11 +247,15 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 	// Style for title.
 	if ( isset( $attr['titleStyles'] ) && isset( $attr['titleStyles'][0] ) ) {
 		$title_styles = $attr['titleStyles'][0];
-		$css->set_selector( ".{$unique_id} .premium-bullet-list__label" );
-		$css->add_property( 'color', $css->render_color( $title_styles['titleColor'] ) );
+    if( isset($title_styles['titleColor'])){
+      $css->set_selector( ".{$unique_id} .premium-bullet-list__label" );
+      $css->add_property( 'color', $css->render_color( $title_styles['titleColor'] ) );
+    }
 
-		$css->set_selector( ".{$unique_id} .premium-bullet-list__wrapper:hover .premium-bullet-list__label-wrap .premium-bullet-list__label" );
-		$css->add_property( 'color', $css->render_string( $css->render_color( $title_styles['titleHoverColor'] ), '!important' ) );
+    if(isset($title_styles['titleHoverColor'])){
+      $css->set_selector( ".{$unique_id} .premium-bullet-list__wrapper:hover .premium-bullet-list__label-wrap .premium-bullet-list__label" );
+      $css->add_property( 'color', $css->render_string( $css->render_color( $title_styles['titleHoverColor'] ), '!important' ) );  
+    }
 	}
 
 	if ( isset( $attr['titlesTextShadow'] ) ) {
@@ -270,13 +280,17 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 	}
 
   // style for description 
-  if ( isset( $attr['descriptionStyles'])) {
+   if ( isset( $attr['descriptionStyles'])) {
 		$description_styles = $attr['descriptionStyles'];
-		$css->set_selector( ".{$unique_id} .premium-bullet-list__description" );
-		$css->add_property( 'color', $css->render_color( $description_styles['color'] ) );
+    if($description_styles['color']){
+      $css->set_selector( ".{$unique_id} .premium-bullet-list__description" );
+      $css->add_property( 'color', $css->render_color( $description_styles['color'] ) );
+    }
 
-		$css->set_selector( ".{$unique_id} .premium-bullet-list__wrapper:hover .premium-bullet-list__label-wrap .premium-bullet-list__description" );
-		$css->add_property( 'color', $css->render_string( $css->render_color( $description_styles['hoverColor'] ), '!important' ) );
+    if(isset($description_styles['hoverColor'])){
+      $css->set_selector( ".{$unique_id} .premium-bullet-list__wrapper:hover .premium-bullet-list__label-wrap .premium-bullet-list__description" );
+      $css->add_property( 'color', $css->render_string( $css->render_color( $description_styles['hoverColor'] ), '!important' ) );
+    }
 	}
 
 	if ( isset( $attr['descriptionTypography'] ) ) {
@@ -305,11 +319,13 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['dividerStyles'] ) && isset( $attr['dividerStyles'][0] ) ) {
 		$divider_styles = $attr['dividerStyles'][0];
-		$css->set_selector( ".{$unique_id} .premium-bullet-list-divider-block:not(:last-child)::after" );
-		$css->add_property( 'border-top-color', $divider_styles['dividerColor'] );
-
-		$css->set_selector( ".{$unique_id} .premium-bullet-list-divider-inline:not(:last-child)::after" );
-		$css->add_property( 'border-left-color', $divider_styles['dividerColor'] );
+    if(isset($divider_styles['dividerColor'])){
+      $css->set_selector( ".{$unique_id} .premium-bullet-list-divider-block:not(:last-child)::after" );
+      $css->add_property( 'border-top-color', $divider_styles['dividerColor'] );
+  
+      $css->set_selector( ".{$unique_id} .premium-bullet-list-divider-inline:not(:last-child)::after" );
+      $css->add_property( 'border-left-color', $divider_styles['dividerColor'] );
+    }
 	}
 
 	if ( isset( $attr['dividerWidth'] ) ) {
@@ -362,7 +378,9 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 		$content_flex_position  = 'after' === $icon_position ? 'row-reverse' : '';
 		$content_flex_direction = 'top' === $icon_position ? $content_flex_direction : $content_flex_position;
 
-	
+    $css->set_selector( '.' . $unique_id );
+		$css->add_property( 'text-align', $content_align );
+    $css->add_property( 'align-self',  $css->render_align_self($content_align) );
 		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list' );
 		$css->add_property( 'justify-content', $content_flex_align );
 		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__wrapper' );
@@ -556,7 +574,9 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 		$content_flex_position  = 'after' === $icon_position ? 'row-reverse' : '';
 		$content_flex_direction = 'top' === $icon_position ? $content_flex_direction : $content_flex_position;
 
-
+    $css->set_selector( '.' . $unique_id );
+		$css->add_property( 'text-align', $content_align );
+    $css->add_property( 'align-self',  $css->render_align_self($content_align) );
 		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list' );
 		$css->add_property( 'justify-content', $content_flex_align );
 		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__wrapper' );
