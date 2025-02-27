@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.1.53
+Stable tag: 2.1.54
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,6 +125,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.1.54 =
+- Fixed: Issue with container overlay background not displaying correctly.
+- Fixed: Gradient control doesn't work properly.
+- Fixed: Responsive entrance animation not triggering as expected in all Blocks.
+
 = 2.1.53 =
 - Fixed: Bullet List block alignment issue.
 - Fixed: Gradient background not applying correctly to the Container block in Editor.

@@ -545,6 +545,7 @@
         },
         "overlayOpacity": {
             "type": "number",
+            "default": 100,
             "isStyle": true
         },
         "overlayFilter": {
@@ -560,16 +561,17 @@
         },
         "hoverOverlayOpacity": {
             "type": "number",
+            "default": 100,
             "isStyle": true
         },
         "hoverOverlayFilter": {
             "type": "object",
             "default": {
-                "contrast": "100",
-                "blur": "0",
-                "bright": "100",
-                "saturation": "100",
-                "hue": "0"
+                "contrast": "",
+                "blur": "",
+                "bright": "",
+                "saturation": "",
+                "hue": ""
             },
             "isStyle": true
         },

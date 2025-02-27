@@ -152,9 +152,15 @@ function get_premium_container_css_style( $attr, $unique_id ) {
         $css->set_selector( '.premium-container-' . $unique_id . ':hover::before , .premium-block-' . $unique_id . ':hover::before' );
         $css->render_background( $attr['backgroundOverlayHover'], 'Desktop' );
     }
-    if ( isset( $attr['overlayOpacity'] ) ) {
-        $css->set_selector( '.premium-container-' . $unique_id . '::before , .premium-block-' . $unique_id . '::before ' );
-        $css->add_property( 'opacity', isset( $attr['backgroundOverlay'] ) && ( $attr['backgroundOverlay']['backgroundType'] === 'solid' || $attr['backgroundOverlay']['backgroundType'] === 'gradient' ) ? $attr['overlayOpacity'] / 100 : 1 );
+    if (isset($attr['overlayOpacity'])) {
+        $css->set_selector('.premium-container-' . $unique_id . '::before , .premium-block-' . $unique_id . '::before');
+        $opacity = 100; // Default value
+        if (isset($attr['backgroundOverlay']) && 
+            ($attr['backgroundOverlay']['backgroundType'] === 'solid' || $attr['backgroundOverlay']['backgroundType'] === 'gradient')) {
+            // Convert overlayOpacity to float or int before division
+            $opacity = is_numeric($attr['overlayOpacity']) ? (float)$attr['overlayOpacity'] / 100 : 1;
+        }
+        $css->add_property('opacity', $opacity);
     }
     if ( isset( $attr['blend'] ) && ! empty( $attr['blend'] ) ) {
         $css->set_selector( '.premium-container-' . $unique_id . '::before , .premium-block-' . $unique_id . '::before ' );       
@@ -180,9 +186,14 @@ function get_premium_container_css_style( $attr, $unique_id ) {
             'brightness(' . $attr['hoverOverlayFilter']['bright'] . '%)' . 'contrast(' . $attr['hoverOverlayFilter']['contrast'] . '%) ' . 'saturate(' . $attr['hoverOverlayFilter']['saturation'] . '%) ' . 'blur(' . $attr['hoverOverlayFilter']['blur'] . 'px) ' . 'hue-rotate(' . $attr['hoverOverlayFilter']['hue'] . 'deg)'
         );
     }
-    if ( isset( $attr['hoverOverlayOpacity'] ) ) {
-        $css->set_selector( '.premium-container-' . $unique_id . ':hover::before , .premium-block-' . $unique_id . ':hover::before' );
-        $css->add_property( 'opacity', isset( $attr['backgroundOverlayHover'] ) && ( $attr['backgroundOverlayHover']['backgroundType'] === 'solid' || $attr['backgroundOverlayHover']['backgroundType'] === 'gradient' ) ? $attr['hoverOverlayOpacity'] / 100 : 1 );
+    if (isset($attr['hoverOverlayOpacity'])) {
+        $css->set_selector('.premium-container-' . $unique_id . ':hover::before , .premium-block-' . $unique_id . ':hover::before');
+        $opacity = 1; 
+        if (isset($attr['backgroundOverlayHover']) && 
+            ($attr['backgroundOverlayHover']['backgroundType'] === 'solid' || $attr['backgroundOverlayHover']['backgroundType'] === 'gradient')) {
+            $opacity = is_numeric($attr['hoverOverlayOpacity']) ? (float)$attr['hoverOverlayOpacity'] / 100 : 1;
+        }
+        $css->add_property('opacity', $opacity);
     }
     $css->set_selector( '.wp-block-premium-container.premium-is-root-container.premium-container-' . $unique_id . ' .premium-container-inner-blocks-wrap , .wp-block-premium-container.premium-is-root-container.premium-block-' . $unique_id . ' .premium-container-inner-blocks-wrap' );
     $css->add_property( 'display', 'flex' );
