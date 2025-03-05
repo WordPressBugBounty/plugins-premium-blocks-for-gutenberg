@@ -5,7 +5,10 @@
     "name": "premium/heading",
     "title": "Heading",
     "description": "Grab your website visitors’ attention with stylish headings using Premium Heading Block.asw",
-    "keywords": ["title", "Heading"],
+    "keywords": [
+        "title",
+        "Heading"
+    ],
     "textdomain": "premium-blocks-for-gutenberg",
     "category": "premium-blocks",
     "attributes": {
@@ -742,6 +745,10 @@
         "iconColor": {
             "type": "string",
             "default": ""
+        },
+        "follow": {
+            "type": "boolean",
+            "default": false
         }
     },
     "editorScript": "pbg-blocks-js",

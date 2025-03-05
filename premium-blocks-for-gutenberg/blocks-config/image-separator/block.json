@@ -5,7 +5,10 @@
     "name": "premium/image-separator",
     "title": "Image Separator",
     "description": "Separate between your Gutenberg sections using Premium Image Separator Block.",
-    "keywords": ["image", "seperator"],
+    "keywords": [
+        "image",
+        "seperator"
+    ],
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
@@ -391,6 +394,10 @@
         "selectedIcon": {
             "type": "string",
             "default": "dashicons admin-site"
+        },
+        "follow": {
+            "type": "boolean",
+            "default": false
         }
     },
     "editorScript": "pbg-blocks-js",

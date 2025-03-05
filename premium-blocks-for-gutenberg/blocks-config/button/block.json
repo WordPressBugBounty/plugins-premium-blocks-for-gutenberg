@@ -6,8 +6,14 @@
     "title": "Button",
     "description": "Add stylish buttons to your Gutenberg page using Premium Button Block.",
     "category": "premium-blocks",
-    "keywords": ["button"],
-    "parent": ["premium/buttons", "premium/icon-box", "premium/pricing-table"],
+    "keywords": [
+        "button"
+    ],
+    "parent": [
+        "premium/buttons",
+        "premium/icon-box",
+        "premium/pricing-table"
+    ],
     "attributes": {
         "blockId": {
             "type": "string"
@@ -97,7 +103,6 @@
             "default": "top",
             "isStyle": true
         },
-
         "block_id": {
             "type": "string"
         },
@@ -733,6 +738,10 @@
             "isStyle": true
         },
         "fullWidth": {
+            "type": "boolean",
+            "default": false
+        },
+        "btnFollow": {
             "type": "boolean",
             "default": false
         }

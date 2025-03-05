@@ -2158,6 +2158,7 @@ public function premium_get_wp_local_fonts(){
 				'lists'     => PBG_Blocks_Integrations::get_instance()->get_fluentcrm_lists(),
 				'tags'      => PBG_Blocks_Integrations::get_instance()->get_fluentcrm_tags(),
 			),
+			'theme_version'        => esc_html( PREMIUM_BLOCKS_VERSION ),
 		);
 
 		// PBG.

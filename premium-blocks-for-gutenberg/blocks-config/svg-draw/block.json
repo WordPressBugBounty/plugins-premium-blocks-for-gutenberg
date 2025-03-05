@@ -6,7 +6,12 @@
     "title": "SVG Draw",
     "description": "Draw SVG with animation",
     "textdomain": "premium-blocks-for-gutenberg",
-    "keywords": ["Icon", "Font Awesome", "SVG", "SVG Draw"],
+    "keywords": [
+        "Icon",
+        "Font Awesome",
+        "SVG",
+        "SVG Draw"
+    ],
     "category": "premium-blocks",
     "attributes": {
         "blockId": {
@@ -449,9 +454,15 @@
                 "afterDrawFillColor": "",
                 "offset": 50
             }
+        },
+        "follow": {
+            "type": "boolean",
+            "default": false
         }
     },
-    "usesContext": ["hoversEffect"],
+    "usesContext": [
+        "hoversEffect"
+    ],
     "editorScript": "pbg-blocks-js",
     "editorStyle": "premium-blocks-editor-css"
 }

@@ -7,7 +7,10 @@
     "description": "Create attractive banners along with Heading, Description, and CTA using Premium Banner.",
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
-    "keywords": ["image", "photo"],
+    "keywords": [
+        "image",
+        "photo"
+    ],
     "attributes": {
         "blockId": {
             "type": "string",
@@ -196,7 +199,6 @@
             },
             "isStyle": true
         },
-
         "classMigrate": {
             "type": "boolean",
             "default": false
@@ -351,6 +353,10 @@
             "type": "string",
             "default": "",
             "isStyle": true
+        },
+        "follow": {
+            "type": "boolean",
+            "default": false
         }
     },
     "editorScript": "pbg-blocks-js",
