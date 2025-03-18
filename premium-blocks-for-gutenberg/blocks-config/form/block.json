@@ -102,6 +102,10 @@
             "type": "string",
             "default": ""
         },
+        "mailchimpMappedFields": {
+            "type": "array",
+            "default": []
+        },
         "mailerliteApiTokenType": {
             "type": "string",
             "default": "default"
@@ -650,9 +654,9 @@
         "iconSize": {
             "type": "object",
             "default": {
-                "Desktop": "",
-                "Tablet": "",
-                "Mobile": "",
+                "Desktop": "25",
+                "Tablet": "25",
+                "Mobile": "25",
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",

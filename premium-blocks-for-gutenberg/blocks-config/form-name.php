@@ -15,6 +15,16 @@
  * @return string Returns the post content with the legacy widget added.
  */
 function render_block_pbg_form_name( $attributes, $content, $block ) {
+  
+  if ( (isset( $attributes["iconTypeSelect"] ) && $attributes["iconTypeSelect"] == "lottie")  || (isset($attributes['triggerSettings']) && $attributes['triggerSettings'][0]['triggerType'] =='lottie')) {
+    wp_enqueue_script(
+      'pbg-lottie',
+      PREMIUM_BLOCKS_URL . 'assets/js/lib/lottie.min.js',
+      array( 'jquery' ),
+      PREMIUM_BLOCKS_VERSION,
+      true
+    );
+  }
 
 	return $content;
 }

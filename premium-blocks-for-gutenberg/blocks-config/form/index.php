@@ -95,7 +95,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['inputsPadding'] ) ) {
 		$inputs_padding = $attr['inputsPadding'];
 		$css->set_selector( ".{$unique_id}.premium-form .premium-form-input" );
-		$css->add_property( 'padding', $css->render_spacing( $inputs_padding['Desktop'], $inputs_padding['unit']['Desktop'] ) );
+		$css->add_property( 'padding', $css->render_spacing( $inputs_padding['Desktop'], $inputs_padding['unit']['Desktop'] ) . "!important" );
 	}
 
 	if ( isset( $attr['inputsMargin'] ) ) {
@@ -223,7 +223,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 		$css->add_property( 'width', $css->render_string( $css->render_range( $attr['iconSize'], 'Desktop' ), '!important' ) );
 		$css->add_property( 'height', $css->render_string( $css->render_range( $attr['iconSize'], 'Desktop' ), '!important' ) );
 
-		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg" );
 		$css->add_property( 'width', $css->render_string( $css->render_range( $attr['iconSize'], 'Desktop' ), '!important' ) );
 		$css->add_property( 'height', $css->render_string( $css->render_range( $attr['iconSize'], 'Desktop' ), '!important' ) );
 
@@ -233,23 +233,31 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->add_property( 'width', $css->render_string( $css->render_range( $attr['iconSize'], 'Desktop' ), '!important' ) );
 		$css->add_property( 'height', $css->render_string( $css->render_range( $attr['iconSize'], 'Desktop' ), '!important' ) );
+
+    $css->set_selector( ".{$unique_id}.premium-form .premium-form-input__icon-wrap + .premium-form-input:not(textarea)" );
+    $css->add_property("height",  $css->render_string( $css->render_range( $attr['iconSize'], 'Desktop' )));
+    $css->add_property("padding-left",  $css->render_string( $css->get_responsive_css( $attr['iconSize'], 'Desktop' ) + 15 . $css->get_responsive_css($attr['iconSize']['unit'], 'Desktop')));
+
+    $css->set_selector( ".{$unique_id}.premium-form .premium-form-input__icon-wrap + .premium-form-input:is(textarea)" );
+    $css->add_property("height",  $css->render_string( $css->get_responsive_css( $attr['iconSize'], 'Desktop' ) + 50 . $css->get_responsive_css($attr['iconSize']['unit'], 'Desktop')));
+    $css->add_property("padding-left",  $css->render_string( $css->get_responsive_css( $attr['iconSize'], 'Desktop' ) + 15 . $css->get_responsive_css($attr['iconSize']['unit'], 'Desktop')));
 	}
 
 	if ( isset( $attr['iconMargin'] ) ) {
 		$icon_margin = $attr['iconMargin'];
-		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->add_property( 'margin', $css->render_spacing( $icon_margin['Desktop'], $icon_margin['unit']['Desktop'] ) );
 	}
 	if ( isset( $attr['iconPadding'] ) ) {
 		$icon_padding = $attr['iconPadding'];
-		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->add_property( 'padding', $css->render_spacing( $icon_padding['Desktop'], $icon_padding['unit']['Desktop'] ) );
 	}
 	if ( isset( $attr['iconBorder'] ) ) {
 		$icon_border        = $attr['iconBorder'];
 		$icon_border_width  = $icon_border['borderWidth'];
 		$icon_border_radius = $icon_border['borderRadius'];
-		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->add_property( 'border-width', $css->render_spacing( $icon_border_width['Desktop'], 'px' ) );
 		$css->add_property( 'border-radius', $css->render_spacing( $icon_border_radius['Desktop'], 'px' ) );
 		$css->add_property( 'border-style', $css->render_string( $css->render_color( $icon_border['borderType'] ), '!important' ) );
@@ -265,19 +273,19 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon:not(.icon-type-fe) svg" );
 		$css->add_property( 'fill', $css->render_color( $icon_color ) );
 		$css->add_property( 'color', $css->render_color( $icon_color ) );
-		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg" );
 		$css->add_property( 'fill', $css->render_color( $icon_color ) );
 		$css->add_property( 'color', $css->render_color( $icon_color ) );
 		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon:not(.icon-type-fe) svg *" );
 		$css->add_property( 'fill', $css->render_color( $icon_color ) );
-		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg *" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg *" );
 		$css->add_property( 'fill', $css->render_color( $icon_color ) );
 	}
 
 	if ( isset( $attr['iconBG'] ) ) {
 		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon" );
 		$css->render_background( $attr['iconBG'], 'Desktop' );
-		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg" );
 		$css->render_background( $attr['iconBG'], 'Desktop' );
 		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->render_background( $attr['iconBG'], 'Desktop' );
@@ -288,19 +296,19 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-form-input-icon" );
 		$css->add_property( 'fill', $css->render_color( $icon_HoverColor ) );
 		$css->add_property( 'color', $css->render_color( $icon_HoverColor ) );
-		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-list-item-svg-class svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-form-input-svg-class svg" );
 		$css->add_property( 'fill', $css->render_color( $icon_HoverColor ) );
 		$css->add_property( 'color', $css->render_color( $icon_HoverColor ) );
 		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-form-input-icon:not(.icon-type-fe) svg *" );
 		$css->add_property( 'fill', $css->render_color( $icon_HoverColor ) );
-		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-list-item-svg-class svg *" );
+		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-form-input-svg-class svg *" );
 		$css->add_property( 'fill', $css->render_color( $icon_HoverColor ) );
 	}
 
 	if ( isset( $attr['iconHoverBG'] ) ) {
 		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-form-input-icon" );
 		$css->render_background( $attr['iconHoverBG'], 'Desktop' );
-		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-list-item-svg-class svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-form-input-svg-class svg" );
 		$css->render_background( $attr['iconHoverBG'], 'Desktop' );
 		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-lottie-animation svg" );
 		$css->render_background( $attr['iconHoverBG'], 'Desktop' );
@@ -311,7 +319,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-form-input-icon" );
 		$css->add_property( 'border-color', $css->render_string( $css->render_color( $hover_border ), '!important' ) );
 
-		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-list-item-svg-class svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-form-input-svg-class svg" );
 		$css->add_property( 'border-color', $css->render_string( $css->render_color( $hover_border ), '!important' ) );
 
 		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-lottie-animation svg" );
@@ -363,7 +371,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['inputsPadding'] ) ) {
 		$inputs_padding = $attr['inputsPadding'];
 		$css->set_selector( ".{$unique_id}.premium-form .premium-form-input" );
-		$css->add_property( 'padding', $css->render_spacing( $inputs_padding['Tablet'], $inputs_padding['unit']['Tablet'] ) );
+		$css->add_property( 'padding', $css->render_spacing( $inputs_padding['Tablet'], $inputs_padding['unit']['Tablet'] ) . "!important");
 	}
 
 	if ( isset( $attr['inputsMargin'] ) ) {
@@ -441,7 +449,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 		$css->add_property( 'width', $css->render_string( $css->render_range( $attr['iconSize'], 'Tablet' ), '!important' ) );
 		$css->add_property( 'height', $css->render_string( $css->render_range( $attr['iconSize'], 'Tablet' ), '!important' ) );
 
-		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg" );
 		$css->add_property( 'width', $css->render_string( $css->render_range( $attr['iconSize'], 'Tablet' ), '!important' ) );
 		$css->add_property( 'height', $css->render_string( $css->render_range( $attr['iconSize'], 'Tablet' ), '!important' ) );
 
@@ -451,23 +459,31 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->add_property( 'width', $css->render_string( $css->render_range( $attr['iconSize'], 'Tablet' ), '!important' ) );
 		$css->add_property( 'height', $css->render_string( $css->render_range( $attr['iconSize'], 'Tablet' ), '!important' ) );
+
+    $css->set_selector( ".{$unique_id}.premium-form .premium-form-input__icon-wrap + .premium-form-input:not(textarea)" );
+    $css->add_property("height",  $css->render_string( $css->render_range( $attr['iconSize'], 'Tablet' )));
+    $css->add_property("padding-left",  $css->render_string( $css->get_responsive_css( $attr['iconSize'], 'Tablet' ) + 15 . $css->get_responsive_css($attr['iconSize']['unit'], 'Tablet')));
+
+    $css->set_selector( ".{$unique_id}.premium-form .premium-form-input__icon-wrap + .premium-form-input:is(textarea)" );
+    $css->add_property("height",  $css->render_string( $css->get_responsive_css( $attr['iconSize'], 'Tablet' ) + 50 . $css->get_responsive_css($attr['iconSize']['unit'], 'Tablet')));
+    $css->add_property("padding-left",  $css->render_string( $css->get_responsive_css( $attr['iconSize'], 'Tablet' ) + 15 . $css->get_responsive_css($attr['iconSize']['unit'], 'Tablet')));
 	}
 
 	if ( isset( $attr['iconMargin'] ) ) {
 		$icon_margin = $attr['iconMargin'];
-		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->add_property( 'margin', $css->render_spacing( $icon_margin['Tablet'], $icon_margin['unit']['Tablet'] ) );
 	}
 	if ( isset( $attr['iconPadding'] ) ) {
 		$icon_padding = $attr['iconPadding'];
-		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->add_property( 'padding', $css->render_spacing( $icon_padding['Tablet'], $icon_padding['unit']['Tablet'] ) );
 	}
 	if ( isset( $attr['iconBorder'] ) ) {
 		$icon_border        = $attr['iconBorder'];
 		$icon_border_width  = $icon_border['borderWidth'];
 		$icon_border_radius = $icon_border['borderRadius'];
-		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->add_property( 'border-width', $css->render_spacing( $icon_border_width['Tablet'], 'px' ) );
 		$css->add_property( 'border-radius', $css->render_spacing( $icon_border_radius['Tablet'], 'px' ) );
 		$css->add_property( 'border-style', $css->render_string( $css->render_color( $icon_border['borderType'] ), '!important' ) );
@@ -477,7 +493,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['iconBG'] ) ) {
 		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon" );
 		$css->render_background( $attr['iconBG'], 'Tablet' );
-		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg" );
 		$css->render_background( $attr['iconBG'], 'Tablet' );
 		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->render_background( $attr['iconBG'], 'Tablet' );
@@ -486,7 +502,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['iconHoverBG'] ) ) {
 		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-form-input-icon" );
 		$css->render_background( $attr['iconHoverBG'], 'Tablet' );
-		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-list-item-svg-class svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-form-input-svg-class svg" );
 		$css->render_background( $attr['iconHoverBG'], 'Tablet' );
 		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-lottie-animation svg" );
 		$css->render_background( $attr['iconHoverBG'], 'Tablet' );
@@ -537,7 +553,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['inputsPadding'] ) ) {
 		$inputs_padding = $attr['inputsPadding'];
 		$css->set_selector( ".{$unique_id}.premium-form .premium-form-input" );
-		$css->add_property( 'padding', $css->render_spacing( $inputs_padding['Mobile'], $inputs_padding['unit']['Mobile'] ) );
+		$css->add_property( 'padding', $css->render_spacing( $inputs_padding['Mobile'], $inputs_padding['unit']['Mobile'] ) . "!important" );
 	}
 
 	if ( isset( $attr['inputsMargin'] ) ) {
@@ -615,7 +631,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 		$css->add_property( 'width', $css->render_string( $css->render_range( $attr['iconSize'], 'Mobile' ), '!important' ) );
 		$css->add_property( 'height', $css->render_string( $css->render_range( $attr['iconSize'], 'Mobile' ), '!important' ) );
 
-		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg" );
 		$css->add_property( 'width', $css->render_string( $css->render_range( $attr['iconSize'], 'Mobile' ), '!important' ) );
 		$css->add_property( 'height', $css->render_string( $css->render_range( $attr['iconSize'], 'Mobile' ), '!important' ) );
 
@@ -625,23 +641,31 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->add_property( 'width', $css->render_string( $css->render_range( $attr['iconSize'], 'Mobile' ), '!important' ) );
 		$css->add_property( 'height', $css->render_string( $css->render_range( $attr['iconSize'], 'Mobile' ), '!important' ) );
+
+    $css->set_selector( ".{$unique_id}.premium-form .premium-form-input__icon-wrap + .premium-form-input:not(textarea)" );
+    $css->add_property("height",  $css->render_string( $css->render_range( $attr['iconSize'], 'Mobile' )));
+    $css->add_property("padding-left",  $css->render_string( $css->get_responsive_css( $attr['iconSize'], 'Mobile' ) + 15 . $css->get_responsive_css($attr['iconSize']['unit'], 'Mobile')));
+
+    $css->set_selector( ".{$unique_id}.premium-form .premium-form-input__icon-wrap + .premium-form-input:is(textarea)" );
+    $css->add_property("height",  $css->render_string( $css->get_responsive_css( $attr['iconSize'], 'Mobile' ) + 50 . $css->get_responsive_css($attr['iconSize']['unit'], 'Mobile')));
+    $css->add_property("padding-left",  $css->render_string( $css->get_responsive_css( $attr['iconSize'], 'Mobile' ) + 15 . $css->get_responsive_css($attr['iconSize']['unit'], 'Mobile')));
 	}
 
 	if ( isset( $attr['iconMargin'] ) ) {
 		$icon_margin = $attr['iconMargin'];
-		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->add_property( 'margin', $css->render_spacing( $icon_margin['Mobile'], $icon_margin['unit']['Mobile'] ) );
 	}
 	if ( isset( $attr['iconPadding'] ) ) {
 		$icon_padding = $attr['iconPadding'];
-		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->add_property( 'padding', $css->render_spacing( $icon_padding['Mobile'], $icon_padding['unit']['Mobile'] ) );
 	}
 	if ( isset( $attr['iconBorder'] ) ) {
 		$icon_border        = $attr['iconBorder'];
 		$icon_border_width  = $icon_border['borderWidth'];
 		$icon_border_radius = $icon_border['borderRadius'];
-		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->add_property( 'border-width', $css->render_spacing( $icon_border_width['Mobile'], 'px' ) );
 		$css->add_property( 'border-radius', $css->render_spacing( $icon_border_radius['Mobile'], 'px' ) );
 		$css->add_property( 'border-style', $css->render_string( $css->render_color( $icon_border['borderType'] ), '!important' ) );
@@ -651,7 +675,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['iconBG'] ) ) {
 		$css->set_selector( ".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon" );
 		$css->render_background( $attr['iconBG'], 'Mobile' );
-		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-list-item-svg-class svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg" );
 		$css->render_background( $attr['iconBG'], 'Mobile' );
 		$css->set_selector( ".{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg" );
 		$css->render_background( $attr['iconBG'], 'Mobile' );
@@ -660,7 +684,7 @@ function get_premium_form_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['iconHoverBG'] ) ) {
 		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-form-input-icon" );
 		$css->render_background( $attr['iconHoverBG'], 'Mobile' );
-		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-list-item-svg-class svg" );
+		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-form-input-svg-class svg" );
 		$css->render_background( $attr['iconHoverBG'], 'Mobile' );
 		$css->set_selector( ".{$unique_id} .premium-form-input-wrap:hover .premium-lottie-animation svg" );
 		$css->render_background( $attr['iconHoverBG'], 'Mobile' );

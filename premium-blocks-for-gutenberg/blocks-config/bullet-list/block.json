@@ -592,11 +592,6 @@
             },
             "isStyle": true
         },
-
-        "iconTypeSelect": {
-            "type": "string",
-            "default": "icon"
-        },
         "iconSize": {
             "type": "object",
             "default": {
@@ -882,6 +877,43 @@
                 "link": true
             },
             "isStyle": true
+        },
+        "iconTypeSelect": {
+            "type": "string",
+            "default": "icon"
+        },
+        "selectedIcon": {
+            "type": "string",
+            "default": "ic_circleRight"
+        },
+        "imageID": {
+            "type": "string"
+        },
+        "imageURL": {
+            "type": "string"
+        },
+        "imgTagHeight": {
+            "type": "number",
+            "default": 0
+        },
+        "imgTagWidth": {
+            "type": "number",
+            "default": 0
+        },
+        "lottieURl": {
+            "type": "string"
+        },
+        "loop": {
+            "type": "boolean",
+            "default": true
+        },
+        "reversedir": {
+            "type": "boolean",
+            "default": false
+        },
+        "svgUrl": {
+            "type": "string",
+            "default": ""
         }
     },
     "editorScript": "pbg-blocks-js",
@@ -889,7 +921,6 @@
     "providesContext": {
         "layoutPos": "layoutPos",
         "divider": "divider",
-        "bulletIconFontSize": "bulletIconFontSize",
-        "iconTypeSelect": "iconTypeSelect"
+        "bulletIconFontSize": "bulletIconFontSize"
     }
 }

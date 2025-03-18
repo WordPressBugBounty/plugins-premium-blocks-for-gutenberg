@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.1.55
+Stable tag: 2.2.0
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -83,11 +83,11 @@ Optimize your WordPress website performance with lightning-fast loading times us
 22. [Instagram Feed](https://premiumblocks.io/gutenberg-blocks/instagram-feed-block/) - Display your Instagram feed directly on your WordPress website.
 23. [Post Carousel](https://premiumblocks.io/gutenberg-blocks/post-carousel-block/) - Showcase your blog posts in a visually appealing carousel.
 24. [Post Grid](https://premiumblocks.io/gutenberg-blocks/post-grid-block/) - Present your blog posts in a neat and organized grid layout.
-24. [SVG Draw](https://premiumblocks.io/gutenberg-blocks/svg-draw-block/) - Create dynamic and interactive SVG drawings directly on your WordPress website.
-25. [Form](https://premiumblocks.io/gutenberg-blocks/contact-form-block/)   - Create beautiful contact forms and more with our intuitive Gutenberg Form block.
-26. [Image](https://premiumblocks.io/gutenberg-blocks/image-block/) - Explore Gutenberg's Image block with its diverse masks, styles, controls, and options, perfect for enhancing your visual content.
-27. [Gallery](https://premiumblocks.io/gutenberg-blocks/gallery-block/) - Engage your Images in various layout
-28. [Tabs](https://premiumblocks.io/gutenberg-blocks/tabs-block/) - For making advanced tabs with content
+25. [SVG Draw](https://premiumblocks.io/gutenberg-blocks/svg-draw-block/) - Create dynamic and interactive SVG drawings directly on your WordPress website.
+26. [Form](https://premiumblocks.io/gutenberg-blocks/contact-form-block/)   - Create beautiful contact forms and more with our intuitive Gutenberg Form block.
+27. [Image](https://premiumblocks.io/gutenberg-blocks/image-block/) - Explore Gutenberg's Image block with its diverse masks, styles, controls, and options, perfect for enhancing your visual content.
+28. [Gallery](https://premiumblocks.io/gutenberg-blocks/gallery-block/) - Engage your Images in various layout
+29. [Tabs](https://premiumblocks.io/gutenberg-blocks/tabs-block/) - For making advanced tabs with content
 
 == Installation ==
 
@@ -125,6 +125,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.0 =
+- New: Added dynamic audience list fields for Mailchimp integration in the Form Block.
+- New: Introduced the "Letter Flow" effect in the Animated Text Block.
+- New: Added general icon styling options for list items in the Bullet List Block.
+- Improvement: Updated panel inspector settings for all premium Gutenberg blocks for improved UX and ease of use.
+- Fixed: Resolved preset styling issue for the button in the Form Block.
+- Fixed: Fixed issue with inserting blocks through the navigation list in the editor for the Modal Box Block.
+
 = 2.1.55 =
 - Tweak: Improved link control in all premium Gutenberg blocks (Container, buttons, icons, etc.).
 

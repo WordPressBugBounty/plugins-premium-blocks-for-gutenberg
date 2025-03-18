@@ -229,6 +229,9 @@ class PBG_Blocks_Helper {
 
 		// Get mailchimp lists.
 		add_action( 'wp_ajax_premium_blocks_get_mailchimp_lists', array( $this, 'premium_get_mailchimp_lists' ) );
+    
+    // get mailchimp list merge fields
+		add_action( 'wp_ajax_pbg_editor_get_mailchimp_list_merge_fields', array( $this, 'pbg_editor_get_mailchimp_list_merge_fields' ) );
 
 		// Get mailerlite groups.
 		add_action( 'wp_ajax_premium_blocks_get_mailerlite_groups', array( $this, 'premium_get_mailerlite_groups' ) );
@@ -322,6 +325,33 @@ class PBG_Blocks_Helper {
 		// Send mailchimp lists.
 		wp_send_json_success( array( 'mailchimp_lists' => $mailchimp_lists ) );
 	}
+
+  /**
+   * Retrieves the merge fields for a Mailchimp list.
+   *
+   * @return void.
+   */
+  public function pbg_editor_get_mailchimp_list_merge_fields() {
+    // Check if nonce is set.
+    check_ajax_referer( 'pa-blog-block-nonce', 'nonce' );
+
+    // Check if api key is set.
+    if ( ! isset( $_POST['api_key'] ) ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'API key is not set.', 'premium-blocks-for-gutenberg' ) ) );
+		}
+
+    if ( ! isset( $_POST['list_id'] ) ) {
+      wp_send_json_error( array( 'message' => esc_html__( 'List ID is not set.', 'premium-blocks-for-gutenberg' ) ) );
+    }
+
+    $list_merge_fields = PBG_Blocks_Integrations::get_instance()->get_mailchimp_list_merge_fields( $_POST['api_key'], $_POST['list_id'] );
+
+    if ( empty( $list_merge_fields ) ) {
+      wp_send_json_error( array( 'message' => esc_html__( 'No merge fields found.', 'premium-blocks-for-gutenberg' ) ) );
+    }
+
+    wp_send_json_success( array( 'list_merge_fields' => $list_merge_fields ) );
+  }
 
 	/**
 	 * Premium Form Submit
@@ -543,9 +573,8 @@ class PBG_Blocks_Helper {
 		$api_key            = $this->integrations_settings['premium-mailchimp-api-key'] ?? '';
 		$api_key_type       = $mailchimp_settings['apiKeyType'] ?? '';
 		$list_id            = $mailchimp_settings['listId'] ?? '';
+    $mapped_fields      = $mailchimp_settings['mappedFields'] ?? array();
 		$email              = $mailchimp_settings['email'] ?? '';
-		$first_name         = $mailchimp_settings['firstName'] ?? '';
-		$last_name          = $mailchimp_settings['lastName'] ?? '';
 
 		if ( 'custom' === $api_key_type ) {
 			$api_key = $mailchimp_settings['apiKey'] ?? '';
@@ -567,7 +596,7 @@ class PBG_Blocks_Helper {
 		}
 
 		// Mailchimp API URL.
-		$response = PBG_Blocks_Integrations::get_instance()->add_mailchimp_subscriber( $api_key, $list_id, $email, $first_name, $last_name );
+		$response = PBG_Blocks_Integrations::get_instance()->add_mailchimp_subscriber( $mailchimp_settings, $api_key, $list_id, $mapped_fields, $email);
 
 		return $response;
 	}
@@ -915,7 +944,7 @@ class PBG_Blocks_Helper {
 			),
 			'premium/list-item'             => array(
 				'name'       => 'list-item',
-				'style_func' => null,
+				'style_func' => 'get_premium_bullet_list_item_css_style',
 			),
 			'premium/countup'               => array(
 				'name'       => 'count-up',

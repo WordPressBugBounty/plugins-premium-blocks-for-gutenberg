@@ -253,8 +253,8 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
     }
 
     if(isset($title_styles['titleHoverColor'])){
-      $css->set_selector( ".{$unique_id} .premium-bullet-list__wrapper:hover .premium-bullet-list__label-wrap .premium-bullet-list__label" );
-      $css->add_property( 'color', $css->render_string( $css->render_color( $title_styles['titleHoverColor'] ), '!important' ) );  
+      $css->set_selector( ".{$unique_id} .premium-bullet-list__wrapper:hover .premium-bullet-list__label" );
+      $css->add_property( 'color', $css->render_color( $title_styles['titleHoverColor'] ) );  
     }
 	}
 
@@ -288,8 +288,8 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
     }
 
     if(isset($description_styles['hoverColor'])){
-      $css->set_selector( ".{$unique_id} .premium-bullet-list__wrapper:hover .premium-bullet-list__label-wrap .premium-bullet-list__description" );
-      $css->add_property( 'color', $css->render_string( $css->render_color( $description_styles['hoverColor'] ), '!important' ) );
+      $css->set_selector( ".{$unique_id} .premium-bullet-list__wrapper:hover .premium-bullet-list__description" );
+      $css->add_property( 'color', $css->render_color( $description_styles['hoverColor'] ));
     }
 	}
 
@@ -384,7 +384,7 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list' );
 		$css->add_property( 'justify-content', $content_flex_align );
 		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__wrapper' );
-		$css->add_property( 'justify-content', $content_flex_align );
+		$css->add_property( 'justify-content', $css->render_align_self($content_align) );
 		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__content-wrap' );
 		$css->add_property( 'justify-content', $content_flex_align );
 		$css->add_property( 'flex-direction', $content_flex_direction );
@@ -580,7 +580,7 @@ function get_premium_bullet_list_css_style( $attr, $unique_id ) {
 		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list' );
 		$css->add_property( 'justify-content', $content_flex_align );
 		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__wrapper' );
-		$css->add_property( 'justify-content', $content_flex_align );
+		$css->add_property( 'justify-content', $css->render_align_self($content_align) );
 		$css->set_selector( '.' . $unique_id . ' .premium-bullet-list__content-wrap' );
 		$css->add_property( 'justify-content', $content_flex_align );
 		$css->add_property( 'flex-direction', $content_flex_direction );

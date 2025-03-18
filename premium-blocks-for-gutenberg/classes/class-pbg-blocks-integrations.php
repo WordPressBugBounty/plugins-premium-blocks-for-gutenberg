@@ -39,6 +39,9 @@ class PBG_Blocks_Integrations {
 		add_action( 'wp_ajax_pbg-get-instagram-feed', array( $this, 'get_instagram_feed' ) );
 		// Get mailchimp lists.
 		add_action( 'wp_ajax_pbg-get-mailchimp-lists', array( $this, 'get_mailchimp_lists' ) );
+    // get mailchimp list merge fields
+		add_action( 'wp_ajax_pbg-get_mailchimp_list_merge_fields', array( $this, 'get_mailchimp_list_merge_fields' ) );
+    
 	}
 
 	/**
@@ -63,7 +66,7 @@ class PBG_Blocks_Integrations {
 				),
 			)
 		);
-
+    
 		if ( is_wp_error( $request ) ) {
 			return array();
 		}
@@ -78,34 +81,72 @@ class PBG_Blocks_Integrations {
 		return array();
 	}
 
+  /**
+   * Retrieves the merge fields for a Mailchimp list.
+   *
+   * @param string $api_key The Mailchimp API key.
+   * @param string $list_id The ID of the Mailchimp list.
+   * @return array The merge fields for the specified Mailchimp list.
+   */
+  public function get_mailchimp_list_merge_fields($api_key = '', $list_id = '') {
+    
+    if ( empty( $api_key ) || empty( $list_id ) ) {
+      return array();
+    }
+
+    $dc      = substr( $api_key, strpos( $api_key, '-' ) + 1 );
+    $response = wp_remote_get(
+			"https://$dc.api.mailchimp.com/3.0/lists/$list_id/merge-fields",
+			array(
+				'headers' => array(
+					'Authorization' => 'Basic ' . base64_encode( 'user:' . $api_key ),
+				),
+			)
+		);
+
+    if (is_wp_error($response)) {
+        return array();
+    }
+
+    $body = wp_remote_retrieve_body( $response );
+		$body = json_decode( $body, true );
+
+    if ( isset( $body['merge_fields'] ) ) {
+			return $body['merge_fields'];
+		}
+
+    return array();
+  }
+
 	/**
 	 * Add Mailchimp subscriber
 	 *
 	 * @access public
+   * @param array $mailchimp_settings the mailchimp settings.
 	 * @param string $api_key the mailchimp api key.
 	 * @param string $list_id the mailchimp list id.
+   * @param array $mapped_fields the mapped fields.
 	 * @param string $email the subscriber email.
-	 * @param string $fname the subscriber first name.
-	 * @param string $lname the subscriber last name.
 	 * @return array
 	 */
-	public function add_mailchimp_subscriber( $api_key, $list_id, $email, $fname, $lname ) {
+	public function add_mailchimp_subscriber($mailchimp_settings, $api_key, $list_id, $mapped_fields, $email) {
 		$dc           = substr( $api_key, strpos( $api_key, '-' ) + 1 );
 		$merge_fields = array();
 
-		if ( ! empty( $fname ) ) {
-			$merge_fields['FNAME'] = $fname;
-		}
+    foreach ($mapped_fields as $field) {
+      $field_name = $field['field_name'];
+      $field_tag = $field['field_tag'];
 
-		if ( ! empty( $lname ) ) {
-			$merge_fields['LNAME'] = $lname;
-		}
+      if (! empty($field_name)){
+        $merge_fields[$field_tag] = $mailchimp_settings[$field_name];
+      }
+    }
 
 		$body = array(
 			'email_address' => $email,
 			'status'        => 'subscribed',
 		);
-
+    
 		if ( ! empty( $merge_fields ) ) {
 			$body['merge_fields'] = $merge_fields;
 		}
