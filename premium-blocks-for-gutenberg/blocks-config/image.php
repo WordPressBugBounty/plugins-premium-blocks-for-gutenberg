@@ -131,7 +131,7 @@ function get_premium_image_css( $attr, $unique_id ) {
 	if(isset($attr['margin'])){
 		$margin = $attr['margin'];
 		$css->set_selector( '.' . $unique_id  );
-		$css->add_property( 'margin', $css->render_spacing( $margin['Desktop'], $margin['unit']['Desktop'] ) );
+		$css->add_property( 'margin', $css->render_string($css->render_spacing( $margin['Desktop'], $margin['unit']['Desktop'] ), '!important') );
 	}
 
 
@@ -194,7 +194,7 @@ function get_premium_image_css( $attr, $unique_id ) {
 	if(isset($attr['margin'])){
 		$margin = $attr['margin'];
 		$css->set_selector( '.' . $unique_id  );
-		$css->add_property( 'margin', $css->render_spacing( $margin['Tablet'], $margin['unit']['Tablet'] ) );
+		$css->add_property( 'margin', $css->render_string($css->render_spacing( $margin['Tablet'], $margin['unit']['Tablet'] ), '!important') );
 	}
 
 
@@ -259,7 +259,7 @@ function get_premium_image_css( $attr, $unique_id ) {
 	if(isset($attr['margin'])){
 		$margin = $attr['margin'];
 		$css->set_selector( '.' . $unique_id  );
-		$css->add_property( 'margin', $css->render_spacing( $margin['Mobile'], $margin['unit']['Mobile'] ) );
+		$css->add_property( 'margin', $css->render_string($css->render_spacing( $margin['Mobile'], $margin['unit']['Mobile'] ), '!important') );
 	}
 
 

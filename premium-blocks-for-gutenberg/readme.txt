@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -125,6 +125,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.1 =
+- Fixed: Sub-container width styling issue.
+- Fixed: Duplicate settings in the Image block editor.
+- Fixed: Spacing issue in the Image block for Gutenberg.
+
 = 2.2.0 =
 - New: Added dynamic audience list fields for Mailchimp integration in the Form Block.
 - New: Introduced the "Letter Flow" effect in the Animated Text Block.

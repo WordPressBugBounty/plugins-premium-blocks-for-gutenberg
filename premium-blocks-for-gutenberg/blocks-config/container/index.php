@@ -71,7 +71,7 @@ function get_premium_container_css_style( $attr, $unique_id ) {
 
     // $css->add_property( 'column-gap', isset( $attr['columnGutter']['Desktop'] ) ? $attr['columnGutter']['Desktop'] . $attr['columnGutter']['unit'] : '20px' );
     if ( isset( $attr['colWidth'] ) ) {
-        $css->set_selector( '.wp-block-premium-container.premium-is-root-container .premium-container-' . $unique_id .' , .wp-block-premium-container.premium-is-root-container .premium-block-' . $unique_id );
+        $css->set_selector( '.wp-block-premium-container .premium-container-' . $unique_id .' , .wp-block-premium-container .premium-block-' . $unique_id );
         $css->add_property( 'max-width', $css->render_range( $attr['colWidth'], 'Desktop' ) );
         $css->add_property( 'width', '100%' );
     }
@@ -198,7 +198,7 @@ function get_premium_container_css_style( $attr, $unique_id ) {
     $css->set_selector( '.wp-block-premium-container.premium-is-root-container.premium-container-' . $unique_id . ' .premium-container-inner-blocks-wrap , .wp-block-premium-container.premium-is-root-container.premium-block-' . $unique_id . ' .premium-container-inner-blocks-wrap' );
     $css->add_property( 'display', 'flex' );
     if ( isset( $attr['innerWidth'] ) && $attr['innerWidthType'] === 'boxed' ) {
-        $css->set_selector( '.wp-block-premium-container.premium-is-root-container.premium-container-' . $unique_id . ' .premium-container-inner-blocks-wrap , .wp-block-premium-container.premium-is-root-container.premium-block-' . $unique_id . ' .premium-container-inner-blocks-wrap' );
+        $css->set_selector( '.wp-block-premium-container.premium-container-' . $unique_id . ' .premium-container-inner-blocks-wrap , .wp-block-premium-container.premium-block-' . $unique_id . ' .premium-container-inner-blocks-wrap' );
         $css->add_property( '--inner-content-custom-width', 'min(100vw,  ' . $attr['innerWidth'] . 'px)' );
         $css->add_property( 'max-width', 'var(--inner-content-custom-width)' );
         $css->add_property( 'margin-left', 'auto' );
@@ -257,7 +257,7 @@ function get_premium_container_css_style( $attr, $unique_id ) {
     $css->add_property( 'column-gap', isset( $attr['columnGutter']['Tablet'] ) ? $css->render_range( $attr['columnGutter'], 'Tablet' ) : '20px' );
 
     if ( isset( $attr['colWidth'] ) ) {
-        $css->set_selector( '.wp-block-premium-container.premium-is-root-container .premium-container-' . $unique_id .' , .wp-block-premium-container.premium-is-root-container .premium-block-' . $unique_id );
+        $css->set_selector( '.wp-block-premium-container .premium-container-' . $unique_id .' , .wp-block-premium-container .premium-block-' . $unique_id );
         $css->add_property( 'max-width', $css->render_range( $attr['colWidth'], 'Tablet' ) );
         $css->add_property( 'width', '100%' );
     }
@@ -387,7 +387,7 @@ function get_premium_container_css_style( $attr, $unique_id ) {
     $css->add_property( 'column-gap', isset( $attr['columnGutter']['Mobile'] ) ? $css->render_range( $attr['columnGutter'], 'Mobile' ) : '20px' );
 
     if ( isset( $attr['colWidth'] ) ) {
-        $css->set_selector( '.wp-block-premium-container.premium-is-root-container .premium-container-' . $unique_id .' , .wp-block-premium-container.premium-is-root-container .premium-block-' . $unique_id );
+        $css->set_selector( '.wp-block-premium-container .premium-container-' . $unique_id .' , .wp-block-premium-container .premium-block-' . $unique_id );
         $css->add_property( 'max-width', $css->render_range( $attr['colWidth'], 'Mobile' ) );
         $css->add_property( 'width', '100%' );
     }
