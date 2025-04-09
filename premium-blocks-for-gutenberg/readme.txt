@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -88,6 +88,7 @@ Optimize your WordPress website performance with lightning-fast loading times us
 27. [Image](https://premiumblocks.io/gutenberg-blocks/image-block/) - Explore Gutenberg's Image block with its diverse masks, styles, controls, and options, perfect for enhancing your visual content.
 28. [Gallery](https://premiumblocks.io/gutenberg-blocks/gallery-block/) - Engage your Images in various layout
 29. [Tabs](https://premiumblocks.io/gutenberg-blocks/tabs-block/) - For making advanced tabs with content
+30. [Off Canvas](https://premiumblocks.io/gutenberg-blocks/off-canvas-block/) - Create hidden, slide-in panels for navigation menus, sidebars, or promotional content using multiple triggers; Button, Image, Icon, SVG, and Lottie Animations.
 
 == Installation ==
 
@@ -125,6 +126,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.2 =
+- New: Added Offcanvas Gutenberg block.
+- Improved: optimized image sizing and overall performance for Image block.
+- Fixed: Custom Width option doesn't work correctly for nested containers.
+- Fixed: selected icon for bullet list block doesn't work.
+
 = 2.2.1 =
 - Fixed: Sub-container width styling issue.
 - Fixed: Duplicate settings in the Image block editor.
@@ -288,7 +295,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.1.23 =
 - Added: Responsive controls for Badge Block.
-- Fixed: Container block issues within classes. 
+- Fixed: Container block issues within classes.
 - Fixed: Styling inconsistencies in the responsive mode for the Post Carousel block.
 - Fixed: Preview console errors in the editor.
 
@@ -347,7 +354,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 - Fixed: Styling problem with Heading Block Style 2.
 
 = 2.1.13 =
-- Added: Link Wrapper option to Container Block and Icon Box block. 
+- Added: Link Wrapper option to Container Block and Icon Box block.
 - Added: Added Alt and Caption options to the image block.
 - Fixed: Bullet List alignment issue.
 - Fixed: The Banner Block Content break when reloading the editor.
@@ -476,7 +483,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.0.20 =
 - Fixed: Responsive Alignment option doesn't work in Premium Icon Block.
-- Fixed: Shape divider of container block doesn't work properly. 
+- Fixed: Shape divider of container block doesn't work properly.
 
 = 2.0.19 =
 - Fixed: Block styles don't work in the header and footer template parts.

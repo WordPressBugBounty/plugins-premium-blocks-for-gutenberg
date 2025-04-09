@@ -279,7 +279,48 @@ function get_premium_image_css( $attr, $unique_id ) {
  */
 function render_block_pbg_image( $attributes, $content, $block ) {
 
-	return $content;
+  /* 
+    Handling new feature of WordPress 6.7.2 --> sizes='auto' for old versions that doesn't contain wp-image-{$id} class.
+    This workaround can be omitted after a few subsequent releases around 25/3/2025
+  */
+  
+  if (false === stripos($content, '<img')) {
+    return $content;
+  }
+
+  if (empty($attributes['id'])) {
+    return $content;
+  }
+
+  $image_id = $attributes['id'];
+  $image_tag = new WP_HTML_Tag_Processor($content);
+
+  // Find our specific image
+  if (!$image_tag->next_tag(['tag_name' => 'img', 'class_name' => "pbg-image-{$image_id}"])) {
+    return $content;
+  }
+
+  $image_classnames = $image_tag->get_attribute('class') ?? '';
+
+  // Only process if wp-image class is missing
+  if (!str_contains($image_classnames, "wp-image-{$image_id}")) {
+    $image_metadata = wp_get_attachment_metadata($image_id);
+    
+    // Set dimensions if available
+    if ($image_metadata && isset($image_metadata['width'], $image_metadata['height'])) {
+        $image_tag->set_attribute('width', $image_metadata['width']);
+        $image_tag->set_attribute('height', $image_metadata['height']);
+    }
+    
+    // Clean up responsive attributes
+    $image_tag->remove_attribute('srcset');
+    $image_tag->remove_attribute('sizes');
+
+    // Add the wp-image class for automatically generate new srcset and sizes attributes
+    $image_tag->add_class("wp-image-{$image_id}");
+  }
+
+  return $image_tag->get_updated_html();
 }
 
 

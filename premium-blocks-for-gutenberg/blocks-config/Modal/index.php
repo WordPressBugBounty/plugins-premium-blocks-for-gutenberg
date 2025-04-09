@@ -297,16 +297,19 @@ function get_premium_modal_css_style( $attr, $unique_id ) {
 		$css->set_selector( '.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' .  '> .premium-modal-box-close-button-container button' );
 		$css->add_property( 'font-size', $css->render_range( $attr['upperIconWidth'], 'Desktop' ) );
 	}
+
 	if(isset($attr['closePosition'])){
 		
 		$css->set_selector( '.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' . '> .premium-modal-box-close-button-container ' );
 		if($attr['closePosition']== "top-left"){
-		$css->add_property( 'top', '-'. $attr['upperIconWidth'][ 'Desktop']  .'px' );
-		$css->add_property( 'left', '-'. $attr['upperIconWidth'][ 'Desktop']  .'px' );
+      $css->add_property( 'top', '-'. $css->render_range($attr['upperIconWidth'], 'Desktop') );
+      $css->add_property( 'left', '-'. $css->render_range($attr['upperIconWidth'], 'Desktop') );
+      $css->add_property( 'right', "unset" );
 		}
 		if($attr['closePosition']== "top-right"){
-		$css->add_property( 'top', '-'. $attr['upperIconWidth'][ 'Desktop']  .'px' );
-		$css->add_property( 'right', '-'. $attr['upperIconWidth'][ 'Desktop']  .'px' );
+      $css->add_property( 'top', '-'. $css->render_range($attr['upperIconWidth'], 'Desktop') );
+      $css->add_property( 'right', '-'. $css->render_range($attr['upperIconWidth'], 'Desktop') );
+      $css->add_property( 'left', "unset" );
 		}
 	}
 
@@ -510,6 +513,21 @@ function get_premium_modal_css_style( $attr, $unique_id ) {
 		$css->add_property( 'font-size', $css->render_range( $attr['upperIconWidth'], 'Tablet' ) );
 	}
 
+  if(isset($attr['closePosition'])){
+		
+		$css->set_selector( '.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' . '> .premium-modal-box-close-button-container ' );
+		if($attr['closePosition']== "top-left"){
+      $css->add_property( 'top', '-'. $css->render_range($attr['upperIconWidth'], 'Tablet') );
+      $css->add_property( 'left', '-'. $css->render_range($attr['upperIconWidth'], 'Tablet') );
+      $css->add_property( 'right', "unset" );
+		}
+		if($attr['closePosition']== "top-right"){
+      $css->add_property( 'top', '-'. $css->render_range($attr['upperIconWidth'], 'Tablet') );
+      $css->add_property( 'right', '-'. $css->render_range($attr['upperIconWidth'], 'Tablet') );
+      $css->add_property( 'left', "unset" );
+		}
+	}
+
 	// Width & Height for Modal
 	if ( isset( $attr['modalWidth'] ) ) {
 		$css->set_selector( '.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' );
@@ -708,6 +726,21 @@ function get_premium_modal_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['upperIconWidth'] ) ) {
 		$css->set_selector( '.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' .  '> .premium-modal-box-close-button-container button' );
 		$css->add_property( 'font-size', $css->render_range( $attr['upperIconWidth'], 'Mobile' ) );
+	}
+
+  if(isset($attr['closePosition'])){
+		
+		$css->set_selector( '.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' . '> .premium-modal-box-close-button-container ' );
+		if($attr['closePosition']== "top-left"){
+      $css->add_property( 'top', '-'. $css->render_range($attr['upperIconWidth'], 'Mobile') );
+      $css->add_property( 'left', '-'. $css->render_range($attr['upperIconWidth'], 'Mobile') );
+      $css->add_property( 'right', "unset" );
+		}
+		if($attr['closePosition']== "top-right"){
+      $css->add_property( 'top', '-'. $css->render_range($attr['upperIconWidth'], 'Mobile') );
+      $css->add_property( 'right', '-'. $css->render_range($attr['upperIconWidth'], 'Mobile') );
+      $css->add_property( 'left', "unset" );
+		}
 	}
 
 	// Width & Height for Modal

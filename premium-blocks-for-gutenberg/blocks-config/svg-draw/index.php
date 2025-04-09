@@ -114,6 +114,10 @@ function get_premium_svg_draw_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['iconBG'] ) && ! empty( $attr['iconBG'] ) ) {
 		$css->set_selector( ".{$unique_id} > .premium-icon-container .premium-icon-content .premium-icon-type" );
 		$css->render_background( $attr['iconBG'], 'Desktop' );
+		$css->set_selector( ".{$unique_id} > .premium-icon-container .premium-icon-content .premium-icon-type svg" );
+		$css->render_background( $attr['iconBG'], 'Desktop' );
+		$css->set_selector( ".{$unique_id} > .premium-icon-container .premium-icon-content > #premium-icon-svg-{$unique_id} > svg" );
+		$css->render_background( $attr['iconBG'], 'Desktop' );
 	}
 
 	if ( isset( $attr['iconHoverColor'] ) && ! empty( $attr['iconHoverColor'] ) ) {
@@ -227,6 +231,8 @@ function get_premium_svg_draw_css_style( $attr, $unique_id ) {
 		$css->render_background( $attr['iconBG'], 'Tablet' );
 		$css->set_selector( ".{$unique_id} > .premium-icon-container .premium-icon-content .premium-icon-type svg" );
 		$css->render_background( $attr['iconBG'], 'Tablet' );
+		$css->set_selector( ".{$unique_id} > .premium-icon-container .premium-icon-content > #premium-icon-svg-{$unique_id} > svg" );
+		$css->render_background( $attr['iconBG'], 'Tablet' );
 	}
 
 	if ( isset( $attr['iconHoverBG'] ) ) {
@@ -318,6 +324,8 @@ function get_premium_svg_draw_css_style( $attr, $unique_id ) {
 		$css->set_selector( ".{$unique_id} > .premium-icon-container .premium-icon-content .premium-icon-type" );
 		$css->render_background( $attr['iconBG'], 'Mobile' );
 		$css->set_selector( ".{$unique_id} > .premium-icon-container .premium-icon-content .premium-icon-type svg" );
+		$css->render_background( $attr['iconBG'], 'Mobile' );
+		$css->set_selector( ".{$unique_id} > .premium-icon-container .premium-icon-content > #premium-icon-svg-{$unique_id} > svg" );
 		$css->render_background( $attr['iconBG'], 'Mobile' );
 	}
 

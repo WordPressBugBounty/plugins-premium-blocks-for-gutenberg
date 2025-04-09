@@ -162,9 +162,10 @@ if ( ! class_exists( 'Pb_Panel' ) ) {
 				'image'            => true,
 				'svg-draw'         => true,
 				'form'             => true,
-				'text'				=>true,
-				'gallery'		   =>true,
-				"tabs"             =>true
+				'text'				     => true,
+				'gallery'		       => true,
+				"tabs"             => true,
+        'off-canvas'       => true,
 			);
 
 			return array_merge( $default_options, $options );
@@ -743,7 +744,7 @@ if ( ! class_exists( 'Pb_Panel' ) ) {
 						'marketing',
 					),
 				),
-				'gallery'         => array(
+				'gallery'          => array(
 					'type'     => 'pb-button',
 					'label'    => __( 'Gallery', 'premium-blocks-for-gutenberg' ),
 					'icon'     => 'gallery',
@@ -752,13 +753,22 @@ if ( ! class_exists( 'Pb_Panel' ) ) {
 						'creative',
 					),
 				),
-				'tabs'         => array(
+				'tabs'             => array(
 					'type'     => 'pb-button',
 					'label'    => __( 'Tabs', 'premium-blocks-for-gutenberg' ),
 					'icon'     => 'tabs',
 					'category' => array(
 						'all',
 						'creative',
+					),
+				),
+        'off-canvas'       => array(
+					'type'     => 'pb-button',
+					'label'    => __( 'Off Canvas', 'premium-blocks-for-gutenberg' ),
+					'icon'     => 'off_canvas',
+					'category' => array(
+						'all',
+						'content',
 					),
 				),
 			);
