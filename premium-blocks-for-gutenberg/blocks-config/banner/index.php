@@ -153,7 +153,40 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
  * @return string Returns the post content with the legacy widget added.
  */
 function render_block_pbg_banner( $attributes, $content, $block ) {
-	return $content;
+  /* 
+    Handling new feature of WordPress 6.7.2 --> sizes='auto' for old versions that doesn't contain wp-image-{$id} class.
+    This workaround can be omitted after a few subsequent releases around 25/3/2025
+  */
+  
+  if (false === stripos($content, '<img')) {
+    return $content;
+  }
+
+  if (empty($attributes['imageID'])) {
+    return $content;
+  }
+
+  $image_id = $attributes['imageID'];
+  $image_tag = new WP_HTML_Tag_Processor($content);
+
+  // Find our specific image
+  if (!$image_tag->next_tag(['tag_name' => 'img', 'class_name' => "premium-banner__img"])) {
+    return $content;
+  }
+
+  $image_classnames = $image_tag->get_attribute('class') ?? '';
+
+  // Only process if wp-image class is missing
+  if (!str_contains($image_classnames, "wp-image-{$image_id}")) {
+    // Clean up responsive attributes
+    $image_tag->remove_attribute('srcset');
+    $image_tag->remove_attribute('sizes');
+
+    // Add the wp-image class for automatically generate new srcset and sizes attributes
+    $image_tag->add_class("wp-image-{$image_id}");
+  }
+
+  return $image_tag->get_updated_html();
 }
 
 

@@ -310,16 +310,16 @@ function get_premium_off_canvas_css( $attributes, $unique_id ) {
   }
 
   if(isset($attributes['contentStyles']['offCanvasType']) && ($attributes['contentStyles']['offCanvasType'] === "slide")){
-    if(isset($attributes['contentStyles']['cornerTransition']) && $attributes['contentStyles']['transition'] === "push"){
+    if(isset($attributes['contentStyles']['transition']) && $attributes['contentStyles']['transition'] === "push"){
       if(isset($attributes['contentStyles']['position']) && ($attributes['contentStyles']['position'] === "left" || $attributes['contentStyles']['position'] === "right")){
         if(isset($attributes['contentWidth'])){
-          $css->set_selector('.premium-off-canvas-site-content-wrapper:has(~ .' . $unique_id . '[aria-hidden="false"] .premium-off-canvas-content.push-content)');
+          $css->set_selector('.premium-off-canvas-site-content-wrapper:has(~ .' . $unique_id . '[aria-hidden="false"] .premium-off-canvas-content)');
           $css->add_property('left', $css->render_string( ($attributes['contentStyles']['position'] === "right" ? "-" : "") . $css->render_range( $attributes['contentWidth'], 'Desktop'), '!important'));
         }
       }
       if(isset($attributes['contentStyles']['position']) && ($attributes['contentStyles']['position'] === "top" || $attributes['contentStyles']['position'] === "bottom")){
         if(isset($attributes['contentHeight'])){
-          $css->set_selector('.premium-off-canvas-site-content-wrapper:has(~ .' . $unique_id . '[aria-hidden="false"] .premium-off-canvas-content.push-content)');
+          $css->set_selector('.premium-off-canvas-site-content-wrapper:has(~ .' . $unique_id . '[aria-hidden="false"] .premium-off-canvas-content)');
           $css->add_property('top', $css->render_string( ($attributes['contentStyles']['position'] === "bottom" ? "-" : "") . $css->render_range( $attributes['contentHeight'], 'Desktop'), '!important'));
         }
       }
@@ -536,16 +536,16 @@ function get_premium_off_canvas_css( $attributes, $unique_id ) {
   }
 
   if(isset($attributes['contentStyles']['offCanvasType']) && ($attributes['contentStyles']['offCanvasType'] === "slide")){
-    if(isset($attributes['contentStyles']['cornerTransition']) && $attributes['contentStyles']['transition'] === "push"){
+    if(isset($attributes['contentStyles']['transition']) && $attributes['contentStyles']['transition'] === "push"){
       if(isset($attributes['contentStyles']['position']) && ($attributes['contentStyles']['position'] === "left" || $attributes['contentStyles']['position'] === "right")){
         if(isset($attributes['contentWidth'])){
-          $css->set_selector('.premium-off-canvas-site-content-wrapper:has(~ .' . $unique_id . '[aria-hidden="false"] .premium-off-canvas-content.push-content)');
+          $css->set_selector('.premium-off-canvas-site-content-wrapper:has(~ .' . $unique_id . '[aria-hidden="false"] .premium-off-canvas-content)');
           $css->add_property('left', $css->render_string( ($attributes['contentStyles']['position'] === "right" ? "-" : "") . $css->render_range( $attributes['contentWidth'], 'Tablet'), '!important'));
         }
       }
       if(isset($attributes['contentStyles']['position']) && ($attributes['contentStyles']['position'] === "top" || $attributes['contentStyles']['position'] === "bottom")){
         if(isset($attributes['contentHeight'])){
-          $css->set_selector('.premium-off-canvas-site-content-wrapper:has(~ .' . $unique_id . '[aria-hidden="false"] .premium-off-canvas-content.push-content)');
+          $css->set_selector('.premium-off-canvas-site-content-wrapper:has(~ .' . $unique_id . '[aria-hidden="false"] .premium-off-canvas-content)');
           $css->add_property('top', $css->render_string( ($attributes['contentStyles']['position'] === "bottom" ? "-" : "") . $css->render_range( $attributes['contentHeight'], 'Tablet'), '!important'));
         }
       }
@@ -759,16 +759,16 @@ function get_premium_off_canvas_css( $attributes, $unique_id ) {
   }
 
   if(isset($attributes['contentStyles']['offCanvasType']) && ($attributes['contentStyles']['offCanvasType'] === "slide")){
-    if(isset($attributes['contentStyles']['cornerTransition']) && $attributes['contentStyles']['transition'] === "push"){
+    if(isset($attributes['contentStyles']['transition']) && $attributes['contentStyles']['transition'] === "push"){
       if(isset($attributes['contentStyles']['position']) && ($attributes['contentStyles']['position'] === "left" || $attributes['contentStyles']['position'] === "right")){
         if(isset($attributes['contentWidth'])){
-          $css->set_selector('.premium-off-canvas-site-content-wrapper:has(~ .' . $unique_id . '[aria-hidden="false"] .premium-off-canvas-content.push-content)');
+          $css->set_selector('.premium-off-canvas-site-content-wrapper:has(~ .' . $unique_id . '[aria-hidden="false"] .premium-off-canvas-content)');
           $css->add_property('left', $css->render_string( ($attributes['contentStyles']['position'] === "right" ? "-" : "") . $css->render_range( $attributes['contentWidth'], 'Mobile'), '!important'));
         }
       }
       if(isset($attributes['contentStyles']['position']) && ($attributes['contentStyles']['position'] === "top" || $attributes['contentStyles']['position'] === "bottom")){
         if(isset($attributes['contentHeight'])){
-          $css->set_selector('.premium-off-canvas-site-content-wrapper:has(~ .' . $unique_id . '[aria-hidden="false"] .premium-off-canvas-content.push-content)');
+          $css->set_selector('.premium-off-canvas-site-content-wrapper:has(~ .' . $unique_id . '[aria-hidden="false"] .premium-off-canvas-content)');
           $css->add_property('top', $css->render_string( ($attributes['contentStyles']['position'] === "bottom" ? "-" : "") . $css->render_range( $attributes['contentHeight'], 'Mobile'), '!important'));
         }
       }
@@ -823,14 +823,16 @@ function render_block_pbg_off_canvas( $attributes, $content, $block ) {
     }
   }
 
-  if (!wp_style_is('pbg-entrance-animation-css', 'enqueued')) {
-    wp_enqueue_style(
-      'pbg-entrance-animation-css',
-      PREMIUM_BLOCKS_URL . 'assets/js/build/entrance-animation/editor/index.css',
-      array(),
-      PREMIUM_BLOCKS_VERSION,
-      'all'
-    );
+  if(isset($attributes['contentEntranceAnimation']['contentAnimation']) && is_array($attributes['contentEntranceAnimation']['contentAnimation'])){
+    if (!wp_style_is('pbg-entrance-animation-css', 'enqueued')) {
+      wp_enqueue_style(
+        'pbg-entrance-animation-css',
+        PREMIUM_BLOCKS_URL . 'assets/js/build/entrance-animation/editor/index.css',
+        array(),
+        PREMIUM_BLOCKS_VERSION,
+        'all'
+      );
+    }
   }
   
 	return $content;

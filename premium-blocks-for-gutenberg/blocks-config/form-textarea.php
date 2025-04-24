@@ -26,6 +26,44 @@ function render_block_pbg_form_textarea( $attributes, $content, $block ) {
     );
   }
 
+  /* 
+    Handling new feature of WordPress 6.7.2 --> sizes='auto' for old versions that doesn't contain wp-image-{$id} class.
+    This workaround can be omitted after a few subsequent releases around 25/3/2025
+  */
+  if ( isset( $attributes['iconTypeSelect'] ) && $attributes['iconTypeSelect'] == 'img' ){
+    if (empty($attributes['imageURL']) || false === stripos($content, '<img')) {
+      return $content;
+    }
+
+    $image_id = attachment_url_to_postid($attributes['imageURL']);
+  
+    if (!$image_id) {
+        return $content;
+    }
+  
+    $image_tag = new WP_HTML_Tag_Processor($content);
+  
+    // Find our specific image
+    if (!$image_tag->next_tag(['tag_name' => 'img'])) {
+      return $content;
+    }
+  
+    $image_classnames = $image_tag->get_attribute('class') ?? '';
+  
+    // Only process if wp-image class is missing
+    if (!str_contains($image_classnames, "wp-image-{$image_id}")) {
+      // Clean up 
+      $image_tag->remove_attribute('srcset');
+      $image_tag->remove_attribute('sizes');
+      $image_tag->remove_class('wp-image-undefined');
+      
+      // Add the wp-image class for automatically generate new srcset and sizes attributes
+      $image_tag->add_class("wp-image-{$image_id}");
+    }
+  
+    return $image_tag->get_updated_html();
+  }
+
 	return $content;
 }
 

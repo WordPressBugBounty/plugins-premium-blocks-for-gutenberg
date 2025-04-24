@@ -860,7 +860,7 @@
             "default": ""
         },
         "imageID": {
-            "type": "string",
+            "type": "number",
             "isStyle": true
         },
         "imageURL": {
@@ -921,5 +921,7 @@
             "default": "top",
             "isStyle": true
         }
-    }
+    },
+    "editorScript": "pbg-blocks-js",
+    "editorStyle": "premium-blocks-editor-css"
 }

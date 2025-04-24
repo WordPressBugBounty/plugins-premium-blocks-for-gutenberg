@@ -5,10 +5,7 @@
     "name": "premium/icon",
     "title": "Icon",
     "description": "Decorate your Gutenberg website using Premium Icon Block.",
-    "keywords": [
-        "Icon",
-        "Font Awesome"
-    ],
+    "keywords": ["Icon", "Font Awesome"],
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
@@ -28,7 +25,7 @@
             "default": "icon"
         },
         "imageID": {
-            "type": "string"
+            "type": "number"
         },
         "imageURL": {
             "type": "string"
@@ -500,9 +497,7 @@
             "default": false
         }
     },
-    "usesContext": [
-        "hoversEffect"
-    ],
+    "usesContext": ["hoversEffect"],
     "editorScript": "pbg-blocks-js",
     "editorStyle": "premium-blocks-editor-css"
 }

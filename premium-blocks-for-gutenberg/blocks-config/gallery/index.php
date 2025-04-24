@@ -110,10 +110,44 @@ function register_block_pbg_gallery()
                     'after'
                 );
 
+                /* 
+                  Handling new feature of WordPress 6.7.2 --> sizes='auto' for old versions that doesn't contain wp-image-{$id} class.
+                  This workaround can be omitted after a few subsequent releases around 25/3/2025
+                */
+                if(isset($attributes['repeaterMedia']) && is_array($attributes['repeaterMedia'])){
 
+                  if ( false === strpos( $content, '<img' ) ) {
+                    return $content;
+                  }
 
+                  $image_tag =  new WP_HTML_Tag_Processor($content);
 
-
+                  foreach ($attributes['repeaterMedia'] as $index => $media_item){
+                    // Skip if no image ID is provided
+                    if (! isset( $media_item['media']['id'] ) || empty($media_item['media']['id'])) {
+                      continue;
+                    }
+                    
+                    $image_id = $media_item['media']['id'];
+              
+                    if (!$image_tag->next_tag(['tag_name' => 'img'])) {
+                      return $content;
+                    }  
+              
+                    $image_classnames = $image_tag->get_attribute('class') ?? '';
+              
+                    if (!str_contains($image_classnames, "wp-image-{$image_id}")) {
+                      // Clean up 
+                      $image_tag->remove_attribute('srcset');
+                      $image_tag->remove_attribute('sizes');
+                      
+                      // Add the wp-image class for automatically generate new srcset and sizes attributes
+                      $image_tag->add_class("wp-image-{$image_id}");
+                    }
+                  }
+              
+                  return $image_tag->get_updated_html();
+                }
 
                 return $content;
             }

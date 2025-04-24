@@ -21,7 +21,10 @@
             "default": [
                 {
                     "titleText": "Modal Box Title",
-                    "animationType": "fadeInDown",
+                    "animationType": {
+                        "label": "Fade In Down",
+                        "value": "pbg-fade-in-down"
+                    },
                     "animationSpeed": "normal"
                 }
             ]
@@ -636,7 +639,7 @@
             "isStyle": true
         },
         "imageID": {
-            "type": "string",
+            "type": "number",
             "isStyle": true
         },
         "imageURL": {

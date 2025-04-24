@@ -3,9 +3,9 @@ Contributors: leap13
 Tags: gutenberg editor, gutenberg blocks, blocks, gutenberg addon, gutenberg free blocks
 Donate link: https://leap13.com
 Requires at least: 5.0
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -126,11 +126,19 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.3 =
+- Tweak: Optimized all image handling across all Premium Blocks for better front-end performance.
+- Tweak: Enhanced performance of the Offcanvas block on the front end.
+- Fixed: Duplicate JS loading in Gallery block with multiple instances, applied same fix to SVG Draw and Container blocks.
+- Fixed: Equal Height setting not working correctly on tablet devices.
+- Fixed: Compatibility issues with WordPress version 7.8 across several blocks.
+
 = 2.2.2 =
 - New: Added Offcanvas Gutenberg block.
-- Improved: optimized image sizing and overall performance for Image block.
-- Fixed: Custom Width option doesn't work correctly for nested containers.
-- Fixed: selected icon for bullet list block doesn't work.
+- Improved: Image block – optimized image sizing and overall performance.
+- Fixed: Custom Width option now works correctly for nested containers.
+- Fixed: Bullet List – selected icon now correctly applies to newly added list items.
+- Fixed: Draw SVG – resolved styling issues.
 
 = 2.2.1 =
 - Fixed: Sub-container width styling issue.
@@ -295,7 +303,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.1.23 =
 - Added: Responsive controls for Badge Block.
-- Fixed: Container block issues within classes.
+- Fixed: Container block issues within classes. 
 - Fixed: Styling inconsistencies in the responsive mode for the Post Carousel block.
 - Fixed: Preview console errors in the editor.
 
@@ -354,7 +362,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 - Fixed: Styling problem with Heading Block Style 2.
 
 = 2.1.13 =
-- Added: Link Wrapper option to Container Block and Icon Box block.
+- Added: Link Wrapper option to Container Block and Icon Box block. 
 - Added: Added Alt and Caption options to the image block.
 - Fixed: Bullet List alignment issue.
 - Fixed: The Banner Block Content break when reloading the editor.
@@ -483,7 +491,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.0.20 =
 - Fixed: Responsive Alignment option doesn't work in Premium Icon Block.
-- Fixed: Shape divider of container block doesn't work properly.
+- Fixed: Shape divider of container block doesn't work properly. 
 
 = 2.0.19 =
 - Fixed: Block styles don't work in the header and footer template parts.

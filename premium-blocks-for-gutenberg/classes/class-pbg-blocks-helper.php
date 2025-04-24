@@ -207,7 +207,6 @@ class PBG_Blocks_Helper
 
 		add_action('enqueue_block_editor_assets', array($this, 'add_blocks_editor_styles'));
 
-		add_filter('render_block_premium/container', array($this, 'equal_height_front_script'), 1, 2);
 
 		add_action('wp_head', array($this, 'add_blocks_frontend_inline_styles'), 80);
 
@@ -1889,11 +1888,12 @@ class PBG_Blocks_Helper
 				PREMIUM_BLOCKS_VERSION,
 				'all'
 			);
+			wp_scripts()->add_data('premium-entrance-animation-view', 'after', array());
 
-			wp_localize_script(
+			wp_add_inline_script(
 				'premium-entrance-animation-view',
-				'PBG_EntranceAnimation',
-				$this->entrance_animation_blocks
+				'var PBG_EntranceAnimation = ' . wp_json_encode($this->entrance_animation_blocks) . ';',
+				'after'
 			);
 		}
 
@@ -1905,10 +1905,13 @@ class PBG_Blocks_Helper
 				PREMIUM_BLOCKS_VERSION,
 				true
 			);
-			wp_localize_script(
+			wp_scripts()->add_data('premium-svg-draw-view', 'after', array());
+
+
+			wp_add_inline_script(
 				'premium-svg-draw-view',
-				'PBG_SvgDraw',
-				$this->svg_draw_blocks
+				'var PBG_SvgDraw = ' . wp_json_encode($this->svg_draw_blocks) . ';',
+				'after'
 			);
 		}
 
@@ -1927,43 +1930,6 @@ class PBG_Blocks_Helper
 		}
 	}
 
-	/**
-	 * Equal Height Frontend
-	 *
-	 * Enqueue Frontend Assets for Premium Blocks.
-	 *
-	 * @access public
-	 *
-	 * @return void
-	 */
-	public function equal_height_front_script($content, $block)
-	{
-		$media_query            = array();
-		$media_query['mobile']  = apply_filters('Premium_BLocks_mobile_media_query', '(max-width: 767px)');
-		$media_query['tablet']  = apply_filters('Premium_BLocks_tablet_media_query', '(max-width: 1024px)');
-		$media_query['desktop'] = apply_filters('Premium_BLocks_desktop_media_query', '(min-width: 1025px)');
-		if ($this->global_features['premium-equal-height'] && isset($block['attrs']['equalHeight']) && $block['attrs']['equalHeight']) {
-			wp_enqueue_script(
-				'premium-equal-height-view',
-				PREMIUM_BLOCKS_URL . 'assets/js/build/equal-height/index.js',
-				array(),
-				PREMIUM_BLOCKS_VERSION,
-				true
-			);
-
-			wp_localize_script(
-				'premium-equal-height-view',
-				'PBG_EqualHeight',
-				apply_filters(
-					'premium_equal_height_localize_script',
-					array(
-						'breakPoints' => $media_query,
-					)
-				)
-			);
-		}
-		return $content;
-	}
 
 	/**
 	 * Add blocks editor style
@@ -1973,9 +1939,7 @@ class PBG_Blocks_Helper
 	public function add_blocks_editor_styles()
 	{
 		$generate_css = new Pbg_Assets_Generator('editor');
-		if ($this->global_features['premium-entrance-animation']) {
-			$generate_css->pbg_add_css('assets/js/build/entrance-animation/editor/index.css');
-		}
+    $generate_css->pbg_add_css('assets/js/build/entrance-animation/editor/index.css');
 		$generate_css->pbg_add_css('assets/css/minified/blockseditor.min.css');
 		$generate_css->pbg_add_css('assets/css/minified/editorpanel.min.css');
 		$is_rtl = is_rtl() ? true : false;

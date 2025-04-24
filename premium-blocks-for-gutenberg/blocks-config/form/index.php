@@ -88,10 +88,7 @@ function get_premium_form_css_style($attr, $unique_id)
 		$inputs_border_radius = $inputs_border['borderRadius'];
 
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input");
-		$css->add_property('border-style', $inputs_border['borderType']);
-		$css->add_property('border-color', $inputs_border['borderColor']);
-		$css->add_property('border-width', $css->render_spacing($inputs_border_width['Desktop'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($inputs_border_radius['Desktop'], 'px'));
+		$css->render_border($inputs_border, 'Desktop');
 	}
 
 	if (isset($attr['inputsPadding'])) {
@@ -126,10 +123,7 @@ function get_premium_form_css_style($attr, $unique_id)
 	if (isset($attr['radioBorder'])) {
 		$radio_border = $attr['radioBorder'];
 		$css->set_selector(".{$unique_id} .premium-radio-item .premium-radio-item-input-wrap .premium-radio-item-input-checkmark");
-		$css->add_property('border-style', $radio_border['borderType']);
-		$css->add_property('border-color', $radio_border['borderColor']);
-		$css->add_property('border-width', $css->render_spacing($radio_border['borderWidth']['Desktop'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($radio_border['borderRadius']['Desktop'], 'px'));
+		$css->render_border($radio_border, 'Desktop');
 	}
 
 	// checkboxColors.
@@ -152,10 +146,8 @@ function get_premium_form_css_style($attr, $unique_id)
 	if (isset($attr['checkboxBorder'])) {
 		$checkbox_border = $attr['checkboxBorder'];
 		$css->set_selector(".{$unique_id} .premium-checkbox-item .premium-checkbox-item-input-wrap .premium-checkbox-item-input-checkmark");
-		$css->add_property('border-style', $checkbox_border['borderType']);
-		$css->add_property('border-color', $checkbox_border['borderColor']);
-		$css->add_property('border-width', $css->render_spacing($checkbox_border['borderWidth']['Desktop'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($checkbox_border['borderRadius']['Desktop'], 'px'));
+
+		$css->render_border($checkbox_border, 'Desktop');
 	}
 
 	// Button buttonAlign.
@@ -194,10 +186,7 @@ function get_premium_form_css_style($attr, $unique_id)
 	if (isset($attr['buttonBorder'])) {
 		$button_border = $attr['buttonBorder'];
 		$css->set_selector(".{$unique_id} .wp-block-button__link.premium-form-submit");
-		$css->add_property('border-style', $button_border['borderType']);
-		$css->add_property('border-color', $button_border['borderColor']);
-		$css->add_property('border-width', $css->render_spacing($button_border['borderWidth']['Desktop'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($button_border['borderRadius']['Desktop'], 'px'));
+		$css->render_border($button_border, 'Desktop');
 	}
 
 	// buttonPadding.
@@ -260,10 +249,7 @@ function get_premium_form_css_style($attr, $unique_id)
 		$icon_border_width  = $icon_border['borderWidth'];
 		$icon_border_radius = $icon_border['borderRadius'];
 		$css->set_selector(".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg");
-		$css->add_property('border-width', $css->render_spacing($icon_border_width['Desktop'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($icon_border_radius['Desktop'], 'px'));
-		$css->add_property('border-style', $css->render_string($css->render_color($icon_border['borderType']), '!important'));
-		$css->add_property('border-color', $css->render_color($icon_border['borderColor']));
+		$css->render_border($icon_border, 'Desktop');
 	}
 
 	// svg styles
@@ -488,8 +474,6 @@ function get_premium_form_css_style($attr, $unique_id)
 		$css->set_selector(".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg");
 		$css->add_property('border-width', $css->render_spacing($icon_border_width['Tablet'], 'px'));
 		$css->add_property('border-radius', $css->render_spacing($icon_border_radius['Tablet'], 'px'));
-		$css->add_property('border-style', $css->render_string($css->render_color($icon_border['borderType']), '!important'));
-		$css->add_property('border-color', $css->render_color($icon_border['borderColor']));
 	}
 
 	if (isset($attr['iconBG'])) {
@@ -670,8 +654,6 @@ function get_premium_form_css_style($attr, $unique_id)
 		$css->set_selector(".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg");
 		$css->add_property('border-width', $css->render_spacing($icon_border_width['Mobile'], 'px'));
 		$css->add_property('border-radius', $css->render_spacing($icon_border_radius['Mobile'], 'px'));
-		$css->add_property('border-style', $css->render_string($css->render_color($icon_border['borderType']), '!important'));
-		$css->add_property('border-color', $css->render_color($icon_border['borderColor']));
 	}
 
 	if (isset($attr['iconBG'])) {

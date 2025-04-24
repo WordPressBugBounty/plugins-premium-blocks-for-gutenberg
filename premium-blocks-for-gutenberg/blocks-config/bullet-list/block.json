@@ -887,7 +887,7 @@
             "default": "ic_circleRight"
         },
         "imageID": {
-            "type": "string"
+            "type": "number"
         },
         "imageURL": {
             "type": "string"
