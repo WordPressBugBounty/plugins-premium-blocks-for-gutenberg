@@ -221,8 +221,6 @@ class PBG_Blocks_Helper
 		// Add block in template parts in FSE theme styles.
 		add_filter('render_block', array($this, 'add_block_style_in_template_parts'), 9, 2);
 
-		// Form Block.
-		// add_filter('render_block_premium/form', array($this, 'form_block_front_script'), 1, 2);
 
 		// Submit form with ajax.
 		add_action('wp_ajax_premium_form_submit', array($this, 'premium_form_submit'));
@@ -691,76 +689,6 @@ class PBG_Blocks_Helper
 		}
 	}
 
-	/**
-	 * Form Block Frontend
-	 *
-	 * Enqueue Frontend Assets for Premium Blocks.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @access public
-	 *
-	 * @return void
-	 */
-	// public function form_block_front_script( $content, $block ) {
-	// 	// Check if there is inner blocks.
-	// 	if ( ! isset( $block['innerBlocks'] ) || empty( $block['innerBlocks'] ) ) {
-	// 		return $content;
-	// 	}
-
-	// 	$dependencies = array( 'wp-element', 'wp-i18n' );
-	// 	// Check if reCAPTCHA is enabled.
-	// 	if ( isset( $block['attrs']['enableRecaptcha'] ) && $block['attrs']['enableRecaptcha'] ) {
-	// 		if ( isset( $block['attrs']['recaptchaVersion'] ) && $block['attrs']['recaptchaVersion'] === 'v3' && $this->integrations_settings['premium-recaptcha-v3-site-key'] !== '' ) {
-	// 			wp_enqueue_script(
-	// 				'premium-recaptcha-v3',
-	// 				'https://www.google.com/recaptcha/api.js?render=' . $this->integrations_settings['premium-recaptcha-v3-site-key'],
-	// 				array(),
-	// 				PREMIUM_BLOCKS_VERSION,
-	// 				true
-	// 			);
-
-	// 			$dependencies[] = 'premium-recaptcha-v3';
-	// 		} elseif ( $this->integrations_settings['premium-recaptcha-v2-site-key'] !== '' ) {
-
-	// 			wp_enqueue_script(
-	// 				'premium-recaptcha-v2',
-	// 				'https://www.google.com/recaptcha/api.js',
-	// 				array(),
-	// 				PREMIUM_BLOCKS_VERSION,
-	// 				true
-	// 			);
-
-	// 			$dependencies[] = 'premium-recaptcha-v2';
-	// 		}
-	// 	}
-
-	// 	wp_enqueue_script(
-	// 		'premium-form-view',
-	// 		PREMIUM_BLOCKS_URL . 'assets/js/build/form/index.js',
-	// 		$dependencies,
-	// 		PREMIUM_BLOCKS_VERSION,
-	// 		true
-	// 	);
-
-	// 	wp_localize_script(
-	// 		'premium-form-view',
-	// 		'PBG_Form',
-	// 		apply_filters(
-	// 			'premium_form_localize_script',
-	// 			array(
-	// 				'ajaxurl'   => esc_url( admin_url( 'admin-ajax.php' ) ),
-	// 				'nonce'     => wp_create_nonce( 'pbg_form_nonce' ),
-	// 				'recaptcha' => array(
-	// 					'v2SiteKey' => $this->integrations_settings['premium-recaptcha-v2-site-key'],
-	// 					'v3SiteKey' => $this->integrations_settings['premium-recaptcha-v3-site-key'],
-	// 				),
-	// 			)
-	// 		)
-	// 	);
-
-	// 	return $content;
-	// }
 
 	/**
 	 * Get Form Inner Blocks
@@ -881,57 +809,6 @@ class PBG_Blocks_Helper
 		return $content;
 	}
 
-	public function gallery_front_script($content, $block)
-	{
-
-		$media_query            = array();
-		$media_query['mobile']  = apply_filters('Premium_BLocks_mobile_media_query', '(max-width: 767px)');
-		$media_query['tablet']  = apply_filters('Premium_BLocks_tablet_media_query', '(max-width: 1024px)');
-		$media_query['desktop'] = apply_filters('Premium_BLocks_tablet_media_query', '(min-width: 1025px)');
-
-		wp_enqueue_script(
-			'premium-image-loaded',
-			PREMIUM_BLOCKS_URL . 'assets/js/lib/imageLoaded.min.js',
-			array("jquery"),
-			PREMIUM_BLOCKS_VERSION,
-			true
-		);
-		wp_enqueue_script(
-			'premium-isotope',
-			PREMIUM_BLOCKS_URL . 'assets/js/lib/isotope.pkgd.min.js',
-			array("jquery"),
-			PREMIUM_BLOCKS_VERSION,
-			true
-		);
-		wp_enqueue_script(
-			'premium-gallery-view',
-			PREMIUM_BLOCKS_URL . 'assets/js/build/gallery/index.js',
-			array('wp-element', 'wp-i18n', 'premium-image-loaded', "premium-isotope"),
-			PREMIUM_BLOCKS_VERSION,
-			true
-		);
-		wp_localize_script(
-			'premium-gallery-view',
-			'PBGPRO_Gallery',
-			apply_filters(
-				'premium_gallery_localize_script',
-				array(
-					'ajaxurl'     => esc_url(admin_url('admin-ajax.php')),
-					'breakPoints' => $media_query,
-					'pluginURL'   => PREMIUM_BLOCKS_URL,
-				)
-			)
-		);
-
-		wp_localize_script(
-			'premium-gallery-view',
-			'PremiumBlocksSettings',
-			array(
-				'defaultAuthImg'    =>  PREMIUM_BLOCKS_URL . 'assets/img/author.jpg'
-			)
-		);
-		return $content;
-	}
 
 	/**
 	 * Get Premium Blocks Names
@@ -1939,7 +1816,7 @@ class PBG_Blocks_Helper
 	public function add_blocks_editor_styles()
 	{
 		$generate_css = new Pbg_Assets_Generator('editor');
-    $generate_css->pbg_add_css('assets/js/build/entrance-animation/editor/index.css');
+		$generate_css->pbg_add_css('assets/js/build/entrance-animation/editor/index.css');
 		$generate_css->pbg_add_css('assets/css/minified/blockseditor.min.css');
 		$generate_css->pbg_add_css('assets/css/minified/editorpanel.min.css');
 		$is_rtl = is_rtl() ? true : false;
@@ -3094,6 +2971,90 @@ class PBG_Blocks_Helper
 			$mob_styling_css .= '}';
 		}
 		return $desktop . $tab_styling_css . $mob_styling_css;
+	}
+
+	/**
+	 * Get Vimeo Video Data
+	 *
+	 * Get video data using Vimeo API
+	 *
+	 * @since 3.11.4
+	 * @access public
+	 *
+	 * @param string $video_id video ID.
+	 */
+	public static function get_vimeo_video_data( $video_id ) {
+
+		$vimeo_data = wp_remote_get( 'http://www.vimeo.com/api/v2/video/' . intval( $video_id ) . '.php' );
+
+		if ( is_wp_error( $vimeo_data ) ) {
+			return false;
+		}
+
+		if ( isset( $vimeo_data['response']['code'] ) ) {
+
+			if ( 200 === $vimeo_data['response']['code'] ) {
+
+				$response  = maybe_unserialize( $vimeo_data['body'] );
+				$thumbnail = isset( $response[0]['thumbnail_large'] ) ? $response[0]['thumbnail_large'] : false;
+
+				$data = array(
+					'src'      => $thumbnail,
+					'url'      => $response[0]['user_url'],
+					'portrait' => $response[0]['user_portrait_huge'],
+					'title'    => $response[0]['title'],
+					'user'     => $response[0]['user_name'],
+				);
+
+				return $data;
+
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get Video Thumbnail
+	 *
+	 * Get thumbnail URL for embed or self hosted
+	 *
+	 * @since 3.7.0
+	 * @access public
+	 *
+	 * @param string $video_id video ID.
+	 * @param string $type embed type.
+	 * @param string $size youtube thumbnail size.
+	 */
+	public static function get_video_thumbnail( $video_id, $type, $size = '' ) {
+
+		$thumbnail_src = 'transparent';
+
+		if ( 'youtube' === $type ) {
+			if ( '' === $size ) {
+				$size = 'maxresdefault';
+			}
+			$thumbnail_src = sprintf( 'https://i.ytimg.com/vi/%s/%s.jpg', $video_id, $size );
+
+		} elseif ( 'vimeo' === $type ) {
+
+			$vimeo = self::get_vimeo_video_data( $video_id );
+
+			$thumbnail_src = is_array( $vimeo ) ? $vimeo['src'] : '';
+
+		} elseif ( 'dailymotion' === $type ) {
+			$video_data = rplg_urlopen( 'https://api.dailymotion.com/video/' . $video_id . '?fields=thumbnail_url' );
+
+			if ( isset( $video_data['code'] ) ) {
+				if ( 404 === $video_data['code'] ) {
+					return $thumbnail_src;
+				}
+			}
+
+			$thumbnail_src = rplg_json_decode( $video_data['data'] )->thumbnail_url;
+		}
+
+		return $thumbnail_src;
 	}
 
 	/**

@@ -167,7 +167,7 @@
                         "bottom": "100",
                         "left": "100"
                     },
-                    "link":true
+                    "link": true
                 },
                 "borderWidth": {
                     "Desktop": {
@@ -188,7 +188,7 @@
                         "bottom": "",
                         "left": ""
                     },
-                    "link":true
+                    "link": true
                 }
             },
             "isStyle": true
@@ -217,7 +217,7 @@
                         "bottom": "",
                         "left": ""
                     },
-                    "link":true
+                    "link": true
                 },
                 "borderWidth": {
                     "Desktop": {
@@ -238,7 +238,7 @@
                         "bottom": "",
                         "left": ""
                     },
-                    "link":true
+                    "link": true
                 }
             },
             "isStyle": true
@@ -269,7 +269,7 @@
                     "Tablet": "px",
                     "Mobile": "px"
                 },
-                "link":true
+                "link": true
             },
             "isStyle": true
         },
@@ -299,7 +299,7 @@
                     "Tablet": "px",
                     "Mobile": "px"
                 },
-                "link":true
+                "link": true
             },
             "isStyle": true
         },
@@ -327,7 +327,7 @@
         "overlayFilter": {
             "type": "object",
             "default": {
-                "contrast": "100",
+                "contrast": "",
                 "blur": "0",
                 "bright": "100",
                 "saturation": "100",
@@ -387,7 +387,7 @@
                     "Tablet": "px",
                     "Mobile": "px"
                 },
-                "link":true
+                "link": true
             },
             "isStyle": true
         },
@@ -443,6 +443,23 @@
             "type": "string",
             "default": "",
             "isStyle": true
+        },
+        "privacyMode": {
+            "type": "boolean",
+            "default": false
+        },
+        "hoverEffect": {
+            "type": "string",
+            "default": "none",
+            "isStyle": true
+        },
+        "thumbnailSize": {
+            "type": "string",
+            "default": "maxresdefault"
+        },
+        "thumbnailSrc": {
+            "type": "string",
+            "default": ""
         }
     },
     "editorScript": "pbg-blocks-js",
