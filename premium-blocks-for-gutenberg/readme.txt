@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.4
+Stable tag: 2.2.5
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -126,6 +126,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.5 =
+- Tweak: Added a "Regenerate Assets" button to clear and rebuild Premium Blocks' CSS, aiding in troubleshooting styling issues.
+
 = 2.2.4 =
 - Tweak: Container block and its variations are now available as inner block within any block's content.
 - Tweak: Improved video box performance and code clarity, including enhanced iframe integration.

@@ -1095,6 +1095,13 @@ class PBG_Blocks_Helper
 		return $global_settings['generate-assets-files'] ?? true;
 	}
 
+
+	public function regenerate_assets_files()
+	{
+		$global_settings = apply_filters('pb_settings', get_option('pbg_blocks_settings', array()));
+		return $global_settings['premium-regenrate-assets'] ?? true;
+	}
+
 	/**
 	 * Add block css file to the frontend assets.
 	 *
@@ -1116,6 +1123,7 @@ class PBG_Blocks_Helper
 		if ($this->generate_assets_files()) {
 			return;
 		}
+
 		$this->add_blocks_assets();
 		$this->blocks_frondend_assets->add_inline_css($this->get_custom_block_css());
 		$inline_css = $this->blocks_frondend_assets->get_inline_css();
@@ -1177,10 +1185,15 @@ class PBG_Blocks_Helper
 		$css_url = $this->blocks_frondend_assets->get_css_url();
 
 		if (! empty($css_url)) {
-			$version = get_post_meta(get_the_ID(), '_pbg_blocks_version', true);
+			$version = get_post_meta(get_the_ID(), '_premium_css_version', true);
+
 			if (! $version) {
 				$version = PREMIUM_BLOCKS_VERSION;
 			}
+			if ($this->regenerate_assets_files()) {
+				$css_url =	$this->blocks_frondend_assets->force_rewrite_css_file();
+			}
+
 			wp_enqueue_style('pbg-blocks-frontend-css', $css_url, array_values($this->blocks_frontend_css_deps), $version);
 		}
 	}
@@ -1816,6 +1829,8 @@ class PBG_Blocks_Helper
 	public function add_blocks_editor_styles()
 	{
 		$generate_css = new Pbg_Assets_Generator('editor');
+
+
 		$generate_css->pbg_add_css('assets/js/build/entrance-animation/editor/index.css');
 		$generate_css->pbg_add_css('assets/css/minified/blockseditor.min.css');
 		$generate_css->pbg_add_css('assets/css/minified/editorpanel.min.css');
@@ -1878,7 +1893,6 @@ class PBG_Blocks_Helper
 
 		// Add dynamic css.
 		$css_url = $generate_css->get_css_url();
-
 		// Enqueue editor styles.
 		if (false != $css_url) {
 			wp_register_style('premium-blocks-editor-css', $css_url, array(), PREMIUM_BLOCKS_VERSION, 'all');
@@ -2983,20 +2997,21 @@ class PBG_Blocks_Helper
 	 *
 	 * @param string $video_id video ID.
 	 */
-	public static function get_vimeo_video_data( $video_id ) {
+	public static function get_vimeo_video_data($video_id)
+	{
 
-		$vimeo_data = wp_remote_get( 'http://www.vimeo.com/api/v2/video/' . intval( $video_id ) . '.php' );
+		$vimeo_data = wp_remote_get('http://www.vimeo.com/api/v2/video/' . intval($video_id) . '.php');
 
-		if ( is_wp_error( $vimeo_data ) ) {
+		if (is_wp_error($vimeo_data)) {
 			return false;
 		}
 
-		if ( isset( $vimeo_data['response']['code'] ) ) {
+		if (isset($vimeo_data['response']['code'])) {
 
-			if ( 200 === $vimeo_data['response']['code'] ) {
+			if (200 === $vimeo_data['response']['code']) {
 
-				$response  = maybe_unserialize( $vimeo_data['body'] );
-				$thumbnail = isset( $response[0]['thumbnail_large'] ) ? $response[0]['thumbnail_large'] : false;
+				$response  = maybe_unserialize($vimeo_data['body']);
+				$thumbnail = isset($response[0]['thumbnail_large']) ? $response[0]['thumbnail_large'] : false;
 
 				$data = array(
 					'src'      => $thumbnail,
@@ -3007,7 +3022,6 @@ class PBG_Blocks_Helper
 				);
 
 				return $data;
-
 			}
 		}
 
@@ -3026,32 +3040,31 @@ class PBG_Blocks_Helper
 	 * @param string $type embed type.
 	 * @param string $size youtube thumbnail size.
 	 */
-	public static function get_video_thumbnail( $video_id, $type, $size = '' ) {
+	public static function get_video_thumbnail($video_id, $type, $size = '')
+	{
 
 		$thumbnail_src = 'transparent';
 
-		if ( 'youtube' === $type ) {
-			if ( '' === $size ) {
+		if ('youtube' === $type) {
+			if ('' === $size) {
 				$size = 'maxresdefault';
 			}
-			$thumbnail_src = sprintf( 'https://i.ytimg.com/vi/%s/%s.jpg', $video_id, $size );
+			$thumbnail_src = sprintf('https://i.ytimg.com/vi/%s/%s.jpg', $video_id, $size);
+		} elseif ('vimeo' === $type) {
 
-		} elseif ( 'vimeo' === $type ) {
+			$vimeo = self::get_vimeo_video_data($video_id);
 
-			$vimeo = self::get_vimeo_video_data( $video_id );
+			$thumbnail_src = is_array($vimeo) ? $vimeo['src'] : '';
+		} elseif ('dailymotion' === $type) {
+			$video_data = rplg_urlopen('https://api.dailymotion.com/video/' . $video_id . '?fields=thumbnail_url');
 
-			$thumbnail_src = is_array( $vimeo ) ? $vimeo['src'] : '';
-
-		} elseif ( 'dailymotion' === $type ) {
-			$video_data = rplg_urlopen( 'https://api.dailymotion.com/video/' . $video_id . '?fields=thumbnail_url' );
-
-			if ( isset( $video_data['code'] ) ) {
-				if ( 404 === $video_data['code'] ) {
+			if (isset($video_data['code'])) {
+				if (404 === $video_data['code']) {
 					return $thumbnail_src;
 				}
 			}
 
-			$thumbnail_src = rplg_json_decode( $video_data['data'] )->thumbnail_url;
+			$thumbnail_src = rplg_json_decode($video_data['data'])->thumbnail_url;
 		}
 
 		return $thumbnail_src;
