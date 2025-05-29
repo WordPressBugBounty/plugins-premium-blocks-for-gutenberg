@@ -27,7 +27,7 @@ function get_premium_section_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['margin'] ) ) {
 		$margin = $attr['margin'];
-		$css->set_selector( $unique_id );
+		$css->set_selector( "body .entry-content {$unique_id}.premium-section" );
 		$css->add_property( 'margin', $css->render_spacing( $margin['Desktop'], isset( $margin['unit']['Desktop'] ) ? $margin['unit']['Desktop'] : $margin['unit'] ) );
 	}
 
@@ -64,7 +64,7 @@ function get_premium_section_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['margin'] ) ) {
 		$margin = $attr['margin'];
-		$css->set_selector( $unique_id );
+		$css->set_selector( "body .entry-content {$unique_id}.premium-section" );
 		$css->add_property( 'margin', $css->render_spacing( $margin['Tablet'], isset( $margin['unit']['Tablet'] ) ? $margin['unit']['Tablet'] : $margin['unit'] ) );
 	}
 
@@ -103,7 +103,7 @@ function get_premium_section_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['margin'] ) ) {
 		$margin = $attr['margin'];
-		$css->set_selector( $unique_id );
+		$css->set_selector( "body .entry-content {$unique_id}.premium-section" );
 		$css->add_property( 'margin', $css->render_spacing( $margin['Mobile'], isset( $margin['unit']['Mobile'] ) ? $margin['unit']['Mobile'] : $margin['unit'] ) );
 	}
 

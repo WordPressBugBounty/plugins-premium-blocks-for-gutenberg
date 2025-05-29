@@ -50,7 +50,7 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['margin'] ) ) {
 		$margin = $attr['margin'];
-		$css->set_selector( $unique_id );
+		$css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
 		$css->add_property( 'margin', $css->render_spacing( $margin['Desktop'], isset( $margin['unit']['Desktop'] )?$margin['unit']['Desktop'] :$margin['unit']) );
 	}
 	if(isset($attr['rotate'])){
@@ -191,7 +191,7 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['margin'] ) ) {
 		$margin = $attr['margin'];
-		$css->set_selector( $unique_id );
+		$css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
 		$css->add_property( 'margin', $css->render_spacing( $margin['Tablet'], isset( $margin['unit']['Tablet'] )?$margin['unit']['Tablet'] :$margin['unit']) );
 	}
 	if(isset($attr['mask_padding'])){
@@ -304,7 +304,7 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 
 	if ( isset( $attr['margin'] ) ) {
 		$margin = $attr['margin'];
-		$css->set_selector( $unique_id );
+		$css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
 		$css->add_property( 'margin', $css->render_spacing( $margin['Mobile'], isset( $margin['unit']['Mobile'] )?$margin['unit']['Mobile'] :$margin['unit']) );
 	}
 	if(isset($attr['mask_padding'])){

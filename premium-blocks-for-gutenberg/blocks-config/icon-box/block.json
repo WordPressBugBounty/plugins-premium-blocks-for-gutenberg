@@ -5,7 +5,11 @@
     "name": "premium/icon-box",
     "title": "Icon Box",
     "description": "Add informative info boxes along with Icon, Description, and CTA using Premium Icon Box Block.",
-    "keywords": ["Icon", "Font Awesome", "Box"],
+    "keywords": [
+        "Icon",
+        "Font Awesome",
+        "Box"
+    ],
     "textdomain": "premium-blocks-for-gutenberg",
     "category": "premium-blocks",
     "attributes": {
@@ -260,6 +264,56 @@
         "iconHorRange": {
             "type": "number",
             "default": 30,
+            "isStyle": true
+        },
+        "containerHoverBorder": {
+            "type": "object",
+            "default": {
+                "borderColor": "#dcdcdc",
+                "borderType": "solid",
+                "borderRadius": {
+                    "Desktop": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "link": true
+                },
+                "borderWidth": {
+                    "Desktop": {
+                        "top": "1",
+                        "right": "1",
+                        "bottom": "1",
+                        "left": "1"
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "link": true
+                }
+            },
             "isStyle": true
         }
     },

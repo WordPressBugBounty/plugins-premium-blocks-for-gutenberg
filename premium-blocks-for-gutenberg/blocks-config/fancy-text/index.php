@@ -20,7 +20,7 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['fancyMargin'] ) ) {
 		$fancyMargin = $attr['fancyMargin'];
 
-		$css->set_selector( '.' . $unique_id);
+		$css->set_selector( "body .entry-content .wp-block-premium-fancy-text.{$unique_id}" );
 		$css->add_property( 'margin', $css->render_spacing( $fancyMargin['Desktop'], isset( $fancyMargin['unit']['Desktop'])?$fancyMargin['unit']['Desktop']:$fancyMargin['unit'] ) );
 	}
 	if ( isset( $attr['fancyPadding'] ) ) {
@@ -92,7 +92,7 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['fancyMargin'] ) ) {
 		$fancyMargin = $attr['fancyMargin'];
 
-		$css->set_selector( '.' . $unique_id);
+		$css->set_selector( "body .entry-content .wp-block-premium-fancy-text.{$unique_id}" );
 		$css->add_property( 'margin', $css->render_spacing( $fancyMargin['Tablet'], isset( $fancyMargin['unit']['Tablet'])?$fancyMargin['unit']['Tablet']:$fancyMargin['unit'] ) );
 	}
 	if ( isset( $attr['fancyPadding'] ) ) {
@@ -139,7 +139,7 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 	if ( isset( $attr['fancyMargin'] ) ) {
 		$fancyMargin = $attr['fancyMargin'];
 
-		$css->set_selector( '.' . $unique_id);
+		$css->set_selector( "body .entry-content .wp-block-premium-fancy-text.{$unique_id}" );
 		$css->add_property( 'margin', $css->render_spacing( $fancyMargin['Mobile'], isset( $fancyMargin['unit']['Mobile'])?$fancyMargin['unit']['Mobile']:$fancyMargin['unit'] ) );
 	}
 	if ( isset( $attr['fancyPadding'] ) ) {

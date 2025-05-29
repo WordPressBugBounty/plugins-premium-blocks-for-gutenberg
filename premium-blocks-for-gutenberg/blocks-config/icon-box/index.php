@@ -80,6 +80,18 @@ function get_premium_icon_box_css_style($attr, $unique_id)
 		$css->add_property('box-shadow', $css->render_shadow($attr['containerHoverShadow']));
 	}
 
+	if (isset($attr['containerHoverBorder'])) {
+		$container_hover_border = $attr['containerHoverBorder'];
+		$css->set_selector('.' . $unique_id . " .premium-icon-box-content:hover");
+		$css->add_property( 'border-width', $css->render_string($css->render_spacing( $container_hover_border['borderWidth']['Desktop'], 'px' ), '!important') );
+		$css->add_property( 'border-radius', $css->render_string($css->render_spacing( $container_hover_border['borderRadius']['Desktop'], 'px' ), '!important') );
+		$css->add_property( 'border-style', $css->render_string($css->render_color( $container_hover_border['borderType'] ?? 'none' ), '!important' ) );
+		if(isset($container_hover_border['borderColor'])){
+			$css->add_property( 'border-color', $css->render_string($css->render_color( $container_hover_border['borderColor'] ), '!important' ) );
+
+		}
+	}
+
 	if (isset($attr['iconRange'])) {
 		$css->set_selector('.' . $unique_id . ' .is-style-var1-icon');
 		$css->add_property('left', $css->render_string($attr['iconRange'], '% !important'));
@@ -113,6 +125,18 @@ function get_premium_icon_box_css_style($attr, $unique_id)
 	if (isset($attr['containerHoverBackground'])) {
 		$css->set_selector('.' . $unique_id . " .premium-icon-box-content:hover");
 		$css->render_background($attr['containerHoverBackground'], 'Tablet');
+	}
+
+	if (isset($attr['containerHoverBorder'])) {
+		$container_hover_border = $attr['containerHoverBorder'];
+		$css->set_selector('.' . $unique_id . " .premium-icon-box-content:hover");
+		$css->add_property( 'border-width', $css->render_string($css->render_spacing( $container_hover_border['borderWidth']['Tablet'], 'px' ), '!important') );
+		$css->add_property( 'border-radius', $css->render_string($css->render_spacing( $container_hover_border['borderRadius']['Tablet'], 'px' ), '!important') );
+		$css->add_property( 'border-style', $css->render_string($css->render_color( $container_hover_border['borderType'] ?? 'none' ), '!important' ) );
+		if(isset($container_hover_border['borderColor'])){
+			$css->add_property( 'border-color', $css->render_string($css->render_color( $container_hover_border['borderColor'] ), '!important' ) );
+
+		}
 	}
 
 	if (isset($attr['align'])) {
@@ -168,6 +192,18 @@ function get_premium_icon_box_css_style($attr, $unique_id)
 	if (isset($attr['containerHoverBackground'])) {
 		$css->set_selector('.' . $unique_id . " .premium-icon-box-content:hover");
 		$css->render_background($attr['containerHoverBackground'], 'Mobile');
+	}
+
+	if (isset($attr['containerHoverBorder'])) {
+		$container_hover_border = $attr['containerHoverBorder'];
+		$css->set_selector('.' . $unique_id . " .premium-icon-box-content:hover");
+		$css->add_property( 'border-width', $css->render_string($css->render_spacing( $container_hover_border['borderWidth']['Mobile'], 'px' ), '!important') );
+		$css->add_property( 'border-radius', $css->render_string($css->render_spacing( $container_hover_border['borderRadius']['Mobile'], 'px' ), '!important') );
+		$css->add_property( 'border-style', $css->render_string($css->render_color( $container_hover_border['borderType'] ?? 'none' ), '!important' ) );
+		if(isset($container_hover_border['borderColor'])){
+			$css->add_property( 'border-color', $css->render_string($css->render_color( $container_hover_border['borderColor'] ), '!important' ) );
+
+		}
 	}
 
 	if (isset($attr['align'])) {

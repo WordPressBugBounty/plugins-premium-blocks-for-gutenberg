@@ -198,6 +198,15 @@ function get_premium_container_css_style($attr, $unique_id)
         $css->add_property('margin-right', 'auto');
     }
 
+    if (isset($attr['boxShadow'])) {
+        $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id );
+        $css->add_property('box-shadow', $css->render_shadow($attr['boxShadow']));
+    }
+    if (isset($attr['boxShadowHover'])) {
+        $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ':hover');
+        $css->add_property('box-shadow', $css->render_shadow($attr['boxShadowHover']));
+    }
+
     $css->start_media_query('tablet');
 
     $css->set_selector('.wp-block-premium-container.premium-is-root-container.premium-container-' . $unique_id . '>  .premium-container-inner-blocks-wrap , .wp-block-premium-container.premium-is-root-container.premium-block-' . $unique_id . '>  .premium-container-inner-blocks-wrap');
@@ -266,16 +275,6 @@ function get_premium_container_css_style($attr, $unique_id)
         $padding = $attr['padding'];
         $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-block-' . $unique_id);
         $css->add_property('padding', $css->render_spacing($padding['Tablet'], isset($padding['unit']['Tablet']) ? $padding['unit']['Tablet'] : $padding['unit']));
-    }
-
-
-    if (isset($attr['boxShadow'])) {
-        $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id);
-        $css->add_property('box-shadow', $css->render_shadow($attr['boxShadow']));
-    }
-    if (isset($attr['boxShadowHover'])) {
-        $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ':hover');
-        $css->add_property('box-shadow', $css->render_shadow($attr['boxShadowHover']));
     }
 
     if (isset($attr['backgroundOptions'])) {

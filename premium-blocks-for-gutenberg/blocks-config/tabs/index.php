@@ -342,7 +342,7 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
         }
          if ( isset( $attr['containerMargin'] ) ) {
             $container_margin = $attr['containerMargin'];
-            $css->set_selector( $unique_id );
+            $css->set_selector( "body .entry-content {$unique_id}.premium-tabs" );
             $css->add_property( 'margin',$css->render_spacing( $container_margin['Desktop'],  $container_margin['unit']['Desktop']));
         }
         if ( isset( $attr['containerPadding'] ) ) {
@@ -610,7 +610,7 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
    
          if ( isset( $attr['containerMargin'] ) ) {
             $container_margin = $attr['containerMargin'];
-            $css->set_selector( $unique_id );
+            $css->set_selector( "body .entry-content {$unique_id}.premium-tabs" );
             $css->add_property( 'margin', $css->render_spacing( $container_margin['Tablet'],  $container_margin['unit']['Tablet']));
         }
         if ( isset( $attr['containerPadding'] ) ) {
@@ -879,7 +879,7 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
        
              if ( isset( $attr['containerMargin'] ) ) {
                 $container_margin = $attr['containerMargin'];
-                $css->set_selector( $unique_id );
+                $css->set_selector( "body .entry-content {$unique_id}.premium-tabs" );
                 $css->add_property( 'margin', $css->render_spacing( $container_margin['Mobile'],  $container_margin['unit']['Mobile']));
             }
             if ( isset( $attr['containerPadding'] ) ) {
