@@ -146,25 +146,20 @@ function get_premium_button_css_style($attr, $unique_id)
 	}
 	if (isset($attr['btnStyles']) && isset($attr['btnStyles'][0])) {
 		$btn_styles = $attr['btnStyles'][0];
-	
+		$btn_hColor = $btn_styles['textHoverColor'];
 		$css->set_selector('#' . $unique_id . ' > .premium-button:hover , #' . $unique_id . 'premium-button:hover');
-	
 		if (isset($btn_styles['backHoverColor']) && !isset($attr['backgroundHoverOptions']['backgroundColor'])) {
 			$css->add_property('background-color', $css->render_string($css->render_color($btn_styles['backHoverColor']), '!important '));
 		}
-	
 		if (isset($btn_styles['borderHoverColor'])) {
 			$css->add_property('border-color', $css->render_string($css->render_color($btn_styles['borderHoverColor']), ' !important'));
 		}
-	
-		if (isset($btn_styles['textHoverColor'])) {
-			$btn_hColor = $btn_styles['textHoverColor'];
+		if (isset($btn_hColor)) {
 			$css->add_property('color', $css->render_string($css->render_color($btn_hColor), ' !important'));
 			$css->set_selector('.' . $unique_id . ' > .premium-button:hover .premium-button-text-edit');
 			$css->add_property('color', $css->render_string($css->render_color($btn_hColor), ' !important'));
 		}
 	}
-	
 
 
 	if (isset($attr['iconMargin'])) {

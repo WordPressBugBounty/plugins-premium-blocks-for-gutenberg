@@ -40,8 +40,6 @@ class PBG_Blocks_Helper
 	 */
 	public static $stylesheet;
 
-
-
 	/**
 	 * Page Blocks Variable
 	 *
@@ -162,14 +160,6 @@ class PBG_Blocks_Helper
 	 */
 	public $integrations_settings;
 
-	public $is_post_revision = false;
-
-
-	public $preview = false;
-	public $file_generation = false;
-
-
-
 	/**
 	 * Constructor for the class
 	 */
@@ -183,11 +173,6 @@ class PBG_Blocks_Helper
 		$this->performance_settings = apply_filters('pb_performance_options', get_option('pbg_performance_options', array()));
 		// Gets Active Blocks.
 		self::$blocks = apply_filters('pb_options', get_option('pb_options', array()));
-
-		$this->preview = isset($_GET['preview']); //phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification not required.
-		if (wp_is_post_revision(get_the_ID())) {
-			$this->is_post_revision = true;
-		}
 		// Support Links Blocks.
 		$this->support_links_blocks = array(
 			'premium/container',
@@ -1105,15 +1090,9 @@ class PBG_Blocks_Helper
 	 * @return bool
 	 */
 	public function generate_assets_files()
-
 	{
-
-		if ($this->preview ||  $this->is_post_revision) {
-			$this->file_generation              = false;
-		} else {
-			$this->file_generation              =  apply_filters('pb_settings', get_option('pbg_blocks_settings', array()));
-		}
-		return $this->file_generation;
+		$global_settings = apply_filters('pb_settings', get_option('pbg_blocks_settings', array()));
+		return $global_settings['generate-assets-files'] ?? true;
 	}
 
 
@@ -1141,7 +1120,6 @@ class PBG_Blocks_Helper
 	 */
 	public function add_blocks_frontend_inline_styles()
 	{
-
 		if ($this->generate_assets_files()) {
 			return;
 		}
@@ -1205,6 +1183,7 @@ class PBG_Blocks_Helper
 		$this->blocks_frondend_assets->set_post_id(get_the_ID());
 		$this->blocks_frondend_assets->add_inline_css($this->get_custom_block_css());
 		$css_url = $this->blocks_frondend_assets->get_css_url();
+
 		if (! empty($css_url)) {
 			$version = get_post_meta(get_the_ID(), '_premium_css_version', true);
 

@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.6
+Stable tag: 2.2.5
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -126,13 +126,6 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
-= 2.2.6 =
-- Fixed: Generated assets were not loading properly in some Full Site Editing templates.
-- Fixed: Default text weight was not applying correctly in the Text block.
-- Fixed: Global fonts were not working properly for headings in the Full Site Editor.
-- Fixed: Default banner height conflicted with certain Gutenberg blocks.
-- Fixed: Default modal popup height conflicted with certain Gutenberg blocks.
-
 = 2.2.5 =
 - Tweak: Added a "Regenerate Assets" button to clear and rebuild Premium Blocks' CSS, aiding in troubleshooting styling issues.
 
