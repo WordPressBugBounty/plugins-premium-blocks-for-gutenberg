@@ -17,10 +17,9 @@ function get_premium_counter_css( $attributes, $unique_id ) {
 		$css->add_property( 'justify-content', $css->get_responsive_css( $attributes['align'], 'Desktop' ) . ' !important' );
 	}
 	// Number Style
-	if ( isset( $attributes['numberTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__increment' );
-		$css->render_typography( $attributes['numberTypography'], 'Desktop' );
-	}
+  $css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__increment' );
+  $css->pbg_render_typography($attributes, 'numberTypography', 'Desktop');
+
 	if ( isset( $attributes['numberMargin'] ) ) {
 		$number_margin = $attributes['numberMargin'];
 		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__increment' );
@@ -33,10 +32,9 @@ function get_premium_counter_css( $attributes, $unique_id ) {
 	}
 
 	// Prefix Style
-	if ( isset( $attributes['prefixTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__prefix' );
-		$css->render_typography( $attributes['prefixTypography'], 'Desktop' );
-	}
+  $css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__prefix' );
+  $css->pbg_render_typography($attributes, 'prefixTypography', 'Desktop');
+
 	if ( isset( $attributes['prefixMargin'] ) ) {
 		$prefix_margin = $attributes['prefixMargin'];
 		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__prefix' );
@@ -49,10 +47,9 @@ function get_premium_counter_css( $attributes, $unique_id ) {
 	}
 
 	// Suffix Style
-	if ( isset( $attributes['suffixTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__suffix' );
-		$css->render_typography( $attributes['suffixTypography'], 'Desktop' );
-	}
+  $css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__suffix' );
+  $css->pbg_render_typography($attributes, 'suffixTypography', 'Desktop');
+
 	if ( isset( $attributes['suffixMargin'] ) ) {
 		$suffix_margin = $attributes['suffixMargin'];
 		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__suffix' );
@@ -71,10 +68,9 @@ function get_premium_counter_css( $attributes, $unique_id ) {
 		$css->add_property( 'justify-content', $css->get_responsive_css( $attributes['align'], 'Tablet' ) . ' !important' );
 	}
 	// Number Style
-	if ( isset( $attributes['numberTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__increment' );
-		$css->render_typography( $attributes['numberTypography'], 'Tablet' );
-	}
+	$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__increment' );
+  $css->pbg_render_typography($attributes, 'numberTypography', 'Tablet');
+  
 	if ( isset( $attributes['numberMargin'] ) ) {
 		$number_margin = $attributes['numberMargin'];
 		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__increment' );
@@ -87,10 +83,9 @@ function get_premium_counter_css( $attributes, $unique_id ) {
 	}
 
 	// Prefix Style
-	if ( isset( $attributes['prefixTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__prefix' );
-		$css->render_typography( $attributes['prefixTypography'], 'Tablet' );
-	}
+	$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__prefix' );
+  $css->pbg_render_typography($attributes, 'prefixTypography', 'Tablet');
+
 	if ( isset( $attributes['prefixMargin'] ) ) {
 		$prefix_margin = $attributes['prefixMargin'];
 		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__prefix' );
@@ -103,10 +98,9 @@ function get_premium_counter_css( $attributes, $unique_id ) {
 	}
 
 	// Suffix Style
-	if ( isset( $attributes['suffixTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__suffix' );
-		$css->render_typography( $attributes['suffixTypography'], 'Tablet' );
-	}
+	$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__suffix' );
+  $css->pbg_render_typography($attributes, 'suffixTypography', 'Tablet');
+
 	if ( isset( $attributes['suffixMargin'] ) ) {
 		$suffix_margin = $attributes['suffixMargin'];
 		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__suffix' );
@@ -126,10 +120,9 @@ function get_premium_counter_css( $attributes, $unique_id ) {
 		$css->add_property( 'justify-content', $css->get_responsive_css( $attributes['align'], 'Mobile' ) . ' !important' );
 	}
 	// Number Style
-	if ( isset( $attributes['numberTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__increment' );
-		$css->render_typography( $attributes['numberTypography'], 'Mobile' );
-	}
+	$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__increment' );
+  $css->pbg_render_typography($attributes, 'numberTypography', 'Mobile');
+
 	if ( isset( $attributes['numberMargin'] ) ) {
 		$number_margin = $attributes['numberMargin'];
 		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__increment' );
@@ -142,10 +135,9 @@ function get_premium_counter_css( $attributes, $unique_id ) {
 	}
 
 	// Prefix Style
-	if ( isset( $attributes['prefixTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__prefix' );
-		$css->render_typography( $attributes['prefixTypography'], 'Mobile' );
-	}
+	$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__prefix' );
+  $css->pbg_render_typography($attributes, 'prefixTypography', 'Mobile');
+
 	if ( isset( $attributes['prefixMargin'] ) ) {
 		$prefix_margin = $attributes['prefixMargin'];
 		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__prefix' );
@@ -158,10 +150,9 @@ function get_premium_counter_css( $attributes, $unique_id ) {
 	}
 
 	// Suffix Style
-	if ( isset( $attributes['suffixTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__suffix' );
-		$css->render_typography( $attributes['suffixTypography'], 'Mobile' );
-	}
+	$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__suffix' );
+  $css->pbg_render_typography($attributes, 'suffixTypography', 'Mobile');
+
 	if ( isset( $attributes['suffixMargin'] ) ) {
 		$suffix_margin = $attributes['suffixMargin'];
 		$css->set_selector( '.' . $unique_id . ' > .premium-countup__desc' . ' > .premium-countup__suffix' );

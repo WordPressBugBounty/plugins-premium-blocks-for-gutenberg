@@ -12,12 +12,9 @@ function get_premium_button_css_style($attr, $unique_id)
 	$css = new Premium_Blocks_css();
 
 	// Button Style
-
-	if (isset($attr['typography'])) {
-		$typography = $attr['typography'];
-		$css->set_selector('.' . $unique_id . '> .premium-button');
-		$css->render_typography($typography, 'Desktop');
-	}
+  $css->set_selector('.' . $unique_id . ' > .premium-button .premium-button-text-edit');
+  $css->pbg_render_typography($attr, 'typography', 'Desktop');
+	
 	if (isset($attr['btnWidth'])) {
 		$css->set_selector('.' . $unique_id);
 		$css->add_property('width', $css->get_responsive_css($attr['btnWidth'], 'Desktop'));
@@ -192,11 +189,9 @@ function get_premium_button_css_style($attr, $unique_id)
 	$css->start_media_query('tablet');
 
 	// Button Style
-	if (isset($attr['typography'])) {
-		$typography = $attr['typography'];
-		$css->set_selector('.' . $unique_id . '> .premium-button');
-		$css->render_typography($typography, 'Tablet');
-	}
+	$css->set_selector('.' . $unique_id . ' > .premium-button .premium-button-text-edit');
+  $css->pbg_render_typography($attr, 'typography', 'Tablet');
+
 	if (isset($attr['btnWidth'])) {
 		$css->set_selector('.' . $unique_id);
 		$css->add_property('width', $css->get_responsive_css($attr['btnWidth'], 'Tablet'));
@@ -306,11 +301,8 @@ function get_premium_button_css_style($attr, $unique_id)
 	$css->start_media_query('mobile');
 
 	// Button Style
-	if (isset($attr['typography'])) {
-		$typography = $attr['typography'];
-		$css->set_selector('.' . $unique_id . '> .premium-button');
-		$css->render_typography($typography, 'Mobile');
-	}
+	$css->set_selector('.' . $unique_id . ' > .premium-button .premium-button-text-edit');
+  $css->pbg_render_typography($attr, 'typography', 'Mobile');
 
 	if (isset($attr['btnWidth'])) {
 		$css->set_selector('.' . $unique_id);

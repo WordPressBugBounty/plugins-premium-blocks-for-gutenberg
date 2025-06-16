@@ -75,11 +75,8 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 	}
 
 	// First Style FontSize.
-
-	if ( isset( $attr['firstTypography'] ) ) {
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-		$css->render_typography( $attr['firstTypography'], 'Desktop' );
-	}
+  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
+  $css->pbg_render_typography( $attr, 'firstTypography', 'Desktop');
 
 	if ( isset( $attr['firstBorder'] ) ) {
 		$first_border        = $attr['firstBorder'];
@@ -115,11 +112,8 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 	}
 
 	// Second Style FontSize.
-
-	if ( isset( $attr['secondTypography'] ) ) {
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-		$css->render_typography( $attr['secondTypography'], 'Desktop' );
-	}
+  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
+  $css->pbg_render_typography($attr, 'secondTypography', 'Desktop');
 
 	if ( isset( $attr['secondBorder'] ) ) {
 		$second_border        = $attr['secondBorder'];
@@ -201,12 +195,8 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 		$css->add_property( 'padding', $css->render_spacing( $padding['Tablet'], $padding['unit']['Tablet'] ));
 	}
 	// First Style FontSize.
-
-	if ( isset( $attr['firstTypography'] ) ) {
-		$first_typography = $attr['firstTypography'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-		$css->render_typography( $first_typography, 'Tablet' );
-	}
+  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
+  $css->pbg_render_typography( $attr, 'firstTypography', 'Tablet');
 
 	if ( isset( $attr['firstBorder'] ) ) {
 		$first_border        = $attr['firstBorder'];
@@ -235,10 +225,8 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 	}
 
 	// Second Style FontSizeTablet.
-	if ( isset( $attr['secondTypography'] ) ) {
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-		$css->render_typography( $attr['secondTypography'], 'Tablet' );
-	}
+	$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
+  $css->pbg_render_typography($attr, 'secondTypography', 'Tablet');
 
 	if ( isset( $attr['secondBorder'] ) ) {
 		$second_border        = $attr['secondBorder'];
@@ -316,12 +304,8 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 
 
 	// First Style FontSize.
-
-	if ( isset( $attr['firstTypography'] ) ) {
-		$first_typography = $attr['firstTypography'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-		$css->render_typography( $first_typography, 'Mobile' );
-	}
+  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
+  $css->pbg_render_typography( $attr, 'firstTypography', 'Mobile');
 
 	if ( isset( $attr['firstBorder'] ) ) {
 		$first_border        = $attr['firstBorder'];
@@ -351,10 +335,8 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 	}
 
 	// Second Style FontSizeMobil.
-	if ( isset( $attr['secondTypography'] ) ) {
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-		$css->render_typography( $attr['secondTypography'], 'Mobile' );
-	}
+	$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
+  $css->pbg_render_typography($attr, 'secondTypography', 'Mobile');
 
 	if ( isset( $attr['secondBorder'] ) ) {
 		$second_border        = $attr['secondBorder'];

@@ -27,12 +27,9 @@ function get_premium_badge_css( $attributes, $unique_id ) {
 		$css->add_property('box-shadow', $css->render_shadow($attributes['boxShadow']));
 	}
 	
-	if ( isset( $attributes['typography'] ) ) {
-		$typography = $attributes['typography'];
-		$css->set_selector( ".{$unique_id} .premium-badge-wrap span" );
-		$css->render_typography( $typography, 'Desktop' );
-
-	}
+  $css->set_selector( ".{$unique_id} .premium-badge-wrap span" );
+  $css->pbg_render_typography($attributes, 'typography', 'Desktop');
+	
 	//horizontal
 	if ( isset( $attributes['hOffset'] ) ) {
 		$css->set_selector( ".{$unique_id}.premium-badge-triangle .premium-badge-wrap span, " . ".{$unique_id}.premium-badge-circle" );
@@ -77,12 +74,8 @@ function get_premium_badge_css( $attributes, $unique_id ) {
 
 	$css->start_media_query( 'tablet' );
 	// Tablet Styles.
-	if ( isset( $attributes['typography'] ) ) {
-		$typography = $attributes['typography'];
-
-		$css->set_selector( ".{$unique_id} .premium-badge-wrap span" );
-		$css->render_typography( $typography, 'Tablet' );
-	}
+	$css->set_selector( ".{$unique_id} .premium-badge-wrap span" );
+  $css->pbg_render_typography($attributes, 'typography', 'Tablet');
 	//horizontal
 	if ( isset( $attributes['hOffset'] ) ) {
 		$css->set_selector( ".{$unique_id}.premium-badge-triangle .premium-badge-wrap span, " . ".{$unique_id}.premium-badge-circle" );
@@ -129,12 +122,8 @@ function get_premium_badge_css( $attributes, $unique_id ) {
 	$css->stop_media_query();
 	$css->start_media_query( 'mobile' );
 	// Mobile Styles.
-	if ( isset( $attributes['typography'] ) ) {
-		$typography = $attributes['typography'];
-
-		$css->set_selector( ".{$unique_id} .premium-badge-wrap span" );
-		$css->render_typography( $typography, 'Mobile' );
-	}
+	$css->set_selector( ".{$unique_id} .premium-badge-wrap span" );
+  $css->pbg_render_typography($attributes, 'typography', 'Mobile');
 	//horizontal
 	if ( isset( $attributes['hOffset'] ) ) {
 		$css->set_selector( ".{$unique_id}.premium-badge-triangle .premium-badge-wrap span, " . ".{$unique_id}.premium-badge-circle" );

@@ -35,17 +35,11 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Desktop' ) );
 	}
 
-	if ( isset( $attr['titleTypography'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
-		$css->render_typography( $attr['titleTypography'], 'Desktop' );
-	}
-
+  $css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
+  $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
 	// Desc Style
-	if ( isset( $attr['descTypography'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
-		$css->render_typography( $attr['descTypography'], 'Desktop' );
-	}
-
+  $css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
+  $css->pbg_render_typography($attr, 'descTypography', 'Desktop');
 	// Container Style
 	if ( isset( $attr['padding'] ) ) {
 		$padding = $attr['padding'];
@@ -72,17 +66,11 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Tablet' ) );
 	}
 
-	if ( isset( $attr['titleTypography'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
-		$css->render_typography( $attr['titleTypography'], 'Tablet' );
-	}
-
+	$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
+  $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
 	// Desc Style
-	if ( isset( $attr['descTypography'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
-		$css->render_typography( $attr['descTypography'], 'Tablet' );
-	}
-
+	$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
+  $css->pbg_render_typography($attr, 'descTypography', 'Tablet');
 	// Container Style
 	if ( isset( $attr['padding'] ) ) {
 		$padding = $attr['padding'];
@@ -111,17 +99,11 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Mobile' ) );
 	}
 
-	if ( isset( $attr['titleTypography'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
-		$css->render_typography( $attr['titleTypography'], 'Mobile' );
-	}
-
+	$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
+  $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');
 	// Desc Style
-	if ( isset( $attr['descTypography'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
-		$css->render_typography( $attr['descTypography'], 'Mobile' );
-	}
-
+	$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
+  $css->pbg_render_typography($attr, 'descTypography', 'Mobile');
 	// Container Style
 	if ( isset( $attr['padding'] ) ) {
 		$padding = $attr['padding'];

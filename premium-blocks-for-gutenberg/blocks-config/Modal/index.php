@@ -194,10 +194,9 @@ function get_premium_modal_css_style($attr, $unique_id)
 		);
 	}
 	// Style For Button Trigger
-	if (isset($attr['triggerTypography'])) {
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button' . '> span');
-		$css->render_typography($attr['triggerTypography'], 'Desktop');
-	}
+  $css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button' . ' > span');
+  $css->pbg_render_typography($attr, 'triggerTypography', 'Desktop');
+	
 	if (isset($attr['triggerPadding'])) {
 		$trigger_padding = $attr['triggerPadding'];
 		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button');
@@ -227,10 +226,10 @@ function get_premium_modal_css_style($attr, $unique_id)
 		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Desktop'], 'px'));
 		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Desktop'], 'px'));
 	}
-	if (isset($attr['triggerTypography'])) {
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
-		$css->render_typography($attr['triggerTypography'], 'Desktop');
-	}
+
+  $css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
+  $css->pbg_render_typography($attr, 'triggerTypography', 'Desktop');
+	
 	if (isset($attr['triggerPadding'])) {
 		$trigger_padding = $attr['triggerPadding'];
 		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
@@ -420,10 +419,9 @@ function get_premium_modal_css_style($attr, $unique_id)
 	}
 
 	// Style For Button Trigger
-	if (isset($attr['triggerTypography'])) {
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button' . ' > span');
-		$css->render_typography($attr['triggerTypography'], 'Tablet');
-	}
+	$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button' . ' > span');
+  $css->pbg_render_typography($attr, 'triggerTypography', 'Tablet');
+
 	if (isset($attr['triggerPadding'])) {
 		$trigger_padding = $attr['triggerPadding'];
 		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button');
@@ -452,10 +450,10 @@ function get_premium_modal_css_style($attr, $unique_id)
 		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Tablet'], 'px'));
 		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Tablet'], 'px'));
 	}
-	if (isset($attr['triggerTypography'])) {
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
-		$css->render_typography($attr['triggerTypography'], 'Tablet');
-	}
+
+	$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
+  $css->pbg_render_typography($attr, 'triggerTypography', 'Tablet');
+
 	if (isset($attr['triggerPadding'])) {
 		$trigger_padding = $attr['triggerPadding'];
 		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
@@ -634,10 +632,9 @@ function get_premium_modal_css_style($attr, $unique_id)
 	}
 
 	// Style For Button Trigger
-	if (isset($attr['triggerTypography'])) {
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button' . ' > span');
-		$css->render_typography($attr['triggerTypography'], 'Mobile');
-	}
+	$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button' . ' > span');
+  $css->pbg_render_typography($attr, 'triggerTypography', 'Mobile');
+
 	if (isset($attr['triggerPadding'])) {
 		$trigger_padding = $attr['triggerPadding'];
 		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button');
@@ -666,10 +663,10 @@ function get_premium_modal_css_style($attr, $unique_id)
 		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Mobile'], 'px'));
 		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Mobile'], 'px'));
 	}
-	if (isset($attr['triggerTypography'])) {
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
-		$css->render_typography($attr['triggerTypography'], 'Mobile');
-	}
+
+	$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
+  $css->pbg_render_typography($attr, 'triggerTypography', 'Mobile');
+
 	if (isset($attr['triggerPadding'])) {
 		$trigger_padding = $attr['triggerPadding'];
 		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');

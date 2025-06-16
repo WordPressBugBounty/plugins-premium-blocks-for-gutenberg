@@ -57,12 +57,8 @@ if(isset( $title_styles['titleColor'] )){
 		$css->add_property( 'text-shadow', $css->render_shadow( $title_shadow ) );
 	}
 
-	if ( isset( $attr['titleTypography'] ) ) {
-		$title_typography = $attr['titleTypography'];
-
-		$css->set_selector( '.' . $unique_id . '> .premium-accordion__content_wrap' . ' > .premium-accordion__title_wrap' . ' > .premium-accordion__title' . ' > .premium-accordion__title_text' );
-		$css->render_typography( $title_typography, 'Desktop' );
-	}
+  $css->set_selector( '.' . $unique_id . '> .premium-accordion__content_wrap' . ' > .premium-accordion__title_wrap' . ' > .premium-accordion__title' . ' > .premium-accordion__title_text' );
+  $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
 
 	if ( isset( $attr['titlePadding'] ) ) {
 		$title_padding = $attr['titlePadding'];
@@ -115,12 +111,8 @@ if(isset( $title_styles['titleColor'] )){
 		$css->add_property( 'text-shadow', $css->render_shadow( $text_shadow ) );
 	}
 
-	if ( isset( $attr['descTypography'] ) ) {
-		$desc_typography = $attr['descTypography'];
-
-		$css->set_selector( '.' . $unique_id . '> .premium-accordion__content_wrap' . ' > .premium-accordion__desc_wrap' . ' > .premium-accordion__desc' );
-		$css->render_typography( $desc_typography, 'Desktop' );
-	}
+  $css->set_selector( '.' . $unique_id . '> .premium-accordion__content_wrap' . ' > .premium-accordion__desc_wrap' . ' > .premium-accordion__desc' );
+  $css->pbg_render_typography($attr, 'descTypography', 'Desktop');
 
 	if ( isset( $attr['descPadding'] ) ) {
 		$desc_padding = $attr['descPadding'];
@@ -152,12 +144,8 @@ if(isset( $title_styles['titleColor'] )){
 
 	$css->start_media_query( 'tablet' );
 
-	if ( isset( $attr['titleTypography'] ) ) {
-		$title_typography = $attr['titleTypography'];
-
-		$css->set_selector( '.' . $unique_id . '> .premium-accordion__content_wrap' . ' > .premium-accordion__title_wrap' . ' > .premium-accordion__title' . ' > .premium-accordion__title_text' );
-		$css->render_typography( $title_typography, 'Tablet' );
-	}
+	$css->set_selector( '.' . $unique_id . '> .premium-accordion__content_wrap' . ' > .premium-accordion__title_wrap' . ' > .premium-accordion__title' . ' > .premium-accordion__title_text' );
+  $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
 
 	if ( isset( $attr['titlePadding'] ) ) {
 		$title_padding = $attr['titlePadding'];
@@ -182,12 +170,8 @@ if(isset( $title_styles['titleColor'] )){
 	}
 
 	// Desc Style
-	if ( isset( $attr['descTypography'] ) ) {
-		$desc_typography = $attr['descTypography'];
-
-		$css->set_selector( '.' . $unique_id . '> .premium-accordion__content_wrap' . ' > .premium-accordion__desc_wrap' . ' > .premium-accordion__desc' );
-		$css->render_typography( $desc_typography, 'Tablet' );
-	}
+	$css->set_selector( '.' . $unique_id . '> .premium-accordion__content_wrap' . ' > .premium-accordion__desc_wrap' . ' > .premium-accordion__desc' );
+  $css->pbg_render_typography($attr, 'descTypography', 'Tablet');
 
 	if ( isset( $attr['descPadding'] ) ) {
 		$desc_padding = $attr['descPadding'];
@@ -214,12 +198,9 @@ if(isset( $title_styles['titleColor'] )){
 
 	$css->stop_media_query();
 	$css->start_media_query( 'mobile' );
-	if ( isset( $attr['titleTypography'] ) ) {
-		$title_typography = $attr['titleTypography'];
-
-		$css->set_selector( '.' . $unique_id . '> .premium-accordion__content_wrap' . ' > .premium-accordion__title_wrap' . ' > .premium-accordion__title' . ' > .premium-accordion__title_text' );
-		$css->render_typography( $title_typography, 'Mobile' );
-	}
+	
+  $css->set_selector( '.' . $unique_id . '> .premium-accordion__content_wrap' . ' > .premium-accordion__title_wrap' . ' > .premium-accordion__title' . ' > .premium-accordion__title_text' );
+  $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');
 
 	if ( isset( $attr['titlePadding'] ) ) {
 		$title_padding = $attr['titlePadding'];
@@ -244,12 +225,8 @@ if(isset( $title_styles['titleColor'] )){
 	}
 
 	// Desc Style
-	if ( isset( $attr['descTypography'] ) ) {
-		$desc_typography = $attr['descTypography'];
-
-		$css->set_selector( '.' . $unique_id . '> .premium-accordion__content_wrap' . ' > .premium-accordion__desc_wrap' . ' > .premium-accordion__desc' );
-		$css->render_typography( $desc_typography, 'Mobile' );
-	}
+	$css->set_selector( '.' . $unique_id . '> .premium-accordion__content_wrap' . ' > .premium-accordion__desc_wrap' . ' > .premium-accordion__desc' );
+  $css->pbg_render_typography($attr, 'descTypography', 'Mobile');
 
 	if ( isset( $attr['descPadding'] ) ) {
 		$desc_padding = $attr['descPadding'];

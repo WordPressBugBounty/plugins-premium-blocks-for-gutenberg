@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.7
+Stable tag: 2.2.8
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -126,9 +126,16 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.8 =
+- New: Introduced new Typography Control style across all our Free Gutenberg blocks.
+- Tweak: Improved user interaction by adding icon hover CSS to icon box Gutenberg Block.
+- Tweak: Performance and Gutenberg compatibility improved for Offcanvas and Text blocks.
+- Fixed: Resolved a styling issue with the pricing table badge.
+- Fixed a compatibility issue where typography settings weren't consistently applying global settings within Full Site Editing (FSE).
+- Fixed: Addressed a styling problem within the bullet list block.
 
 = 2.2.7 =
-- Added: Three new styles for the Badge block in the Pricing Table Gutenberg block.
+- Added: Three new styles for the Badge block in the Pricing Table gutenberg block.
 - Fixed: Icon box styling issues.
 - Fixed: Container styling inconsistencies.
 - Fixed: Spacing issues in the Gallery block.

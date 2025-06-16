@@ -142,11 +142,8 @@ function get_premium_heading_css_style($attr, $unique_id)
 		$css->add_property('margin', $css->render_spacing($title_margin['Desktop'], isset($title_margin['unit']['Desktop']) ? $title_margin['unit']['Desktop'] : $title_margin['unit']));
 	}
 
-	if (isset($attr['titleTypography'])) {
-		$typography_title = $attr['titleTypography'];
-		$css->set_selector($unique_id . ' .premium-title-header');
-		$css->render_typography($typography_title, 'Desktop');
-	}
+  $css->set_selector($unique_id . ' .premium-title-header .premium-title-text-title');
+  $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
 
 	if (isset($attr['titleBorder'])) {
 		$title_border        = $attr['titleBorder'];
@@ -399,11 +396,8 @@ function get_premium_heading_css_style($attr, $unique_id)
 		$css->add_property('-webkit-text-stroke-width', $css->render_range($stroke_full, 'Desktop'));
 	}
 
-	if (isset($attr['textTypography'])) {
-		$text_typography = $attr['textTypography'];
-		$css->set_selector($unique_id . ' .premium-title-bg-text:before');
-		$css->render_typography($text_typography, 'Desktop');
-	}
+  $css->set_selector($unique_id . ' .premium-title-bg-text:before');
+  $css->pbg_render_typography($attr, 'textTypography', 'Desktop');
 
 	$css->start_media_query('tablet');
 
@@ -427,11 +421,8 @@ function get_premium_heading_css_style($attr, $unique_id)
 		$css->add_property('margin', $css->render_spacing($title_margin['Tablet'], isset($title_margin['unit']['Tablet']) ? $title_margin['unit']['Tablet'] : $title_margin['unit']));
 	}
 
-	if (isset($attr['titleTypography'])) {
-		$typography_title = $attr['titleTypography'];
-		$css->set_selector($unique_id . ' .premium-title-header');
-		$css->render_typography($typography_title, 'Tablet');
-	}
+	$css->set_selector($unique_id . ' .premium-title-header .premium-title-text-title');
+  $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
 
 	if (isset($attr['titleBorder'])) {
 		$title_border        = $attr['titleBorder'];
@@ -603,11 +594,8 @@ function get_premium_heading_css_style($attr, $unique_id)
 		$css->add_property('-webkit-text-stroke-width', $css->render_range($stroke_full, 'Tablet'));
 	}
 
-	if (isset($attr['textTypography'])) {
-		$text_typography = $attr['textTypography'];
-		$css->set_selector($unique_id . ' .premium-title-bg-text:before');
-		$css->render_typography($text_typography, 'Tablet');
-	}
+	$css->set_selector($unique_id . ' .premium-title-bg-text:before');
+  $css->pbg_render_typography($attr, 'textTypography', 'Tablet');
 
 	$css->stop_media_query();
 
@@ -633,11 +621,8 @@ function get_premium_heading_css_style($attr, $unique_id)
 		$css->add_property('margin', $css->render_spacing($title_margin['Mobile'], isset($title_margin['unit']['Mobile']) ? $title_margin['unit']['Mobile'] : $title_margin['unit']));
 	}
 
-	if (isset($attr['titleTypography'])) {
-		$typography_title = $attr['titleTypography'];
-		$css->set_selector($unique_id . ' .premium-title-header');
-		$css->render_typography($typography_title, 'Mobile');
-	}
+	$css->set_selector($unique_id . ' .premium-title-header .premium-title-text-title');
+  $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');
 
 	if (isset($attr['titleBorder'])) {
 		$title_border        = $attr['titleBorder'];
@@ -809,11 +794,8 @@ function get_premium_heading_css_style($attr, $unique_id)
 		$css->add_property('-webkit-text-stroke-width', $css->render_range($stroke_full, 'Mobile'));
 	}
 
-	if (isset($attr['textTypography'])) {
-		$text_typography = $attr['textTypography'];
-		$css->set_selector($unique_id . ' .premium-title-bg-text:before');
-		$css->render_typography($text_typography, 'Mobile');
-	}
+	$css->set_selector($unique_id . ' .premium-title-bg-text:before');
+  $css->pbg_render_typography($attr, 'textTypography', 'Mobile');
 
 	$css->stop_media_query();
 	return $css->css_output();

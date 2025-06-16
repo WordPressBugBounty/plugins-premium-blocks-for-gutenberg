@@ -951,19 +951,19 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
 				$css->add_property( 'color',$css->render_string( $css->render_color( $attr['contentColor'] ). '!important' ));
 			}
-			if ( isset( $attr['contentTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
-				$css->render_typography( $attr['contentTypography'], 'Desktop' );
-			}
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
+      $css->pbg_render_typography( $attr, 'contentTypography', 'Desktop' );
+			
 			if ( isset( $attr['contentMargin'] ) ) {
 				$content_spacing = $attr['contentMargin'];
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
 				$css->add_property( 'margin', $css->render_spacing( $content_spacing['Desktop'], isset($content_spacing['unit']['Desktop'])?$content_spacing['unit']['Desktop']:$content_spacing['unit']  ) );
 			}
-			if ( isset( $attr['titleTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title , .' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title >* ' );
-				$css->render_typography( $attr['titleTypography'], 'Desktop' );
-			}
+      
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title , .' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title >* ' );
+      $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
+			
 			if ( isset( $attr['shapeBottom'] ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-bottom-shape svg' );
 				$css->add_property( 'fill', $css->render_color( $attr['shapeBottom']['color'] ) );
@@ -983,15 +983,14 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'color', $css->render_string( $css->render_color($attr['titleHoverColor'] ), ' !important' ));
 			}
 			// Meta
-			if ( isset( $attr['metaTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data , .'. $unique_id . ' .premium-blog-meta-data > a' );
-				$css->render_typography( $attr['metaTypography'], 'Desktop' );
-			}
-			if ( isset( $attr['metaTypography'] ) ) {
-				$iconSize = $attr['metaTypography'];
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data , .'. $unique_id . ' .premium-blog-meta-data > a' );
+      $css->pbg_render_typography( $attr, 'metaTypography', 'Desktop' );
+			
+			if ( isset( $attr['metaTypography']['fontSize'] ) ) {
+				$iconSize = $attr['metaTypography']['fontSize'];
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data svg' );
-				$css->add_property( 'width', $css->render_range( $iconSize['fontSize'], 'Desktop' ) );
-				$css->add_property( 'height', $css->render_range( $iconSize['fontSize'], 'Desktop' ) );
+				$css->add_property( 'width', $css->render_range( $iconSize, 'Desktop' ) );
+				$css->add_property( 'height', $css->render_range( $iconSize, 'Desktop' ) );
 
 			}
 			if ( isset( $attr['metaColor'] ) ) {
@@ -1050,11 +1049,9 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'background-color', $css->render_color( $attr['colorOverlayHover'] ) );
 			}
 			// excerpt
-
-			if ( isset( $attr['btnTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->render_typography( $attr['btnTypography'], 'Desktop' );
-			}
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
+      $css->pbg_render_typography( $attr, 'btnTypography', 'Desktop' );
+			
 			if ( isset( $attr['buttonSpacing'] ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'margin-top', $css->render_range( $attr['buttonSpacing'], 'Desktop' ) );
@@ -1155,10 +1152,9 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'background-color',$css->render_color( $attr['dotsActiveColor'] ));
 			}
 
-			if ( isset( $attr['catTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
-				$css->render_typography( $attr['catTypography'], 'Desktop' );
-			}
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
+      $css->pbg_render_typography( $attr, 'catTypography', 'Desktop' );
+			
 			if ( isset( $attr['catColor'] ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
 				$css->add_property( 'color',$css->render_color($attr['catColor']) );
@@ -1198,10 +1194,10 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property('justify-content',  $attr['paginationPosition']['Desktop']);
 
 			}
-			if (isset($attr['paginationTypography'])) {
-				$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
-				$css->render_typography($attr['paginationTypography'], 'Desktop');
-			}
+      
+      $css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
+      $css->pbg_render_typography( $attr, 'paginationTypography', 'Desktop' );
+			
 			if (isset($attr['paginationColor'])) {
 				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers');
 				$css->add_property('color',  $css->render_color($attr["paginationColor"]));
@@ -1355,20 +1351,16 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'align-items', $css->render_align_self($content_align)  );
 			}
 
-			if ( isset( $attr['contentTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
-				$css->render_typography( $attr['contentTypography'], 'Tablet' );
-			}
+			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
+      $css->pbg_render_typography( $attr, 'contentTypography', 'Tablet' );
 
 			if ( isset( $attr['contentMargin'] ) ) {
 				$content_spacing = $attr['contentMargin'];
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
 				$css->add_property( 'margin', $css->render_spacing( $content_spacing['Tablet'], isset($content_spacing['unit']['Tablet'])?$content_spacing['unit']['Tablet']:$content_spacing['unit']  ) );
 			}
-			if ( isset( $attr['titleTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title >* ' );
-				$css->render_typography( $attr['titleTypography'], 'Tablet' );
-			}
+			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title , .' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title >* ' );
+      $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
 			if ( isset( $attr['shapeBottom'] ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-bottom-shape svg' );
 				$css->add_property( 'width', $css->render_range( $attr['shapeBottom']['width'], 'Tablet' ) );
@@ -1379,15 +1371,14 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'margin-bottom', $css->render_range( $attr['titleBottomSpacing'], 'Tablet' ) );
 			}
 			// Meta
-			if ( isset( $attr['metaTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data' );
-				$css->render_typography( $attr['metaTypography'], 'Tablet' );
-			}
-			if ( isset( $attr['metaTypography'] ) ) {
-				$iconSize = $attr['metaTypography'];
+			$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data , .'. $unique_id . ' .premium-blog-meta-data > a' );
+      $css->pbg_render_typography( $attr, 'metaTypography', 'Tablet' );
+			
+			if ( isset( $attr['metaTypography']['fontSize'] ) ) {
+				$iconSize = $attr['metaTypography']['fontSize'];
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data svg' );
-				$css->add_property( 'width', $css->render_range( $iconSize['fontSize'], 'Tablet' ) );
-				$css->add_property( 'height', $css->render_range( $iconSize['fontSize'], 'Tablet' ) );
+				$css->add_property( 'width', $css->render_range( $iconSize, 'Tablet' ) );
+				$css->add_property( 'height', $css->render_range( $iconSize, 'Tablet' ) );
 
 			}
 
@@ -1399,11 +1390,9 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			}
 
 			// excerpt
-
-			if ( isset( $attr['btnTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->render_typography( $attr['btnTypography'], 'Tablet' );
-			}
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
+      $css->pbg_render_typography( $attr, 'btnTypography', 'Tablet' );
+			
 			if ( isset( $attr['buttonSpacing'] ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'margin-top', $css->render_range( $attr['buttonSpacing'], 'Tablet' ) );
@@ -1439,6 +1428,10 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'padding', $css->render_spacing( $button_padding['Tablet'], isset( $button_padding['unit']['Tablet'])? $button_padding['unit']['Tablet']: $button_padding['unit'] ) );
 			}
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
+      $css->pbg_render_typography( $attr, 'catTypography', 'Tablet' );
+
 			if ( isset( $attr['catBorder'] ) ) {
 				$border_width  = $attr['catBorder']['borderWidth'];
 				$border_radius = $attr['catBorder']['borderRadius'];
@@ -1454,10 +1447,8 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property('justify-content',  $attr['paginationPosition']['Tablet']);
 
 			}
-			if (isset($attr['paginationTypography'])) {
-				$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
-				$css->render_typography($attr['paginationTypography'], 'Tablet');
-			}
+			$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
+      $css->pbg_render_typography( $attr, 'paginationTypography', 'Tablet' );
 
 			if (isset($attr['paginationMargin'])) {
 				$content_margin = $attr['paginationMargin'];
@@ -1563,20 +1554,18 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'align-items', $css->render_align_self($content_align)  );
 			}
 
-			if ( isset( $attr['contentTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
-				$css->render_typography( $attr['contentTypography'], 'Mobile' );
-			}
+			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
+      $css->pbg_render_typography( $attr, 'contentTypography', 'Mobile' );
 
 			if ( isset( $attr['contentMargin'] ) ) {
 				$content_spacing = $attr['contentMargin'];
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
 				$css->add_property( 'margin', $css->render_spacing( $content_spacing['Mobile'],isset($content_spacing['unit']['Mobile'])?$content_spacing['unit']['Mobile']:$content_spacing['unit']  ) );
 			}
-			if ( isset( $attr['titleTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title >* ' );
-				$css->render_typography( $attr['titleTypography'], 'Mobile' );
-			}
+
+			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title , .' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title >* ' );
+      $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');
+
 			if ( isset( $attr['shapeBottom'] ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-bottom-shape svg' );
 				$css->add_property( 'width', $css->render_range( $attr['shapeBottom']['width'], 'Mobile' ) );
@@ -1587,15 +1576,14 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property( 'margin-bottom', $css->render_range( $attr['titleBottomSpacing'], 'Mobile' ) );
 			}
 			// Meta
-			if ( isset( $attr['metaTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data' );
-				$css->render_typography( $attr['metaTypography'], 'Mobile' );
-			}
-			if ( isset( $attr['metaTypography'] ) ) {
-				$iconSize = $attr['metaTypography'];
+			$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data , .'. $unique_id . ' .premium-blog-meta-data > a' );
+      $css->pbg_render_typography( $attr, 'metaTypography', 'Mobile' );
+			
+			if ( isset( $attr['metaTypography']['fontSize'] ) ) {
+				$iconSize = $attr['metaTypography']['fontSize'];
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data svg' );
-				$css->add_property( 'width', $css->render_range( $iconSize['fontSize'], 'Mobile' ) );
-				$css->add_property( 'height', $css->render_range( $iconSize['fontSize'], 'Mobile' ) );
+				$css->add_property( 'width', $css->render_range( $iconSize, 'Mobile' ) );
+				$css->add_property( 'height', $css->render_range( $iconSize, 'Mobile' ) );
 
 			}
 
@@ -1607,11 +1595,9 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			}
 
 			// excerpt
-
-			if ( isset( $attr['btnTypography'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->render_typography( $attr['btnTypography'], 'Mobile' );
-			}
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
+      $css->pbg_render_typography( $attr, 'btnTypography', 'Mobile' );
+			
 			if ( isset( $attr['buttonSpacing'] ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'margin-top', $css->render_range( $attr['buttonSpacing'], 'Mobile' ) );
@@ -1647,6 +1633,10 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
 				$css->add_property( 'padding', $css->render_spacing( $button_padding['Mobile'],isset($button_padding['unit']['Mobile'])?$button_padding['unit']['Mobile']:$button_padding['unit']  ) );
 			}
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
+      $css->pbg_render_typography( $attr, 'catTypography', 'Mobile' );
+
 			if ( isset( $attr['catBorder'] ) ) {
 				$border_width  = $attr['catBorder']['borderWidth'];
 				$border_radius = $attr['catBorder']['borderRadius'];
@@ -1661,10 +1651,10 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$css->add_property('justify-content',  $attr['paginationPosition']['Mobile']);
 
 			}
-			if (isset($attr['paginationTypography'])) {
-				$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
-				$css->render_typography($attr['paginationTypography'], 'Mobile');
-			}
+      
+			$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
+      $css->pbg_render_typography( $attr, 'paginationTypography', 'Mobile' );
+
 			if (isset($attr['paginationMargin'])) {
 				$content_margin = $attr['paginationMargin'];
 				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers');

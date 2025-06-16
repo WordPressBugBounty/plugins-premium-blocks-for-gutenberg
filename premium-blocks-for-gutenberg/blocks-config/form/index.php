@@ -38,10 +38,8 @@ function get_premium_form_css_style($attr, $unique_id)
 	}
 
 	// Labels.
-	if (isset($attr['labelsTypography'])) {
-		$css->set_selector(".{$unique_id} .premium-form-input-label");
-		$css->render_typography($attr['labelsTypography'], 'Desktop');
-	}
+  $css->set_selector(".{$unique_id}.premium-form .premium-form-input-label");
+  $css->pbg_render_typography($attr, 'labelsTypography', 'Desktop');
 
 	if (isset($attr['labelsColors'])) {
 		$css->set_selector(".{$unique_id} .premium-form-input-label");
@@ -52,11 +50,9 @@ function get_premium_form_css_style($attr, $unique_id)
 	}
 
 	// Inputs.
-	if (isset($attr['inputsTypography'])) {
-		$css->set_selector(".{$unique_id}.premium-form .premium-form-input");
-		$css->render_typography($attr['inputsTypography'], 'Desktop');
-	}
-
+  $css->set_selector(".{$unique_id}.premium-form .premium-form-input");
+  $css->pbg_render_typography($attr, 'inputsTypography', 'Desktop');
+	
 	if (isset($attr['inputsColors'])) {
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input");
 		$css->add_property('color', $attr['inputsColors']['text']);
@@ -158,10 +154,8 @@ function get_premium_form_css_style($attr, $unique_id)
 	}
 
 	// Button buttonTypography.
-	if (isset($attr['buttonTypography'])) {
-		$css->set_selector(".{$unique_id} .wp-block-button__link.premium-form-submit");
-		$css->render_typography($attr['buttonTypography'], 'Desktop');
-	}
+  $css->set_selector(".{$unique_id}.premium-form .wp-block-button__link.premium-form-submit span");
+  $css->pbg_render_typography($attr, 'buttonTypography', 'Desktop');
 
 	// buttonColors.
 	if (isset($attr['buttonColors'])) {
@@ -335,16 +329,12 @@ function get_premium_form_css_style($attr, $unique_id)
 	}
 
 	// Labels.
-	if (isset($attr['labelsTypography'])) {
-		$css->set_selector(".{$unique_id} .premium-form-input-label");
-		$css->render_typography($attr['labelsTypography'], 'Tablet');
-	}
+	$css->set_selector(".{$unique_id}.premium-form .premium-form-input-label");
+  $css->pbg_render_typography($attr, 'labelsTypography', 'Tablet');
 
 	// Inputs.
-	if (isset($attr['inputsTypography'])) {
-		$css->set_selector(".{$unique_id} .premium-form-input");
-		$css->render_typography($attr['inputsTypography'], 'Tablet');
-	}
+	$css->set_selector(".{$unique_id}.premium-form .premium-form-input");
+  $css->pbg_render_typography($attr, 'inputsTypography', 'Tablet');
 
 	if (isset($attr['inputsBorder'])) {
 		$inputs_border        = $attr['inputsBorder'];
@@ -392,10 +382,8 @@ function get_premium_form_css_style($attr, $unique_id)
 	}
 
 	// Button buttonTypography.
-	if (isset($attr['buttonTypography'])) {
-		$css->set_selector(".{$unique_id} .wp-block-button__link.premium-form-submit");
-		$css->render_typography($attr['buttonTypography'], 'Tablet');
-	}
+	$css->set_selector(".{$unique_id}.premium-form .wp-block-button__link.premium-form-submit span");
+  $css->pbg_render_typography($attr, 'buttonTypography', 'Tablet');
 
 	// buttonBackgroundOptions.
 	if (isset($attr['buttonBackgroundOptions'])) {
@@ -515,16 +503,12 @@ function get_premium_form_css_style($attr, $unique_id)
 	}
 
 	// Labels.
-	if (isset($attr['labelsTypography'])) {
-		$css->set_selector(".{$unique_id} .premium-form-input-label");
-		$css->render_typography($attr['labelsTypography'], 'Mobile');
-	}
+	$css->set_selector(".{$unique_id}.premium-form .premium-form-input-label");
+  $css->pbg_render_typography($attr, 'labelsTypography', 'Mobile');
 
 	// Inputs.
-	if (isset($attr['inputsTypography'])) {
-		$css->set_selector(".{$unique_id} .premium-form-input");
-		$css->render_typography($attr['inputsTypography'], 'Mobile');
-	}
+	$css->set_selector(".{$unique_id}.premium-form .premium-form-input");
+  $css->pbg_render_typography($attr, 'inputsTypography', 'Mobile');
 
 	if (isset($attr['inputsBorder'])) {
 		$inputs_border        = $attr['inputsBorder'];
@@ -572,10 +556,8 @@ function get_premium_form_css_style($attr, $unique_id)
 	}
 
 	// Button buttonTypography.
-	if (isset($attr['buttonTypography'])) {
-		$css->set_selector(".{$unique_id} .wp-block-button__link.premium-form-submit");
-		$css->render_typography($attr['buttonTypography'], 'Mobile');
-	}
+	$css->set_selector(".{$unique_id}.premium-form .wp-block-button__link.premium-form-submit span");
+  $css->pbg_render_typography($attr, 'buttonTypography', 'Mobile');
 
 	// buttonBackgroundOptions.
 	if (isset($attr['buttonBackgroundOptions'])) {

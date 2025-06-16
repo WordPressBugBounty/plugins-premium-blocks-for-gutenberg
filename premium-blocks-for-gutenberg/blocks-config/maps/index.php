@@ -49,12 +49,8 @@ function get_premium_maps_css_style( $attr, $unique_id ) {
         $css->add_property( 'border-radius', $css->render_spacing( $map_border_radius['Desktop'], 'px' ) );
     }
     // Title.
-    if ( isset( $attr['titleTypography'] ) ) {
-        $title_typography = $attr['titleTypography'];
-
-        $css->set_selector( $unique_id . ' .premium-maps__wrap__title' );
-        $css->render_typography( $title_typography, 'Desktop' );
-    }
+    $css->set_selector( $unique_id . ' .premium-maps__wrap__title' );
+    $css->pbg_render_typography( $attr, 'titleTypography', 'Desktop' );
 
     if ( isset( $attr['titlePadding'] ) ) {
         $title_padding = $attr['titlePadding'];
@@ -68,12 +64,8 @@ function get_premium_maps_css_style( $attr, $unique_id ) {
         $css->add_property( 'margin', $css->render_spacing( $title_margin['Desktop'], isset( $title_margin['unit']['Desktop'] ) ? $title_margin['unit']['Desktop'] : $title_margin['unit'] ) );
     }
     // Description.
-    if ( isset( $attr['descriptionTypography'] ) ) {
-        $description_typography = $attr['descriptionTypography'];
-
-        $css->set_selector( $unique_id . ' .premium-maps__wrap__desc' );
-        $css->render_typography( $description_typography, 'Desktop' );
-    }
+    $css->set_selector( $unique_id . ' .premium-maps__wrap__desc' );
+    $css->pbg_render_typography( $attr, 'descriptionTypography', 'Desktop' ); 
 
     if ( isset( $attr['descriptionPadding'] ) ) {
         $description_padding = $attr['descriptionPadding'];
@@ -124,12 +116,8 @@ function get_premium_maps_css_style( $attr, $unique_id ) {
         $css->add_property( 'border-radius', $css->render_spacing( $map_border_radius['Tablet'], 'px' ) );
     }
     // Title.
-    if ( isset( $attr['titleTypography'] ) ) {
-        $title_typography = $attr['titleTypography'];
-
-        $css->set_selector( $unique_id . ' .premium-maps__wrap__title' );
-        $css->render_typography( $title_typography, 'Tablet' );
-    }
+    $css->set_selector( $unique_id . ' .premium-maps__wrap__title' );
+    $css->pbg_render_typography( $attr, 'titleTypography', 'Tablet' );
 
     if ( isset( $attr['titlePadding'] ) ) {
         $title_padding = $attr['titlePadding'];
@@ -143,12 +131,8 @@ function get_premium_maps_css_style( $attr, $unique_id ) {
         $css->add_property( 'margin', $css->render_spacing( $title_margin['Tablet'], isset( $title_margin['unit']['Tablet'] ) ? $title_margin['unit']['Tablet'] : $title_margin['unit'] ) );
     }
     // Description.
-    if ( isset( $attr['descriptionTypography'] ) ) {
-        $description_typography = $attr['descriptionTypography'];
-
-        $css->set_selector( $unique_id . ' .premium-maps__wrap__desc' );
-        $css->render_typography( $description_typography, 'Tablet' );
-    }
+    $css->set_selector( $unique_id . ' .premium-maps__wrap__desc' );
+    $css->pbg_render_typography( $attr, 'descriptionTypography', 'Tablet' ); 
 
     if ( isset( $attr['descriptionPadding'] ) ) {
         $description_padding = $attr['descriptionPadding'];
@@ -200,12 +184,8 @@ function get_premium_maps_css_style( $attr, $unique_id ) {
         $css->add_property( 'border-radius', $css->render_spacing( $map_border_radius['Mobile'], 'px' ) );
     }
     // Title.
-    if ( isset( $attr['titleTypography'] ) ) {
-        $title_typography = $attr['titleTypography'];
-
-        $css->set_selector( $unique_id . ' .premium-maps__wrap__title' );
-        $css->render_typography( $title_typography, 'Mobile' );
-    }
+    $css->set_selector( $unique_id . ' .premium-maps__wrap__title' );
+    $css->pbg_render_typography( $attr, 'titleTypography', 'Mobile' );
 
     if ( isset( $attr['titlePadding'] ) ) {
         $title_padding = $attr['titlePadding'];
@@ -219,12 +199,8 @@ function get_premium_maps_css_style( $attr, $unique_id ) {
         $css->add_property( 'margin', $css->render_spacing( $title_margin['Mobile'], isset( $title_margin['unit']['Mobile'] ) ? $title_margin['unit']['Mobile'] : $title_margin['unit'] ) );
     }
     // Description.
-    if ( isset( $attr['descriptionTypography'] ) ) {
-        $description_typography = $attr['descriptionTypography'];
-
-        $css->set_selector( $unique_id . ' .premium-maps__wrap__desc' );
-        $css->render_typography( $description_typography, 'Mobile' );
-    }
+    $css->set_selector( $unique_id . ' .premium-maps__wrap__desc' );
+    $css->pbg_render_typography( $attr, 'descriptionTypography', 'Mobile' );
 
     if ( isset( $attr['descriptionPadding'] ) ) {
         $description_padding = $attr['descriptionPadding'];

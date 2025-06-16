@@ -31,20 +31,14 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 	}
 
 	// FancyText Style
-	if ( isset( $attr['fancyTextTypography'] ) ) {
-		$fancy_typography = $attr['fancyTextTypography'];
-		$fancy_size       = $fancy_typography['fontSize'];
-
-		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide ul li , .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
-		$css->render_typography( $attr['fancyTextTypography'], 'Desktop' );
-		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .typed-cursor' );
-		$css->add_property( 'font-size', $css->render_range( $fancy_size, 'Desktop' ) );
-	}
+  $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide ul li , .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
+  $css->pbg_render_typography($attr, 'fancyTextTypography', 'Desktop');
+  $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .typed-cursor' );
+  $css->pbg_render_range($attr, 'fancyTextTypography.fontSize', 'font-size', 'Desktop');
 	// Suffix, Prefix Style
-	if ( isset( $attr['prefixTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-suffix-prefix' );
-		$css->render_typography( $attr['prefixTypography'], 'Desktop' );
-	}
+  $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-suffix-prefix' );
+  $css->pbg_render_typography($attr, 'prefixTypography', 'Desktop');
+	
 
 	if ( isset( $attr['fancyContentAlign'] ) ) {
         $content_align      = $css->get_responsive_css( $attr['fancyContentAlign'], 'Desktop' );
@@ -102,21 +96,14 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 		$css->add_property( 'padding', $css->render_spacing( $fancyPadding['Tablet'], isset( $fancyPadding['unit']['Tablet'])?$fancyPadding['unit']['Tablet']:$fancyPadding['unit'] ) );
 	}
 
-	if ( isset( $attr['fancyTextTypography'] ) ) {
-		$fancy_typography = $attr['fancyTextTypography'];
-		$fancy_size       = $fancy_typography['fontSize'];
-
-		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide ul li , .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
-		$css->render_typography( $attr['fancyTextTypography'], 'Tablet' );
-		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .typed-cursor' );
-		$css->add_property( 'font-size', $css->render_range( $fancy_size, 'Tablet' ) );
-	}
-
+  // FancyText Style
+	$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide ul li , .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
+  $css->pbg_render_typography($attr, 'fancyTextTypography', 'Tablet');
+  $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .typed-cursor' );
+  $css->pbg_render_range($attr, 'fancyTextTypography.fontSize', 'font-size', 'Tablet');
 	// Suffix, Prefix Style
-	if ( isset( $attr['prefixTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-suffix-prefix' );
-		$css->render_typography( $attr['prefixTypography'], 'Tablet' );
-	}
+	$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-suffix-prefix' );
+  $css->pbg_render_typography($attr, 'prefixTypography', 'Tablet');
 
 	if ( isset( $attr['fancyContentAlign'] ) ) {
 		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' );
@@ -149,21 +136,15 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 		$css->add_property( 'padding', $css->render_spacing( $fancyPadding['Mobile'], isset( $fancyPadding['unit']['Mobile'])?$fancyPadding['unit']['Mobile']:$fancyPadding['unit'] ) );
 	}
 
-	if ( isset( $attr['fancyTextTypography'] ) ) {
-		$fancy_typography = $attr['fancyTextTypography'];
-		$fancy_size       = $fancy_typography['fontSize'];
-
-		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide ul li , .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
-		$css->render_typography( $attr['fancyTextTypography'], 'Mobile' );
-		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .typed-cursor' );
-		$css->add_property( 'font-size', $css->render_range( $fancy_size, 'Mobile' ) );
-	}
-
+  // FancyText Style
+	$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide ul li , .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
+  $css->pbg_render_typography($attr, 'fancyTextTypography', 'Mobile');
+  $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .typed-cursor' );
+  $css->pbg_render_range($attr, 'fancyTextTypography.fontSize', 'font-size', 'Mobile');
 	// Suffix, Prefix Style
-	if ( isset( $attr['prefixTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-suffix-prefix' );
-		$css->render_typography( $attr['prefixTypography'], 'Mobile' );
-	}
+	$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-suffix-prefix' );
+  $css->pbg_render_typography($attr, 'prefixTypography', 'Mobile');
+
 	if ( isset( $attr['fancyContentAlign'] ) ) {
 		$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' );
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['fancyContentAlign'], 'Mobile' ) );

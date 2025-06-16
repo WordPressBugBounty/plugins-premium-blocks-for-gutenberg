@@ -128,8 +128,8 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 		 * @return void
 		 */
 		function pbg_fronend_global_styles() {
-			$this->add_global_color_to_editor();
-			$this->add_global_typography_to_editor();
+			$this->add_global_color_to_frontend();
+			$this->add_global_typography_to_frontend();
 			$this->add_global_block_spacing();
 		}
 
@@ -141,353 +141,198 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 		public function add_global_block_spacing() {
 			$global_block_spacing = get_option( 'pbg_global_layout' );
 			$css                  = new Premium_Blocks_css();
-			if ( isset( $global_block_spacing['block_spacing'] ) ) {
-				$block_global_spacing = $global_block_spacing['block_spacing'];
-				$css->set_selector( 'body .entry-content > div:not(:first-child) ' );
-				$css->add_property( 'margin-block-start', ( $block_global_spacing . 'px' ) );
-				$css->add_property( 'margin-top', ( $block_global_spacing . 'px' ) );
-			}
+			
+      $css->set_selector( 'body .entry-content > div:not(:first-child) ' );
+      $css->pbg_render_range($global_block_spacing, 'block_spacing', 'margin-block-start', null, null, 'px');
+      $css->pbg_render_range($global_block_spacing, 'block_spacing', 'margin-top', null, null, 'px');
 
 			$this->block_helpers->add_custom_block_css( $css->css_output() );
 		}
 
 		/**
-		 * add_global_typography_to_editor
+		 * add_global_typography_to_frontend
 		 *
 		 * @return string
 		 */
-		public function add_global_typography_to_editor() {
+		public function add_global_typography_to_frontend() {
 			$global_typography = get_option( 'pbg_global_typography', array() );
 			$apply_to_default  = get_option( 'pbg_global_typography_to_default', false );
 			$css               = new Premium_Blocks_css();
 
-			if ( isset( $global_typography['heading1'] ) ) {
-				$h1_typography = $global_typography['heading1'];
+      $css->set_selector( '[class*="wp-block-premium"] h1, [class*="wp-block-premium"] h1 > span' );
+      $css->pbg_render_typography($global_typography, 'heading1', 'Desktop');
+			
+      $css->set_selector( '[class*="wp-block-premium"] h2, [class*="wp-block-premium"] h2 > span' );
+      $css->pbg_render_typography($global_typography, 'heading2', 'Desktop');
 
-				$css->set_selector( 'h1[class*="premium"]' );
-				$css->render_typography( $h1_typography, 'Desktop' );
-			}
+      $css->set_selector( '[class*="wp-block-premium"] h3, [class*="wp-block-premium"] h3 > span' );
+      $css->pbg_render_typography($global_typography, 'heading3', 'Desktop');
 
-			if ( isset( $global_typography['heading2'] ) ) {
-				$h2_typography = $global_typography['heading2'];
+      $css->set_selector( '[class*="wp-block-premium"] h4, [class*="wp-block-premium"] h4 > span' );
+      $css->pbg_render_typography($global_typography, 'heading4', 'Desktop');
 
-				$css->set_selector( 'h2[class*="premium"]' );
-				$css->render_typography( $h2_typography, 'Desktop' );
-			}
+      $css->set_selector( '[class*="wp-block-premium"] h5, [class*="wp-block-premium"] h5 > span' );
+      $css->pbg_render_typography($global_typography, 'heading5', 'Desktop');
 
-			if ( isset( $global_typography['heading3'] ) ) {
-				$h3_typography = $global_typography['heading3'];
+      $css->set_selector( '[class*="wp-block-premium"] h6, [class*="wp-block-premium"] h6 > span' );
+      $css->pbg_render_typography($global_typography, 'heading6', 'Desktop');
 
-				$css->set_selector( 'h3[class*="premium"]' );
-				$css->render_typography( $h3_typography, 'Desktop' );
-			}
+      $css->set_selector( '[class*="wp-block-premium"] .premium-button, [class*="wp-block-premium"] .premium-button a,[class*="wp-block-premium"] a:not(h1 > a):not(h2 > a):not(h3 > a):not(h4 > a):not(h5 > a):not(h6 > a)' );
+      $css->pbg_render_typography($global_typography, 'button', 'Desktop');
 
-			if ( isset( $global_typography['heading4'] ) ) {
-				$h4_typography = $global_typography['heading4'];
-
-				$css->set_selector( 'h4[class*="premium"]' );
-				$css->render_typography( $h4_typography, 'Desktop' );
-			}
-
-			if ( isset( $global_typography['heading5'] ) ) {
-				$h5_typography = $global_typography['heading5'];
-
-				$css->set_selector( 'h5[class*="premium"]' );
-				$css->render_typography( $h5_typography, 'Desktop' );
-			}
-
-			if ( isset( $global_typography['heading6'] ) ) {
-				$h6_typography = $global_typography['heading6'];
-
-				$css->set_selector( 'h6[class*="premium"]' );
-				$css->render_typography( $h6_typography, 'Desktop' );
-			}
-
-			if ( isset( $global_typography['button'] ) ) {
-				$button_typography = $global_typography['button'];
-
-				$css->set_selector( '[class*="wp-block-premium"] .premium-button,.premium-button a, [class*="wp-block-premium"] .premium-modal-box-modal-lower-close' );
-				$css->render_typography( $button_typography, 'Desktop' );
-			}
-
-			if ( isset( $global_typography['paragraph'] ) ) {
-				$p_typography = $global_typography['paragraph'];
-
-				$css->set_selector( '.pbg-body, p' );
-				$css->render_typography( $p_typography, 'Desktop' );
-			}
+      $css->set_selector( 
+        '[class*="wp-block-premium"] p, ' .
+        '[class*="wp-block-premium"] label, ' .
+        '[class*="wp-block-premium"] li, ' .
+        '[class*="wp-block-premium"] .premium-form-input-label, ' .
+        '[class*="wp-block-premium"] span:not(h1 > span):not(h2 > span):not(h3 > span):not(h4 > span):not(h5 > span):not(h6 > span):not(button > span):not(a > span)' 
+      );
+      $css->pbg_render_typography($global_typography, 'paragraph', 'Desktop');
 
 			// Core blocks styles.
 			if ( $apply_to_default ) {
-				if ( isset( $global_typography['heading1'] ) ) {
-					$h1_typography = $global_typography['heading1'];
+        $css->set_selector( '[data-type="core"] > h1, h1[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading1', 'Desktop');
 
-					$css->set_selector( '[data-type="core"] h1, h1[data-type="core"]' );
-					$css->render_typography( $h1_typography, 'Desktop' );
-				}
+        $css->set_selector( '[data-type="core"] > h2, h2[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading2', 'Desktop');
 
-				if ( isset( $global_typography['heading2'] ) ) {
-					$h2_typography = $global_typography['heading2'];
+        $css->set_selector( '[data-type="core"] > h3, h3[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading3', 'Desktop');
 
-					$css->set_selector( '[data-type="core"] h2, h2[data-type="core"]' );
-					$css->render_typography( $h2_typography, 'Desktop' );
-				}
+        $css->set_selector( '[data-type="core"] > h4, h4[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading4', 'Desktop');
 
-				if ( isset( $global_typography['heading3'] ) ) {
-					$h3_typography = $global_typography['heading3'];
+        $css->set_selector( '[data-type="core"] > h5, h5[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading5', 'Desktop');
 
-					$css->set_selector( '[data-type="core"] h3, h3[data-type="core"]' );
-					$css->render_typography( $h3_typography, 'Desktop' );
-				}
+        $css->set_selector( '[data-type="core"] > h6, h6[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading6', 'Desktop');
 
-				if ( isset( $global_typography['heading4'] ) ) {
-					$h4_typography = $global_typography['heading4'];
+        $css->set_selector( '[data-type="core"] .wp-block-button .wp-block-button__link, .wp-block-button[data-type="core"] .wp-block-button__link' );
+        $css->pbg_render_typography($global_typography, 'button', 'Desktop');
 
-					$css->set_selector( '[data-type="core"] h4, h4[data-type="core"]' );
-					$css->render_typography( $h4_typography, 'Desktop' );
-				}
-
-				if ( isset( $global_typography['heading5'] ) ) {
-					$h5_typography = $global_typography['heading5'];
-
-					$css->set_selector( '[data-type="core"] h5, h5[data-type="core"]' );
-					$css->render_typography( $h5_typography, 'Desktop' );
-				}
-
-				if ( isset( $global_typography['heading6'] ) ) {
-					$h6_typography = $global_typography['heading6'];
-
-					$css->set_selector( '[data-type="core"] h6, h6[data-type="core"]' );
-					$css->render_typography( $h6_typography, 'Desktop' );
-				}
-
-				if ( isset( $global_typography['button'] ) ) {
-					$button_typography = $global_typography['button'];
-
-					$css->set_selector( '[data-type="core"] .wp-block-button .wp-block-button__link, .wp-block-button[data-type="core"] .wp-block-button__link' );
-					$css->render_typography( $button_typography, 'Desktop' );
-				}
+        $css->set_selector( '[data-type="core"] > p, p[data-type="core"], [data-type="core"] > span, span[data-type="core"], [data-type="core"] > li, li[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'paragraph', 'Desktop');
 			}
 
 			$css->start_media_query( 'tablet' );
 
-			if ( isset( $global_typography['heading1'] ) ) {
-				$h1_typography = $global_typography['heading1'];
+      $css->set_selector( '[class*="wp-block-premium"] h1, [class*="wp-block-premium"] h1 > span' );
+      $css->pbg_render_typography($global_typography, 'heading1', 'Tablet');
+			
+      $css->set_selector( '[class*="wp-block-premium"] h2, [class*="wp-block-premium"] h2 > span' );
+      $css->pbg_render_typography($global_typography, 'heading2', 'Tablet');
 
-				$css->set_selector( 'h1[class*="premium"]' );
-				$css->render_typography( $h1_typography, 'Tablet' );
-			}
+      $css->set_selector( '[class*="wp-block-premium"] h3, [class*="wp-block-premium"] h3 > span' );
+      $css->pbg_render_typography($global_typography, 'heading3', 'Tablet');
 
-			if ( isset( $global_typography['heading2'] ) ) {
-				$h2_typography = $global_typography['heading2'];
+      $css->set_selector( '[class*="wp-block-premium"] h4, [class*="wp-block-premium"] h4 > span' );
+      $css->pbg_render_typography($global_typography, 'heading4', 'Tablet');
 
-				$css->set_selector( 'h2[class*="premium"]' );
-				$css->render_typography( $h2_typography, 'Tablet' );
-			}
+      $css->set_selector( '[class*="wp-block-premium"] h5, [class*="wp-block-premium"] h5 > span' );
+      $css->pbg_render_typography($global_typography, 'heading5', 'Tablet');
 
-			if ( isset( $global_typography['heading3'] ) ) {
-				$h3_typography = $global_typography['heading3'];
+      $css->set_selector( '[class*="wp-block-premium"] h6, [class*="wp-block-premium"] h6 > span' );
+      $css->pbg_render_typography($global_typography, 'heading6', 'Tablet');
 
-				$css->set_selector( 'h3[class*="premium"]' );
-				$css->render_typography( $h3_typography, 'Tablet' );
-			}
+      $css->set_selector( '[class*="wp-block-premium"] .premium-button, [class*="wp-block-premium"] .premium-button a,[class*="wp-block-premium"] a:not(h1 > a):not(h2 > a):not(h3 > a):not(h4 > a):not(h5 > a):not(h6 > a)' );
+      $css->pbg_render_typography($global_typography, 'button', 'Tablet');
 
-			if ( isset( $global_typography['heading4'] ) ) {
-				$h4_typography = $global_typography['heading4'];
-
-				$css->set_selector( 'h4[class*="premium"]' );
-				$css->render_typography( $h4_typography, 'Tablet' );
-			}
-
-			if ( isset( $global_typography['heading5'] ) ) {
-				$h5_typography = $global_typography['heading5'];
-
-				$css->set_selector( 'h5[class*="premium"]' );
-				$css->render_typography( $h5_typography, 'Tablet' );
-			}
-
-			if ( isset( $global_typography['heading6'] ) ) {
-				$h6_typography = $global_typography['heading6'];
-
-				$css->set_selector( 'h6[class*="premium"]' );
-				$css->render_typography( $h6_typography, 'Tablet' );
-			}
-
-			if ( isset( $global_typography['button'] ) ) {
-				$button_typography = $global_typography['button'];
-
-				$css->set_selector( '[class*="wp-block-premium"] .premium-button, [class*="wp-block-premium"] .premium-modal-box-modal-lower-close' );
-				$css->render_typography( $button_typography, 'Tablet' );
-			}
-
-			if ( isset( $global_typography['paragraph'] ) ) {
-				$p_typography = $global_typography['paragraph'];
-
-				$css->set_selector( '.pbg-body, p' );
-				$css->render_typography( $p_typography, 'Tablet' );
-			}
+      $css->set_selector( 
+        '[class*="wp-block-premium"] p, ' .
+        '[class*="wp-block-premium"] label, ' .
+        '[class*="wp-block-premium"] li, ' .
+        '[class*="wp-block-premium"] .premium-form-input-label, ' .
+        '[class*="wp-block-premium"] span:not(h1 > span):not(h2 > span):not(h3 > span):not(h4 > span):not(h5 > span):not(h6 > span):not(button > span):not(a > span)' 
+      );
+      $css->pbg_render_typography($global_typography, 'paragraph', 'Tablet');
 
 			// Core blocks styles.
 			if ( $apply_to_default ) {
-				if ( isset( $global_typography['heading1'] ) ) {
-					$h1_typography = $global_typography['heading1'];
+        $css->set_selector( '[data-type="core"] > h1, h1[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading1', 'Tablet');
 
-					$css->set_selector( '[data-type="core"] h1, h1[data-type="core"]' );
-					$css->render_typography( $h1_typography, 'Tablet' );
-				}
+        $css->set_selector( '[data-type="core"] > h2, h2[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading2', 'Tablet');
 
-				if ( isset( $global_typography['heading2'] ) ) {
-					$h2_typography = $global_typography['heading2'];
+        $css->set_selector( '[data-type="core"] > h3, h3[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading3', 'Tablet');
 
-					$css->set_selector( '[data-type="core"] h2, h2[data-type="core"]' );
-					$css->render_typography( $h2_typography, 'Tablet' );
-				}
+        $css->set_selector( '[data-type="core"] > h4, h4[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading4', 'Tablet');
 
-				if ( isset( $global_typography['heading3'] ) ) {
-					$h3_typography = $global_typography['heading3'];
+        $css->set_selector( '[data-type="core"] > h5, h5[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading5', 'Tablet');
 
-					$css->set_selector( '[data-type="core"] h3, h3[data-type="core"]' );
-					$css->render_typography( $h3_typography, 'Tablet' );
-				}
+        $css->set_selector( '[data-type="core"] > h6, h6[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading6', 'Tablet');
 
-				if ( isset( $global_typography['heading4'] ) ) {
-					$h4_typography = $global_typography['heading4'];
+        $css->set_selector( '[data-type="core"] .wp-block-button .wp-block-button__link, .wp-block-button[data-type="core"] .wp-block-button__link' );
+        $css->pbg_render_typography($global_typography, 'button', 'Tablet');
 
-					$css->set_selector( '[data-type="core"] h4, h4[data-type="core"]' );
-					$css->render_typography( $h4_typography, 'Tablet' );
-				}
-
-				if ( isset( $global_typography['heading5'] ) ) {
-					$h5_typography = $global_typography['heading5'];
-
-					$css->set_selector( '[data-type="core"] h5, h5[data-type="core"]' );
-					$css->render_typography( $h5_typography, 'Tablet' );
-				}
-
-				if ( isset( $global_typography['heading6'] ) ) {
-					$h6_typography = $global_typography['heading6'];
-
-					$css->set_selector( '[data-type="core"] h6, h6[data-type="core"]' );
-					$css->render_typography( $h6_typography, 'Tablet' );
-				}
-
-				if ( isset( $global_typography['button'] ) ) {
-					$button_typography = $global_typography['button'];
-
-					$css->set_selector( '[data-type="core"] .wp-block-button .wp-block-button__link, .wp-block-button[data-type="core"] .wp-block-button__link' );
-					$css->render_typography( $button_typography, 'Tablet' );
-				}
+        $css->set_selector( '[data-type="core"] > p, p[data-type="core"], [data-type="core"] > span, span[data-type="core"], [data-type="core"] > li, li[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'paragraph', 'Tablet');
 			}
 
 			$css->stop_media_query();
 			$css->start_media_query( 'mobile' );
 
-			if ( isset( $global_typography['heading1'] ) ) {
-				$h1_typography = $global_typography['heading1'];
+      $css->set_selector( '[class*="wp-block-premium"] h1, [class*="wp-block-premium"] h1 > span' );
+      $css->pbg_render_typography($global_typography, 'heading1', 'Mobile');
+			
+      $css->set_selector( '[class*="wp-block-premium"] h2, [class*="wp-block-premium"] h2 > span' );
+      $css->pbg_render_typography($global_typography, 'heading2', 'Mobile');
 
-				$css->set_selector( 'h1[class*="premium"]' );
-				$css->render_typography( $h1_typography, 'Mobile' );
-			}
+      $css->set_selector( '[class*="wp-block-premium"] h3, [class*="wp-block-premium"] h3 > span' );
+      $css->pbg_render_typography($global_typography, 'heading3', 'Mobile');
 
-			if ( isset( $global_typography['heading2'] ) ) {
-				$h2_typography = $global_typography['heading2'];
+      $css->set_selector( '[class*="wp-block-premium"] h4, [class*="wp-block-premium"] h4 > span' );
+      $css->pbg_render_typography($global_typography, 'heading4', 'Mobile');
 
-				$css->set_selector( 'h2[class*="premium"]' );
-				$css->render_typography( $h2_typography, 'Mobile' );
-			}
+      $css->set_selector( '[class*="wp-block-premium"] h5, [class*="wp-block-premium"] h5 > span' );
+      $css->pbg_render_typography($global_typography, 'heading5', 'Mobile');
 
-			if ( isset( $global_typography['heading3'] ) ) {
-				$h3_typography = $global_typography['heading3'];
+      $css->set_selector( '[class*="wp-block-premium"] h6, [class*="wp-block-premium"] h6 > span' );
+      $css->pbg_render_typography($global_typography, 'heading6', 'Mobile');
 
-				$css->set_selector( 'h3[class*="premium"]' );
-				$css->render_typography( $h3_typography, 'Mobile' );
-			}
+      $css->set_selector( '[class*="wp-block-premium"] .premium-button, [class*="wp-block-premium"] .premium-button a,[class*="wp-block-premium"] a:not(h1 > a):not(h2 > a):not(h3 > a):not(h4 > a):not(h5 > a):not(h6 > a)' );
+      $css->pbg_render_typography($global_typography, 'button', 'Mobile');
 
-			if ( isset( $global_typography['heading4'] ) ) {
-				$h4_typography = $global_typography['heading4'];
-
-				$css->set_selector( 'h4[class*="premium"]' );
-				$css->render_typography( $h4_typography, 'Mobile' );
-			}
-
-			if ( isset( $global_typography['heading5'] ) ) {
-				$h5_typography = $global_typography['heading5'];
-
-				$css->set_selector( 'h5[class*="premium"]' );
-				$css->render_typography( $h5_typography, 'Mobile' );
-			}
-
-			if ( isset( $global_typography['heading6'] ) ) {
-				$h6_typography = $global_typography['heading6'];
-
-				$css->set_selector( 'h6[class*="premium"]' );
-				$css->render_typography( $h6_typography, 'Mobile' );
-			}
-
-			if ( isset( $global_typography['button'] ) ) {
-				$button_typography = $global_typography['button'];
-
-				$css->set_selector( '[class*="wp-block-premium"] .premium-button, [class*="wp-block-premium"] .premium-modal-box-modal-lower-close' );
-				$css->render_typography( $button_typography, 'Mobile' );
-			}
-
-			if ( isset( $global_typography['paragraph'] ) ) {
-				$p_typography = $global_typography['paragraph'];
-
-				$css->set_selector( '.pbg-body, p' );
-				$css->render_typography( $p_typography, 'Mobile' );
-			}
+      $css->set_selector( 
+        '[class*="wp-block-premium"] p, ' .
+        '[class*="wp-block-premium"] label, ' .
+        '[class*="wp-block-premium"] li, ' .
+        '[class*="wp-block-premium"] .premium-form-input-label, ' .
+        '[class*="wp-block-premium"] span:not(h1 > span):not(h2 > span):not(h3 > span):not(h4 > span):not(h5 > span):not(h6 > span):not(button > span):not(a > span)' 
+      );
+      $css->pbg_render_typography($global_typography, 'paragraph', 'Mobile');
 
 			// Core blocks styles.
 			if ( $apply_to_default ) {
-				if ( isset( $global_typography['heading1'] ) ) {
-					$h1_typography = $global_typography['heading1'];
+        $css->set_selector( '[data-type="core"] > h1, h1[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading1', 'Mobile');
 
-					$css->set_selector( '[data-type="core"] h1, h1[data-type="core"]' );
-					$css->render_typography( $h1_typography, 'Mobile' );
-				}
+        $css->set_selector( '[data-type="core"] > h2, h2[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading2', 'Mobile');
 
-				if ( isset( $global_typography['heading2'] ) ) {
-					$h2_typography = $global_typography['heading2'];
+        $css->set_selector( '[data-type="core"] > h3, h3[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading3', 'Mobile');
 
-					$css->set_selector( '[data-type="core"] h2, h2[data-type="core"]' );
-					$css->render_typography( $h2_typography, 'Mobile' );
-				}
+        $css->set_selector( '[data-type="core"] > h4, h4[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading4', 'Mobile');
 
-				if ( isset( $global_typography['heading3'] ) ) {
-					$h3_typography = $global_typography['heading3'];
+        $css->set_selector( '[data-type="core"] > h5, h5[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading5', 'Mobile');
 
-					$css->set_selector( '[data-type="core"] h3, h3[data-type="core"]' );
-					$css->render_typography( $h3_typography, 'Mobile' );
-				}
+        $css->set_selector( '[data-type="core"] > h6, h6[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'heading6', 'Mobile');
 
-				if ( isset( $global_typography['heading4'] ) ) {
-					$h4_typography = $global_typography['heading4'];
+        $css->set_selector( '[data-type="core"] .wp-block-button .wp-block-button__link, .wp-block-button[data-type="core"] .wp-block-button__link' );
+        $css->pbg_render_typography($global_typography, 'button', 'Mobile');
 
-					$css->set_selector( '[data-type="core"] h4, h4[data-type="core"]' );
-					$css->render_typography( $h4_typography, 'Mobile' );
-				}
-
-				if ( isset( $global_typography['heading5'] ) ) {
-					$h5_typography = $global_typography['heading5'];
-
-					$css->set_selector( '[data-type="core"] h5, h5[data-type="core"]' );
-					$css->render_typography( $h5_typography, 'Mobile' );
-				}
-
-				if ( isset( $global_typography['heading6'] ) ) {
-					$h6_typography = $global_typography['heading6'];
-
-					$css->set_selector( '[data-type="core"] h6, h6[data-type="core"]' );
-					$css->render_typography( $h6_typography, 'Mobile' );
-				}
-
-				if ( isset( $global_typography['button'] ) ) {
-					$button_typography = $global_typography['button'];
-
-					$css->set_selector( '[data-type="core"] .wp-block-button .wp-block-button__link, .wp-block-button[data-type="core"] .wp-block-button__link' );
-					$css->render_typography( $button_typography, 'Mobile' );
-				}
+        $css->set_selector( '[data-type="core"] > p, p[data-type="core"], [data-type="core"] > span, span[data-type="core"], [data-type="core"] > li, li[data-type="core"]' );
+        $css->pbg_render_typography($global_typography, 'paragraph', 'Mobile');
 			}
 
 			$css->stop_media_query();
@@ -496,11 +341,11 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 		}
 
 		/**
-		 * add_global_color_to_editor
+		 * add_global_color_to_frontend
 		 *
 		 * @return string
 		 */
-		public function add_global_color_to_editor() {
+		public function add_global_color_to_frontend() {
 			$global_color_palette = get_option( 'pbg_global_color_palette', 'theme' );
 			$apply_to_default     = get_option( 'pbg_global_colors_to_default', false );
 			if ( $global_color_palette === 'theme' ) {
@@ -540,26 +385,30 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 			$css->add_property( '--pbg-global-color3', $css->render_color( $global_colors['colors'][2]['color'] ) );
 			$css->add_property( '--pbg-global-color4', $css->render_color( $global_colors['colors'][3]['color'] ) );
 			$css->add_property( '--pbg-global-color5', $css->render_color( $global_colors['colors'][4]['color'] ) );
+
 			$css->set_selector( '[class*="wp-block-premium"]' );
-			$css->add_property( 'color', $css->render_color( 'var(--pbg-global-color3)' ) );
+      $css->pbg_render_normal_value('color', 'var(--pbg-global-color3)');
 			$css->set_selector( '[class*="wp-block-premium"] h1, [class*="wp-block-premium"] h2, [class*="wp-block-premium"] h3,[class*="wp-block-premium"] h4,[class*="wp-block-premium"] h5,[class*="wp-block-premium"] h6, a:where(:not([class*="button"]))' );
-			$css->add_property( 'color', $css->render_color( 'var(--pbg-global-color2)' ) );
+      $css->pbg_render_normal_value('color', 'var(--pbg-global-color2)');
 			$css->set_selector( 'a:hover:where(:not([class*="button"]))' );
-			$css->add_property( 'color', $css->render_color( 'var(--pbg-global-color1)' ) );
+      $css->pbg_render_normal_value('color', 'var(--pbg-global-color1)');
 			$css->set_selector( '[class*="wp-block-premium"] .premium-button, [class*="wp-block-premium"] .premium-modal-box-modal-lower-close' );
-			$css->add_property( 'color', $css->render_color( '#ffffff' ) );
-			$css->add_property( 'background-color', $css->render_color( 'var(--pbg-global-color1)' ) );
-			$css->add_property( 'border-color', $css->render_color( 'var(--pbg-global-color4)' ) );
+      $css->pbg_render_normal_value('color', 'var(--pbg-global-color5)');
+      $css->pbg_render_normal_value('background-color', 'var(--pbg-global-color1)');
+      $css->pbg_render_normal_value('border-color', 'var(--pbg-global-color4)');
+	
 			// Core blocks styles.
 			if ( $apply_to_default ) {
 				$css->set_selector( '[data-type="core"]' );
-				$css->add_property( 'color', $css->render_color( 'var(--pbg-global-color3)' ) );
+				$css->pbg_render_normal_value('color', 'var(--pbg-global-color3)');
 				$css->set_selector( '[data-type="core"] h1, h1[data-type="core"], [data-type="core"] h2, h2[data-type="core"], [data-type="core"] h3, h3[data-type="core"],[data-type="core"] h4, h4[data-type="core"],[data-type="core"] h5, h5[data-type="core"],[data-type="core"] h6, h6[data-type="core"]' );
-				$css->add_property( 'color', $css->render_color( 'var(--pbg-global-color2)' ) );
+        $css->pbg_render_normal_value('color', 'var(--pbg-global-color2)');
+        $css->set_selector( '[data-type^="core/"] a:hover:where(:not([class*="button"]))' );
+        $css->pbg_render_normal_value('color', 'var(--pbg-global-color1)');
 				$css->set_selector( '[data-type="core"] .wp-block-button .wp-block-button__link, .wp-block-button[data-type="core"] .wp-block-button__link' );
-				$css->add_property( 'color', $css->render_color( '#ffffff' ) );
-				$css->add_property( 'background-color', $css->render_color( 'var(--pbg-global-color1)' ) );
-				$css->add_property( 'border-color', $css->render_color( 'var(--pbg-global-color4)' ) );
+				$css->pbg_render_normal_value('color', 'var(--pbg-global-color5)');
+        $css->pbg_render_normal_value('background-color', 'var(--pbg-global-color1)');
+        $css->pbg_render_normal_value('border-color', 'var(--pbg-global-color4)');
 			}
 
 			$this->block_helpers->add_custom_block_css( $css->css_output() );

@@ -145,10 +145,8 @@ function get_premium_instagram_feed_posts_css($attr, $unique_id)
 		$css->add_property('color', $attr['captionColor']);
 	}
 
-	if (isset($attr['captionTypography'])) {
-		$css->set_selector(".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-caption");
-		$css->render_typography($attr['captionTypography'], 'Desktop');
-	}
+  $css->set_selector(".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-caption");
+  $css->pbg_render_typography($attr, 'captionTypography', 'Desktop');
 
 	if (isset($attr['captionShadow'])) {
 		$css->set_selector(".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-caption");
@@ -317,10 +315,8 @@ function get_premium_instagram_feed_posts_css($attr, $unique_id)
 	}
 
 	// Caption.
-	if (isset($attr['captionTypography'])) {
-		$css->set_selector(".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-caption");
-		$css->render_typography($attr['captionTypography'], 'Tablet');
-	}
+	$css->set_selector(".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-caption");
+  $css->pbg_render_typography($attr, 'captionTypography', 'Tablet');
 
 	if (isset($attr['captionPadding'])) {
 		$css->set_selector(".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-caption");
@@ -445,10 +441,8 @@ function get_premium_instagram_feed_posts_css($attr, $unique_id)
 	}
 
 	// Caption.
-	if (isset($attr['captionTypography'])) {
-		$css->set_selector(".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-caption");
-		$css->render_typography($attr['captionTypography'], 'Mobile');
-	}
+	$css->set_selector(".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-caption");
+  $css->pbg_render_typography($attr, 'captionTypography', 'Mobile');
 
 	if (isset($attr['captionPadding'])) {
 		$css->set_selector(".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-caption");
@@ -601,7 +595,7 @@ function pbg_get_instagram_posts_markup($posts, $attr)
 		$caption_words     = $caption_max_words ? wp_trim_words($caption, $caption_max_words) : $caption;
 		$caption_words     = strlen($caption_words) === strlen($caption) ? $caption : $caption_words . '...';
 		$caption_markup    = sprintf(
-			'<div class="pbg-insta-feed-caption">%s</div>',
+			'<p class="pbg-insta-feed-caption">%s</p>',
 			$caption_words
 		);
 		$redirect_link     = sprintf('<a href="%s" target="_blank" rel="noopener noreferrer" class="pbg-insta-feed-link"></a>', $permalink);

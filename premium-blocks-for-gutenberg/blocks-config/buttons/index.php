@@ -44,11 +44,8 @@ function get_premium_button_group_css_style( $attr, $unique_id ) {
 		$css->add_property( 'row-gap', $css->get_responsive_css( $attr['buttonGap'], 'Desktop' ) . 'px !important' );
 	}
 
-	if ( isset( $attr['typography'] ) ) {
-		$typography = $attr['typography'];
-		$css->set_selector( $unique_id . ' .premium-button-text-edit' );
-		$css->render_typography( $typography, 'Desktop' );
-	}
+  $css->set_selector( $unique_id . ' .premium-button .premium-button-text-edit' );
+  $css->pbg_render_typography($attr, 'typography', 'Desktop');
 
 	if ( isset( $attr['groupPadding'] ) ) {
 		$groupPadding = $attr['groupPadding'];
@@ -90,11 +87,8 @@ function get_premium_button_group_css_style( $attr, $unique_id ) {
 		$css->add_property( 'row-gap', $css->get_responsive_css( $attr['buttonGap'], 'Tablet' ) . 'px !important' );
 	}
 
-	if ( isset( $attr['typography'] ) ) {
-		$typography = $attr['typography'];
-		$css->set_selector( $unique_id . ' .premium-button-text-edit' );
-		$css->render_typography( $typography, 'Tablet' );
-	}
+	$css->set_selector( $unique_id . ' .premium-button .premium-button-text-edit' );
+  $css->pbg_render_typography($attr, 'typography', 'tablet');
 
 	if ( isset( $attr['groupPadding'] ) ) {
 		$groupPadding = $attr['groupPadding'];
@@ -137,11 +131,8 @@ function get_premium_button_group_css_style( $attr, $unique_id ) {
 		$css->add_property( 'row-gap', $css->get_responsive_css( $attr['buttonGap'], 'Mobile' ) . 'px !important' );
 	}
 
-	if ( isset( $attr['typography'] ) ) {
-		$typography = $attr['typography'];
-		$css->set_selector( $unique_id . ' .premium-button-text-edit' );
-		$css->render_typography( $typography, 'Mobile' );
-	}
+	$css->set_selector( $unique_id . ' .premium-button .premium-button-text-edit' );
+  $css->pbg_render_typography($attr, 'typography', 'Mobile');
 
 	if ( isset( $attr['groupPadding'] ) ) {
 		$groupPadding = $attr['groupPadding'];

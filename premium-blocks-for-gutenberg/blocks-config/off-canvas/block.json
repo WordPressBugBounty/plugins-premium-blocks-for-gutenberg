@@ -15,8 +15,8 @@
             "type": "object",
             "default": {
                 "Desktop": "center",
-                "Tablet": "center",
-                "Mobile": "center"
+                "Tablet": "",
+                "Mobile": ""
             }
         },
         "triggerSettings": {
@@ -104,7 +104,7 @@
                     },
                     "fixed": false,
                     "gradientLocationOne": "0",
-                    "gradientColorTwo": "",
+                    "gradientColorTwo": "#777",
                     "gradientLocationTwo": "100",
                     "gradientType": "linear",
                     "gradientAngle": "180",
@@ -132,7 +132,7 @@
                     },
                     "fixed": false,
                     "gradientLocationOne": "0",
-                    "gradientColorTwo": "",
+                    "gradientColorTwo": "#777",
                     "gradientLocationTwo": "100",
                     "gradientType": "linear",
                     "gradientAngle": "180",
@@ -197,7 +197,7 @@
             "isStyle": true
         },
         "triggerBorderH": {
-            "type": "object",
+            "type": "string",
             "default": "",
             "isStyle": true
         },
@@ -330,7 +330,7 @@
                 },
                 "fixed": false,
                 "gradientLocationOne": "0",
-                "gradientColorTwo": "",
+                "gradientColorTwo": "#777",
                 "gradientLocationTwo": "100",
                 "gradientAngle": "180",
                 "gradientPosition": "center center",
@@ -472,13 +472,9 @@
                 "animationCurve": "linear"
             }
         },
-        "closeEnabled": {
-            "type": "boolean",
-            "default": true
-        },
         "closeIcon": {
             "type": "string",
-            "default": "style1"
+            "default": "close"
         },
         "closePosition": {
             "type": "string",
@@ -805,13 +801,13 @@
                     "Mobile": ""
                 },
                 "backgroundSize": {
-                    "Desktop": "",
+                    "Desktop": "cover",
                     "Tablet": "",
                     "Mobile": ""
                 },
                 "fixed": false,
                 "gradientLocationOne": "0",
-                "gradientColorTwo": "",
+                "gradientColorTwo": "#777",
                 "gradientLocationTwo": "100",
                 "gradientAngle": "180",
                 "gradientPosition": "center center",
@@ -837,13 +833,13 @@
                     "Mobile": ""
                 },
                 "backgroundSize": {
-                    "Desktop": "",
+                    "Desktop": "cover",
                     "Tablet": "",
                     "Mobile": ""
                 },
                 "fixed": false,
                 "gradientLocationOne": "0",
-                "gradientColorTwo": "",
+                "gradientColorTwo": "#777",
                 "gradientLocationTwo": "100",
                 "gradientAngle": "180",
                 "gradientPosition": "center center",

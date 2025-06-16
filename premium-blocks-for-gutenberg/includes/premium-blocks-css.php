@@ -411,9 +411,6 @@ class Premium_Blocks_css {
 		return $this;
 	}
 
-
-
-
 	/**
 	 * Generates the measure output.
 	 *
@@ -438,55 +435,6 @@ class Premium_Blocks_css {
 
 		return $size_string;
 	}
-
-	/**
-	 * Generates the font output.
-	 *
-	 * @param array  $font an array of font settings.
-	 * @param object $css an object of css output.
-	 * @param string $inherit an string to determine if the font should inherit.
-	 * @return string
-	 */
-	public function render_typography( $font, $device ) {
-		if ( empty( $font ) ) {
-			return false;
-		}
-		if ( isset( $font['fontSize'] ) && isset( $font['fontSize'][ $device ] ) && ! empty( $font['fontSize'][ $device ] ) ) {
-			$this->add_property( 'font-size', $this->render_range( $font['fontSize'], $device ) );
-		}
-		if ( isset( $font['lineHeight'] ) && isset( $font['lineHeight'][ $device ] ) && ! empty( $font['lineHeight'][ $device ] ) ) {
-			$this->add_property( 'line-height', $this->render_range( $font['lineHeight'], $device ) );
-		}
-		if ( isset( $font['letterSpacing'] ) && isset( $font['letterSpacing'][ $device ] ) && ! empty( $font['letterSpacing'][ $device ] ) ) {
-			$this->add_property( 'letter-spacing', $this->render_range( $font['letterSpacing'], $device ) );
-		}
-		if ( isset( $font['textDecoration'] ) && ! empty( $font['textDecoration'] ) ) {
-			$this->add_property( 'text-decoration', $font['textDecoration'] );
-		}
-		if ( isset( $font['textTransform'] ) && ! empty( $font['textTransform'] ) ) {
-			$this->add_property( 'text-transform', $font['textTransform'] );
-		}
-		if ( isset( $font['fontWeight'] ) && ! empty( $font['fontWeight'] ) && 'Default' !== $font['fontWeight'] ) {
-			$this->add_property( 'font-weight', $font['fontWeight'] );
-		}
-		if ( isset( $font['fontStyle'] ) && ! empty( $font['fontStyle'] ) ) {
-			$this->add_property( 'font-style', $font['fontStyle'] );
-		}
-		$family = ( isset( $font['fontFamily'] ) && ! empty( $font['fontFamily'] ) && 'Default' !== $font['fontFamily'] ? $font['fontFamily'] : '' );
-		if ( ! empty( $family ) ) {
-			$font_style  = ( $font['fontStyle'] ?? 'normal' ) === 'italic' ? 'i' : 'n';
-			$font_weight = ( $font['fontWeight'] ?? '400' ) !== 'Default' ? intval( $font['fontWeight'] ) / 100 : '4';
-			$this->add_gfont(
-				array(
-					'fontFamily'  => $family,
-					'fontVariant' => $font_style . $font_weight,
-				)
-			);
-			$this->add_property( 'font-family', $font['fontFamily'] );
-
-		}
-	}
-
 
 	public function add_gfont( $attr ) {
 
@@ -795,4 +743,405 @@ class Premium_Blocks_css {
 	public function get_responsive_css( $values, $device = 'Desktop' ) {
 		return isset( $values[ $device ] ) && $values[ $device ] ? "{$values[$device]}" : '';
 	}
+
+  // New Functions 
+
+  public function pbg_render_value($attributes, $name, $property, $device = '', $prefix = '', $postfix = '') {
+    if (empty($attributes) || !is_array($attributes) || empty($name) || empty($property)) {
+      return false;
+    }
+
+    $value = $this->find_nested_keys($attributes, $name);
+
+    $is_responsive = !empty($device);
+    $final_value = '';
+
+    if($is_responsive){
+      if (null === $value || !is_array($value) || !isset($value[$device]) || $value[$device] === '') {
+        return false;
+      }
+      $final_value = $value[$device];
+    }else{
+      if (null === $value || !isset($value) || $value === '') {
+        return false;
+      }
+      $final_value = $value;
+    }
+    
+    $this->add_property($property, $prefix . $final_value . $postfix);
+  }
+
+  public function pbg_render_align_self($attributes, $name, $property, $device = '', $prefix = '', $postfix = '') {
+    if (empty($attributes) || !is_array($attributes) || empty($name) || empty($property)) {
+      return false;
+    }
+
+    $value = $this->find_nested_keys($attributes, $name);
+
+    $is_responsive = !empty($device);
+    $final_value = '';
+
+    if($is_responsive){
+      if (null === $value || !is_array($value) || !isset($value[$device]) || $value[$device] === '') {
+        return false;
+      }
+      switch ($value[$device]) {
+        case "left":
+          $final_value="flex-start";
+          break;
+        case "right":
+          $final_value="flex-end";
+          break;
+        case "center":
+          $final_value="center";
+          break;
+        default:
+          break;
+      }
+    }else{
+      if (null === $value || !isset($value) || $value === '') {
+        return false;
+      }
+      switch ($value) {
+        case "left":
+          $final_value="flex-start";
+          break;
+        case "right":
+          $final_value="flex-end";
+          break;
+        case "center":
+          $final_value="center";
+          break;
+        default:
+          break;
+      }
+    }
+    
+    $this->add_property($property, $prefix . $final_value . $postfix);
+  }
+
+  public function pbg_render_spacing($attributes, $name, $property, $device = '', $prefix = '', $postfix = ''){
+    if (empty($attributes) || !is_array($attributes) || empty($name) || empty($property)) {
+      return false;
+    }
+
+    $value_at_path = $this->find_nested_keys($attributes, $name);
+
+    $is_responsive = !empty($device);
+    $device_values = '';
+    
+    if($is_responsive){
+      if (null === $value_at_path || !is_array($value_at_path) || !isset($value_at_path[$device]) || $value_at_path[$device] === "") {
+        return false;
+      }
+      $device_values = $value_at_path[$device];
+    }else{
+      if (null === $value_at_path || !is_array($value_at_path)) {
+        return false;
+      }
+      $device_values = $value_at_path;
+    }
+    
+    $unit = 'px';
+    if (isset($value_at_path['unit'])) {
+        $unit_setting = $value_at_path['unit'];
+        if (is_array($unit_setting) && isset($unit_setting[$device]) && !empty($unit_setting[$device])) {
+            $unit = $unit_setting[$device];
+        } elseif (is_string($unit_setting) && !empty($unit_setting)) {
+            $unit = $unit_setting;
+        }
+    }
+
+    if (
+        !is_numeric($device_values['top'] ?? "") &&
+        !is_numeric($device_values['right'] ?? "") &&
+        !is_numeric($device_values['bottom'] ?? "") &&
+        !is_numeric($device_values['left'] ?? "")
+    ) {
+			return false;
+		}
+
+    $top    = (isset($device_values['top'])    && is_numeric($device_values['top']))    ? $device_values['top']    : '0';
+    $right  = (isset($device_values['right'])  && is_numeric($device_values['right']))  ? $device_values['right']  : '0';
+    $bottom = (isset($device_values['bottom']) && is_numeric($device_values['bottom'])) ? $device_values['bottom'] : '0';
+    $left   = (isset($device_values['left'])   && is_numeric($device_values['left']))   ? $device_values['left']   : '0';
+
+    $multi_values = "{$top}{$unit} {$right}{$unit} {$bottom}{$unit} {$left}{$unit}";
+
+    $this->add_property( $property, $prefix . $multi_values . $postfix);
+  }
+
+  public function pbg_render_border($attributes, $name, $device = '', $prefix = '', $postfix = ''){
+    if (empty($attributes) || !is_array($attributes) || empty($name)) {
+      return false;
+    }
+
+    $value_at_path = $this->find_nested_keys($attributes, $name);
+
+    if (null === $value_at_path || !is_array($value_at_path) || empty($value_at_path)) {
+      return false;
+    }
+
+		if ( isset( $value_at_path['borderColor'] ) &&  ! empty( $value_at_path['borderColor'] ) && $value_at_path['borderColor'] !== 'Default' ) {
+			$this->add_property( 'border-color', $value_at_path['borderColor'] );
+		}
+		if ( isset( $value_at_path['borderType'] ) &&  ! empty( $value_at_path['borderType'] ) ) {
+			$this->add_property( 'border-style', $value_at_path['borderType'] );
+		}
+
+    $this->pbg_render_spacing($value_at_path, 'borderWidth', 'border-width', $device);
+    $this->pbg_render_spacing($value_at_path, 'borderRadius', 'border-radius', $device);
+  }
+
+  public function pbg_render_range($attributes, $name, $property, $device = '', $prefix = '', $postfix = ''){
+    if (empty($attributes) || !is_array($attributes) || empty($name) || empty($property)) {
+      return false;
+    }
+
+    $value = $this->find_nested_keys($attributes, $name);
+
+    $is_responsive = !empty($device);
+    $final_value = '';
+    
+    if($is_responsive){
+      if (null === $value || !is_array($value) || !isset($value[$device]) || $value[$device] === "") {
+        return false;
+      }
+      $final_value = $value[$device];
+    }else{
+      if (null === $value || !isset($value) || $value === '') {
+        return false;
+      }
+      $final_value = $value;
+    }
+
+    $unit = '';
+		if (isset( $value['unit'][$device] ) && is_array($value['unit']) && ! empty( $value['unit'][$device]   )) {
+			$unit=$value['unit'][$device];
+		} elseif(isset( $value['unit'] ) && is_string($value['unit']) && ! empty( $value['unit'] )) {
+			$unit=$value['unit'];
+		}
+
+    $this->add_property($property, $prefix . $final_value . $unit . $postfix);
+  }
+
+  public function pbg_render_color($attributes, $name, $property, $postfix = ''){
+    if(empty($attributes) || !is_array($attributes) || empty($name) || empty($property)){
+      return false;
+    }
+
+    $value = $this->find_nested_keys($attributes, $name);
+
+    if ($value === null || $value === '') {
+      return false;
+    }
+
+    $this->add_property($property, $value . $postfix);
+  }
+
+  public function pbg_render_background($attributes, $name, $device = '', $postfix = ''){
+    if(empty($attributes) || !is_array($attributes) || empty($name)){
+      return false;
+    }
+
+    $background = $this->find_nested_keys($attributes, $name);
+
+    if (null === $background || !is_array($background) || empty($background) || empty($background['backgroundType'])) {
+      return false;
+    }
+
+    $type = $background['backgroundType'] ?? '';
+
+    if($type === 'transparent'){
+      $this->add_property( 'background-color', "transparent" );
+      return;
+    }
+
+    if($type === 'solid'){
+      $color = $background['backgroundColor'] ?? '';
+
+      if(!empty($color)){
+        $this->add_property('background-color', $color . '!important');
+      }
+
+      $image_url = $background['backgroundImageURL'] ?? '';
+      if (!empty($image_url)) {
+        $this->add_property('background-image', 'url(' . $image_url . ')');
+        
+        // Add responsive properties if they exist
+        $this->pbg_render_value($background, 'backgroundRepeat', 'background-repeat', $device);
+        $this->pbg_render_value($background, 'backgroundPosition', 'background-position', $device);
+        $this->pbg_render_value($background, 'backgroundSize', 'background-size', $device);
+      }
+      return;
+    }
+
+    if($type === 'gradient'){
+      $first_color = $background['backgroundColor'] ?? 'rgba(255,255,255,0)'; // 
+      $second_color = $background['gradientColorTwo'] ?? '#777'; // #777
+      $location_one = $background['gradientLocationOne'] ?? ''; // 0
+      $location_two = $background['gradientLocationTwo'] ?? ''; // 100
+
+      if (isset($background['gradientType']) && !empty($background['gradientType'])){
+        if ($background['gradientType'] === 'radial') {
+          $position = $background['gradientPosition'] ?? 'center center';
+          $gradient = sprintf(
+            'radial-gradient(at %s, %s %s%%, %s %s%%)',
+            $position,
+            $first_color,
+            $location_one,
+            $second_color,
+            $location_two
+          );
+        } else {
+          $angle = $background['gradientAngle'] ?? 90;
+          $gradient = sprintf(
+            'linear-gradient(%sdeg, %s %s%%, %s %s%%)',
+            $angle,
+            $first_color,
+            $location_one,
+            $second_color,
+            $location_two
+          );
+       }
+      
+       $this->add_property('background-image', $gradient);
+      }
+    }
+  }
+
+  public function pbg_render_typography( $attributes, $name, $device = '', $postfix = '') {
+    if(empty($attributes) || !is_array($attributes) || empty($name)){
+      return false;
+    }
+
+    $font = $this->find_nested_keys($attributes, $name);
+    
+		if ( empty( $font ) ) {
+			return false;
+		}
+    
+    $this->pbg_render_range($font, 'fontSize', 'font-size', $device , null, $postfix);
+    $this->pbg_render_range($font, 'lineHeight', 'line-height', $device, null, $postfix);
+    $this->pbg_render_range($font, 'letterSpacing', 'letter-spacing', $device, null, $postfix);
+		
+		if ( isset( $font['textDecoration'] ) && ! empty( $font['textDecoration'] ) ) {
+			$this->add_property( 'text-decoration', $font['textDecoration'] . $postfix );
+		}
+		if ( isset( $font['textTransform'] ) && ! empty( $font['textTransform'] ) ) {
+			$this->add_property( 'text-transform', $font['textTransform'] . $postfix );
+		}
+		if ( isset( $font['fontWeight'] ) && ! empty( $font['fontWeight'] ) && 'Default' !== $font['fontWeight'] ) {
+			$this->add_property( 'font-weight', $font['fontWeight'] . $postfix );
+		}
+		if ( isset( $font['fontStyle'] ) && ! empty( $font['fontStyle'] ) ) {
+			$this->add_property( 'font-style', $font['fontStyle'] . $postfix);
+		}
+		$family = ( isset( $font['fontFamily'] ) && ! empty( $font['fontFamily'] ) && 'Default' !== $font['fontFamily'] ? $font['fontFamily'] : '' );
+		if ( ! empty( $family ) ) {
+			$font_style  = ( $font['fontStyle'] ?? 'normal' ) === 'italic' ? 'i' : 'n';
+			$font_weight = ( $font['fontWeight'] ?? '400' ) !== 'Default' ? intval( $font['fontWeight'] ) / 100 : '4';
+			$this->add_gfont(
+				array(
+					'fontFamily'  => $family,
+					'fontVariant' => $font_style . $font_weight,
+				)
+			);
+			$this->add_property( 'font-family', $font['fontFamily'] . $postfix );
+
+		}
+	}
+
+  public function pbg_render_shadow( $attributes, $name, $property, $postfix = '') {
+    if(empty($attributes) || !is_array($attributes) || empty($name) || empty($property)){
+      return false;
+    }
+
+    $shadow = $this->find_nested_keys($attributes, $name);
+		
+		if ( empty( $shadow ) ) {
+			return false;
+		}
+		if ( $shadow["color"] === "transparent" ) {
+			return false;
+		}
+		if ( ! isset( $shadow['horizontal'] ) ) {
+			return false;
+		}
+		if ( ! isset( $shadow['vertical'] ) ) {
+			return false;
+		}
+		if ( ! isset( $shadow['blur'] ) ) {
+			return false;
+		}
+	
+		if ( isset($shadow['position'] )  && $shadow['position'] === 'inset' ) {
+			$shadow_string = 'inset ' . ( ! empty( $shadow['horizontal'] ) ? $shadow['horizontal'] : '0' ) . 'px ' . ( ! empty( $shadow['vertical'] ) ? $shadow['vertical'] : '0' ) . 'px ' . ( ! empty( $shadow['blur'] ) ? $shadow['blur'] : '0' ) . 'px ' . ( ! empty( $shadow['color'] ) ? $shadow['color'] : "#00000080" );
+		} else {
+			$shadow_string = ( ! empty( $shadow['horizontal'] ) ? $shadow['horizontal'] : '0' ) . 'px ' . ( ! empty( $shadow['vertical'] ) ? $shadow['vertical'] : '0' ) . 'px ' . ( ! empty( $shadow['blur'] ) ? $shadow['blur'] : '0' ) . 'px ' . ( ! empty( $shadow['color'] ) ? $shadow['color'] : "#00000080" );
+		}
+
+    $this->add_property($property, $shadow_string . $postfix);
+	}
+
+  public function pbg_render_filters( $attributes, $name, $postfix = '') {
+    if(empty($attributes) || !is_array($attributes) || empty($name)){
+      return false;
+    }
+
+    $filter = $this->find_nested_keys($attributes, $name);
+		
+		if ( empty( $filter ) ) {
+			return false;
+		}
+
+    $default_filters = array(
+      'contrast' => '100',
+      'blur' => '0',
+      'bright' => '100',
+      'hue' => '0',
+      'saturation' => '100');
+
+    if ( $filter == $default_filters){
+      return false;
+    }
+		
+    if ( ! isset( $filter['bright']) || ! isset($filter['contrast']) || ! isset($filter['saturation']) || ! isset($filter['blur']) || ! isset($filter['hue'])){
+      return false;
+    }
+
+    $filter_string = 'brightness(' . $filter['bright'] . '%)' . 'contrast(' . $filter['contrast'] . '%) ' . 'saturate(' . $filter['saturation'] . '%) ' . 'blur(' . $filter['blur'] . 'px) ' . 'hue-rotate(' . $filter['hue'] . 'deg)';
+
+    $this->add_property('filter', $filter_string . $postfix);
+	}
+
+  public function pbg_render_normal_value($property, $value, $postfix = '') {
+    if (empty($value) || empty($property)) {
+      return false;
+    }
+    
+    $this->add_property($property,  $value . $postfix);
+  }
+  /**
+   * Finds the value of a nested key in an array of attributes.
+   *
+   * This function takes an array of attributes and a nested key name, and returns the value of the nested key if it exists.
+   * The nested key name should be in dot notation, e.g. 'parent.child.grandchild'.
+   *
+   * @param array $attributes The array of attributes to search in.
+   * @param string $name The name of the nested key in dot notation.
+   * @return mixed|null The value of the nested key if found, or null if the key is not found.
+   */
+  public function find_nested_keys($attributes, $name){
+    $keys = explode('.', $name);
+
+    foreach ($keys as $key) {
+        if (!isset($attributes[$key])) {
+            return null; // Key not found
+        }
+        $attributes = $attributes[$key];
+    }
+
+    return $attributes;
+  }
 }

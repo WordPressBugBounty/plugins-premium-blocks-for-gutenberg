@@ -32,12 +32,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'justify-content', $css->render_string( $align, ' !important' ) );
 	}
 	// Slashed Price.
-	if ( isset( $attributes['slashedTypography'] ) ) {
-		$slashed_typography = $attributes['slashedTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-slash" );
-		$css->render_typography( $slashed_typography, 'Desktop' );
-	}
+  $css->set_selector( ".{$unique_id} .premium-pricing-slash" );
+  $css->pbg_render_typography($attributes, 'slashedTypography', 'Desktop');
 
 	if ( isset( $attributes['slashedAlign'] ) ) {
 		$slashed_align = $attributes['slashedAlign'];
@@ -46,12 +42,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'align-self', $css->get_responsive_css( $slashed_align, 'Desktop' ) );
 	}
 	// Currency.
-	if ( isset( $attributes['currencyTypography'] ) ) {
-		$currency_typography = $attributes['currencyTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-currency" );
-		$css->render_typography( $currency_typography, 'Desktop' );
-	}
+  $css->set_selector( ".{$unique_id} .premium-pricing-currency" );
+  $css->pbg_render_typography($attributes, 'currencyTypography', 'Desktop');
 
 	if ( isset( $attributes['currencyAlign'] ) ) {
 		$currency_align = $attributes['currencyAlign'];
@@ -60,12 +52,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'align-self', $css->get_responsive_css( $currency_align, 'Desktop' ) );
 	}
 	// Price.
-	if ( isset( $attributes['priceTypography'] ) ) {
-		$price_typography = $attributes['priceTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-val" );
-		$css->render_typography( $price_typography, 'Desktop' );
-	}
+  $css->set_selector( ".{$unique_id} .premium-pricing-val" );
+  $css->pbg_render_typography($attributes, 'priceTypography', 'Desktop');
 
 	if ( isset( $attributes['priceAlign'] ) ) {
 		$price_align = $attributes['priceAlign'];
@@ -74,12 +62,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'align-self', $css->get_responsive_css( $price_align, 'Desktop' ) );
 	}
 	// Divider.
-	if ( isset( $attributes['dividerTypography'] ) ) {
-		$divider_typography = $attributes['dividerTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-divider" );
-		$css->render_typography( $divider_typography, 'Desktop' );
-	}
+  $css->set_selector( ".{$unique_id} .premium-pricing-divider" );
+  $css->pbg_render_typography($attributes, 'dividerTypography', 'Desktop');
 
 	if ( isset( $attributes['dividerAlign'] ) ) {
 		$divider_align = $attributes['dividerAlign'];
@@ -88,12 +72,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'align-self', $css->get_responsive_css( $divider_align, 'Desktop' ) );
 	}
 	// Duration.
-	if ( isset( $attributes['durationTypography'] ) ) {
-		$duration_typography = $attributes['durationTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-dur" );
-		$css->render_typography( $duration_typography, 'Desktop' );
-	}
+  $css->set_selector( ".{$unique_id} .premium-pricing-dur" );
+  $css->pbg_render_typography($attributes, 'durationTypography', 'Desktop');
 
 	if ( isset( $attributes['durationAlign'] ) ) {
 		$duration_align = $attributes['durationAlign'];
@@ -125,12 +105,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'justify-content', $css->render_string( $align, ' !important' ) );
 	}
 	// Slashed Price.
-	if ( isset( $attributes['slashedTypography'] ) ) {
-		$slashed_typography = $attributes['slashedTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-slash" );
-		$css->render_typography( $slashed_typography, 'Tablet' );
-	}
+	$css->set_selector( ".{$unique_id} .premium-pricing-slash" );
+  $css->pbg_render_typography($attributes, 'slashedTypography', 'Tablet');
 
 	if ( isset( $attributes['slashedAlign'] ) ) {
 		$slashed_align = $attributes['slashedAlign'];
@@ -139,12 +115,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'align-self', $css->get_responsive_css( $slashed_align, 'Tablet' ) );
 	}
 	// Currency.
-	if ( isset( $attributes['currencyTypography'] ) ) {
-		$currency_typography = $attributes['currencyTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-currency" );
-		$css->render_typography( $currency_typography, 'Tablet' );
-	}
+	$css->set_selector( ".{$unique_id} .premium-pricing-currency" );
+  $css->pbg_render_typography($attributes, 'currencyTypography', 'Tablet');
 
 	if ( isset( $attributes['currencyAlign'] ) ) {
 		$currency_align = $attributes['currencyAlign'];
@@ -153,12 +125,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'align-self', $css->get_responsive_css( $currency_align, 'Tablet' ) );
 	}
 	// Price.
-	if ( isset( $attributes['priceTypography'] ) ) {
-		$price_typography = $attributes['priceTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-val" );
-		$css->render_typography( $price_typography, 'Tablet' );
-	}
+	$css->set_selector( ".{$unique_id} .premium-pricing-val" );
+  $css->pbg_render_typography($attributes, 'priceTypography', 'Tablet');
 
 	if ( isset( $attributes['priceAlign'] ) ) {
 		$price_align = $attributes['priceAlign'];
@@ -167,12 +135,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'align-self', $css->get_responsive_css( $price_align, 'Tablet' ) );
 	}
 	// Divider.
-	if ( isset( $attributes['dividerTypography'] ) ) {
-		$divider_typography = $attributes['dividerTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-divider" );
-		$css->render_typography( $divider_typography, 'Tablet' );
-	}
+	$css->set_selector( ".{$unique_id} .premium-pricing-divider" );
+  $css->pbg_render_typography($attributes, 'dividerTypography', 'Tablet');
 
 	if ( isset( $attributes['dividerAlign'] ) ) {
 		$divider_align = $attributes['dividerAlign'];
@@ -181,12 +145,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'align-self', $css->get_responsive_css( $divider_align, 'Tablet' ) );
 	}
 	// Duration.
-	if ( isset( $attributes['durationTypography'] ) ) {
-		$duration_typography = $attributes['durationTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-dur" );
-		$css->render_typography( $duration_typography, 'Tablet' );
-	}
+	$css->set_selector( ".{$unique_id} .premium-pricing-dur" );
+  $css->pbg_render_typography($attributes, 'durationTypography', 'Tablet');
 
 	if ( isset( $attributes['durationAlign'] ) ) {
 		$duration_align = $attributes['durationAlign'];
@@ -219,12 +179,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'justify-content', $css->render_string( $align, ' !important' ) );
 	}
 	// Slashed Price.
-	if ( isset( $attributes['slashedTypography'] ) ) {
-		$slashed_typography = $attributes['slashedTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-slash" );
-		$css->render_typography( $slashed_typography, 'Mobile' );
-	}
+	$css->set_selector( ".{$unique_id} .premium-pricing-slash" );
+  $css->pbg_render_typography($attributes, 'slashedTypography', 'Mobile');
 
 	if ( isset( $attributes['slashedAlign'] ) ) {
 		$slashed_align = $attributes['slashedAlign'];
@@ -233,12 +189,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'align-self', $css->get_responsive_css( $slashed_align, 'Mobile' ) );
 	}
 	// Currency.
-	if ( isset( $attributes['currencyTypography'] ) ) {
-		$currency_typography = $attributes['currencyTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-currency" );
-		$css->render_typography( $currency_typography, 'Mobile' );
-	}
+	$css->set_selector( ".{$unique_id} .premium-pricing-currency" );
+  $css->pbg_render_typography($attributes, 'currencyTypography', 'Mobile');
 
 	if ( isset( $attributes['currencyAlign'] ) ) {
 		$currency_align = $attributes['currencyAlign'];
@@ -247,12 +199,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'align-self', $css->get_responsive_css( $currency_align, 'Mobile' ) );
 	}
 	// Price.
-	if ( isset( $attributes['priceTypography'] ) ) {
-		$price_typography = $attributes['priceTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-val" );
-		$css->render_typography( $price_typography, 'Mobile' );
-	}
+	$css->set_selector( ".{$unique_id} .premium-pricing-val" );
+  $css->pbg_render_typography($attributes, 'priceTypography', 'Mobile');
 
 	if ( isset( $attributes['priceAlign'] ) ) {
 		$price_align = $attributes['priceAlign'];
@@ -261,12 +209,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'align-self', $css->get_responsive_css( $price_align, 'Mobile' ) );
 	}
 	// Divider.
-	if ( isset( $attributes['dividerTypography'] ) ) {
-		$divider_typography = $attributes['dividerTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-divider" );
-		$css->render_typography( $divider_typography, 'Mobile' );
-	}
+	$css->set_selector( ".{$unique_id} .premium-pricing-divider" );
+  $css->pbg_render_typography($attributes, 'dividerTypography', 'Mobile');
 
 	if ( isset( $attributes['dividerAlign'] ) ) {
 		$divider_align = $attributes['dividerAlign'];
@@ -275,12 +219,8 @@ function get_premium_price_css( $attributes, $unique_id ) {
 		$css->add_property( 'align-self', $css->get_responsive_css( $divider_align, 'Mobile' ) );
 	}
 	// Duration.
-	if ( isset( $attributes['durationTypography'] ) ) {
-		$duration_typography = $attributes['durationTypography'];
-
-		$css->set_selector( ".{$unique_id} .premium-pricing-dur" );
-		$css->render_typography( $duration_typography, 'Mobile' );
-	}
+	$css->set_selector( ".{$unique_id} .premium-pricing-dur" );
+  $css->pbg_render_typography($attributes, 'durationTypography', 'Mobile');
 
 	if ( isset( $attributes['durationAlign'] ) ) {
 		$duration_align = $attributes['durationAlign'];

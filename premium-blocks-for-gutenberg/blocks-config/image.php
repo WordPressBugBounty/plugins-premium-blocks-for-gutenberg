@@ -100,10 +100,9 @@ function get_premium_image_css($attr, $unique_id)
 		$css->add_property('text-align', $css->get_responsive_css($attr['captionAlign'], 'Desktop'));
 	}
 
-	if (isset($attr['captionTypography'])) {
-		$css->set_selector('.' . $unique_id . '  .premium-image-caption');
-		$css->render_typography($attr['captionTypography'], 'Desktop');
-	}
+  $css->set_selector('.' . $unique_id . '  .premium-image-caption');
+  $css->pbg_render_typography($attr, 'captionTypography', 'Desktop');
+	
 	if (isset($attr['captionColor'])) {
 		$css->set_selector('.' . $unique_id . '  .premium-image-caption');
 		$css->add_property("color",	 $css->render_color($attr['captionColor']));
@@ -162,10 +161,9 @@ function get_premium_image_css($attr, $unique_id)
 		$css->add_property('align-self', $css->get_responsive_css($attr['align'], 'Tablet'));
 	}
 
-	if (isset($attr['captionTypography'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-image-caption');
-		$css->render_typography($attr['captionTypography'], 'Tablet');
-	}
+	$css->set_selector('.' . $unique_id . '  .premium-image-caption');
+  $css->pbg_render_typography($attr, 'captionTypography', 'Tablet');
+
 	if (isset($attr['captionPadding'])) {
 		$caption_padding = $attr['captionPadding'];
 
@@ -227,10 +225,9 @@ function get_premium_image_css($attr, $unique_id)
 		$css->add_property('align-self', $css->get_responsive_css($attr['align'], 'Mobile'));
 	}
 
-	if (isset($attr['captionTypography'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-image-caption');
-		$css->render_typography($attr['captionTypography'], 'Mobile');
-	}
+	$css->set_selector('.' . $unique_id . '  .premium-image-caption');
+  $css->pbg_render_typography($attr, 'captionTypography', 'Mobile');
+
 	if (isset($attr['captionPadding'])) {
 		$caption_padding = $attr['captionPadding'];
 

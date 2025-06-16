@@ -61,15 +61,9 @@ function get_content_switcher_css_style( $attributes, $unique_id ) {
 	}
 
 	// First Label styles
-	if ( isset( $attributes['firstLabelTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-inline' . ' > .premium-content-switcher-first-label' . ' > .premium-content-switcher-inline' . '-editing' );
-		$css->render_typography( $attributes['firstLabelTypography'], 'Desktop' );
-	}
-	if ( isset( $attributes['firstLabelTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-block' . ' > .premium-content-switcher-first-label' . ' > .premium-content-switcher-block' . '-editing' );
-		$css->render_typography( $attributes['firstLabelTypography'], 'Desktop' );
-	}
-
+  $css->set_selector( '.' . $unique_id . " > .premium-content-switcher .premium-content-switcher-toggle-{$attributes['display']} .premium-content-switcher-first-label .premium-content-switcher-{$attributes['display']}-editing");
+  $css->pbg_render_typography($attributes, 'firstLabelTypography', 'Desktop');
+	
 	if ( isset( $attributes['firstLabelPadding'] ) ) {
 		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-inline' . ' > .premium-content-switcher-first-label' . ' > .premium-content-switcher-inline' . '-editing' );
 		$css->add_property( 'padding', $css->render_spacing( $attributes['firstLabelPadding']['Desktop'],isset( $attributes['firstLabelPadding']['unit']['Desktop'] )?$attributes['firstLabelPadding']['unit']['Desktop']:$attributes['firstLabelPadding']['unit']) );
@@ -99,14 +93,8 @@ function get_content_switcher_css_style( $attributes, $unique_id ) {
 	}
 
 	// Second Label styles
-	if ( isset( $attributes['secondLabelTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-inline' . ' > .premium-content-switcher-second-label' . ' > .premium-content-switcher-inline' . '-editing' );
-		$css->render_typography( $attributes['secondLabelTypography'], 'Desktop' );
-	}
-	if ( isset( $attributes['secondLabelTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-block' . ' > .premium-content-switcher-second-label' . ' > .premium-content-switcher-block' . '-editing' );
-		$css->render_typography( $attributes['secondLabelTypography'], 'Desktop' );
-	}
+  $css->set_selector( '.' . $unique_id . " > .premium-content-switcher .premium-content-switcher-toggle-{$attributes['display']} .premium-content-switcher-second-label .premium-content-switcher-{$attributes['display']}-editing");
+  $css->pbg_render_typography($attributes, 'secondLabelTypography', 'Desktop');
 
 	if ( isset( $attributes['secondLabelPadding'] ) ) {
 		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-inline' . ' > .premium-content-switcher-second-label' . ' > .premium-content-switcher-inline' . '-editing' );
@@ -221,14 +209,8 @@ function get_content_switcher_css_style( $attributes, $unique_id ) {
 	}
 
 	// First Label styles
-	if ( isset( $attributes['firstLabelTypography']['fontSize']['Tablet'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-inline' . ' > .premium-content-switcher-first-label' . ' > .premium-content-switcher-inline' . '-editing' );
-		$css->render_typography( $attributes['firstLabelTypography'], 'Tablet' );
-	}
-	if ( isset( $attributes['firstLabelTypography']['fontSize']['Tablet'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-block' . ' > .premium-content-switcher-first-label' . ' > .premium-content-switcher-block' . '-editing' );
-		$css->render_typography( $attributes['firstLabelTypography'], 'Tablet' );
-	}
+	$css->set_selector( '.' . $unique_id . " > .premium-content-switcher .premium-content-switcher-toggle-{$attributes['display']} .premium-content-switcher-first-label .premium-content-switcher-{$attributes['display']}-editing");
+  $css->pbg_render_typography($attributes, 'firstLabelTypography', 'Tablet');
 
 	if ( isset( $attributes['firstLabelPadding'] ) ) {
 		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-inline' . ' > .premium-content-switcher-first-label' . ' > .premium-content-switcher-inline' . '-editing' );
@@ -259,14 +241,8 @@ function get_content_switcher_css_style( $attributes, $unique_id ) {
 	}
 
 	// Second Label styles
-	if ( isset( $attributes['secondLabelTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-inline' . ' > .premium-content-switcher-second-label' . ' > .premium-content-switcher-inline' . '-editing' );
-		$css->render_typography( $attributes['secondLabelTypography'], 'Tablet' );
-	}
-	if ( isset( $attributes['secondLabelTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-block' . ' > .premium-content-switcher-second-label' . ' > .premium-content-switcher-block' . '-editing' );
-		$css->render_typography( $attributes['secondLabelTypography'], 'Tablet' );
-	}
+	$css->set_selector( '.' . $unique_id . " > .premium-content-switcher .premium-content-switcher-toggle-{$attributes['display']} .premium-content-switcher-second-label .premium-content-switcher-{$attributes['display']}-editing");
+  $css->pbg_render_typography($attributes, 'secondLabelTypography', 'Tablet');
 
 	if ( isset( $attributes['secondLabelPadding'] ) ) {
 		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-inline' . ' > .premium-content-switcher-second-label' . ' > .premium-content-switcher-inline' . '-editing' );
@@ -360,14 +336,8 @@ function get_content_switcher_css_style( $attributes, $unique_id ) {
 	}
 
 	// First Label styles
-	if ( isset( $attributes['firstLabelTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-inline' . ' > .premium-content-switcher-first-label' . ' > .premium-content-switcher-inline' . '-editing' );
-		$css->render_typography( $attributes['firstLabelTypography'], 'Mobile' );
-	}
-	if ( isset( $attributes['firstLabelTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-block' . ' > .premium-content-switcher-first-label' . ' > .premium-content-switcher-block' . '-editing' );
-		$css->render_typography( $attributes['firstLabelTypography'], 'Mobile' );
-	}
+	$css->set_selector( '.' . $unique_id . " > .premium-content-switcher .premium-content-switcher-toggle-{$attributes['display']} .premium-content-switcher-first-label .premium-content-switcher-{$attributes['display']}-editing");
+  $css->pbg_render_typography($attributes, 'firstLabelTypography', 'Mobile');
 
 	if ( isset( $attributes['firstLabelPadding'] ) ) {
 		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-inline' . ' > .premium-content-switcher-first-label' . ' > .premium-content-switcher-inline' . '-editing' );
@@ -398,14 +368,8 @@ function get_content_switcher_css_style( $attributes, $unique_id ) {
 	}
 
 	// Second Label styles
-	if ( isset( $attributes['secondLabelTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-inline' . ' > .premium-content-switcher-second-label' . ' > .premium-content-switcher-inline' . '-editing' );
-		$css->render_typography( $attributes['secondLabelTypography'], 'Mobile' );
-	}
-	if ( isset( $attributes['secondLabelTypography'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-block' . ' > .premium-content-switcher-second-label' . ' > .premium-content-switcher-block' . '-editing' );
-		$css->render_typography( $attributes['secondLabelTypography'], 'Mobile' );
-	}
+	$css->set_selector( '.' . $unique_id . " > .premium-content-switcher .premium-content-switcher-toggle-{$attributes['display']} .premium-content-switcher-second-label .premium-content-switcher-{$attributes['display']}-editing");
+  $css->pbg_render_typography($attributes, 'secondLabelTypography', 'Mobile');
 
 	if ( isset( $attributes['secondLabelPadding'] ) ) {
 		$css->set_selector( '.' . $unique_id . ' > .premium-content-switcher' . ' > .premium-content-switcher-toggle-inline' . ' > .premium-content-switcher-second-label' . ' > .premium-content-switcher-inline' . '-editing' );

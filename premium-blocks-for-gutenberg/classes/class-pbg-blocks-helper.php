@@ -1111,7 +1111,8 @@ class PBG_Blocks_Helper
 		if ($this->preview ||  $this->is_post_revision) {
 			$this->file_generation              = false;
 		} else {
-			$this->file_generation              =  apply_filters('pb_settings', get_option('pbg_blocks_settings', array()));
+
+			$this->file_generation =  isset(self::$config['generate-assets-files']) ? self::$config['generate-assets-files'] : true;
 		}
 		return $this->file_generation;
 	}
@@ -1344,71 +1345,37 @@ class PBG_Blocks_Helper
 			}
 		}
 
-		if (isset($attrs['pbgzIndex'])) {
-			$css->set_selector(".{$block_id}");
-			$css->add_property('z-index', $attrs['pbgzIndex'] . ' !important');
-		}
+		$css->set_selector(".{$block_id}");
+		$css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Desktop', null, '!important');
+		$css->pbg_render_value($attrs, 'pbgzIndex', 'z-index', null, null, '!important');
+		$css->pbg_render_spacing($attrs, 'blockPadding', 'padding', 'Desktop', null, '!important');
 
-		if (isset($attrs['pbgWidth'])) {
-			$css->set_selector(".{$block_id}");
-			$css->add_property('width', $css->render_range($attrs['pbgWidth'], 'Desktop') . ' !important');
-		}
-		if (isset($attrs['blockMargin'])) {
-			$block_margin = $attrs['blockMargin'];
+		$css->set_selector(":root:has(.{$block_id}) .{$block_id}");
+		$css->pbg_render_spacing($attrs, 'blockMargin', 'margin', 'Desktop');
 
-			$css->set_selector(":root:has(.{$block_id}) .{$block_id}");
-			$css->add_property('margin', $css->render_spacing($block_margin['Desktop'], $block_margin['unit']['Desktop']));
-		}
-		if (isset($attrs['blockPadding'])) {
-			$block_padding = $attrs['blockPadding'];
-
-			$css->set_selector(".{$block_id}");
-			$css->add_property('padding', $css->render_string($css->render_spacing($block_padding['Desktop'], $block_padding['unit']['Desktop']), ' !important'));
-		}
 		// Tablet.
 		$css->start_media_query('tablet');
-		if (isset($attrs['pbgWidth'])) {
-			$css->set_selector(".{$block_id}");
-			$css->add_property('width', $css->render_range($attrs['pbgWidth'], 'Tablet') . ' !important');
-		}
 
-		if (isset($attrs['blockMargin'])) {
-			$block_margin = $attrs['blockMargin'];
+		$css->set_selector(".{$block_id}");
+		$css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Tablet', null, '!important');
+		$css->pbg_render_spacing($attrs, 'blockPadding', 'padding', 'Tablet', null, '!important');
 
-			$css->set_selector(":root:has(.{$block_id}) .{$block_id}");
-			$css->add_property('margin', $css->render_spacing($block_margin['Tablet'], $block_margin['unit']['Tablet']));
-		}
+		$css->set_selector(":root:has(.{$block_id}) .{$block_id}");
+		$css->pbg_render_spacing($attrs, 'blockMargin', 'margin', 'Tablet');
 
-		if (isset($attrs['blockPadding'])) {
-			$block_padding = $attrs['blockPadding'];
-
-			$css->set_selector(".{$block_id}");
-			$css->add_property('padding', $css->render_string($css->render_spacing($block_padding['Tablet'], $block_padding['unit']['Tablet']), ' !important'));
-		}
 		$css->stop_media_query();
 
 		// Mobile.
 		$css->start_media_query('mobile');
-		if (isset($attrs['pbgWidth'])) {
-			$css->set_selector(".{$block_id}");
-			$css->add_property('width', $css->render_range($attrs['pbgWidth'], 'Mobile') . ' !important');
-		}
 
-		if (isset($attrs['blockMargin'])) {
-			$block_margin = $attrs['blockMargin'];
+		$css->set_selector(".{$block_id}");
+		$css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Mobile', null, '!important');
+		$css->pbg_render_spacing($attrs, 'blockPadding', 'padding', 'Mobile', null, '!important');
 
-			$css->set_selector(":root:has(.{$block_id}) .{$block_id}");
-			$css->add_property('margin', $css->render_spacing($block_margin['Mobile'], $block_margin['unit']['Mobile']));
-		}
+		$css->set_selector(":root:has(.{$block_id}) .{$block_id}");
+		$css->pbg_render_spacing($attrs, 'blockMargin', 'margin', 'Mobile');
 
-		if (isset($attrs['blockPadding'])) {
-			$block_padding = $attrs['blockPadding'];
-
-			$css->set_selector(".{$block_id}");
-			$css->add_property('padding', $css->render_string($css->render_spacing($block_padding['Mobile'], $block_padding['unit']['Mobile']), ' !important'));
-		}
 		$css->stop_media_query();
-
 		return $css->css_output();
 	}
 
@@ -2117,6 +2084,8 @@ class PBG_Blocks_Helper
 				'tags'      => PBG_Blocks_Integrations::get_instance()->get_fluentcrm_tags(),
 			),
 			'theme_version'        => esc_html(PREMIUM_BLOCKS_VERSION),
+			'FontAwesomeEnabled' => $is_fa_enabled,
+			'JsonUploadEnabled' => $allow_json,
 		);
 
 		// PBG.
@@ -2152,30 +2121,9 @@ class PBG_Blocks_Helper
 		);
 
 		wp_localize_script(
-			'pbg-blocks-js',
-			'PremiumBlocksSettings',
-			$settings_data
-		);
-
-		wp_localize_script(
 			'pbg-settings-js',
 			'PremiumBlocksSettings',
 			$settings_data
-		);
-
-		wp_localize_script(
-			'pbg-settings-js',
-			'FontAwesomeConfig',
-			array(
-				'FontAwesomeEnabled' => $is_fa_enabled,
-			)
-		);
-		wp_localize_script(
-			'pbg-settings-js',
-			'JsonUploadFile',
-			array(
-				'JsonUploadEnabled' => $allow_json,
-			)
 		);
 
 		if ($this->global_features['premium-entrance-animation']) {

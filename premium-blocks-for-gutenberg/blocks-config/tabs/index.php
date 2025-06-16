@@ -207,10 +207,9 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
             $css->add_property( 'color', $css->render_string( $css->render_color($attr['titleActiveColor'] ), "!important") );
         }
 
-        if(isset($attr['titleTypography'])){
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-            $css->render_typography( $attr['titleTypography'], 'Desktop' );
-        }
+        $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
+        $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
+        
         if ( isset( $attr['titleMargin'] ) ) {
             $title_margin = $attr['titleMargin'];
             $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
@@ -248,10 +247,9 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
             $css->add_property( 'color', $css->render_string( $css->render_color($attr['subActiveColor'] ), "!important") );
         }
 
-        if(isset($attr['subTypography'])){
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
-            $css->render_typography( $attr['subTypography'], 'Desktop' );
-        }
+        $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
+        $css->pbg_render_typography($attr, 'subTypography', 'Desktop');
+        
         if ( isset( $attr['subMargin'] ) ) {
             $sub_margin = $attr['subMargin'];
             $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
@@ -508,10 +506,9 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
     ///////////////////////////////////////////////// title Styling/////////////////////////////////////////////
      
 
-        if(isset($attr['titleTypography'])){
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-            $css->render_typography( $attr['titleTypography'], 'Tablet' );
-        }
+        $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
+        $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
+
         if ( isset( $attr['titleMargin'] ) ) {
             $title_margin = $attr['titleMargin'];
             $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
@@ -533,11 +530,10 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
             $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
            
         }
-      /////////////////////////////////// Sub Title Styling ///////////////////////////////
-      if(isset($attr['subTypography'])){
-        $css->set_selector( $unique_id  . " .premium-tabs-nav-list-item  .premium-tab-link .premium-tab-desc");
-        $css->render_typography( $attr['subTypography'], 'Tablet' );
-    }
+    /////////////////////////////////// Sub Title Styling ///////////////////////////////
+    $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
+    $css->pbg_render_typography($attr, 'subTypography', 'Tablet');
+
     if ( isset( $attr['subMargin'] ) ) {
         $sub_margin = $attr['subMargin'];
         $css->set_selector( $unique_id  . " .premium-tabs-nav-list-item  .premium-tab-link .premium-tab-desc");
@@ -779,10 +775,9 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
         ///////////////////////////////////////////////// title Styling/////////////////////////////////////////////
          
     
-            if(isset($attr['titleTypography'])){
-                $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-                $css->render_typography( $attr['titleTypography'], 'Mobile' );
-            }
+            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
+            $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');
+
             if ( isset( $attr['titleMargin'] ) ) {
                 $title_margin = $attr['titleMargin'];
                 $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
@@ -805,10 +800,8 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
             }
 
                   /////////////////////////////////// Sub Title Styling ///////////////////////////////
-            if(isset($attr['subTypography'])){
-                $css->set_selector( $unique_id  . " .premium-tabs-nav-list-item  .premium-tab-link .premium-tab-desc");
-                $css->render_typography( $attr['subTypography'], 'Mobile' );
-            }
+            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
+            $css->pbg_render_typography($attr, 'subTypography', 'Mobile');
             if ( isset( $attr['subMargin'] ) ) {
                 $sub_margin = $attr['subMargin'];
                 $css->set_selector( $unique_id  . " .premium-tabs-nav-list-item  .premium-tab-link .premium-tab-desc");

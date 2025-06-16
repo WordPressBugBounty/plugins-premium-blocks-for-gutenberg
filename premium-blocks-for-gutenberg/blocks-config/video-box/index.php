@@ -76,12 +76,9 @@ function get_premium_video_box_css_style( $attr, $unique_id ) {
 		$css->add_property( 'fill', $css->render_string( $css->render_color( $attr['playStyles'][0]['playColor'] ), ' !important' ) );
 	}
 	// Style Description.
-	if ( isset( $attr['videoDescTypography'] ) ) {
-		$desc_typography = $attr['videoDescTypography'];
-
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' . '> .premium-video-box__desc_text' );
-		$css->render_typography( $desc_typography, 'Desktop' );
-	}
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' . '> .premium-video-box__desc_text' );
+  $css->pbg_render_typography($attr, 'videoDescTypography', 'Desktop');
+	
 	if ( isset( $attr['descPadding'] ) ) {
 		$desc_padding = $attr['descPadding'];
 		$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' );
@@ -94,12 +91,9 @@ function get_premium_video_box_css_style( $attr, $unique_id ) {
 	}
 
 	// Style Caption.
-	if ( isset( $attr['videoCaptionTypography'] ) ) {
-		$caption_typography = $attr['videoCaptionTypography'];
+  $css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' . '> .premium-video-box__caption_text' );
+  $css->pbg_render_typography($attr, 'videoCaptionTypography', 'Desktop');
 
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' . '> .premium-video-box__caption_text' );
-		$css->render_typography( $caption_typography, 'Desktop' );
-	}
 	if ( isset( $attr['captionPadding'] ) ) {
 		$caption_padding = $attr['captionPadding'];
 		$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' );
@@ -136,12 +130,9 @@ function get_premium_video_box_css_style( $attr, $unique_id ) {
 	}
 
 	// Style Description.
-	if ( isset( $attr['videoDescTypography'] ) ) {
-		$desc_typography = $attr['videoDescTypography'];
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' . '> .premium-video-box__desc_text' );
+  $css->pbg_render_typography($attr, 'videoDescTypography', 'Tablet');
 
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' . '> .premium-video-box__desc_text' );
-		$css->render_typography( $desc_typography, 'Tablet' );
-	}
 	if ( isset( $attr['descPadding'] ) ) {
 		$desc_padding = $attr['descPadding'];
 		$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' );
@@ -154,12 +145,9 @@ function get_premium_video_box_css_style( $attr, $unique_id ) {
 	}
 
 	// Style Caption.
-	if ( isset( $attr['videoCaptionTypography'] ) ) {
-		$caption_typography = $attr['videoCaptionTypography'];
-
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' . '> .premium-video-box__caption_text' );
-		$css->render_typography( $caption_typography, 'Tablet' );
-	}
+  $css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' . '> .premium-video-box__caption_text' );
+  $css->pbg_render_typography($attr, 'videoCaptionTypography', 'Tablet');
+	
 	if ( isset( $attr['captionPadding'] ) ) {
 		$caption_padding = $attr['captionPadding'];
 		$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' );
@@ -197,12 +185,9 @@ function get_premium_video_box_css_style( $attr, $unique_id ) {
 	}
 
 	// Style Description.
-	if ( isset( $attr['videoDescTypography'] ) ) {
-		$desc_typography = $attr['videoDescTypography'];
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' . '> .premium-video-box__desc_text' );
+  $css->pbg_render_typography($attr, 'videoDescTypography', 'Mobile');
 
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' . '> .premium-video-box__desc_text' );
-		$css->render_typography( $desc_typography, 'Mobile' );
-	}
 	if ( isset( $attr['descPadding'] ) ) {
 		$desc_padding = $attr['descPadding'];
 		$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' );
@@ -215,12 +200,9 @@ function get_premium_video_box_css_style( $attr, $unique_id ) {
 	}
 
 	// Style Caption.
-	if ( isset( $attr['videoCaptionTypography'] ) ) {
-		$caption_typography = $attr['videoCaptionTypography'];
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' . '> .premium-video-box__caption_text' );
+  $css->pbg_render_typography($attr, 'videoCaptionTypography', 'Mobile');
 
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' . '> .premium-video-box__caption_text' );
-		$css->render_typography( $caption_typography, 'Mobile' );
-	}
 	if ( isset( $attr['captionPadding'] ) ) {
 		$caption_padding = $attr['captionPadding'];
 		$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' );
