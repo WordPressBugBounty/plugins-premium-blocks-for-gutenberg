@@ -132,8 +132,9 @@
             "type": "object",
             "default": {
                 "Desktop": "10",
-                "Tablet": "10",
-                "Mobile": "10"
+                "Tablet": "",
+                "Mobile": "",
+                "unit": "px"
             },
             "isStyle": true
         }

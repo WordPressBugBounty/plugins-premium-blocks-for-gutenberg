@@ -2773,7 +2773,7 @@ class PBG_Blocks_Helper
 			}
 		}
 
-		if (0 !== $attributes['query']['offset']) {
+		if ( isset($attributes['query']['offset']) && 0 !== $attributes['query']['offset'] ) {
 			$query_args['offset'] = $attributes['query']['offset'];
 		}
 		if ($attributes['query']['sticky']) {

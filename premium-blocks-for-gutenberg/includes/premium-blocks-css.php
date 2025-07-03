@@ -925,7 +925,7 @@ class Premium_Blocks_css {
     $this->add_property($property, $prefix . $final_value . $unit . $postfix);
   }
 
-  public function pbg_render_color($attributes, $name, $property, $postfix = ''){
+  public function pbg_render_color($attributes, $name, $property, $prefix= '', $postfix = ''){
     if(empty($attributes) || !is_array($attributes) || empty($name) || empty($property)){
       return false;
     }
@@ -936,7 +936,7 @@ class Premium_Blocks_css {
       return false;
     }
 
-    $this->add_property($property, $value . $postfix);
+    $this->add_property($property, $prefix . $value . $postfix);
   }
 
   public function pbg_render_background($attributes, $name, $device = '', $postfix = ''){
@@ -1115,12 +1115,29 @@ class Premium_Blocks_css {
     $this->add_property('filter', $filter_string . $postfix);
 	}
 
-  public function pbg_render_normal_value($property, $value, $postfix = '') {
-    if (empty($value) || empty($property)) {
+  public function pbg_get_value($attributes, $name, $device = ''){
+    if (empty($attributes) || !is_array($attributes) || empty($name)) {
       return false;
     }
+
+    $value = $this->find_nested_keys($attributes, $name);
+
+    $is_responsive = !empty($device);
+    $final_value = '';
+
+    if($is_responsive){
+      if (null === $value || !is_array($value) || !isset($value[$device]) || $value[$device] === '') {
+        return false;
+      }
+      $final_value = $value[$device];
+    }else{
+      if (null === $value || !isset($value) || $value === '') {
+        return false;
+      }
+      $final_value = $value;
+    }
     
-    $this->add_property($property,  $value . $postfix);
+    return $final_value;
   }
   /**
    * Finds the value of a nested key in an array of attributes.
@@ -1136,10 +1153,26 @@ class Premium_Blocks_css {
     $keys = explode('.', $name);
 
     foreach ($keys as $key) {
-        if (!isset($attributes[$key])) {
-            return null; // Key not found
-        }
-        $attributes = $attributes[$key];
+      // Check if the key itself is in array index format (e.g., 'key[0]')
+      if (preg_match('/^(.+)\[(\d+)\]$/', $key, $matches)) {
+          $array_key = $matches[1];
+          $array_index = (int)$matches[2];
+
+          if (!is_array($attributes) || !isset($attributes[$array_key])) {
+              return null; // The parent element is not an array or doesn't have the key
+          }
+
+          $current_level = $attributes[$array_key];
+          if (!is_array($current_level) || !isset($current_level[$array_index])) {
+              return null; 
+          }
+          $attributes = $current_level[$array_index];
+      } else {
+          if (!is_array($attributes) || !isset($attributes[$key])) {
+              return null; 
+          }
+          $attributes = $attributes[$key];
+      }
     }
 
     return $attributes;

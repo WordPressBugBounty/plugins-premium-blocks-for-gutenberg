@@ -5,10 +5,7 @@
     "name": "premium/heading",
     "title": "Heading",
     "description": "Grab your website visitors’ attention with stylish headings using Premium Heading Block.asw",
-    "keywords": [
-        "title",
-        "Heading"
-    ],
+    "keywords": ["title", "Heading"],
     "textdomain": "premium-blocks-for-gutenberg",
     "category": "premium-blocks",
     "attributes": {
@@ -100,7 +97,7 @@
             "default": "Awesome Title"
         },
         "textWidth": {
-            "type": "number",
+            "type": "string",
             "isStyle": true
         },
         "url": {
@@ -111,8 +108,8 @@
             "type": "object",
             "default": {
                 "Desktop": "center",
-                "Tablet": "center",
-                "Mobile": "center"
+                "Tablet": "",
+                "Mobile": ""
             },
             "isStyle": true
         },
@@ -305,8 +302,8 @@
             "type": "object",
             "default": {
                 "Desktop": 120,
-                "Tablet": 120,
-                "Mobile": 120,
+                "Tablet": "",
+                "Mobile": "",
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
@@ -319,8 +316,8 @@
             "type": "object",
             "default": {
                 "Desktop": 5,
-                "Tablet": 5,
-                "Mobile": 5,
+                "Tablet": "",
+                "Mobile": "",
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
@@ -347,8 +344,8 @@
             "type": "object",
             "default": {
                 "Desktop": 0,
-                "Tablet": 0,
-                "Mobile": 0,
+                "Tablet": "",
+                "Mobile": "",
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
@@ -361,10 +358,7 @@
             "type": "array",
             "default": [
                 {
-                    "textBackColor": "",
-                    "rotateText": 0,
-                    "rotateTextTablet": 0,
-                    "rotateTextMobile": 0
+                    "textBackColor": ""
                 }
             ],
             "isStyle": true
@@ -416,8 +410,8 @@
             "type": "object",
             "default": {
                 "Desktop": 0,
-                "Tablet": 0,
-                "Mobile": 0,
+                "Tablet": "",
+                "Mobile": "",
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
@@ -430,8 +424,8 @@
             "type": "object",
             "default": {
                 "Desktop": 0,
-                "Tablet": 0,
-                "Mobile": 0,
+                "Tablet": "",
+                "Mobile": "",
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
@@ -444,8 +438,8 @@
             "type": "object",
             "default": {
                 "Desktop": 1,
-                "Tablet": 1,
-                "Mobile": 1,
+                "Tablet": "",
+                "Mobile": "",
                 "unit": "deg"
             },
             "isStyle": true
@@ -654,7 +648,8 @@
             "default": {
                 "Desktop": "",
                 "Tablet": "",
-                "Mobile": ""
+                "Mobile": "",
+                "unit": "px"
             },
             "isStyle": true
         },

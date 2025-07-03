@@ -18,133 +18,86 @@
 function get_premium_button_group_css_style( $attr, $unique_id ) {
 	$css = new Premium_Blocks_css();
 
-	if ( isset( $attr['align'] ) ) {
-		$content_align      = $css->get_responsive_css( $attr['align'], 'Desktop' );
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
+  $css->set_selector( $unique_id );
+  $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
+  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Desktop');
 
-		$css->set_selector( $unique_id );
-		$css->add_property( 'text-align', $content_align );
-        	$css->add_property( 'align-self',  $css->render_align_self($content_align) );
-
-		$css->set_selector( $unique_id . ' > .premium-button-group_wrap.premium-button-group-class-css' );
-		$css->add_property( 'justify-content', $content_align );
-		$css->add_property( 'align-items',  $css->render_align_self($content_align) );
-	}
-	if ( isset( $attr['groupAlign'] ) ) {
-		$content_align      = $css->get_responsive_css( $attr['groupAlign'], 'Desktop' );
-		$content_flex_align = 'horizontal' === $content_align ? 'row' : 'column';
-
-		$css->set_selector( $unique_id . ' > .premium-button-group_wrap' );
-		$css->add_property( 'flex-direction', $content_flex_align );
-	}
-	if ( isset( $attr['buttonGap'] ) ) {
-		$css->set_selector( $unique_id . ' > .premium-button-group_wrap' );
-		$css->add_property( 'column-gap', $css->get_responsive_css( $attr['buttonGap'], 'Desktop' ) . 'px !important' );
-		$css->add_property( 'row-gap', $css->get_responsive_css( $attr['buttonGap'], 'Desktop' ) . 'px !important' );
-	}
+  $css->set_selector( $unique_id . ' .premium-button-group_wrap' );
+  $css->pbg_render_range($attr, 'buttonGap', 'column-gap', 'Desktop', null, '!important');
+  $css->pbg_render_range($attr, 'buttonGap', 'row-gap', 'Desktop', null, '!important');
+  $css->pbg_render_spacing($attr, 'groupMargin', 'margin', 'Desktop');
+  $flex_direction = $css->pbg_get_value($attr, 'groupAlign', 'Desktop');
+  if($flex_direction){
+    if($flex_direction === 'horizontal'){
+      $css->add_property( 'flex-direction', 'row');
+      $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Desktop');
+    }else{
+      $css->add_property( 'flex-direction', 'column');
+      $css->pbg_render_align_self($attr, 'align', 'align-items', 'Desktop');
+    }
+  }
 
   $css->set_selector( $unique_id . ' .premium-button .premium-button-text-edit' );
   $css->pbg_render_typography($attr, 'typography', 'Desktop');
 
-	if ( isset( $attr['groupPadding'] ) ) {
-		$groupPadding = $attr['groupPadding'];
-		$css->set_selector( $unique_id . ' .premium-button' );
-		$css->add_property( 'padding', $css->render_spacing( $groupPadding['Desktop'], isset($groupPadding['unit']['Desktop'])?$groupPadding['unit']['Desktop']:$groupPadding['unit']  ) );
-	}
-
-	if ( isset( $attr['groupMargin'] ) ) {
-		$groupMargin = $attr['groupMargin'];
-		$css->set_selector( $unique_id . ' .premium-button-group_wrap' );
-		$css->add_property( 'margin', $css->render_spacing( $groupMargin['Desktop'], isset($groupMargin['unit']['Desktop'])?$groupMargin['unit']['Desktop']:$groupMargin['unit']  ) );
-	}
+  $css->set_selector( $unique_id . ' .premium-button' );
+  $css->pbg_render_spacing($attr, 'groupPadding', 'padding', 'Desktop');
 
 	$css->start_media_query( 'tablet' );
 
-	if ( isset( $attr['align'] ) ) {
-		$content_align      = $css->get_responsive_css( $attr['align'], 'Tablet' );
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
+	$css->set_selector( $unique_id );
+  $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
+  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Tablet');
 
-		$css->set_selector( $unique_id );
-		$css->add_property( 'text-align', $content_align );
-   	$css->add_property( 'align-self',  $css->render_align_self($content_align) );
-		$css->set_selector( $unique_id . ' > .premium-button-group_wrap.premium-button-group-class-css' );
-		$css->add_property( 'justify-content', $content_align );
-		$css->add_property( 'align-items',  $css->render_align_self($content_align) );
-
-	}
-	if ( isset( $attr['groupAlign'] ) ) {
-		$content_align      = $css->get_responsive_css( $attr['groupAlign'], 'Tablet' );
-		$content_flex_align = 'horizontal' === $content_align ? 'row' : 'column';
-
-		$css->set_selector( $unique_id . ' > .premium-button-group_wrap' );
-		$css->add_property( 'flex-direction', $content_flex_align );
-	}
-	if ( isset( $attr['buttonGap'] ) ) {
-		$css->set_selector( $unique_id . ' > .premium-button-group_wrap' );
-		$css->add_property( 'column-gap', $css->get_responsive_css( $attr['buttonGap'], 'Tablet' ) . 'px !important' );
-		$css->add_property( 'row-gap', $css->get_responsive_css( $attr['buttonGap'], 'Tablet' ) . 'px !important' );
-	}
+	$css->set_selector( $unique_id . ' .premium-button-group_wrap' );
+  $css->pbg_render_range($attr, 'buttonGap', 'column-gap', 'Tablet', null, '!important');
+  $css->pbg_render_range($attr, 'buttonGap', 'row-gap', 'Tablet', null, '!important');
+  $css->pbg_render_spacing($attr, 'groupMargin', 'margin', 'Tablet');
+  $flex_direction = $css->pbg_get_value($attr, 'groupAlign', 'Tablet');
+  if($flex_direction){
+    if($flex_direction === 'horizontal'){
+      $css->add_property( 'flex-direction', 'row');
+      $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Tablet');
+    }else{
+      $css->add_property( 'flex-direction', 'column');
+      $css->pbg_render_align_self($attr, 'align', 'align-items', 'Tablet');
+    }
+  }
 
 	$css->set_selector( $unique_id . ' .premium-button .premium-button-text-edit' );
   $css->pbg_render_typography($attr, 'typography', 'tablet');
 
-	if ( isset( $attr['groupPadding'] ) ) {
-		$groupPadding = $attr['groupPadding'];
-		$css->set_selector( $unique_id . ' .premium-button' );
-		$css->add_property( 'padding', $css->render_spacing( $groupPadding['Tablet'], isset($groupPadding['unit']['Tablet'])?$groupPadding['unit']['Tablet']:$groupPadding['unit']  ) );
-	}
-
-	if ( isset( $attr['groupMargin'] ) ) {
-		$groupMargin = $attr['groupMargin'];
-		$css->set_selector( $unique_id . ' .premium-button-group_wrap' );
-		$css->add_property( 'margin', $css->render_spacing( $groupMargin['Tablet'], isset($groupMargin['unit']['Tablet'])?$groupMargin['unit']['Tablet']:$groupMargin['unit']  ) );
-	}
+	$css->set_selector( $unique_id . ' .premium-button' );
+  $css->pbg_render_spacing($attr, 'groupPadding', 'padding', 'Tablet');
 
 	$css->stop_media_query();
 	$css->start_media_query( 'mobile' );
 
-	if ( isset( $attr['align'] ) ) {
-		$content_align      = $css->get_responsive_css( $attr['align'], 'Mobile' );
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
+	$css->set_selector( $unique_id );
+  $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
+  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Mobile');
 
-		$css->set_selector( $unique_id );
-		$css->add_property( 'text-align', $content_align );
-   	$css->add_property( 'align-self',  $css->render_align_self($content_align) );
-		$css->set_selector( $unique_id . ' > .premium-button-group_wrap.premium-button-group-class-css' );
-		$css->add_property( 'justify-content', $content_align );
-		$css->add_property( 'align-items',  $css->render_align_self($content_align) );
-
-	}
-	if ( isset( $attr['groupAlign'] ) ) {
-		$content_align      = $css->get_responsive_css( $attr['groupAlign'], 'Mobile' );
-		$content_flex_align = 'horizontal' === $content_align ? 'row' : 'column';
-
-		$css->set_selector( $unique_id . ' > .premium-button-group_wrap' );
-		$css->add_property( 'flex-direction', $content_flex_align );
-	}
-	if ( isset( $attr['buttonGap'] ) ) {
-		$css->set_selector( $unique_id . ' > .premium-button-group_wrap' );
-		$css->add_property( 'column-gap', $css->get_responsive_css( $attr['buttonGap'], 'Mobile' ) . 'px !important' );
-		$css->add_property( 'row-gap', $css->get_responsive_css( $attr['buttonGap'], 'Mobile' ) . 'px !important' );
-	}
+	$css->set_selector( $unique_id . ' .premium-button-group_wrap' );
+  $css->pbg_render_range($attr, 'buttonGap', 'column-gap', 'Mobile', null, '!important');
+  $css->pbg_render_range($attr, 'buttonGap', 'row-gap', 'Mobile', null, '!important');
+  $css->pbg_render_spacing($attr, 'groupMargin', 'margin', 'Mobile');
+  $flex_direction = $css->pbg_get_value($attr, 'groupAlign', 'Mobile');
+  if($flex_direction){
+    if($flex_direction === 'horizontal'){
+      $css->add_property( 'flex-direction', 'row');
+      $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Mobile');
+    }else{
+      $css->add_property( 'flex-direction', 'column');
+      $css->pbg_render_align_self($attr, 'align', 'align-items', 'Mobile');
+    }
+  }
 
 	$css->set_selector( $unique_id . ' .premium-button .premium-button-text-edit' );
   $css->pbg_render_typography($attr, 'typography', 'Mobile');
 
-	if ( isset( $attr['groupPadding'] ) ) {
-		$groupPadding = $attr['groupPadding'];
-		$css->set_selector( $unique_id . ' .premium-button' );
-		$css->add_property( 'padding', $css->render_spacing( $groupPadding['Mobile'], isset($groupPadding['unit']['Mobile'])?$groupPadding['unit']['Mobile']:$groupPadding['unit']  ) );
-	}
+	$css->set_selector( $unique_id . ' .premium-button' );
+  $css->pbg_render_spacing($attr, 'groupPadding', 'padding', 'Mobile');
 
-	if ( isset( $attr['groupMargin'] ) ) {
-		$groupMargin = $attr['groupMargin'];
-    $css->set_selector( $unique_id . ' .premium-button-group_wrap' );
-		$css->add_property( 'margin', $css->render_spacing( $groupMargin['Mobile'], isset($groupMargin['unit']['Mobile'])?$groupMargin['unit']['Mobile']:$groupMargin['unit']  ) );
-	}
 	$css->stop_media_query();
 	return $css->css_output();
 }

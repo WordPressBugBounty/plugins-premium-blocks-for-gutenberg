@@ -12,251 +12,109 @@ function get_premium_image_css($attr, $unique_id)
 	$css = new Premium_Blocks_css();
 
 	// Desktop Styles.
-	if (isset($attr['imageBorder'])) {
-		$image_border        = $attr['imageBorder'];
-		$image_border_width  = $image_border['borderWidth'];
-		$image_border_radius = $image_border['borderRadius'];
-
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap');
-		$css->add_property('border-style', $css->render_string($image_border['borderType'], ' !important'));
-		if (isset($image_border['borderColor'])) {
-			$css->add_property('border-color', $css->render_string($image_border['borderColor'], ' !important'));
-		}
-		$css->add_property('border-radius', $css->render_spacing($image_border_radius['Desktop'], 'px'));
-		$css->add_property('border-width', $css->render_spacing($image_border_width['Desktop'], 'px'));
-	}
-
-	if (isset($attr['maskShape']) && $attr['maskShape'] !== "none") {
-
-		$image_path = PREMIUM_BLOCKS_URL . 'assets/icons/masks/' . $attr['maskShape'] . '.svg';
-		if ($attr['maskShape'] === "custom" && isset($attr['maskCustomShape'])) {
-			$image_path = $attr['maskCustomShape']['url'];
+  $mask_shape = $css->pbg_get_value($attr, 'maskShape');
+  if($mask_shape && $mask_shape !== "none"){
+    $image_path = PREMIUM_BLOCKS_URL . 'assets/icons/masks/' . $mask_shape . '.svg';
+		if ($mask_shape === "custom") {
+			$image_path = $css->pbg_get_value($attr, 'maskCustomShape.url');
 		}
 		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap  img , ' . '.' . $unique_id . ' > .premium-image-container' . ' .premium-image-overlay');
-
 		$css->add_property('mask-image', 'url(' . $image_path . ')');
 		$css->add_property('-webkit-mask-image', 'url(' . $image_path . ')');
+		$css->add_property('mask-size', $attr['maskSize'] ?? "contain");
+		$css->add_property('-webkit-mask-size', $attr['maskSize'] ?? "contain");
+		$css->add_property('mask-repeat', $attr['maskRepeat'] ?? 'no-repeat');
+		$css->add_property('-webkit-mask-repeat', $attr['maskRepeat'] ?? 'no-repeat');
+		$css->add_property('mask-position', $attr['maskPosition'] ?? "center center");
+		$css->add_property('-webkit-mask-position', $attr['maskPosition'] ?? "center center");
+  }
+  $css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap');
+  $css->pbg_render_border($attr, 'imageBorder', 'Desktop');
+  $css->pbg_render_shadow($attr, 'boxShadow', 'box-shadow');
+  
+  $css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' .premium-image-overlay');
+  $css->pbg_render_color($attr, 'overlayColor', 'background-color');
 
-		$css->add_property('mask-size', isset($attr['maskSize']) ? $attr['maskSize'] : "contain");
-		$css->add_property('-webkit-mask-size', isset($attr['maskSize']) ? $attr['maskSize'] : "contain");
+  $css->set_selector('.' . $unique_id . ' > .premium-image-container:hover' . ' .premium-image-overlay');
+  $css->pbg_render_color($attr, 'overlayColorHover', 'background-color');
 
-		$css->add_property('mask-repeat', isset($attr['maskRepeat']) ? $attr['maskRepeat'] : 'no-repeat');
-		$css->add_property('-webkit-mask-repeat', isset($attr['maskRepeat']) ? $attr['maskRepeat'] : 'no-repeat');
+  $css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap' . ' > img');
+  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Desktop');
+  $css->pbg_render_range($attr, 'imgHeight', 'height', 'Desktop');
+  $css->pbg_render_range($attr, 'imgOpacity', 'opacity', null, 'calc(', ' / 100)');
+  $css->pbg_render_filters($attr, 'imageFilter');
+  $css->pbg_render_value($attr, 'objectFit', 'object-fit');
 
-		$css->add_property('mask-position', isset($attr['maskPosition']) ? $attr['maskPosition'] : "center center");
-		$css->add_property('-webkit-mask-position', isset($attr['maskPosition']) ? $attr['maskPosition'] : "center center");
-	}
+  $css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap:hover' . ' > img');
+  $css->pbg_render_range($attr, 'imgOpacityHover', 'opacity', null, 'calc(', ' / 100)');
 
-	if (isset($attr['imgOpacity'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap' . ' > img');
-		$css->add_property('opacity', isset($attr['imgOpacity']) ? ' calc( ' . $attr['imgOpacity'] . ' / 100)' : 1);
-	}
+  $css->set_selector('.' . $unique_id);
+  $css->pbg_render_value($attr, 'align', 'align-self', 'Desktop');
 
-	if (isset($attr['overlayColor'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . '  .premium-image-overlay');
-		$css->add_property('background-color', $css->render_color($attr['overlayColor']));
-	}
+  $css->set_selector('.' . $unique_id . '.premium-image .premium-image-container');
+  $css->pbg_render_value($attr, 'align', 'justify-content', 'Desktop');
 
-	if (isset($attr['overlayColorHover'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container:hover' . '  .premium-image-overlay');
-		$css->add_property('background-color', $css->render_color($attr['overlayColorHover']));
-	}
-
-	if (isset($attr['imgOpacityHover'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap:hover' . ' > img');
-		$css->add_property('opacity', isset($attr['imgOpacityHover']) ? ' calc( ' . $attr['imgOpacityHover'] . ' / 100)' : 1);
-	}
-
-	if (isset($attr['boxShadow'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap');
-		$css->add_property('box-shadow', $css->render_shadow($attr['boxShadow']));
-	}
-	if (isset($attr['imgHeight'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap' . ' > img');
-		$css->add_property('height', $css->render_range($attr['imgHeight'], 'Desktop'));
-	}
-
-	if (isset($attr['imgWidth'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap' . ' > img');
-		$css->add_property('width', $css->render_range($attr['imgWidth'], 'Desktop'));
-	}
-
-	if (isset($attr['imageFilter'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap' . ' > img');
-		$css->add_property('filter', $css->render_filter($attr['imageFilter']));
-	}
-
-	if (isset($attr['align'])) {
-		$css->set_selector('.' . $unique_id . '.premium-image .premium-image-container');
-		$css->add_property('justify-content', $css->get_responsive_css($attr['align'], 'Desktop'));
-	}
-	if (isset($attr['align'])) {
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('align-self', $css->get_responsive_css($attr['align'], 'Desktop'));
-	}
-
-	if (isset($attr['captionAlign'])) {
-		$css->set_selector('.' . $unique_id . '  .premium-image-caption');
-		$css->add_property('text-align', $css->get_responsive_css($attr['captionAlign'], 'Desktop'));
-	}
-
-  $css->set_selector('.' . $unique_id . '  .premium-image-caption');
+  $css->set_selector('.' . $unique_id . ' .premium-image-caption');
   $css->pbg_render_typography($attr, 'captionTypography', 'Desktop');
-	
-	if (isset($attr['captionColor'])) {
-		$css->set_selector('.' . $unique_id . '  .premium-image-caption');
-		$css->add_property("color",	 $css->render_color($attr['captionColor']));
-	}
-	if (isset($attr['captionPadding'])) {
-		$caption_padding = $attr['captionPadding'];
+  $css->pbg_render_value($attr, 'captionAlign', 'text-align', 'Desktop');
+  $css->pbg_render_spacing($attr, 'captionPadding', 'padding', 'Desktop');
+  $css->pbg_render_spacing($attr, 'captionMargin', 'margin', 'Desktop');
+  $css->pbg_render_color($attr, 'captionColor', 'color');
 
-		$css->set_selector('.' . $unique_id . '  .premium-image-caption');
-		$css->add_property('padding', $css->render_spacing($caption_padding['Desktop'], $caption_padding['unit']['Desktop']));
-	}
-	if (isset($attr['captionMargin'])) {
-		$caption_margin = $attr['captionMargin'];
-
-		$css->set_selector('.' . $unique_id . '  .premium-image-caption');
-		$css->add_property('margin', $css->render_spacing($caption_margin['Desktop'], $caption_margin['unit']['Desktop']));
-	}
-
-	if (isset($attr['padding'])) {
-		$padding = $attr['padding'];
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('padding', $css->render_spacing($padding['Desktop'], $padding['unit']['Desktop']));
-	}
-	if (isset($attr['margin'])) {
-		$margin = $attr['margin'];
-		$css->set_selector("body .entry-content .{$unique_id}.premium-image");
-		$css->add_property('margin', $css->render_spacing($margin['Desktop'], $margin['unit']['Desktop']));
-	}
-
+  $css->set_selector( ":root:has(.{$unique_id}) .{$unique_id}.premium-image");
+  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Desktop', null, '!important');
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Desktop');
 
 	$css->start_media_query('tablet');
 	// // Tablet Styles.
-	if (isset($attr['imageBorder'])) {
-		$image_border        = $attr['imageBorder'];
-		$image_border_width  = $image_border['borderWidth'];
-		$image_border_radius = $image_border['borderRadius'];
+	$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap');
+  $css->pbg_render_border($attr, 'imageBorder', 'Tablet');
 
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap');
-		$css->add_property('border-radius', $css->render_spacing($image_border_radius['Tablet'], 'px'));
-		$css->add_property('border-width', $css->render_spacing($image_border_width['Tablet'], 'px'));
-	}
-	if (isset($attr['imgHeight'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap' . ' > img');
-		$css->add_property('height', $css->render_range($attr['imgHeight'], 'Tablet'));
-	}
-	if (isset($attr['imgWidth'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap' . ' > img');
-		$css->add_property('width', $css->render_range($attr['imgWidth'], 'Tablet'));
-	}
+	$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap' . ' > img');
+  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Tablet');
+  $css->pbg_render_range($attr, 'imgHeight', 'height', 'Tablet');
 
-	if (isset($attr['align'])) {
-		$css->set_selector('.' . $unique_id . '.premium-image .premium-image-container');
-		$css->add_property('justify-content', $css->get_responsive_css($attr['align'], 'Tablet'));
-	}
-	if (isset($attr['align'])) {
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('align-self', $css->get_responsive_css($attr['align'], 'Tablet'));
-	}
+	$css->set_selector('.' . $unique_id);
+  $css->pbg_render_value($attr, 'align', 'align-self', 'Tablet');
+  
+  $css->set_selector('.' . $unique_id . '.premium-image .premium-image-container');
+  $css->pbg_render_value($attr, 'align', 'justify-content', 'Tablet');
 
-	$css->set_selector('.' . $unique_id . '  .premium-image-caption');
+	$css->set_selector('.' . $unique_id . ' .premium-image-caption');
   $css->pbg_render_typography($attr, 'captionTypography', 'Tablet');
+  $css->pbg_render_value($attr, 'captionAlign', 'text-align', 'Tablet');
+  $css->pbg_render_spacing($attr, 'captionPadding', 'padding', 'Tablet');
+  $css->pbg_render_spacing($attr, 'captionMargin', 'margin', 'Tablet');
 
-	if (isset($attr['captionPadding'])) {
-		$caption_padding = $attr['captionPadding'];
-
-		$css->set_selector('.' . $unique_id . '  .premium-image-caption');
-		$css->add_property('padding', $css->render_spacing($caption_padding['Tablet'], $caption_padding['unit']['Tablet']));
-	}
-	if (isset($attr['captionMargin'])) {
-		$caption_margin = $attr['captionMargin'];
-
-		$css->set_selector('.' . $unique_id . ' .premium-image-caption');
-		$css->add_property('margin', $css->render_spacing($caption_margin['Tablet'], $caption_margin['unit']['Tablet']));
-	}
-
-	if (isset($attr['captionAlign'])) {
-		$css->set_selector('.' . $unique_id . '  .premium-image-caption');
-		$css->add_property('text-align', $css->get_responsive_css($attr['captionAlign'], 'Tablet'));
-	}
-
-	if (isset($attr['padding'])) {
-		$padding = $attr['padding'];
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('padding', $css->render_spacing($padding['Tablet'], $padding['unit']['Tablet']));
-	}
-	if (isset($attr['margin'])) {
-		$margin = $attr['margin'];
-		$css->set_selector("body .entry-content .{$unique_id}.premium-image");
-		$css->add_property('margin', $css->render_string($css->render_spacing($margin['Tablet'], $margin['unit']['Tablet']), '!important'));
-	}
-
+	$css->set_selector( ":root:has(.{$unique_id}) .{$unique_id}.premium-image");
+  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Tablet', null, '!important');
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Tablet');
 
 	$css->stop_media_query();
 	$css->start_media_query('mobile');
 	// // Mobile Styles.
-	if (isset($attr['imageBorder'])) {
-		$image_border        = $attr['imageBorder'];
-		$image_border_width  = $image_border['borderWidth'];
-		$image_border_radius = $image_border['borderRadius'];
+	$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap');
+  $css->pbg_render_border($attr, 'imageBorder', 'Mobile');
+	
+  $css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap' . ' > img');
+  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Mobile');
+  $css->pbg_render_range($attr, 'imgHeight', 'height', 'Mobile');
 
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap');
-		$css->add_property('border-radius', $css->render_spacing($image_border_radius['Mobile'], 'px'));
-		$css->add_property('border-width', $css->render_spacing($image_border_width['Mobile'], 'px'));
-	}
-	if (isset($attr['imgHeight'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap' . ' > img');
-		$css->add_property('height', $css->render_range($attr['imgHeight'], 'Mobile'));
-	}
-	if (isset($attr['imgWidth'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap' . ' > img');
-		$css->add_property('width', $css->render_range($attr['imgWidth'], 'Mobile'));
-	}
+	$css->set_selector('.' . $unique_id);
+  $css->pbg_render_value($attr, 'align', 'align-self', 'Mobile');
+  
+  $css->set_selector('.' . $unique_id . '.premium-image .premium-image-container');
+  $css->pbg_render_value($attr, 'align', 'justify-content', 'Mobile');
 
-	if (isset($attr['align'])) {
-		$css->set_selector('.' . $unique_id . '.premium-image .premium-image-container');
-		$css->add_property('justify-content', $css->get_responsive_css($attr['align'], 'Mobile'));
-	}
-
-	if (isset($attr['align'])) {
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('align-self', $css->get_responsive_css($attr['align'], 'Mobile'));
-	}
-
-	$css->set_selector('.' . $unique_id . '  .premium-image-caption');
+	$css->set_selector('.' . $unique_id . ' .premium-image-caption');
   $css->pbg_render_typography($attr, 'captionTypography', 'Mobile');
+  $css->pbg_render_value($attr, 'captionAlign', 'text-align', 'Mobile');
+  $css->pbg_render_spacing($attr, 'captionPadding', 'padding', 'Mobile');
+  $css->pbg_render_spacing($attr, 'captionMargin', 'margin', 'Mobile');
 
-	if (isset($attr['captionPadding'])) {
-		$caption_padding = $attr['captionPadding'];
-
-		$css->set_selector('.' . $unique_id . ' .premium-image-caption');
-		$css->add_property('padding', $css->render_spacing($caption_padding['Mobile'], $caption_padding['unit']['Mobile']));
-	}
-	if (isset($attr['captionMargin'])) {
-		$caption_margin = $attr['captionMargin'];
-
-		$css->set_selector('.' . $unique_id . ' .premium-image-caption');
-		$css->add_property('margin', $css->render_spacing($caption_margin['Mobile'], $caption_margin['unit']['Mobile']));
-	}
-
-	if (isset($attr['captionAlign'])) {
-		$css->set_selector('.' . $unique_id . '  .premium-image-caption');
-		$css->add_property('text-align', $css->get_responsive_css($attr['captionAlign'], 'Mobile'));
-	}
-
-	if (isset($attr['padding'])) {
-		$padding = $attr['padding'];
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('padding', $css->render_spacing($padding['Mobile'], $padding['unit']['Mobile']));
-	}
-	if (isset($attr['margin'])) {
-		$margin = $attr['margin'];
-		$css->set_selector("body .entry-content .{$unique_id}.premium-image");
-		$css->add_property('margin', $css->render_string($css->render_spacing($margin['Mobile'], $margin['unit']['Mobile']), '!important'));
-	}
-
+	$css->set_selector( ":root:has(.{$unique_id}) .{$unique_id}.premium-image");
+  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Mobile', null, '!important');
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Mobile');
 
 	$css->stop_media_query();
 

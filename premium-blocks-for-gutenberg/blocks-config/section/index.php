@@ -47,6 +47,11 @@ function get_premium_section_css_style( $attr, $unique_id ) {
 		$css->set_selector( $unique_id );
 		$css->add_property( 'text-align', $content_align );
         $css->add_property( 'align-self',  $css->render_align_self($content_align) );
+				$css->set_selector( $unique_id  . ' .premium-section__content_wrap .premium-section__content_inner');
+
+		        $css->add_property( 'align-items',  $css->render_align_self($content_align) );
+
+
 	}
 	if ( isset( $attr['background'] ) ) {
 		$css->set_selector( $unique_id );

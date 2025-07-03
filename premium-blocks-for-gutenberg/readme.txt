@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.8
+Stable tag: 2.2.9
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -126,6 +126,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.9 =  
+- New: Added a switcher to the Dual Heading block to reverse heading order.  
+- Fixed: Post Carousel offset issue.  
+- Fixed: Icon block spacing styles.  
+- Fixed: Section block alignment issue.  
+- Fixed: Dual Heading block layout issue.  
+- Fixed: Button alignment on various screen sizes.
+
 = 2.2.8 =
 - New: Introduced new Typography Control style across all our Free Gutenberg blocks.
 - Tweak: Improved user interaction by adding icon hover CSS to icon box Gutenberg Block.

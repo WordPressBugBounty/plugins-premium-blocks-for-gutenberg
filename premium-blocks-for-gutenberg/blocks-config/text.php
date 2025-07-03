@@ -13,7 +13,6 @@
 	// Desktop Styles.
   $css->set_selector( ".{$unique_id}" );
   $css->pbg_render_border($attributes, 'border', 'Desktop');
-  $css->pbg_render_spacing($attributes, 'padding', 'padding', 'Desktop');
   $css->pbg_render_background($attributes, 'background', 'Desktop');
   $css->pbg_render_range($attributes, 'rotateText', 'transform', 'Desktop', 'rotate(', ')!important');
   $css->pbg_render_align_self($attributes, 'align', 'align-self', 'Desktop');
@@ -24,15 +23,15 @@
   $css->pbg_render_value($attributes, 'align', 'text-align', 'Desktop', null, '!important');
 	$css->pbg_render_typography($attributes, 'typography', 'Desktop');
 
-  $css->set_selector( "body .entry-content .{$unique_id}.premium-text" );
+  $css->set_selector( ":root:has(.{$unique_id}) .{$unique_id}.wp-block-premium-text" );
   $css->pbg_render_spacing($attributes, 'margin', 'margin', 'Desktop');
+  $css->pbg_render_spacing($attributes, 'padding', 'padding', 'Desktop', null, '!important');
 
 	$css->start_media_query( 'tablet' );
 
 	// Tablet Styles.
   $css->set_selector( ".{$unique_id}" );
   $css->pbg_render_border($attributes, 'border', 'Tablet');
-  $css->pbg_render_spacing($attributes, 'padding', 'padding', 'Tablet');
   $css->pbg_render_background($attributes, 'background', 'Tablet');
   $css->pbg_render_range($attributes, 'rotateText', 'transform', 'Tablet', 'rotate(', ')!important');
   $css->pbg_render_align_self($attributes, 'align', 'align-self', 'Tablet');
@@ -41,15 +40,15 @@
   $css->pbg_render_value($attributes, 'align', 'text-align', 'Tablet', null, '!important');
 	$css->pbg_render_typography($attributes, 'typography', 'Tablet');
 
-  $css->set_selector( "body .entry-content .{$unique_id}.premium-text" );
-  $css->pbg_render_spacing($attributes, 'margin', 'margin', 'Tablet');  
+  $css->set_selector( ":root:has(.{$unique_id}) .{$unique_id}.wp-block-premium-text" );
+  $css->pbg_render_spacing($attributes, 'margin', 'margin', 'Tablet');
+  $css->pbg_render_spacing($attributes, 'padding', 'padding', 'Tablet', null, '!important');
 
 	$css->stop_media_query();
 	$css->start_media_query( 'mobile' );
 	// Mobile Styles.
   $css->set_selector( ".{$unique_id}" );
   $css->pbg_render_border($attributes, 'border', 'Mobile');
-  $css->pbg_render_spacing($attributes, 'padding', 'padding', 'Mobile');
   $css->pbg_render_background($attributes, 'background', 'Mobile');
   $css->pbg_render_range($attributes, 'rotateText', 'transform', 'Mobile', 'rotate(', ')!important');
   $css->pbg_render_align_self($attributes, 'align', 'align-self', 'Tablet');
@@ -58,8 +57,9 @@
   $css->pbg_render_value($attributes, 'align', 'text-align', 'Mobile', null, '!important');
 	$css->pbg_render_typography($attributes, 'typography', 'Mobile');
 
-  $css->set_selector( "body .entry-content .{$unique_id}.premium-text" );
+  $css->set_selector( ":root:has(.{$unique_id}) .{$unique_id}.wp-block-premium-text" );
   $css->pbg_render_spacing($attributes, 'margin', 'margin', 'Mobile');
+  $css->pbg_render_spacing($attributes, 'padding', 'padding', 'Mobile', null, '!important');
 
 	$css->stop_media_query();
 

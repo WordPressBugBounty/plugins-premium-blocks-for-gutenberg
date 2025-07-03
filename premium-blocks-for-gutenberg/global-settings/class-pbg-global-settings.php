@@ -185,7 +185,7 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
         '[class*="wp-block-premium"] label, ' .
         '[class*="wp-block-premium"] li, ' .
         '[class*="wp-block-premium"] .premium-form-input-label, ' .
-        '[class*="wp-block-premium"] span:not(h1 > span):not(h2 > span):not(h3 > span):not(h4 > span):not(h5 > span):not(h6 > span):not(button > span):not(a > span)' 
+        '[class*="wp-block-premium"] span:not(h1 span):not(h2 span):not(h3 span):not(h4 span):not(h5 span):not(h6 span):not(button > span):not(a > span)' 
       );
       $css->pbg_render_typography($global_typography, 'paragraph', 'Desktop');
 
@@ -244,7 +244,7 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
         '[class*="wp-block-premium"] label, ' .
         '[class*="wp-block-premium"] li, ' .
         '[class*="wp-block-premium"] .premium-form-input-label, ' .
-        '[class*="wp-block-premium"] span:not(h1 > span):not(h2 > span):not(h3 > span):not(h4 > span):not(h5 > span):not(h6 > span):not(button > span):not(a > span)' 
+        '[class*="wp-block-premium"] span:not(h1 span):not(h2 span):not(h3 span):not(h4 span):not(h5 span):not(h6 span):not(button > span):not(a > span)' 
       );
       $css->pbg_render_typography($global_typography, 'paragraph', 'Tablet');
 
@@ -304,7 +304,7 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
         '[class*="wp-block-premium"] label, ' .
         '[class*="wp-block-premium"] li, ' .
         '[class*="wp-block-premium"] .premium-form-input-label, ' .
-        '[class*="wp-block-premium"] span:not(h1 > span):not(h2 > span):not(h3 > span):not(h4 > span):not(h5 > span):not(h6 > span):not(button > span):not(a > span)' 
+        '[class*="wp-block-premium"] span:not(h1 span):not(h2 span):not(h3 span):not(h4 span):not(h5 span):not(h6 span):not(button > span):not(a > span)' 
       );
       $css->pbg_render_typography($global_typography, 'paragraph', 'Mobile');
 
@@ -387,28 +387,28 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 			$css->add_property( '--pbg-global-color5', $css->render_color( $global_colors['colors'][4]['color'] ) );
 
 			$css->set_selector( '[class*="wp-block-premium"]' );
-      $css->pbg_render_normal_value('color', 'var(--pbg-global-color3)');
+      $css->add_property('color', 'var(--pbg-global-color3)');
 			$css->set_selector( '[class*="wp-block-premium"] h1, [class*="wp-block-premium"] h2, [class*="wp-block-premium"] h3,[class*="wp-block-premium"] h4,[class*="wp-block-premium"] h5,[class*="wp-block-premium"] h6, a:where(:not([class*="button"]))' );
-      $css->pbg_render_normal_value('color', 'var(--pbg-global-color2)');
+      $css->add_property('color', 'var(--pbg-global-color2)');
 			$css->set_selector( 'a:hover:where(:not([class*="button"]))' );
-      $css->pbg_render_normal_value('color', 'var(--pbg-global-color1)');
+      $css->add_property('color', 'var(--pbg-global-color1)');
 			$css->set_selector( '[class*="wp-block-premium"] .premium-button, [class*="wp-block-premium"] .premium-modal-box-modal-lower-close' );
-      $css->pbg_render_normal_value('color', 'var(--pbg-global-color5)');
-      $css->pbg_render_normal_value('background-color', 'var(--pbg-global-color1)');
-      $css->pbg_render_normal_value('border-color', 'var(--pbg-global-color4)');
+      $css->add_property('color', 'var(--pbg-global-color5)');
+      $css->add_property('background-color', 'var(--pbg-global-color1)');
+      $css->add_property('border-color', 'var(--pbg-global-color4)');
 	
 			// Core blocks styles.
 			if ( $apply_to_default ) {
 				$css->set_selector( '[data-type="core"]' );
-				$css->pbg_render_normal_value('color', 'var(--pbg-global-color3)');
+				$css->add_property('color', 'var(--pbg-global-color3)');
 				$css->set_selector( '[data-type="core"] h1, h1[data-type="core"], [data-type="core"] h2, h2[data-type="core"], [data-type="core"] h3, h3[data-type="core"],[data-type="core"] h4, h4[data-type="core"],[data-type="core"] h5, h5[data-type="core"],[data-type="core"] h6, h6[data-type="core"]' );
-        $css->pbg_render_normal_value('color', 'var(--pbg-global-color2)');
+        $css->add_property('color', 'var(--pbg-global-color2)');
         $css->set_selector( '[data-type^="core/"] a:hover:where(:not([class*="button"]))' );
-        $css->pbg_render_normal_value('color', 'var(--pbg-global-color1)');
+        $css->add_property('color', 'var(--pbg-global-color1)');
 				$css->set_selector( '[data-type="core"] .wp-block-button .wp-block-button__link, .wp-block-button[data-type="core"] .wp-block-button__link' );
-				$css->pbg_render_normal_value('color', 'var(--pbg-global-color5)');
-        $css->pbg_render_normal_value('background-color', 'var(--pbg-global-color1)');
-        $css->pbg_render_normal_value('border-color', 'var(--pbg-global-color4)');
+				$css->add_property('color', 'var(--pbg-global-color5)');
+        $css->add_property('background-color', 'var(--pbg-global-color1)');
+        $css->add_property('border-color', 'var(--pbg-global-color4)');
 			}
 
 			$this->block_helpers->add_custom_block_css( $css->css_output() );

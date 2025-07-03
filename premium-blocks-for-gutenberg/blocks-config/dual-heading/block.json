@@ -5,11 +5,7 @@
     "name": "premium/dheading-block",
     "title": "Dual Heading",
     "description": "Use Premium Dual Heading Block to create one heading with two different styles.",
-    "keywords": [
-        "title",
-        "heading",
-        "text"
-    ],
+    "keywords": ["title", "heading", "text"],
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
@@ -35,6 +31,10 @@
             "source": "html",
             "default": "Blocks",
             "selector": ".premium-dheading-block__second"
+        },
+        "swapHeadings": {
+            "type": "boolean",
+            "default": false
         },
         "firstTag": {
             "type": "string",

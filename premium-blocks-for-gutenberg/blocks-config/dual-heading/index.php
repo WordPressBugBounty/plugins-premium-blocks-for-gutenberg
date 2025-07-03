@@ -18,352 +18,113 @@
 function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 	$css = new Premium_Blocks_css();
 
-	if ( isset( $attr['align'] ) ) {
-        $content_align      = $css->get_responsive_css( $attr['align'], 'Desktop' );
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
-		$css->set_selector( $unique_id );
-		$css->add_property( 'text-align', $content_align );
-        $css->add_property( 'align-self',  $css->render_align_self($content_align) );
+  $css->set_selector( $unique_id );
+  $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
+  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Desktop');
+  $css->pbg_render_border($attr, 'containerBorder', 'Desktop');
+  $css->pbg_render_background($attr, 'background', 'Desktop');
+  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Desktop');
+  $css->pbg_render_range($attr, 'rotate', 'transform', null, 'rotate(', 'deg)');
+  if(isset($attr['rotate']) && !empty($attr['rotate'])){
+		$css->add_property( 'transform-origin', ($attr['transform_origin_x'] ?? '') . ' ' . ($attr['transform_origin_y'] ?? ''));
+	}
+  
+  $css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Desktop');
 
-	}
-	if ( isset( $attr['containerBorder'] ) ) {
-		$container_border        = $attr['containerBorder'];
-		$container_border_width  = $container_border['borderWidth'];
-		$container_border_radius = $container_border['borderRadius'];
-
-		$css->set_selector( $unique_id );
-		$css->add_property( 'border-width', $css->render_spacing( $container_border_width['Desktop'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $container_border_radius['Desktop'], 'px' ) );
-	}
-	if ( isset( $attr['background'] ) ) {
-		$css->set_selector( $unique_id );
-		$css->render_background( $attr['background'], 'Desktop' );
-
-	}
-
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Desktop'], isset( $padding['unit']['Desktop'])?$padding['unit']['Desktop']:$padding['unit'] ) );
-	}
-
-	if ( isset( $attr['margin'] ) ) {
-		$margin = $attr['margin'];
-		$css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
-		$css->add_property( 'margin', $css->render_spacing( $margin['Desktop'], isset( $margin['unit']['Desktop'] )?$margin['unit']['Desktop'] :$margin['unit']) );
-	}
-	if(isset($attr['rotate'])){
-		$css->set_selector( $unique_id );
-		$css->add_property( 'transform', 'rotate(' .$attr['rotate']. 'deg)'  );
-
-	}
-	if(isset($attr['transform_origin_x']) &&isset($attr['transform_origin_x'])){
-		$css->set_selector( $unique_id );
-		$css->add_property( 'transform-origin', $attr['transform_origin_x'] . ' ' . $attr['transform_origin_y']  );
-
-	}
-	if(isset($attr['mask_color'])){
-		$css->set_selector( $unique_id . '.premium-mask-yes .premium-dheading-block__title span::after' );
-		$css->add_property( 'background', $css->render_color($attr['mask_color'])  );
-	}
-	if(isset($attr['mask_padding'])){
-		$padding = $attr['mask_padding'];
-
-		$css->set_selector( $unique_id . ' .premium-mask-span' );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Desktop'], $padding['unit']['Desktop'] ));
-	}
+	$css->set_selector( $unique_id . '.premium-mask-yes .premium-dheading-block__title span::after' );
+  $css->pbg_render_color($attr, 'mask_color', 'background-color');
+	
+  $css->set_selector( $unique_id . ' .premium-mask-span' );
+  $css->pbg_render_spacing($attr, 'mask_padding', 'padding', 'Desktop');
 
 	// First Style FontSize.
   $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
   $css->pbg_render_typography( $attr, 'firstTypography', 'Desktop');
+  $css->pbg_render_border($attr, 'firstBorder', 'Desktop');
+  $css->pbg_render_background($attr, 'firstBackgroundOptions', 'Desktop');
+  $css->pbg_render_spacing($attr, 'firstPadding', 'padding', 'Desktop');
+  $css->pbg_render_spacing($attr, 'firstMargin', 'margin', 'Desktop');
 
-	if ( isset( $attr['firstBorder'] ) ) {
-		$first_border        = $attr['firstBorder'];
-		$first_border_width  = $first_border['borderWidth'];
-		$first_border_radius = $first_border['borderRadius'];
-
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-		$css->add_property( 'border-width', $css->render_spacing( $first_border_width['Desktop'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $first_border_radius['Desktop'], 'px' ) );
-	}
-
-	if ( isset( $attr['firstPadding'] ) ) {
-		$first_padding = $attr['firstPadding'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-		$css->add_property( 'padding', $css->render_spacing( $first_padding['Desktop'], isset( $first_padding['unit']['Desktop'])?$first_padding['unit']['Desktop']:$first_padding['unit'] ) );
-	}
-    if(isset($attr['firstBackgroundOptions']) ){
-        $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-        $css->render_background( $attr['firstBackgroundOptions'], 'Desktop' );
-    }
-	if ( isset( $attr['firstMargin'] ) ) {
-		$first_margin = $attr['firstMargin'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-		$css->add_property( 'margin', $css->render_spacing( $first_margin['Desktop'], isset( $first_margin['unit']['Desktop'] )?$first_margin['unit']['Desktop'] :$first_margin['unit']) );
-	}
-	if ( isset( $attr['firstStrokeColor'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headings-true.premium-dheading-block__first' );
-		$css->add_property( '-webkit-text-stroke-color', $css->render_color( $attr['firstStrokeColor']) );
-	}
-	if ( isset( $attr['firstStrokeFill'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headings-true.premium-dheading-block__first' );
-		$css->add_property( '-webkit-text-fill-color', $css->render_color($attr['firstStrokeFill']) );
-	}
+  $css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headings-true.premium-dheading-block__first' );
+  $css->pbg_render_color($attr, 'firstStrokeColor', '-webkit-text-stroke-color');
+  $css->pbg_render_color($attr, 'firstStrokeFill', '-webkit-text-fill-color');
 
 	// Second Style FontSize.
   $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
   $css->pbg_render_typography($attr, 'secondTypography', 'Desktop');
+  $css->pbg_render_border($attr, 'secondBorder', 'Desktop');
+  $css->pbg_render_background($attr, 'secondBackgroundOptions', 'Desktop');
+  $css->pbg_render_spacing($attr, 'secondPadding', 'padding', 'Desktop');
+  $css->pbg_render_spacing($attr, 'secondMargin', 'margin', 'Desktop');
 
-	if ( isset( $attr['secondBorder'] ) ) {
-		$second_border        = $attr['secondBorder'];
-		$second_border_width  = $second_border['borderWidth'];
-		$second_border_radius = $second_border['borderRadius'];
-
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-		$css->add_property( 'border-width', $css->render_spacing( $second_border_width['Desktop'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $second_border_radius['Desktop'], 'px' ) );
-	}
-    if(isset($attr['secondBackgroundOptions']) ){
-        $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-        $css->render_background( $attr['secondBackgroundOptions'], 'Desktop' );
-    }
-
-	if ( isset( $attr['secondPadding'] ) ) {
-		$second_padding = $attr['secondPadding'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-		$css->add_property( 'padding', $css->render_spacing( $second_padding['Desktop'], isset( $second_padding['unit']['Desktop'])?$second_padding['unit']['Desktop']:$second_padding['unit'] ) );
-	}
-  
-	if ( isset( $attr['secondMargin'] ) ) {
-		$second_margin = $attr['secondMargin'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-		$css->add_property( 'margin', $css->render_spacing( $second_margin['Desktop'], isset( $second_margin['unit']['Desktop'])?$second_margin['unit']['Desktop']:$second_margin['unit'] ) );
-	}
-
-	if ( isset( $attr['secondStrokeColor'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headings-true.premium-dheading-block__second' );
-		$css->add_property( '-webkit-text-stroke-color', $css->render_color( $attr['secondStrokeColor']) );
-	}
-	if ( isset( $attr['secondStrokeFill'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headings-true.premium-dheading-block__second' );
-		$css->add_property( '-webkit-text-fill-color', $css->render_color($attr['secondStrokeFill']) );
-	}
+  $css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headings-true.premium-dheading-block__second' );
+  $css->pbg_render_color($attr, 'secondStrokeColor', '-webkit-text-stroke-color');
+  $css->pbg_render_color($attr, 'secondStrokeFill', '-webkit-text-fill-color');
 
 	$css->start_media_query( 'tablet' );
 
-	if ( isset( $attr['align'] ) ) {
-        $content_align      = $css->get_responsive_css( $attr['align'], 'Tablet' );
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
-		$css->set_selector( $unique_id );
-		$css->add_property( 'text-align', $content_align );
-        $css->add_property( 'align-self',  $css->render_align_self($content_align) );
-	
-	}
+	$css->set_selector( $unique_id );
+  $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
+  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Tablet');
+  $css->pbg_render_border($attr, 'containerBorder', 'Tablet');
+  $css->pbg_render_background($attr, 'background', 'Tablet');
+  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Tablet');
+  
+  $css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Tablet');
 
-	if ( isset( $attr['containerBorder'] ) ) {
-		$container_border        = $attr['containerBorder'];
-		$container_border_width  = $container_border['borderWidth'];
-		$container_border_radius = $container_border['borderRadius'];
+	$css->set_selector( $unique_id . ' .premium-mask-span' );
+  $css->pbg_render_spacing($attr, 'mask_padding', 'padding', 'Tablet');
 
-		$css->set_selector( $unique_id );
-		$css->add_property( 'border-width', $css->render_spacing( $container_border_width['Tablet'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $container_border_radius['Tablet'], 'px' ) );
-	}
-
-	if ( isset( $attr['background'] ) ) {
-		$css->set_selector( $unique_id );
-		$css->render_background( $attr['background'], 'Tablet' );
-
-	}
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Tablet'], isset( $padding['unit']['Tablet'])?$padding['unit']['Tablet']:$padding['unit'] ) );
-	}
-
-	if ( isset( $attr['margin'] ) ) {
-		$margin = $attr['margin'];
-		$css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
-		$css->add_property( 'margin', $css->render_spacing( $margin['Tablet'], isset( $margin['unit']['Tablet'] )?$margin['unit']['Tablet'] :$margin['unit']) );
-	}
-	if(isset($attr['mask_padding'])){
-		$padding = $attr['mask_padding'];
-
-		$css->set_selector( $unique_id . '.premium-mask-span' );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Tablet'], $padding['unit']['Tablet'] ));
-	}
 	// First Style FontSize.
   $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
   $css->pbg_render_typography( $attr, 'firstTypography', 'Tablet');
-
-	if ( isset( $attr['firstBorder'] ) ) {
-		$first_border        = $attr['firstBorder'];
-		$first_border_width  = $first_border['borderWidth'];
-		$first_border_radius = $first_border['borderRadius'];
-
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-		$css->add_property( 'border-width', $css->render_spacing( $first_border_width['Tablet'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $first_border_radius['Tablet'], 'px' ) );
-	}
-
-	if ( isset( $attr['firstPadding'] ) ) {
-		$first_padding = $attr['firstPadding'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-		$css->add_property( 'padding', $css->render_spacing( $first_padding['Tablet'], isset( $first_padding['unit']['Tablet'])?$first_padding['unit']['Tablet']:$first_padding['unit'] ) );
-	}
-    if(isset($attr['firstBackgroundOptions']) ){
-        $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-        $css->render_background( $attr['firstBackgroundOptions'], 'Tablet' );
-    }
-
-	if ( isset( $attr['firstMargin'] ) ) {
-		$first_margin = $attr['firstMargin'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-		$css->add_property( 'margin', $css->render_spacing( $first_margin['Tablet'], isset( $first_margin['unit']['Tablet'] )?$first_margin['unit']['Tablet'] :$first_margin['unit']) );
-	}
+  $css->pbg_render_border($attr, 'firstBorder', 'Tablet');
+  $css->pbg_render_background($attr, 'firstBackgroundOptions', 'Tablet');
+  $css->pbg_render_spacing($attr, 'firstPadding', 'padding', 'Tablet');
+  $css->pbg_render_spacing($attr, 'firstMargin', 'margin', 'Tablet');
 
 	// Second Style FontSizeTablet.
 	$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
   $css->pbg_render_typography($attr, 'secondTypography', 'Tablet');
+  $css->pbg_render_border($attr, 'secondBorder', 'Tablet');
+  $css->pbg_render_background($attr, 'secondBackgroundOptions', 'Tablet');
+  $css->pbg_render_spacing($attr, 'secondPadding', 'padding', 'Tablet');
+  $css->pbg_render_spacing($attr, 'secondMargin', 'margin', 'Tablet');
 
-	if ( isset( $attr['secondBorder'] ) ) {
-		$second_border        = $attr['secondBorder'];
-		$second_border_width  = $second_border['borderWidth'];
-		$second_border_radius = $second_border['borderRadius'];
-
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-
-		$css->add_property( 'border-width', $css->render_spacing( $second_border_width['Tablet'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $second_border_radius['Tablet'], 'px' ) );
-	}
-
-	if ( isset( $attr['secondPadding'] ) ) {
-		$second_padding = $attr['secondPadding'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-		$css->add_property( 'padding', $css->render_spacing( $second_padding['Tablet'], isset( $second_padding['unit']['Tablet'])?$second_padding['unit']['Tablet']:$second_padding['unit'] ) );
-	}
-    if(isset($attr['secondBackgroundOptions']) ){
-        $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-        $css->render_background( $attr['secondBackgroundOptions'], 'Tablet' );
-    }
-
-
-	if ( isset( $attr['secondMargin'] ) ) {
-		$second_margin = $attr['secondMargin'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-		$css->add_property( 'margin', $css->render_spacing( $second_margin['Tablet'], isset( $second_margin['unit']['Tablet'])?$second_margin['unit']['Tablet']:$second_margin['unit'] ) );
-	}
 	$css->stop_media_query();
 	$css->start_media_query( 'mobile' );
 
-	if ( isset( $attr['align'] ) ) {
-		
-        $content_align      = $css->get_responsive_css( $attr['align'], 'Mobile' );
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
-		$css->set_selector( $unique_id );
-		$css->add_property( 'text-align', $content_align );
-        $css->add_property( 'align-self',  $css->render_align_self($content_align) );
-	}
-
-	if ( isset( $attr['containerBorder'] ) ) {
-		$container_border        = $attr['containerBorder'];
-		$container_border_width  = $container_border['borderWidth'];
-		$container_border_radius = $container_border['borderRadius'];
-
-		$css->set_selector( $unique_id );
-		$css->add_property( 'border-width', $css->render_spacing( $container_border_width['Mobile'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $container_border_radius['Mobile'], 'px' ) );
-	}
-
-	if ( isset( $attr['background'] ) ) {
-		$css->set_selector( $unique_id );
-		$css->render_background( $attr['background'], 'Mobile' );
-
-	}
-
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Mobile'], isset( $padding['unit']['Mobile'])?$padding['unit']['Mobile']:$padding['unit'] ) );
-	}
-
-	if ( isset( $attr['margin'] ) ) {
-		$margin = $attr['margin'];
-		$css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
-		$css->add_property( 'margin', $css->render_spacing( $margin['Mobile'], isset( $margin['unit']['Mobile'] )?$margin['unit']['Mobile'] :$margin['unit']) );
-	}
-	if(isset($attr['mask_padding'])){
-		$padding = $attr['mask_padding'];
-
-		$css->set_selector( $unique_id . '.premium-mask-span' );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Mobile'], $padding['unit']['Mobile'] ));
-	}
-
+	$css->set_selector( $unique_id );
+  $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
+  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Mobile');
+  $css->pbg_render_border($attr, 'containerBorder', 'Mobile');
+  $css->pbg_render_background($attr, 'background', 'Mobile');
+  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Mobile');
+  
+  $css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Mobile');
+	
+  $css->set_selector( $unique_id . ' .premium-mask-span' );
+  $css->pbg_render_spacing($attr, 'mask_padding', 'padding', 'Mobile');
 
 	// First Style FontSize.
   $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
   $css->pbg_render_typography( $attr, 'firstTypography', 'Mobile');
-
-	if ( isset( $attr['firstBorder'] ) ) {
-		$first_border        = $attr['firstBorder'];
-		$first_border_width  = $first_border['borderWidth'];
-		$first_border_radius = $first_border['borderRadius'];
-
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-		$css->add_property( 'border-width', $css->render_spacing( $first_border_width['Mobile'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $first_border_radius['Mobile'], 'px' ) );
-	}
-
-	if ( isset( $attr['firstPadding'] ) ) {
-		$first_padding = $attr['firstPadding'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-		$css->add_property( 'padding', $css->render_spacing( $first_padding['Mobile'], isset( $first_padding['unit']['Mobile'])?$first_padding['unit']['Mobile']:$first_padding['unit'] ) );
-	}
-
-    if(isset($attr['firstBackgroundOptions']) ){
-        $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-        $css->render_background( $attr['firstBackgroundOptions'], 'Mobile' );
-    }
-
-	if ( isset( $attr['firstMargin'] ) ) {
-		$first_margin = $attr['firstMargin'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-		$css->add_property( 'margin', $css->render_spacing( $first_margin['Mobile'], isset( $first_margin['unit']['Mobile'] )?$first_margin['unit']['Mobile'] :$first_margin['unit']) );
-	}
+  $css->pbg_render_border($attr, 'firstBorder', 'Mobile');
+  $css->pbg_render_background($attr, 'firstBackgroundOptions', 'Mobile');
+  $css->pbg_render_spacing($attr, 'firstPadding', 'padding', 'Mobile');
+  $css->pbg_render_spacing($attr, 'firstMargin', 'margin', 'Mobile');
 
 	// Second Style FontSizeMobil.
 	$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
   $css->pbg_render_typography($attr, 'secondTypography', 'Mobile');
+  $css->pbg_render_border($attr, 'secondBorder', 'Mobile');
+  $css->pbg_render_background($attr, 'secondBackgroundOptions', 'Mobile');
+  $css->pbg_render_spacing($attr, 'secondPadding', 'padding', 'Mobile');
+  $css->pbg_render_spacing($attr, 'secondMargin', 'margin', 'Mobile');
 
-	if ( isset( $attr['secondBorder'] ) ) {
-		$second_border        = $attr['secondBorder'];
-		$second_border_width  = $second_border['borderWidth'];
-		$second_border_radius = $second_border['borderRadius'];
-
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-
-		$css->add_property( 'border-width', $css->render_spacing( $second_border_width['Mobile'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $second_border_radius['Mobile'], 'px' ) );
-	}
-
-	if ( isset( $attr['secondPadding'] ) ) {
-		$second_padding = $attr['secondPadding'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-		$css->add_property( 'padding', $css->render_spacing( $second_padding['Mobile'], isset( $second_padding['unit']['Mobile'])?$second_padding['unit']['Mobile']:$second_padding['unit'] ) );
-	}
-    if(isset($attr['secondBackgroundOptions']) ){
-        $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-        $css->render_background( $attr['secondBackgroundOptions'], 'Mobile' );
-    }
-
-	if ( isset( $attr['secondMargin'] ) ) {
-		$second_margin = $attr['secondMargin'];
-		$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-		$css->add_property( 'margin', $css->render_spacing( $second_margin['Mobile'], isset( $second_margin['unit']['Mobile'])?$second_margin['unit']['Mobile']:$second_margin['unit'] ) );
-	}
 	$css->stop_media_query();
 	return $css->css_output();
 }

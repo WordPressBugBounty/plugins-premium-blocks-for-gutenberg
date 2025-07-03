@@ -57,11 +57,11 @@
         },
         "loop": {
             "type": "boolean",
-            "default": "true"
+            "default": true
         },
         "cursorShow": {
             "type": "boolean",
-            "default": "true"
+            "default": true
         },
         "cursorMark": {
             "type": "string",
