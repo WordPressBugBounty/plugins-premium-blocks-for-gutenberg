@@ -6,6 +6,7 @@
     "title": "Accordion",
     "textdomain": "premium-blocks-for-gutenberg",
     "description": "Display collapsed content like FAQs using Premium Accordion Block.",
+    "keywords": ["accordion", "collapse", "faq", "toggle"],
     "category": "premium-blocks",
     "attributes": {
         "blockId": {
@@ -29,7 +30,7 @@
             "default": [
                 {
                     "titleColor": "",
-                    "titleBack": ""
+                    "titleBack": "#f2f2f2"
                 }
             ],
             "isStyle": true

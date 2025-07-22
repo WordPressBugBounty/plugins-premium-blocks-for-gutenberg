@@ -5,7 +5,7 @@
     "name": "premium/heading",
     "title": "Heading",
     "description": "Grab your website visitors’ attention with stylish headings using Premium Heading Block.asw",
-    "keywords": ["title", "Heading"],
+    "keywords": ["title", "Heading", "heading block", "heading styles"],
     "textdomain": "premium-blocks-for-gutenberg",
     "category": "premium-blocks",
     "attributes": {
@@ -19,7 +19,7 @@
         "align": {
             "type": "object",
             "default": {
-                "Desktop": "",
+                "Desktop": "left",
                 "Tablet": "",
                 "Mobile": ""
             },

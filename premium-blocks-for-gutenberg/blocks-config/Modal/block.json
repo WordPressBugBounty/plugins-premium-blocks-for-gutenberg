@@ -5,7 +5,7 @@
     "name": "premium/modal",
     "title": "Modal Box",
     "description": "Easily, get creative modal popups on your WordPress website using Premium Modal Box Block.",
-    "keywords": ["modal", "popup"],
+    "keywords": ["modal", "popup", "lightbox", "pop-up", "dialog"],
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {

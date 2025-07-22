@@ -5,7 +5,7 @@
     "name": "premium/maps",
     "title": "Maps",
     "description": "Embed Google Maps to your Gutenberg page using Premium Maps Block.",
-    "keywords": ["google", "maps"],
+    "keywords": ["google", "maps", "map", "location"],
     "textdomain": "premium-blocks-for-gutenberg",
     "category": "premium-blocks",
     "attributes": {

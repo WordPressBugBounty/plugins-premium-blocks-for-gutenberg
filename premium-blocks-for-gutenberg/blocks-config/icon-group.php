@@ -16,246 +16,147 @@ function get_premium_icon_group_css($attr, $unique_id)
 	$media_query['tablet']  = apply_filters('Premium_BLocks_tablet_media_query', '(max-width: 1024px)');
 	$media_query['desktop'] = apply_filters('Premium_BLocks_tablet_media_query', '(min-width: 1025px)');
 
-	// icon Size
-	if (isset($attr['iconsSize']['Desktop'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container .premium-icon-type');
+  $css->set_selector('.' . $unique_id);
+  $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
+  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Desktop');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container .premium-icon-type svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconsSize'], 'Desktop')));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconsSize'], 'Desktop')));
+  $css->set_selector('.' . $unique_id . '.wp-block-premium-icon-group .premium-icon-group-horizontal');
+  $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Desktop');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container .premium-icon-svg-class svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconsSize'], 'Desktop')));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconsSize'], 'Desktop')));
+  $css->set_selector('.' . $unique_id . '.wp-block-premium-icon-group .premium-icon-group-vertical');
+  $css->pbg_render_align_self($attr, 'align', 'align-items', 'Desktop');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container img');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconsSize'], 'Desktop')));
+  $css->set_selector('.' . $unique_id . ' .premium-icon-group-container');
+  $css->pbg_render_range($attr, 'iconsGap', 'gap', 'Desktop');
+  
+  $css->set_selector(
+    ".{$unique_id} .premium-icon-container .premium-icon-type svg, " .
+    ".{$unique_id} .premium-icon-container .premium-lottie-animation svg, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-svg-class svg"
+  );
+  $css->pbg_render_range($attr, 'iconsSize', 'width', 'Desktop', null, '!important');
+  $css->pbg_render_range($attr, 'iconsSize', 'height', 'Desktop', null, '!important');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container .premium-lottie-animation svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconsSize'], 'Desktop')));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconsSize'], 'Desktop')));
-	}
-	if (isset($attr['iconsGap']['Desktop'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-icon-group-container ');
-		$css->add_property('gap', $css->render_string($css->render_range($attr['iconsGap'], 'Desktop')));
-	}
+  $css->set_selector('.' . $unique_id . ' .premium-icon-container img');
+  $css->pbg_render_range($attr, 'iconsSize', 'width', 'Desktop', null, '!important');
 
-	// Desktop Styles.
-	if (isset($attr['groupIconBorder'])) {
-		$icon_border        = $attr['groupIconBorder'];
-		$icon_border_width  = $icon_border['borderWidth'];
-		$icon_border_radius = $icon_border['borderRadius'];
+  $css->set_selector(
+    ".{$unique_id} .premium-icon-container .premium-icon-type, " .
+    ".{$unique_id} .premium-icon-container img, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-svg-class svg, " .
+    ".{$unique_id} .premium-icon-container .premium-lottie-animation svg"
+  );
+  $css->pbg_render_border($attr, 'groupIconBorder', 'Desktop');
+  $css->pbg_render_spacing($attr, 'groupIconPadding', 'padding', "Desktop");
+  $css->pbg_render_spacing($attr, 'groupIconMargin', 'margin', 'Desktop');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-type, ' . '.' . $unique_id . ' .premium-icon-container' . ' > img, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-icon-svg-class' . ' > svg, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-lottie-animation' . ' > svg');
-		$css->render_border($icon_border, 'Desktop');
-	}
+  $css->set_selector( 
+    ".{$unique_id} .premium-icon-container .premium-icon-type, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-type:not(.icon-type-fe) svg, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-type:not(.icon-type-fe) svg *, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-svg-class svg, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-svg-class svg *"
+  );
+  $css->pbg_render_color($attr, 'groupIconColor', 'color');
+  $css->pbg_render_color($attr, 'groupIconColor', 'fill');
 
-	if (isset($attr['groupIconMargin'])) {
-		$groupIconMargin = $attr['groupIconMargin'];
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-type, ' . '.' . $unique_id . ' .premium-icon-container' . ' > img, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-icon-svg-class' . ' > svg, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-lottie-animation' . ' > svg');
-		$css->add_property('margin', $css->render_string($css->render_spacing($groupIconMargin['Desktop'], isset($groupIconMargin['unit']['Desktop']) ? $groupIconMargin['unit']['Desktop'] : $groupIconMargin['unit'])));
-	}
+  $css->set_selector(
+    ".{$unique_id} .premium-icon-container .premium-icon-type, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-svg-class svg, " .
+    ".{$unique_id} .premium-icon-container .premium-lottie-animation svg"
+  );
+  $css->pbg_render_color($attr, 'groupIconBack', 'background-color');
 
-	if (isset($attr['groupIconPadding'])) {
-		$groupIconPadding = $attr['groupIconPadding'];
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-type, ' . '.' . $unique_id . ' .premium-icon-container' . ' > img, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-icon-svg-class' . ' > svg, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-lottie-animation' . ' > svg');
-		$css->add_property('padding', $css->render_string($css->render_spacing($groupIconPadding['Desktop'], isset($groupIconPadding['unit']['Desktop']) ? $groupIconPadding['unit']['Desktop'] : $groupIconPadding['unit'])));
-	}
+  $css->set_selector( 
+    ".{$unique_id} .premium-icon-container .premium-icon-type:hover, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-type:not(.icon-type-fe):hover svg *, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-svg-class:hover svg, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-svg-class:hover svg *"
+  );
+  $css->pbg_render_color($attr, 'groupIconHoverColor', 'color');
+  $css->pbg_render_color($attr, 'groupIconHoverColor', 'fill');
 
-	if (isset($attr['align'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-icon-group-horizontal');
-		$css->add_property('justify-content', $css->render_string($css->get_responsive_css($attr['align'], 'Desktop'), '!important'));
-	}
-
-	if (isset($attr['align'])) {
-		$content_align      = $css->get_responsive_css($attr['align'], 'Desktop');
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
-
-		$css->set_selector('.' . $unique_id . ' > .premium-icon-group-vertical');
-		$css->add_property('align-items', $css->render_string($content_flex_align, '!important'));
-		$css->add_property('justify-content', $css->render_string($content_flex_align, '!important'));
-	}
-
-	if (isset($attr['groupIconColor']) && ! empty($attr['groupIconColor'])) {
-		$icon_color = $attr['groupIconColor'];
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-content .premium-icon-type');
-		$css->add_property('fill', $css->render_color($icon_color));
-		$css->add_property('color', $css->render_color($icon_color));
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-content .premium-icon-type:not(.icon-type-fe) svg');
-		$css->add_property('fill', $css->render_color($icon_color));
-		$css->add_property('color', $css->render_color($icon_color));
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container' . ' .premium-icon-content' . ' > .premium-icon-svg-class' . ' > svg ');
-		$css->add_property('fill', $css->render_color($icon_color));
-		$css->add_property('color', $css->render_color($icon_color));
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container' . ' .premium-icon-content' . ' > .premium-icon-type:not(.icon-type-fe)' . ' > svg *');
-		$css->add_property('fill', $css->render_color($icon_color));
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container' . ' .premium-icon-content' . ' > .premium-icon-svg-class' . ' > svg *');
-		$css->add_property('fill', $css->render_color($icon_color));
-	}
-
-	if (isset($attr['groupIconBack']) && ! empty($attr['groupIconBack'])) {
-		$icon_color = $attr['groupIconBack'];
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-content .premium-icon-type');
-		$css->add_property('background-color', $css->render_color($icon_color));
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-content .premium-lottie-animation svg ');
-		$css->add_property('background-color', $css->render_color($icon_color));
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container' . ' .premium-icon-content' . ' > .premium-icon-svg-class' . ' > svg ');
-		$css->add_property('background-color', $css->render_color($icon_color));
-	}
-
-	if (isset($attr['groupIconHoverBack']) && ! empty($attr['groupIconHoverBack'])) {
-		$icon_color = $attr['groupIconHoverBack'];
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-content .premium-icon-type:hover');
-		$css->add_property('background-color', $css->render_color($icon_color));
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-content .premium-lottie-animation:hover svg ');
-		$css->add_property('background-color', $css->render_color($icon_color));
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container' . ' .premium-icon-content' . ' > .premium-icon-svg-class' . ' > svg:hover ');
-		$css->add_property('background-color', $css->render_color($icon_color));
-	}
-
-	if (isset($attr['groupIconHoverColor']) && ! empty($attr['groupIconHoverColor'])) {
-		$icon_HoverColor = $attr['groupIconHoverColor'];
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-content .premium-icon-type:hover');
-		$css->add_property('fill', $css->render_color($icon_HoverColor));
-		$css->add_property('color', $css->render_color($icon_HoverColor));
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container' . ' .premium-icon-content' . ' > .premium-icon-svg-class' . ' > svg:hover');
-		$css->add_property('fill', $css->render_color($icon_HoverColor));
-		$css->add_property('color', $css->render_color($icon_HoverColor));
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container' . ' .premium-icon-content' . ' > .premium-icon-type:not(.icon-type-fe):hover' . ' > svg *');
-		$css->add_property('fill', $css->render_color($icon_HoverColor));
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container' . ' .premium-icon-content' . ' > .premium-icon-svg-class' . ' > svg:hover *');
-		$css->add_property('fill', $css->render_color($icon_HoverColor));
-	}
+  $css->set_selector(
+    ".{$unique_id} .premium-icon-container .premium-icon-type:hover, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-svg-class:hover svg, " .
+    ".{$unique_id} .premium-icon-container .premium-lottie-animation:hover svg"
+  );
+  $css->pbg_render_color($attr, 'groupIconHoverBack', 'background-color');
 
 	$css->start_media_query('tablet');
-	// // Tablet Styles.
-	// icon Size
-	if (isset($attr['iconsSize']['Tablet'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container .premium-icon-type');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container .premium-icon-type svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconsSize'], 'Tablet')));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconsSize'], 'Tablet')));
+	// Tablet Styles.
+	$css->set_selector('.' . $unique_id);
+  $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
+  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Tablet');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container .premium-icon-svg-class svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconsSize'], 'Tablet')));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconsSize'], 'Tablet')));
+  $css->set_selector('.' . $unique_id . '.wp-block-premium-icon-group .premium-icon-group-horizontal');
+  $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Tablet');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container img');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconsSize'], 'Tablet')));
+  $css->set_selector('.' . $unique_id . '.wp-block-premium-icon-group .premium-icon-group-vertical');
+  $css->pbg_render_align_self($attr, 'align', 'align-items', 'Tablet');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container .premium-lottie-animation svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconsSize'], 'Tablet')));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconsSize'], 'Tablet')));
-	}
+  $css->set_selector('.' . $unique_id . ' .premium-icon-group-container');
+  $css->pbg_render_range($attr, 'iconsGap', 'gap', 'Tablet');
+  
+  $css->set_selector(
+    ".{$unique_id} .premium-icon-container .premium-icon-type svg, " .
+    ".{$unique_id} .premium-icon-container .premium-lottie-animation svg, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-svg-class svg"
+  );
+  $css->pbg_render_range($attr, 'iconsSize', 'width', 'Tablet', null, '!important');
+  $css->pbg_render_range($attr, 'iconsSize', 'height', 'Tablet', null, '!important');
 
-	if (isset($attr['iconsGap']['Tablet'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-icon-group-container ');
-		$css->add_property('gap', $css->render_string($css->render_range($attr['iconsGap'], 'Tablet')));
-	}
-	if (isset($attr['groupIconBorder'])) {
-		$icon_border        = $attr['groupIconBorder'];
-		$icon_border_width  = $icon_border['borderWidth'];
-		$icon_border_radius = $icon_border['borderRadius'];
+  $css->set_selector('.' . $unique_id . ' .premium-icon-container img');
+  $css->pbg_render_range($attr, 'iconsSize', 'width', 'Tablet', null, '!important');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-type, ' . '.' . $unique_id . ' .premium-icon-container' . ' > img, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-icon-svg-class' . ' > svg, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-lottie-animation' . ' > svg');
-		$css->add_property('border-radius', $css->render_string($css->render_spacing($icon_border_radius['Tablet'], 'px')));
-		$css->add_property('border-width', $css->render_string($css->render_spacing($icon_border_width['Tablet'], 'px')));
-	}
-
-
-	if (isset($attr['groupIconMargin'])) {
-		$groupIconMargin = $attr['groupIconMargin'];
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-type, ' . '.' . $unique_id . ' .premium-icon-container' . ' > img, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-icon-svg-class' . ' > svg, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-lottie-animation' . ' > svg');
-		$css->add_property('margin', $css->render_string($css->render_spacing($groupIconMargin['Tablet'], isset($groupIconMargin['unit']['Tablet']) ? $groupIconMargin['unit']['Tablet'] : $groupIconMargin['unit'])));
-	}
-
-	if (isset($attr['groupIconPadding'])) {
-		$groupIconPadding = $attr['groupIconPadding'];
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-type, ' . '.' . $unique_id . ' .premium-icon-container' . ' > img, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-icon-svg-class' . ' > svg, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-lottie-animation' . ' > svg');
-		$css->add_property('padding', $css->render_string($css->render_spacing($groupIconPadding['Tablet'], isset($groupIconPadding['unit']['Tablet']) ? $groupIconPadding['unit']['Tablet'] : $groupIconPadding['unit'])));
-	}
-
-	if (isset($attr['align'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-icon-group-horizontal');
-		$css->add_property('justify-content', $css->render_string($css->get_responsive_css($attr['align'], 'Tablet'), '!important'));
-	}
-
-	if (isset($attr['align'])) {
-		$content_align      = $css->get_responsive_css($attr['align'], 'Tablet');
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
-
-		$css->set_selector('.' . $unique_id . ' > .premium-icon-group-vertical');
-		$css->add_property('align-items', $css->render_string($content_flex_align, '!important'));
-		$css->add_property('justify-content', $css->render_string($content_flex_align, '!important'));
-	}
+  $css->set_selector(
+    ".{$unique_id} .premium-icon-container .premium-icon-type, " .
+    ".{$unique_id} .premium-icon-container img, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-svg-class svg, " .
+    ".{$unique_id} .premium-icon-container .premium-lottie-animation svg"
+  );
+  $css->pbg_render_border($attr, 'groupIconBorder', 'Tablet');
+  $css->pbg_render_spacing($attr, 'groupIconPadding', 'padding', "Tablet");
+  $css->pbg_render_spacing($attr, 'groupIconMargin', 'margin', 'Tablet');
 
 	$css->stop_media_query();
 	$css->start_media_query('mobile');
-	// // Mobile Styles.
-	// icon Size
-	if (isset($attr['iconsSize']['Mobile'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container .premium-icon-type');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container .premium-icon-type svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconsSize'], 'Mobile')));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconsSize'], 'Mobile')));
+	// Mobile Styles.
+	$css->set_selector('.' . $unique_id);
+  $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
+  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Mobile');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container .premium-icon-svg-class svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconsSize'], 'Mobile')));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconsSize'], 'Mobile')));
+  $css->set_selector('.' . $unique_id . '.wp-block-premium-icon-group .premium-icon-group-horizontal');
+  $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Mobile');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container img');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconsSize'], 'Mobile')));
+  $css->set_selector('.' . $unique_id . '.wp-block-premium-icon-group .premium-icon-group-vertical');
+  $css->pbg_render_align_self($attr, 'align', 'align-items', 'Mobile');
 
-		$css->set_selector('.' . $unique_id . ' .premium-icon__container .premium-lottie-animation svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconsSize'], 'Mobile')));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconsSize'], 'Mobile')));
-	}
+  $css->set_selector('.' . $unique_id . ' .premium-icon-group-container');
+  $css->pbg_render_range($attr, 'iconsGap', 'gap', 'Mobile');
+  
+  $css->set_selector(
+    ".{$unique_id} .premium-icon-container .premium-icon-type svg, " .
+    ".{$unique_id} .premium-icon-container .premium-lottie-animation svg, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-svg-class svg"
+  );
+  $css->pbg_render_range($attr, 'iconsSize', 'width', 'Mobile', null, '!important');
+  $css->pbg_render_range($attr, 'iconsSize', 'height', 'Mobile', null, '!important');
 
-	if (isset($attr['iconsGap']['Mobile'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-icon-group-container ');
-		$css->add_property('gap', $css->render_string($css->render_range($attr['iconsGap'], 'Mobile')));
-	}
+  $css->set_selector('.' . $unique_id . ' .premium-icon-container img');
+  $css->pbg_render_range($attr, 'iconsSize', 'width', 'Mobile', null, '!important');
 
-	if (isset($attr['groupIconBorder'])) {
-		$icon_border        = $attr['groupIconBorder'];
-		$icon_border_width  = $icon_border['borderWidth'];
-		$icon_border_radius = $icon_border['borderRadius'];
-
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-type, ' . '.' . $unique_id . ' .premium-icon-container' . ' > img, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-icon-svg-class' . ' > svg, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-lottie-animation' . ' > svg');
-		$css->add_property('border-radius', $css->render_string($css->render_spacing($icon_border_radius['Mobile'], 'px')));
-		$css->add_property('border-width', $css->render_string($css->render_spacing($icon_border_width['Mobile'], 'px')));
-	}
-
-	if (isset($attr['groupIconMargin'])) {
-		$groupIconMargin = $attr['groupIconMargin'];
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-type, ' . '.' . $unique_id . ' .premium-icon-container' . ' > img, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-icon-svg-class' . ' > svg, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-lottie-animation' . ' > svg');
-		$css->add_property('margin', $css->render_string($css->render_spacing($groupIconMargin['Mobile'], isset($groupIconMargin['unit']['Mobile']) ? $groupIconMargin['unit']['Mobile'] : $groupIconMargin['unit'])));
-	}
-
-	if (isset($attr['groupIconPadding'])) {
-		$groupIconPadding = $attr['groupIconPadding'];
-		$css->set_selector('.' . $unique_id . ' .premium-icon-container .premium-icon-type, ' . '.' . $unique_id . ' .premium-icon-container' . ' > img, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-icon-svg-class' . ' > svg, ' . '.' . $unique_id . ' .premium-icon-container' . ' > .premium-lottie-animation' . ' > svg');
-		$css->add_property('padding', $css->render_string($css->render_spacing($groupIconPadding['Mobile'], isset($groupIconPadding['unit']['Mobile']) ? $groupIconPadding['unit']['Mobile'] : $groupIconPadding['unit'])));
-	}
-
-	if (isset($attr['align'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-icon-group-horizontal');
-		$css->add_property('justify-content', $css->render_string($css->get_responsive_css($attr['align'], 'Mobile'), '!important'));
-	}
-
-	if (isset($attr['align'])) {
-		$content_align      = $css->get_responsive_css($attr['align'], 'Mobile');
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
-
-		$css->set_selector('.' . $unique_id . ' > .premium-icon-group-vertical');
-		$css->add_property('align-items', $css->render_string($content_flex_align, '!important'));
-		$css->add_property('justify-content', $css->render_string($content_flex_align, '!important'));
-	}
+  $css->set_selector(
+    ".{$unique_id} .premium-icon-container .premium-icon-type, " .
+    ".{$unique_id} .premium-icon-container img, " .
+    ".{$unique_id} .premium-icon-container .premium-icon-svg-class svg, " .
+    ".{$unique_id} .premium-icon-container .premium-lottie-animation svg"
+  );
+  $css->pbg_render_border($attr, 'groupIconBorder', 'Mobile');
+  $css->pbg_render_spacing($attr, 'groupIconPadding', 'padding', "Mobile");
+  $css->pbg_render_spacing($attr, 'groupIconMargin', 'margin', 'Mobile');
 
 	$css->stop_media_query();
 

@@ -22,7 +22,7 @@ function get_premium_button_group_css_style( $attr, $unique_id ) {
   $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
   $css->pbg_render_align_self($attr, 'align', 'align-self', 'Desktop');
 
-  $css->set_selector( $unique_id . ' .premium-button-group_wrap' );
+  $css->set_selector( $unique_id . '.wp-block-premium-buttons .premium-button-group_wrap' );
   $css->pbg_render_range($attr, 'buttonGap', 'column-gap', 'Desktop', null, '!important');
   $css->pbg_render_range($attr, 'buttonGap', 'row-gap', 'Desktop', null, '!important');
   $css->pbg_render_spacing($attr, 'groupMargin', 'margin', 'Desktop');
@@ -49,7 +49,7 @@ function get_premium_button_group_css_style( $attr, $unique_id ) {
   $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
   $css->pbg_render_align_self($attr, 'align', 'align-self', 'Tablet');
 
-	$css->set_selector( $unique_id . ' .premium-button-group_wrap' );
+	$css->set_selector( $unique_id . '.wp-block-premium-buttons .premium-button-group_wrap' );
   $css->pbg_render_range($attr, 'buttonGap', 'column-gap', 'Tablet', null, '!important');
   $css->pbg_render_range($attr, 'buttonGap', 'row-gap', 'Tablet', null, '!important');
   $css->pbg_render_spacing($attr, 'groupMargin', 'margin', 'Tablet');
@@ -77,7 +77,7 @@ function get_premium_button_group_css_style( $attr, $unique_id ) {
   $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
   $css->pbg_render_align_self($attr, 'align', 'align-self', 'Mobile');
 
-	$css->set_selector( $unique_id . ' .premium-button-group_wrap' );
+	$css->set_selector( $unique_id . '.wp-block-premium-buttons .premium-button-group_wrap' );
   $css->pbg_render_range($attr, 'buttonGap', 'column-gap', 'Mobile', null, '!important');
   $css->pbg_render_range($attr, 'buttonGap', 'row-gap', 'Mobile', null, '!important');
   $css->pbg_render_spacing($attr, 'groupMargin', 'margin', 'Mobile');

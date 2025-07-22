@@ -783,6 +783,12 @@ if ( ! class_exists( 'PBG_Post' ) ) {
                     let cols = parseInt('<?php echo esc_html( $value['columns']['Desktop'] ); ?>');
                     let tabletGap = Boolean('<?php echo esc_html($value['columnGap']['Tablet']) ?>');
                     let mobileGap = Boolean('<?php echo esc_html($value['columnGap']['Mobile']) ?>');
+				   let desktopWidth = Boolean('<?php echo esc_html($value['slidesWidth']['Desktop']) ?>');
+
+					let tabletWidth = Boolean('<?php echo esc_html($value['slidesWidth']['Tablet']) ?>');
+                    let mobileWidth = Boolean('<?php echo esc_html($value['slidesWidth']['Mobile']) ?>');
+					let fixedWidth = Boolean('<?php echo esc_html($value['fixedWidth']) ?>');
+
 	                  let scope = document.querySelector('.<?php echo esc_html( $key );?> .splide .splide__track .splide__list');
                     
                     if(cols > scope.children.length){
@@ -802,20 +808,25 @@ if ( ! class_exists( 'PBG_Post' ) ) {
                       ...(<?php echo esc_html( $value['slideToScroll'] ); ?> == 1 ? { focus: 0, omitEnd: true } : {}),
                       direction: '<?php echo esc_html( $is_rtl ? "rtl" : "ltr" ); ?>',
                       gap: '<?php echo esc_html($value['columnGap']['Desktop']) . esc_html($value['columnGap']['unit']['Desktop']); ?>',
+					  ...(fixedWidth  && desktopWidth? { fixedWidth : '<?php echo esc_html($value['slidesWidth']['Desktop']) . esc_html($value['slidesWidth']['unit']['Desktop']); ?>'} : {}),
                       breakpoints : {
                         1024: {
                           perPage: <?php echo esc_html( $tcolumns <= $value['query']['perPage'] ? $tcolumns : 1); ?>,
                           perMove: 1,
                           focus: 0,
                           omiteEnd: true,
-                          ...(tabletGap ? {gap: '<?php echo esc_html($value['columnGap']['Tablet']) . esc_html($value['columnGap']['unit']['Tablet']); ?>'} : {})
+                          ...(tabletGap ? {gap: '<?php echo esc_html($value['columnGap']['Tablet']) . esc_html($value['columnGap']['unit']['Tablet']); ?>'} : {}),
+						  ...(tabletWidth && fixedWidth ? {fixedWidth: '<?php echo esc_html($value['slidesWidth']['Tablet']) . esc_html($value['slidesWidth']['unit']['Tablet']); ?>'} : {}),
+
                         },
                         767: {
                           perPage: <?php echo esc_html( $mcolumns <= $value['query']['perPage'] ? $mcolumns : 1); ?>,
                           perMove: 1,
                           focus: 0,
                           omiteEnd: true,
-                          ...(mobileGap ? {gap: '<?php echo esc_html($value['columnGap']['Mobile']) . esc_html($value['columnGap']['unit']['Mobile']); ?>'} : {})
+						...(mobileWidth && fixedWidth ? {fixedWidth: '<?php echo esc_html($value['slidesWidth']['Mobile']) . esc_html($value['slidesWidth']['unit']['Mobile']); ?>'} : {}),
+
+                          ...(mobileGap ? {gap: '<?php echo esc_html($value['columnGap']['Mobile']) . esc_html($value['columnGap']['unit']['Mobile']); ?>'} : {}),
                         }
                       },
                     };

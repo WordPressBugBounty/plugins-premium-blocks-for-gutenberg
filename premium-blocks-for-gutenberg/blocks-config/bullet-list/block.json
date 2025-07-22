@@ -7,7 +7,7 @@
     "description": "Organize your website’s content with attractive lists using Premium Bullet List Block.",
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
-    "keywords": ["icon list", "image list", "bullet list"],
+    "keywords": ["icon list", "image list", "bullet list", "list", "content list"],
     "attributes": {
         "blockId": {
             "type": "string",

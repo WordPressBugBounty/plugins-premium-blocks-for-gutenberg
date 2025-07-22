@@ -20,82 +20,40 @@ function get_premium_pricing_table_css_style( $attr, $unique_id ) {
 
 	// Table.
 
-  if ( isset( $attr['tableStyles'][0]['tableBack'])){
-    $table_bg_color = $attr['tableStyles'][0]['tableBack'];
-
-    $css->set_selector( "{$unique_id}:not(:has(.premium-pricing-table))" );
-    $css->add_property( 'background-color' , $css->render_color($table_bg_color));
-
-    $css->set_selector( "{$unique_id} .premium-pricing-table" );
-    $css->add_property( 'background-color' , $css->render_color($table_bg_color));
-  }
-
-  if ( isset( $attr['tableBoxShadow'] ) ) {
-    $table_box_shadow = $attr['tableBoxShadow'];
-		$css->set_selector( "{$unique_id}:not(:has(.premium-pricing-table))" );
-		$css->add_property( 'box-shadow', $css->render_shadow( $table_box_shadow ) );
-
-		$css->set_selector( "{$unique_id} .premium-pricing-table" );
-		$css->add_property( 'box-shadow', $css->render_shadow( $table_box_shadow ) );
-	}
-
-  if ( isset( $attr['tableBorder'] ) ) {
-		$css->set_selector( "{$unique_id}:not(:has(.premium-pricing-table))" );
-		$css->render_border( $attr['tableBorder'], 'Desktop' );
-
-		$css->set_selector( "{$unique_id} .premium-pricing-table" );
-		$css->render_border( $attr['tableBorder'], 'Desktop' );
-	}
-
-	if ( isset( $attr['tablePadding'] ) ) {
-		$table_padding = $attr['tablePadding'];
-		$css->set_selector( "{$unique_id}:not(:has(.premium-pricing-table))" );
-		$css->add_property( 'padding', $css->render_spacing( $table_padding['Desktop'],isset($table_padding['unit']['Desktop'])?$table_padding['unit']['Desktop']:$table_padding['unit']  ) );
-		
-    $css->set_selector( "{$unique_id} .premium-pricing-table" );
-		$css->add_property( 'padding', $css->render_spacing( $table_padding['Desktop'],isset($table_padding['unit']['Desktop'])?$table_padding['unit']['Desktop']:$table_padding['unit']  ) );
-	}
+  $css->set_selector( 
+    "{$unique_id}:not(:has(.premium-pricing-table)), " .
+    "{$unique_id} .premium-pricing-table"
+  );
+  $css->pbg_render_border($attr, 'tableBorder', 'Desktop');
+  $css->pbg_render_spacing($attr, 'tablePadding', 'padding', 'Desktop');
+  $css->pbg_render_shadow($attr, 'tableBoxShadow', 'box-shadow');
+//   $css->pbg_render_color($attr, 'tableStyles[0].tableBack', 'background-color');
+  $css->pbg_render_background($attr, 'background', 'Desktop');
 
 	$css->start_media_query( 'tablet' );
 
 	// Table.
-	if ( isset( $attr['tableBorder'] ) ) {
-		$css->set_selector( "{$unique_id}:not(:has(.premium-pricing-table))" );
-		$css->render_border( $attr['tableBorder'], 'Tablet' );
+	$css->set_selector( 
+    "{$unique_id}:not(:has(.premium-pricing-table)), " .
+    "{$unique_id} .premium-pricing-table"
+  );
+  $css->pbg_render_border($attr, 'tableBorder', 'Tablet');
+  $css->pbg_render_spacing($attr, 'tablePadding', 'padding', 'Tablet');
+    $css->pbg_render_background($attr, 'background', 'Tablet');
 
-		$css->set_selector( "{$unique_id} .premium-pricing-table" );
-		$css->render_border( $attr['tableBorder'], 'Tablet' );
-	}
-
-	if ( isset( $attr['tablePadding'] ) ) {
-		$table_padding = $attr['tablePadding'];
-		$css->set_selector( "{$unique_id}:not(:has(.premium-pricing-table))" );
-		$css->add_property( 'padding', $css->render_spacing( $table_padding['Tablet'], isset($table_padding['unit']['Tablet']) ?$table_padding['unit']['Tablet']:$table_padding['unit'] ) );
-		
-    $css->set_selector( "{$unique_id} .premium-pricing-table" );
-		$css->add_property( 'padding', $css->render_spacing( $table_padding['Tablet'], isset($table_padding['unit']['Tablet']) ?$table_padding['unit']['Tablet']:$table_padding['unit'] ) );
-	}
 
 	$css->stop_media_query();
 	$css->start_media_query( 'mobile' );
 
 	// Table.
-	if ( isset( $attr['tableBorder'] ) ) {
-		$css->set_selector( "{$unique_id}:not(:has(.premium-pricing-table))" );
-		$css->render_border( $attr['tableBorder'], 'Mobile' );
+	$css->set_selector( 
+    "{$unique_id}:not(:has(.premium-pricing-table)), " .
+    "{$unique_id} .premium-pricing-table"
+  );
+    $css->pbg_render_border($attr, 'tableBorder', 'Mobile');
+    $css->pbg_render_spacing($attr, 'tablePadding', 'padding', 'Mobile');
+	$css->pbg_render_background($attr, 'background', 'Mobile');
 
-		$css->set_selector( "{$unique_id} .premium-pricing-table" );
-		$css->render_border( $attr['tableBorder'], 'Mobile' );
-	}
-
-	if ( isset( $attr['tablePadding'] ) ) {
-		$table_padding = $attr['tablePadding'];
-		$css->set_selector( "{$unique_id}:not(:has(.premium-pricing-table))" );
-		$css->add_property( 'padding', $css->render_spacing( $table_padding['Mobile'], isset( $table_padding['unit']['Mobile'])? $table_padding['unit']['Mobile']: $table_padding['unit'] ) );
-		
-    $css->set_selector( "{$unique_id} .premium-pricing-table" );
-		$css->add_property( 'padding', $css->render_spacing( $table_padding['Mobile'], isset( $table_padding['unit']['Mobile'])? $table_padding['unit']['Mobile']: $table_padding['unit'] ) );
-	}
 
 	$css->stop_media_query();
 	return $css->css_output();

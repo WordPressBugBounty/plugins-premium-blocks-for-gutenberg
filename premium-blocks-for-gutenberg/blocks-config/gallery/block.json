@@ -6,8 +6,7 @@
     "description": "Engage your Images in various layout",
     "name": "premium/gallery",
     "category": "premium-blocks",
-    "keywords": ["images", "photos"],
-
+    "keywords": ["images", "photos", "gallery", "image gallery", "photo gallery", "media gallery"],
     "attributes": {
         "blockId": {
             "type": "string"

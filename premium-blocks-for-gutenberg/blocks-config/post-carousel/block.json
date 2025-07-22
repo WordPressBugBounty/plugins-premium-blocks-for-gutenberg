@@ -5,6 +5,7 @@
     "title": "Post Carousel",
     "category": "premium-blocks",
     "description": "An advanced block that allows displaying post types based on different query parameters and visual configurations.",
+    "keywords": ["post", "carousel", "posts", "post carousel"],
     "textdomain": "premium-blocks-for-gutenberg",
 
     "attributes": {
@@ -62,6 +63,23 @@
                     "Mobile": "px"
                 }
             }
+        },
+        "slidesWidth": {
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "rem",
+                    "Tablet": "rem",
+                    "Mobile": "rem"
+                }
+            }
+        },
+        "fixedWidth": {
+            "type": "boolean",
+            "default": false
         },
         "columnGap": {
             "type": "object",

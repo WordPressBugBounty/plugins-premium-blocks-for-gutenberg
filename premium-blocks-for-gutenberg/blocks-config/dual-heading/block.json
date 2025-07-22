@@ -5,7 +5,7 @@
     "name": "premium/dheading-block",
     "title": "Dual Heading",
     "description": "Use Premium Dual Heading Block to create one heading with two different styles.",
-    "keywords": ["title", "heading", "text"],
+    "keywords": ["title", "heading", "text", "dual heading", "heading block"],
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
@@ -15,7 +15,7 @@
         "align": {
             "type": "object",
             "default": {
-                "Desktop": "",
+                "Desktop": "left",
                 "Tablet": "",
                 "Mobile": ""
             }

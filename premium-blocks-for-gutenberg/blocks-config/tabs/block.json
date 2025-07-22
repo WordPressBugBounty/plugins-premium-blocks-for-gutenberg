@@ -5,7 +5,7 @@
     "title": "Tabs",
     "category": "premium-blocks",
     "description": "For making advanced tabs with content",
-    "keywords": ["tabs"],
+    "keywords": ["tabs", "tab", "content", "accordion"],
     "textdomain": "default",
     "attributes": {
         "blockId": {
@@ -710,7 +710,15 @@
             "type": "string",
             "default": ""
         },
+        "iconBackground": {
+            "type": "string",
+            "default": ""
+        },
         "iconHoverColor": {
+            "type": "string",
+            "default": ""
+        },
+        "iconHoverBackground": {
             "type": "string",
             "default": ""
         },
@@ -719,6 +727,53 @@
             "default": "var(--pbg-global-color1,#0085BA)"
         },
         "iconBorder": {
+            "type": "object",
+            "default": {
+                "borderColor": "",
+                "borderType": "none",
+                "borderRadius": {
+                    "Desktop": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    }
+                },
+                "borderWidth": {
+                    "Desktop": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    }
+                }
+            }
+        },
+        "iconHoverBorder": {
             "type": "object",
             "default": {
                 "borderColor": "",

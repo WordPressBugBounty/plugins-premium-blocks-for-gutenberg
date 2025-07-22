@@ -5,7 +5,7 @@
     "name": "premium/testimonial",
     "title": "Testimonial",
     "description": "Proof your success by displaying customer reviews using Premium Testimonials Block.",
-    "keywords": ["testimonial", "Quote"],
+    "keywords": ["testimonial", "Quote", "review"],
     "textdomain": "premium-blocks-for-gutenberg",
     "category": "premium-blocks",
     "attributes": {

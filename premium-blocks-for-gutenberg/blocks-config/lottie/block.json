@@ -5,11 +5,7 @@
     "name": "premium/lottie",
     "title": "Lottie Animation",
     "description": "Bring life to your Gutenberg web page using Premium Lottie Animation.",
-    "keywords": [
-        "svg",
-        "Animation",
-        "canvas"
-    ],
+    "keywords": ["svg", "Animation", "canvas", "lottie"],
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {

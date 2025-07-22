@@ -1,0 +1,144 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "premium/badge",
+    "title": "Badge",
+    "category": "premium-blocks",
+    "description": "Badge Description.",
+    "keywords": ["badge"],
+    "textdomain": "premium-blocks-for-gutenberg",
+    "parent": ["premium/pricing-table"],
+    "attributes": {
+        "blockId": {
+            "type": "string"
+        },
+        "typography": {
+            "type": "object",
+            "default": {
+                "fontWeight": "400",
+                "fontStyle": "",
+                "letterSpacing": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": "px"
+                },
+                "fontFamily": "Default",
+                "lineHeight": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": "px"
+                },
+                "textDecoration": "",
+                "textTransform": "",
+                "fontSize": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": {
+                        "Desktop": "px",
+                        "Tablet": "px",
+                        "Mobile": "px"
+                    }
+                }
+            },
+            "isStyle": true
+        },
+        "color": {
+            "type": "string",
+            "default": "#fff",
+            "isStyle": true
+        },
+        "backgroundColor": {
+            "type": "string",
+            "default": "var(--pbg-global-color1,#0085BA)",
+            "isStyle": true
+        },
+        "text": {
+            "type": "string",
+            "source": "html",
+            "selector": ".premium-badge-wrap span",
+            "default": "New"
+        },
+        "textWidth": {
+            "type": "object",
+            "default": {
+                "Desktop": "80",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": "px"
+            },
+            "isStyle": true
+        },
+        "badgeSize": {
+            "type": "object",
+            "default": {
+                "Desktop": "130",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": "px"
+            },
+            "isStyle": true
+        },
+        "position": {
+            "type": "string",
+            "default": "right",
+            "isStyle": true
+        },
+        "vOffset": {
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
+        },
+        "hOffset": {
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
+        },
+        "type": {
+            "type": "string",
+            "default": "triangle",
+            "isStyle": true
+        },
+        "badgeCircleSize": {
+            "type": "object",
+            "default": {
+                "Desktop": "4",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": "em"
+            },
+            "isStyle": true
+        },
+        "boxShadow": {
+            "type": "object",
+            "default": {
+                "color": "transparent",
+                "blur": "10",
+                "horizontal": "0",
+                "vertical": "0",
+                "position": ""
+            },
+            "isStyle": true
+        }
+    }
+}

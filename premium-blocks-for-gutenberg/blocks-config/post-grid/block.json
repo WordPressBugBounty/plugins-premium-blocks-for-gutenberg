@@ -5,6 +5,7 @@
     "title": "Post Grid",
     "category": "premium-blocks",
     "description": "An advanced block that allows displaying post types based on different query parameters and visual configurations.",
+    "keywords": ["post", "grid", "posts", "post grid"],
     "textdomain": "premium-blocks-for-gutenberg",
 
     "attributes": {

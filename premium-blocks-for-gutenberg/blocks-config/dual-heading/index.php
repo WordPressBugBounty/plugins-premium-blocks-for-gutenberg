@@ -20,7 +20,6 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 
   $css->set_selector( $unique_id );
   $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
-  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Desktop');
   $css->pbg_render_border($attr, 'containerBorder', 'Desktop');
   $css->pbg_render_background($attr, 'background', 'Desktop');
   $css->pbg_render_spacing($attr, 'padding', 'padding', 'Desktop');
@@ -66,7 +65,6 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 
 	$css->set_selector( $unique_id );
   $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
-  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Tablet');
   $css->pbg_render_border($attr, 'containerBorder', 'Tablet');
   $css->pbg_render_background($attr, 'background', 'Tablet');
   $css->pbg_render_spacing($attr, 'padding', 'padding', 'Tablet');
@@ -98,7 +96,6 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 
 	$css->set_selector( $unique_id );
   $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
-  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Mobile');
   $css->pbg_render_border($attr, 'containerBorder', 'Mobile');
   $css->pbg_render_background($attr, 'background', 'Mobile');
   $css->pbg_render_spacing($attr, 'padding', 'padding', 'Mobile');

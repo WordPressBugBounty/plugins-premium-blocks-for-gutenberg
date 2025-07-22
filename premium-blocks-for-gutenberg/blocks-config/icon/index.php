@@ -21,10 +21,7 @@ function get_premium_icon_css_style($attr, $unique_id)
 	$css = new Premium_Blocks_css();
 
 	// Container Styles
-  $css->set_selector( '.' . $unique_id  );
-  $css->pbg_render_align_self($attr, 'iconAlign', 'align-self', 'Desktop');
-
-  $css->set_selector('.' . $unique_id . ' > .premium-icon-container');
+  $css->set_selector('.' . $unique_id . '.wp-block-premium-icon .premium-icon-container');
   $css->pbg_render_background($attr, 'containerBackground', 'Desktop');
   $css->pbg_render_border($attr, 'containerBorder', 'Desktop');
   $css->pbg_render_spacing($attr, 'wrapPadding', 'padding', 'Desktop');
@@ -97,10 +94,7 @@ function get_premium_icon_css_style($attr, $unique_id)
 	$css->start_media_query('tablet');
 
 	// Container Styles
-  $css->set_selector( '.' . $unique_id  );
-  $css->pbg_render_align_self($attr, 'iconAlign', 'align-self', 'Tablet');
-
-	$css->set_selector('.' . $unique_id . ' > .premium-icon-container');
+	$css->set_selector('.' . $unique_id . '.wp-block-premium-icon .premium-icon-container');
   $css->pbg_render_background($attr, 'containerBackground', 'Tablet');
   $css->pbg_render_border($attr, 'containerBorder', 'Tablet');
   $css->pbg_render_spacing($attr, 'wrapPadding', 'padding', 'Tablet');
@@ -152,10 +146,7 @@ function get_premium_icon_css_style($attr, $unique_id)
 	$css->start_media_query('mobile');
 
 	// Container Styles
-  $css->set_selector( '.' . $unique_id  );
-  $css->pbg_render_align_self($attr, 'iconAlign', 'align-self', 'Mobile');
-  
-	$css->set_selector('.' . $unique_id . ' > .premium-icon-container');
+  $css->set_selector('.' . $unique_id . '.wp-block-premium-icon .premium-icon-container');
   $css->pbg_render_background($attr, 'containerBackground', 'Mobile');
   $css->pbg_render_border($attr, 'containerBorder', 'Mobile');
   $css->pbg_render_spacing($attr, 'wrapPadding', 'padding', 'Mobile');

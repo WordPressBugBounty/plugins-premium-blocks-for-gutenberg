@@ -882,15 +882,16 @@ class Premium_Blocks_css {
       return false;
     }
 
-		if ( isset( $value_at_path['borderColor'] ) &&  ! empty( $value_at_path['borderColor'] ) && $value_at_path['borderColor'] !== 'Default' ) {
-			$this->add_property( 'border-color', $value_at_path['borderColor'] );
-		}
-		if ( isset( $value_at_path['borderType'] ) &&  ! empty( $value_at_path['borderType'] ) ) {
-			$this->add_property( 'border-style', $value_at_path['borderType'] );
+    if ( isset( $value_at_path['borderType'] ) &&  ! empty( $value_at_path['borderType'] ) ) {
+			$this->add_property( 'border-style', $value_at_path['borderType'] . $postfix );
 		}
 
-    $this->pbg_render_spacing($value_at_path, 'borderWidth', 'border-width', $device);
-    $this->pbg_render_spacing($value_at_path, 'borderRadius', 'border-radius', $device);
+		if ( isset( $value_at_path['borderColor'] ) &&  ! empty( $value_at_path['borderColor'] ) && $value_at_path['borderColor'] !== 'Default' ) {
+			$this->add_property( 'border-color', $value_at_path['borderColor'] . $postfix);
+		}
+
+    $this->pbg_render_spacing($value_at_path, 'borderWidth', 'border-width', $device, null, $postfix);
+    $this->pbg_render_spacing($value_at_path, 'borderRadius', 'border-radius', $device, null, $postfix);
   }
 
   public function pbg_render_range($attributes, $name, $property, $device = '', $prefix = '', $postfix = ''){

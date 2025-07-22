@@ -1,61 +1,51 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
-    "version": "0.1.0",
-    "name": "premium/section",
-    "title": "Section",
-    "description": "Engage your Gutenberg blocks using Premium Section Block.",
-    "keywords": ["section"],
-    "textdomain": "premium-blocks-for-gutenberg",
+    "name": "premium/text",
+    "title": "Text",
     "category": "premium-blocks",
+    "description": "Text Description.",
+    "keywords": ["text", "paragraph", "content", "typography"],
+    "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
-        "stretchSection": {
-            "type": "boolean",
-            "default": false
-        },
-        "innerWidthType": {
-            "type": "string",
-            "default": "boxed",
-            "isStyle": true
-        },
-        "isUpdated": {
-            "type": "boolean",
-            "default": false
-        },
-        "horAlign": {
-            "type": "object",
-            "default": {
-                "Desktop": "",
-                "Tablet": "",
-                "Mobile": ""
-            },
-            "isStyle": true
-        },
-        "height": {
-            "type": "string",
-            "default": "min",
-            "isStyle": true
-        },
-        "innerWidth": {
-            "type": "number",
-            "isStyle": true
-        },
-        "minHeight": {
-            "type": "number",
-            "isStyle": true
-        },
-        "minHeightUnit": {
-            "type": "string",
-            "default": "px",
-            "isStyle": true
-        },
-        "vPos": {
-            "type": "string",
-            "default": "top",
-            "isStyle": true
-        },
         "blockId": {
             "type": "string"
+        },
+        "text": {
+            "type": "string"
+        },
+        "typography": {
+            "type": "object",
+            "default": {
+                "fontWeight": "Default",
+                "fontStyle": "",
+                "letterSpacing": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": "px"
+                },
+                "fontFamily": "Default",
+                "lineHeight": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": "px"
+                },
+                "textDecoration": "",
+                "textTransform": "",
+                "fontSize": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": {
+                        "Desktop": "px",
+                        "Tablet": "px",
+                        "Mobile": "px"
+                    }
+                }
+            },
+            "isStyle": true
         },
         "padding": {
             "type": "object",
@@ -117,23 +107,12 @@
             },
             "isStyle": true
         },
-        "boxShadow": {
-            "type": "object",
-            "default": {
-                "color": "transparent",
-                "blur": "10",
-                "horizontal": "0",
-                "vertical": "0",
-                "position": " "
-            },
-            "isStyle": true
-        },
         "border": {
             "type": "object",
             "default": {
-                "borderType": "none",
                 "borderColor": "",
-                "borderWidth": {
+                "borderType": "none",
+                "borderRadius": {
                     "Desktop": {
                         "top": "",
                         "right": "",
@@ -154,7 +133,7 @@
                     },
                     "link": true
                 },
-                "borderRadius": {
+                "borderWidth": {
                     "Desktop": {
                         "top": "",
                         "right": "",
@@ -176,6 +155,30 @@
                     "link": true
                 }
             },
+            "isStyle": true
+        },
+        "textShadow": {
+            "type": "object",
+            "default": {
+                "color": "transparent",
+                "blur": "10",
+                "horizontal": "0",
+                "vertical": "0"
+            },
+            "isStyle": true
+        },
+        "align": {
+            "type": "object",
+            "default": {
+                "Desktop": "left",
+                "Tablet": "",
+                "Mobile": ""
+            },
+            "isStyle": true
+        },
+        "color": {
+            "type": "string",
+            "default": "",
             "isStyle": true
         },
         "background": {
@@ -210,11 +213,22 @@
             },
             "isStyle": true
         },
+        "textTag": {
+            "type": "string",
+            "default": "p"
+        },
         "classes": {
             "type": "string",
             "default": ""
+        },
+        "rotateText": {
+            "type": "object",
+            "default": {
+                "Desktop": 0,
+                "Tablet": "",
+                "Mobile": "",
+                "unit": "deg"
+            }
         }
-    },
-    "editorScript": "pbg-blocks-js",
-    "editorStyle": "premium-blocks-editor-css"
+    }
 }

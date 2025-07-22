@@ -7,7 +7,7 @@
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "description": "Display your latest Instagram posts and feeds on your website.",
-    "keywords": ["instagram", "instagram-feed"],
+    "keywords": ["instagram", "instagram-feed", "social media"],
     "attributes": {
         "blockId": {
             "type": "string"

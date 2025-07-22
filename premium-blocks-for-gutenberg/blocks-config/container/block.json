@@ -5,10 +5,7 @@
     "name": "premium/container",
     "title": "Container",
     "description": "Organize your Gutenberg Blocks into rows and sections.",
-    "keywords": [
-        "row",
-        "container"
-    ],
+    "keywords": ["row", "container", "section", "layout", "flexbox", "grid", "flex"],
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
@@ -563,7 +560,7 @@
         },
         "hoverOverlayOpacity": {
             "type": "number",
-            "default": 100,
+            "default": "",
             "isStyle": true
         },
         "hoverOverlayFilter": {
@@ -595,11 +592,7 @@
         },
         "equalHeightDevices": {
             "type": "array",
-            "default": [
-                "desktop",
-                "tablet",
-                "mobile"
-            ]
+            "default": ["desktop", "tablet", "mobile"]
         }
     },
     "editorScript": "pbg-blocks-js",

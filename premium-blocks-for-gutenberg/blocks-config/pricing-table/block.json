@@ -5,7 +5,7 @@
     "name": "premium/pricing-table",
     "title": "Pricing Table",
     "description": "Display your pricing plans in an elegant way using Premium Pricing Table Block.",
-    "keywords": ["Pricing", "Pricing Table"],
+    "keywords": ["Pricing", "Pricing Table", "Plans"],
     "textdomain": "premium-blocks-for-gutenberg",
     "category": "premium-blocks",
     "attributes": {
@@ -30,6 +30,38 @@
             ],
             "isStyle": true
         },
+        "background": {
+            "type": "object",
+            "default": {
+                "backgroundType": "",
+                "backgroundColor": "",
+                "backgroundImageID": "",
+                "backgroundImageURL": "",
+                "backgroundPosition": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundRepeat": {
+                    "Desktop": "no-repeat",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundSize": {
+                    "Desktop": "cover",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "fixed": false,
+                "gradientLocationOne": "0",
+                "gradientColorTwo": "",
+                "gradientLocationTwo": "100",
+                "gradientAngle": "180",
+                "gradientPosition": "center center",
+                "gradientType": "linear"
+            },
+            "isStyle": true
+        },
         "tableBoxShadow": {
             "type": "object",
             "default": {
@@ -44,7 +76,7 @@
         "tableBorder": {
             "type": "object",
             "default": {
-                "bordertype": "solid",
+                "borderType": "solid",
                 "borderColor": "var(--pbg-global-color4, #e1e1e1)",
                 "borderWidth": {
                     "Desktop": {

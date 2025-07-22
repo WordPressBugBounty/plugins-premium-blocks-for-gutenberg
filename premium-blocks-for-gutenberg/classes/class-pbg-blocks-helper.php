@@ -2242,10 +2242,10 @@ class PBG_Blocks_Helper
 				require_once PREMIUM_BLOCKS_PATH . "blocks-config/{$slug}/index.php";
 			}
 			if ('pricing-table' === $slug || 'icon-box' === $slug || 'person' === $slug) {
-				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/text.php';
+				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/text/index.php';
 				if ('pricing-table' === $slug) {
-					require_once PREMIUM_BLOCKS_PATH . 'blocks-config/price.php';
-					require_once PREMIUM_BLOCKS_PATH . 'blocks-config/badge.php';
+					require_once PREMIUM_BLOCKS_PATH . 'blocks-config/price/index.php';
+					require_once PREMIUM_BLOCKS_PATH . 'blocks-config/badge/index.php';
 				}
 				if ('pricing-table' === $slug || 'icon-box' === $slug || 'count-up' === $slug) {
 					require_once PREMIUM_BLOCKS_PATH . 'blocks-config/buttons/index.php';
@@ -2266,10 +2266,10 @@ class PBG_Blocks_Helper
 			} elseif ($slug === 'count-up') {
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/counter.php';
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/icon/index.php';
-				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/text.php';
+				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/text/index.php';
 			} elseif ($slug === 'testimonials') {
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/image.php';
-				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/text.php';
+				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/text/index.php';
 			} elseif ($slug === 'buttons') {
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/button/index.php';
 			} elseif ($slug === 'instagram-feed') {
@@ -2279,8 +2279,6 @@ class PBG_Blocks_Helper
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/list-item.php';
 			} elseif ($slug === 'tabs') {
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/tab-item/index.php';
-			} elseif ($slug === 'text') {
-				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/text.php';
 			} elseif ($slug === 'form') {
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/form-email.php';
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/form-name.php';

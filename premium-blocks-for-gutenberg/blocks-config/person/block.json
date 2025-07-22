@@ -5,7 +5,7 @@
     "name": "premium/person",
     "title": "Team Members",
     "description": "Show off your team members along with social links using Premium Team Members Block.",
-    "keywords": ["Team", "profile", "member", "person"],
+    "keywords": ["Team", "profile", "member", "person", "people"],
     "textdomain": "premium-blocks-for-gutenberg",
     "category": "premium-blocks",
     "attributes": {
@@ -13,8 +13,8 @@
             "type": "object",
             "default": {
                 "Desktop": "center",
-                "Tablet": "center",
-                "Mobile": "center"
+                "Tablet": "",
+                "Mobile": ""
             },
             "isStyle": true
         },

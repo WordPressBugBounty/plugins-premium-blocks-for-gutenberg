@@ -71,10 +71,12 @@ function get_premium_container_css_style($attr, $unique_id)
     $css->add_property('column-gap', isset($attr['columnGutter']['Desktop']) ? $css->render_range($attr['columnGutter'], 'Desktop') : '20px');
 
     // $css->add_property( 'column-gap', isset( $attr['columnGutter']['Desktop'] ) ? $attr['columnGutter']['Desktop'] . $attr['columnGutter']['unit'] : '20px' );
-    if (isset($attr['colWidth'])) {
-        $css->set_selector('.premium-container-' . $unique_id . ' , .premium-block-' . $unique_id);
+     if (isset($attr['colWidth'])) {
+        $css->set_selector('.wp-block-premium-container.premium-is-root-container .premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-is-root-container .premium-block-' . $unique_id);
         $css->add_property('max-width', $css->render_range($attr['colWidth'], 'Desktop'));
+        $css->add_property('width', '100%');
     }
+
     if (isset($attr['shapeTop'])) {
         $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-top-shape svg , .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-top-shape svg');
         $css->add_property('fill', $css->render_color($attr['shapeTop']['color']));
@@ -257,10 +259,12 @@ function get_premium_container_css_style($attr, $unique_id)
     $css->add_property('row-gap', isset($attr['rowGutter']['Tablet']) ? $css->render_range($attr['rowGutter'], 'Tablet') : '20px');
     $css->add_property('column-gap', isset($attr['columnGutter']['Tablet']) ? $css->render_range($attr['columnGutter'], 'Tablet') : '20px');
 
-    if (isset($attr['colWidth'])) {
-        $css->set_selector('.premium-container-' . $unique_id . ' , .premium-block-' . $unique_id);
+      if (isset($attr['colWidth'])) {
+        $css->set_selector('.wp-block-premium-container.premium-is-root-container .premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-is-root-container .premium-block-' . $unique_id);
         $css->add_property('max-width', $css->render_range($attr['colWidth'], 'Tablet'));
+        $css->add_property('width', '100%');
     }
+
     if (isset($attr['shapeTop'])) {
         $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-top-shape svg , .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-top-shape svg');
         $css->add_property('width', $css->render_range($attr['shapeTop']['width'], 'Tablet'));
@@ -375,10 +379,12 @@ function get_premium_container_css_style($attr, $unique_id)
     $css->add_property('row-gap', isset($attr['rowGutter']['Mobile']) ? $css->render_range($attr['rowGutter'], 'Mobile') : '20px');
     $css->add_property('column-gap', isset($attr['columnGutter']['Mobile']) ? $css->render_range($attr['columnGutter'], 'Mobile') : '20px');
 
-    if (isset($attr['colWidth'])) {
-        $css->set_selector('.premium-container-' . $unique_id . ' , .premium-block-' . $unique_id);
+      if (isset($attr['colWidth'])) {
+        $css->set_selector('.wp-block-premium-container.premium-is-root-container .premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-is-root-container .premium-block-' . $unique_id);
         $css->add_property('max-width', $css->render_range($attr['colWidth'], 'Mobile'));
+        $css->add_property('width', '100%');
     }
+
     if (isset($attr['shapeTop'])) {
         $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-top-shape svg , .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-top-shape svg');
         $css->add_property('width', $css->render_range($attr['shapeTop']['width'], 'Mobile'));

@@ -40,19 +40,13 @@ function get_premium_section_css_style( $attr, $unique_id ) {
 		$css->add_property( 'border-width', $css->render_spacing( $border_width['Desktop'], 'px' ) );
 		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Desktop'], 'px' ) );
 	}
-	if ( isset( $attr['horAlign'] ) ) {
-        $content_align      = $css->get_responsive_css( $attr['horAlign'], 'Desktop' );
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
-		$css->set_selector( $unique_id );
-		$css->add_property( 'text-align', $content_align );
-        $css->add_property( 'align-self',  $css->render_align_self($content_align) );
-				$css->set_selector( $unique_id  . ' .premium-section__content_wrap .premium-section__content_inner');
 
-		        $css->add_property( 'align-items',  $css->render_align_self($content_align) );
+  $css->set_selector( $unique_id );
+  $css->pbg_render_value($attr, 'horAlign', 'text-align', 'Desktop');
+  
+  $css->set_selector( $unique_id  . ' .premium-section__content_wrap .premium-section__content_inner');
+  $css->pbg_render_align_self($attr, 'horAlign', 'align-items', 'Desktop');
 
-
-	}
 	if ( isset( $attr['background'] ) ) {
 		$css->set_selector( $unique_id );
 		$css->render_background( $attr['background'], 'Desktop' );
@@ -83,14 +77,12 @@ function get_premium_section_css_style( $attr, $unique_id ) {
 		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
 	}
 
-	if ( isset( $attr['horAlign'] ) ) {
-	        $content_align      = $css->get_responsive_css( $attr['horAlign'], 'Tablet' );
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
-		$css->set_selector( $unique_id );
-		$css->add_property( 'text-align', $content_align );
-        $css->add_property( 'align-self',  $css->render_align_self($content_align) );
-	}
+	$css->set_selector( $unique_id );
+  $css->pbg_render_value($attr, 'horAlign', 'text-align', 'Tablet');
+  
+  $css->set_selector( $unique_id  . ' .premium-section__content_wrap .premium-section__content_inner');
+  $css->pbg_render_align_self($attr, 'horAlign', 'align-items', 'Tablet');
+
 	if ( isset( $attr['background'] ) ) {
 		$css->set_selector( $unique_id );
 		$css->render_background( $attr['background'], 'Tablet' );
@@ -122,14 +114,11 @@ function get_premium_section_css_style( $attr, $unique_id ) {
 		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
 	}
 
-	if ( isset( $attr['horAlign'] ) ) {
-        $content_align      = $css->get_responsive_css( $attr['horAlign'], 'Mobile' );
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
-		$css->set_selector( $unique_id );
-		$css->add_property( 'text-align', $content_align );
-        $css->add_property( 'align-self',  $css->render_align_self($content_align) );
-	}
+	$css->set_selector( $unique_id );
+  $css->pbg_render_value($attr, 'horAlign', 'text-align', 'Mobile');
+  
+  $css->set_selector( $unique_id  . ' .premium-section__content_wrap .premium-section__content_inner');
+  $css->pbg_render_align_self($attr, 'horAlign', 'align-items', 'Mobile');
     
 	if ( isset( $attr['background'] ) ) {
 		$css->set_selector( $unique_id );

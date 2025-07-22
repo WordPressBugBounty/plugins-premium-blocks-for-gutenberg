@@ -7,7 +7,7 @@
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "description": "Toggle between two different content using Premium Content Switcher Block.",
-    "keywords": ["content", "switcher"],
+    "keywords": ["content", "switcher", "content switcher"],
     "supports": {
         "html": false
     },

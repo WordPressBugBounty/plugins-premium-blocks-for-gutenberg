@@ -6,9 +6,7 @@
     "title": "Button",
     "description": "Add stylish buttons to your Gutenberg page using Premium Button Block.",
     "category": "premium-blocks",
-    "keywords": [
-        "button"
-    ],
+    "keywords": [ "button", "link", "call to action", "cta" ],
     "parent": [
         "premium/buttons",
         "premium/icon-box",

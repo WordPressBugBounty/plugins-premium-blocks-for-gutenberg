@@ -155,6 +155,16 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
         $css->add_property( 'color', $css->render_color($attr['iconColor'] ) );
 
     }
+      if(isset($attr['iconBackground'])){
+        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tab-link .premium-icon-type , " . $unique_id . '   .premium-tabs-nav li .premium-tab-link .premium-tabs-svg-class , ' . $unique_id  . "   .premium-tabs-nav .premium-tab-link .premium-icon-type:not(.icon-type-fe)  ," . $unique_id  . "  .premium-tabs-nav .premium-tab-link .premium-lottie-animation " );
+        $css->add_property( 'background-color', $css->render_color($attr['iconColor'] ) );
+
+    }
+       if(isset($attr['iconHoverBackground'])){
+        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tab-link:hover .premium-icon-type , " . $unique_id . '   .premium-tabs-nav li:hover .premium-tab-link .premium-tabs-svg-class , ' . $unique_id  . "   .premium-tabs-nav .premium-tab-link:hover .premium-icon-type:not(.icon-type-fe)  ," . $unique_id  . "  .premium-tabs-nav .premium-tab-link:hover .premium-lottie-animation " );
+        $css->add_property( 'background-color', $css->render_color($attr['iconColor'] ) );
+
+    }
 
     if(isset($attr['iconActiveColor'])){
         $css->set_selector( $unique_id  . "  .premium-tabs-nav li.active .premium-tab-link .premium-icon-type , " . $unique_id . '   .premium-tabs-nav li.active .premium-tab-link .premium-tabs-svg-class svg ,  ' . $unique_id  . "   .premium-tabs-nav li.active .premium-tab-link .premium-icon-type:not(.icon-type-fe) svg ," . $unique_id  . "  .premium-tabs-nav li.active .premium-tab-link .premium-icon-type:not(.icon-type-fe) svg > *" );
@@ -184,6 +194,14 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
        
 
         $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '  .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link img" );
+        $css->render_border( $border , 'Desktop' );
+
+    }
+      if ( isset( $attr['iconHoverBorder'] )  && $attr['iconHoverBorder']['borderType'] !== "none") {
+        $border        = $attr['iconHoverBorder'];
+       
+
+        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '   .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link img" );
         $css->render_border( $border , 'Desktop' );
 
     }
@@ -500,6 +518,14 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
         $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
       
     }
+       if ( isset( $attr['iconHoverBorder'] ) ) {
+        $border        = $attr['iconHoverBorder'];
+       
+
+        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '   .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link img" );
+        $css->render_border( $border , 'Tablet' );
+
+    }
 
 
 
@@ -769,6 +795,14 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
             $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
           
         }
+           if ( isset( $attr['iconHoverBorder'] ) ) {
+        $border        = $attr['iconHoverBorder'];
+       
+
+        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '   .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link img" );
+        $css->render_border( $border , 'Mobile' );
+
+    }
     
     
     

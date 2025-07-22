@@ -5,7 +5,7 @@
     "name": "premium/fancy-text",
     "title": "Animated Text ",
     "description": "Insert animated headlines across your Gutenberg page using Premium Fancy Text Block.",
-    "keywords": ["fancy-text", "animated-text", "animated"],
+    "keywords": ["fancy-text", "animated-text", "animated", "text-animation", "typing-effect", "text-effect"],
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {

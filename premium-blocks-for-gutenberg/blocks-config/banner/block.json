@@ -9,7 +9,8 @@
     "textdomain": "premium-blocks-for-gutenberg",
     "keywords": [
         "image",
-        "photo"
+        "photo",
+        "media"
     ],
     "attributes": {
         "blockId": {

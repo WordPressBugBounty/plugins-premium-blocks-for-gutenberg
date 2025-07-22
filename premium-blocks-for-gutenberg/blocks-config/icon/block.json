@@ -5,7 +5,7 @@
     "name": "premium/icon",
     "title": "Icon",
     "description": "Decorate your Gutenberg website using Premium Icon Block.",
-    "keywords": ["Icon", "Font Awesome"],
+    "keywords": ["Icon", "Font Awesome", "Dashicons", "Lottie", "SVG", "Icons", "icon block"],
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
@@ -74,7 +74,7 @@
         "iconAlign": {
             "type": "object",
             "default": {
-                "Desktop": "",
+                "Desktop": "center",
                 "Tablet": "",
                 "Mobile": ""
             },

@@ -5,14 +5,14 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.9
+Stable tag: 2.2.10
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
 Enhance the functionality and design capabilities of the Gutenberg editor using a batch of well-developed Gutenberg blocks and features that helps building professional-looking WordPress websites with minimum effort.
 
 == Description ==
-Take your WordPress website design to the next level with Premium Blocks for Gutenberg! This powerful plugin unlocks the full potential of the Gutenberg editor, providing you with a collection of advanced yet user-friendly blocks that go beyond the limitations of the default WordPress editor. Effortlessly create stunning and unique layouts, streamline your workflow, and achieve professional results without needing to write a single line of custom code.
+Take your WordPress website design to the next level with Free Blocks for Gutenberg! This powerful plugin unlocks the full potential of the Gutenberg editor, providing you with a collection of advanced yet user-friendly blocks that go beyond the limitations of the default WordPress editor. Effortlessly create stunning and unique layouts, streamline your workflow, and achieve professional results without needing to write a single line of custom code.
 
 
 Premium Blocks for Gutenberg undergoes continual evolution through weekly updates, introducing exciting new features and enhancements, and empowering you with complete control over every aspect of your WordPress website's design through a plethora of customization options.
@@ -28,13 +28,13 @@ Effortlessly create complex, responsive layouts using the power of Flexbox. Arra
 
 
 
-### Premium Blocks Global Settings for Gutenberg
+### Premium Blocks For Gutenberg Global Settings for Gutenberg Editor
 Save time and streamline your workflow by setting global styles and defaults for all your Gutenberg blocks. Customize fonts, colors, spacing, and more once and apply them seamlessly across your entire WordPress website.
 
 
 
 ### Presets and Variations for Various Gutenberg Blocks
-Elevate your website design in seconds with Premium Blocks for Gutenberg's extensive library of pre-designed presets and variations. Forget the hassle of starting from scratch – simply choose a preset that aligns with your vision, and then personalize it further with a variety of built-in variations.
+Elevate your website design in seconds with Free Blocks for Gutenberg's extensive library of pre-designed presets and variations. Forget the hassle of starting from scratch – simply choose a preset that aligns with your vision, and then personalize it further with a variety of built-in variations.
 
 
 
@@ -126,12 +126,22 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
-= 2.2.9 =  
-- New: Added a switcher to the Dual Heading block to reverse heading order.  
-- Fixed: Post Carousel offset issue.  
-- Fixed: Icon block spacing styles.  
-- Fixed: Section block alignment issue.  
-- Fixed: Dual Heading block layout issue.  
+= 2.2.10 =
+- Added: Background control option to the Pricing Table Gutenberg block.
+- Added: Fixed width setting for the Post Carousel Gutenberg block.
+- Added: Background options (normal and hover) for the Tabs block.
+- Tweak: Improved performance and enhanced Gutenberg compatibility for the following blocks: Pricing Table, Team Member, Icon, and Image.
+- Fixed: Unsaved changes prompt appearing when opening the editor.
+- Fixed: Background overlay option not functioning correctly.
+- Fixed: Styling issue in the Pricing Table badge.
+- Fixed: Block alignment issues across all blocks.
+
+= 2.2.9 =
+- New: Added a switcher to the Dual Heading block to reverse heading order.
+- Fixed: Post Carousel offset issue.
+- Fixed: Icon block spacing styles.
+- Fixed: Section block alignment issue.
+- Fixed: Dual Heading block layout issue.
 - Fixed: Button alignment on various screen sizes.
 
 = 2.2.8 =
@@ -340,7 +350,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.1.23 =
 - Added: Responsive controls for Badge Block.
-- Fixed: Container block issues within classes. 
+- Fixed: Container block issues within classes.
 - Fixed: Styling inconsistencies in the responsive mode for the Post Carousel block.
 - Fixed: Preview console errors in the editor.
 
@@ -399,7 +409,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 - Fixed: Styling problem with Heading Block Style 2.
 
 = 2.1.13 =
-- Added: Link Wrapper option to Container Block and Icon Box block. 
+- Added: Link Wrapper option to Container Block and Icon Box block.
 - Added: Added Alt and Caption options to the image block.
 - Fixed: Bullet List alignment issue.
 - Fixed: The Banner Block Content break when reloading the editor.
@@ -528,7 +538,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.0.20 =
 - Fixed: Responsive Alignment option doesn't work in Premium Icon Block.
-- Fixed: Shape divider of container block doesn't work properly. 
+- Fixed: Shape divider of container block doesn't work properly.
 
 = 2.0.19 =
 - Fixed: Block styles don't work in the header and footer template parts.

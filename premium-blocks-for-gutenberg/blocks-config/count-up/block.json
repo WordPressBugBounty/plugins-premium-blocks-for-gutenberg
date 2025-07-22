@@ -5,7 +5,7 @@
     "name": "premium/countup",
     "title": "Counter",
     "description": "Show off your facts and figures in an elegant way using Premium CountUp Block.",
-    "keywords": ["number", "count down", "count up", "counter"],
+    "keywords": ["number", "count down", "count up", "counter", "facts"],
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {

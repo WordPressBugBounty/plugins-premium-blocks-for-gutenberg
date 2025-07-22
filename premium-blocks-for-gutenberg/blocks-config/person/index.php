@@ -19,166 +19,60 @@ function get_premium_person_css_style( $attr, $unique_id ) {
 	$css = new Premium_Blocks_css();
 
 	// style for container
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
-	}
+  $css->set_selector( '.' . $unique_id );
+  $css->pbg_render_spacing($attr, 'contentPadding', 'padding', 'Desktop', null, '!important');
+  $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
 
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-text .premium-text-wrap' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
-	}
+  $css->set_selector( '.' . $unique_id . ' .premium-icon-group-horizontal' );
+  $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Desktop');
+	
+  $css->set_selector( '.' . $unique_id . ' .premium-icon-group-vertical' );
+  $css->pbg_render_align_self($attr, 'align', 'align-items', 'Desktop');
 
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-heading');
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
-	}
-
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-icon-group' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
-	}
-
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-icon-group-horizontal' );
-		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
-	}
-
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-image .premium-image-container' );
-		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
-	}
-
-	if ( isset( $attr['align'] ) ) {
-		$align      = $css->get_responsive_css( $attr['align'], 'Desktop' );
-		$flex_align = 'left' === $align ? 'flex-start' : 'center';
-		$flex_align = 'right' === $align ? 'flex-end' : $flex_align;
-
-		$css->set_selector( '.' . $unique_id . ' .premium-icon-group-vertical' );
-		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
-		$css->add_property( 'align-items', $flex_align );
-	}
-
-	// style for Content
-	if ( isset( $attr['contentPadding'] ) ) {
-		$content_padding = $attr['contentPadding'];
-		$css->set_selector( '.' . $unique_id );
-		$css->add_property( 'padding', $css->render_string( $css->render_spacing( $content_padding['Desktop'],isset($content_padding['unit']['Desktop'])?$content_padding['unit']['Desktop']:$content_padding['unit']  ) , '!important' ));
-	}
-	if ( isset( $attr['bottomOffset'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .is-style-style2 .premium-person-overall-container' );
-		$css->add_property( 'bottom', $css->render_range( $attr['bottomOffset'], 'Desktop' ) );
-	}
-
+  $css->set_selector( '.' . $unique_id . ' .premium-image-container' );
+  $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Desktop');
+	
+  $css->set_selector( '.' . $unique_id . ' .is-style-style2 .premium-person-overall-container' );
+  $css->pbg_render_range($attr, 'bottomOffset', 'bottom', 'Desktop');
+	
 	$css->start_media_query( 'tablet' );
 
 	// style for container
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
-	}
+	$css->set_selector( '.' . $unique_id );
+  $css->pbg_render_spacing($attr, 'contentPadding', 'padding', 'Tablet', null, '!important');
+  $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
 
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-text .premium-text-wrap' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
-	}
+  $css->set_selector( '.' . $unique_id . ' .premium-icon-group-horizontal' );
+  $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Tablet');
+	
+  $css->set_selector( '.' . $unique_id . ' .premium-icon-group-vertical' );
+  $css->pbg_render_align_self($attr, 'align', 'align-items', 'Tablet');
 
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-heading');
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
-	}
-
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-icon-group' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
-	}
-
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-icon-group-horizontal' );
-		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
-	}
-
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-image .premium-image-container' );
-		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
-	}
-
-	if ( isset( $attr['align'] ) ) {
-		$align      = $css->get_responsive_css( $attr['align'], 'Tablet' );
-		$flex_align = 'left' === $align ? 'flex-start' : 'center';
-		$flex_align = 'right' === $align ? 'flex-end' : $flex_align;
-
-		$css->set_selector( '.' . $unique_id . ' .premium-icon-group-vertical' );
-		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
-		$css->add_property( 'align-items', $flex_align );
-	}
-
-	// style for Content
-	if ( isset( $attr['contentPadding'] ) ) {
-		$content_padding = $attr['contentPadding'];
-		$css->set_selector( '.' . $unique_id );
-		$css->add_property( 'padding', $css->render_string( $css->render_spacing( $content_padding['Tablet'], isset($content_padding['unit']['Tablet'])?$content_padding['unit']['Tablet']:$content_padding['unit']  ) , '!important' ));
-	}
-	if ( isset( $attr['bottomOffset'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .is-style-style2 .premium-person-overall-container' );
-		$css->add_property( 'bottom', $css->render_range( $attr['bottomOffset'], 'Tablet' ) );
-	}
+  $css->set_selector( '.' . $unique_id . ' .premium-image-container' );
+  $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Tablet');
+	
+  $css->set_selector( '.' . $unique_id . ' .is-style-style2 .premium-person-overall-container' );
+  $css->pbg_render_range($attr, 'bottomOffset', 'bottom', 'Tablet');
 
 	$css->stop_media_query();
-
 	$css->start_media_query( 'mobile' );
 
 	// style for container
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
-	}
+	$css->set_selector( '.' . $unique_id );
+  $css->pbg_render_spacing($attr, 'contentPadding', 'padding', 'Mobile', null, '!important');
+  $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
 
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-text .premium-text-wrap' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
-	}
+  $css->set_selector( '.' . $unique_id . ' .premium-icon-group-horizontal' );
+  $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Mobile');
+	
+  $css->set_selector( '.' . $unique_id . ' .premium-icon-group-vertical' );
+  $css->pbg_render_align_self($attr, 'align', 'align-items', 'Mobile');
 
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-heading');
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
-	}
-
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-icon-group' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
-	}
-
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-icon-group-horizontal' );
-		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
-	}
-
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-image .premium-image-container' );
-		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
-	}
-
-	if ( isset( $attr['align'] ) ) {
-		$align      = $css->get_responsive_css( $attr['align'], 'Mobile' );
-		$flex_align = 'left' === $align ? 'flex-start' : 'center';
-		$flex_align = 'right' === $align ? 'flex-end' : $flex_align;
-
-		$css->set_selector( '.' . $unique_id . ' .premium-icon-group-vertical' );
-		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
-		$css->add_property( 'align-items', $flex_align );
-	}
-
-	// style for Content
-	if ( isset( $attr['contentPadding'] ) ) {
-		$content_padding = $attr['contentPadding'];
-		$css->set_selector( '.' . $unique_id );
-		$css->add_property( 'padding', $css->render_string( $css->render_spacing( $content_padding['Mobile'], isset($content_padding['unit']['Mobile'])?$content_padding['unit']['Mobile']:$content_padding['unit']  ) , '!important' ));
-	}
-	if ( isset( $attr['bottomOffset'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .is-style-style2 .premium-person-overall-container' );
-		$css->add_property( 'bottom', $css->render_range( $attr['bottomOffset'], 'Mobile' ) );
-	}
+  $css->set_selector( '.' . $unique_id . ' .premium-image-container' );
+  $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Mobile');
+	
+  $css->set_selector( '.' . $unique_id . ' .is-style-style2 .premium-person-overall-container' );
+  $css->pbg_render_range($attr, 'bottomOffset', 'bottom', 'Mobile');
 
 	$css->stop_media_query();
 	return $css->css_output();

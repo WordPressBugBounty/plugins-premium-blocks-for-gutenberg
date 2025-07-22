@@ -53,7 +53,6 @@ function get_premium_heading_css_style($attr, $unique_id)
 	// Align.
   $css->set_selector($unique_id);
   $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
-  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Desktop');
 
   $css->set_selector($unique_id . ' .premium-title-header');
   $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Desktop');
@@ -168,7 +167,6 @@ function get_premium_heading_css_style($attr, $unique_id)
 	// Align.
 	$css->set_selector($unique_id);
   $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
-  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Tablet');
 
   $css->set_selector($unique_id . ' .premium-title-header');
   $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Tablet');
@@ -256,7 +254,6 @@ function get_premium_heading_css_style($attr, $unique_id)
 	// Align.
 	$css->set_selector($unique_id);
   $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
-  $css->pbg_render_align_self($attr, 'align', 'align-self', 'Mobile');
 
   $css->set_selector($unique_id . ' .premium-title-header');
   $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Mobile');
