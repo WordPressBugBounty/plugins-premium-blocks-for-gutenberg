@@ -546,7 +546,7 @@ function render_block_pbg_off_canvas( $attributes, $content, $block ) {
     }
   }
 
-  if(isset($attributes['contentEntranceAnimation']['contentAnimation']) && is_array($attributes['contentEntranceAnimation']['contentAnimation'])){
+  if(isset($attributes['contentEntranceAnimation']['contentAnimation']) && $attributes['contentEntranceAnimation']['contentAnimation']){
     if (!wp_style_is('pbg-entrance-animation-css', 'enqueued')) {
       wp_enqueue_style(
         'pbg-entrance-animation-css',

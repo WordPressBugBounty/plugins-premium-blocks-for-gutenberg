@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.10
+Stable tag: 2.2.11
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -126,6 +126,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.11 =
+- Tweak: Improved performance and enhanced compatibility with Gutenberg for the Gallery block.
+- Tweak: Added playsinline support to the Video Gutenberg block.
+- Tweak: Increased the maximum number of columns in the Post Carousel block and ensured compatibility with classic themes.
+- Tweak: Enhanced the Gallery Gutenberg block to better support uploading multiple images at once.
+- Fix: Fixed spacing issues between the Team Member block and Section block when used together in the Person block.
+
 = 2.2.10 =
 - Added: Background control option to the Pricing Table Gutenberg block.
 - Added: Fixed width setting for the Post Carousel Gutenberg block.
@@ -136,12 +143,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 - Fixed: Styling issue in the Pricing Table badge.
 - Fixed: Block alignment issues across all blocks.
 
-= 2.2.9 =
-- New: Added a switcher to the Dual Heading block to reverse heading order.
-- Fixed: Post Carousel offset issue.
-- Fixed: Icon block spacing styles.
-- Fixed: Section block alignment issue.
-- Fixed: Dual Heading block layout issue.
+= 2.2.9 =  
+- New: Added a switcher to the Dual Heading block to reverse heading order.  
+- Fixed: Post Carousel offset issue.  
+- Fixed: Icon block spacing styles.  
+- Fixed: Section block alignment issue.  
+- Fixed: Dual Heading block layout issue.  
 - Fixed: Button alignment on various screen sizes.
 
 = 2.2.8 =
@@ -350,7 +357,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.1.23 =
 - Added: Responsive controls for Badge Block.
-- Fixed: Container block issues within classes.
+- Fixed: Container block issues within classes. 
 - Fixed: Styling inconsistencies in the responsive mode for the Post Carousel block.
 - Fixed: Preview console errors in the editor.
 
@@ -409,7 +416,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 - Fixed: Styling problem with Heading Block Style 2.
 
 = 2.1.13 =
-- Added: Link Wrapper option to Container Block and Icon Box block.
+- Added: Link Wrapper option to Container Block and Icon Box block. 
 - Added: Added Alt and Caption options to the image block.
 - Fixed: Bullet List alignment issue.
 - Fixed: The Banner Block Content break when reloading the editor.
@@ -538,7 +545,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.0.20 =
 - Fixed: Responsive Alignment option doesn't work in Premium Icon Block.
-- Fixed: Shape divider of container block doesn't work properly.
+- Fixed: Shape divider of container block doesn't work properly. 
 
 = 2.0.19 =
 - Fixed: Block styles don't work in the header and footer template parts.

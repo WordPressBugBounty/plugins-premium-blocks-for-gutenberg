@@ -971,17 +971,14 @@ class PBG_Blocks_Helper
 				'style_func' => 'get_premium_instagram_feed_posts_css',
 			),
 			'premium/post-carousel'         => array(
-				'name'       => 'post',
+				'name'       => 'post-carousel',
 				'style_func' => array('PBG_Post', 'get_premium_post_css_style'),
 			),
 			'premium/post-grid'             => array(
-				'name'       => 'post',
+				'name'       => 'post-grid',
 				'style_func' => array('PBG_Post', 'get_premium_post_css_style'),
 			),
-			'premium/post'                  => array(
-				'name'       => 'post',
-				'style_func' => array('PBG_Post', 'get_premium_post_css_style'),
-			),
+		
 			'premium/svg-draw'              => array(
 				'name'       => 'svg-draw',
 				'style_func' => 'get_premium_svg_draw_css_style',
@@ -1173,7 +1170,11 @@ class PBG_Blocks_Helper
 			}
 
 			if (! file_exists(PREMIUM_BLOCKS_PATH . "assets/css/minified/{$slug}.min.css")) {
-				continue;
+        if ($slug === 'post-grid' || $slug=== 'post-carousel') {
+			$this->add_block_css("assets/css/minified/post.min.css");
+        }else{
+			continue;
+		}
 			}
 
 			$this->add_block_css("assets/css/minified/{$slug}.min.css");
@@ -1862,10 +1863,14 @@ class PBG_Blocks_Helper
 					$generate_css->pbg_add_css('assets/css/minified/instagram-feed-header.min.css');
 					$generate_css->pbg_add_css('assets/css/minified/instagram-feed-posts.min.css');
 				}
-				if ('post-carousel' === $slug || 'post-grid' === $slug || 'post-masonary' === $slug) {
+				if ('post-carousel' === $slug || 'post-grid' === $slug ) {
 					$generate_css->pbg_add_css('assets/css/minified/post.min.css');
-					$generate_css->pbg_add_css('assets/css/minified/splide.min.css');
-				} elseif ('form' === $slug) {
+				} 
+				if('post-carousel'=== $slug){
+				$generate_css->pbg_add_css('assets/css/minified/splide.min.css');
+
+				}
+				elseif ('form' === $slug) {
 					$generate_css->pbg_add_css('assets/css/minified/form-toggle.min.css');
 					$generate_css->pbg_add_css('assets/css/minified/form-checkbox.min.css');
 					$generate_css->pbg_add_css('assets/css/minified/form-radio.min.css');

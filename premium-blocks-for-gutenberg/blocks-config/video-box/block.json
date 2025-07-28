@@ -5,9 +5,7 @@
     "name": "premium/video-box",
     "title": "Video Box",
     "description": "Embed YouTube, Vimeo, Dailymotion, or upload a Custom Video using Premium Video Box Block.zz",
-    "keywords": [
-        "video"
-    ],
+    "keywords": ["video", "youtube", "vimeo", "dailymotion", "custom video"],
     "category": "premium-blocks",
     "attributes": {
         "blockId": {
@@ -43,6 +41,10 @@
             "default": true
         },
         "mute": {
+            "type": "boolean",
+            "default": false
+        },
+        "playInline": {
             "type": "boolean",
             "default": false
         },

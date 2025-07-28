@@ -157,12 +157,12 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
     }
       if(isset($attr['iconBackground'])){
         $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tab-link .premium-icon-type , " . $unique_id . '   .premium-tabs-nav li .premium-tab-link .premium-tabs-svg-class , ' . $unique_id  . "   .premium-tabs-nav .premium-tab-link .premium-icon-type:not(.icon-type-fe)  ," . $unique_id  . "  .premium-tabs-nav .premium-tab-link .premium-lottie-animation " );
-        $css->add_property( 'background-color', $css->render_color($attr['iconColor'] ) );
+        $css->add_property( 'background-color', $css->render_color($attr['iconBackground'] ) );
 
     }
        if(isset($attr['iconHoverBackground'])){
         $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tab-link:hover .premium-icon-type , " . $unique_id . '   .premium-tabs-nav li:hover .premium-tab-link .premium-tabs-svg-class , ' . $unique_id  . "   .premium-tabs-nav .premium-tab-link:hover .premium-icon-type:not(.icon-type-fe)  ," . $unique_id  . "  .premium-tabs-nav .premium-tab-link:hover .premium-lottie-animation " );
-        $css->add_property( 'background-color', $css->render_color($attr['iconColor'] ) );
+        $css->add_property( 'background-color', $css->render_color($attr['iconHoverBackground'] ) );
 
     }
 

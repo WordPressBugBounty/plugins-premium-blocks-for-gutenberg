@@ -28,7 +28,7 @@
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
-                    "unit": "px"
+                    "Mobile": "px"
                 }
             }
         },
@@ -42,7 +42,7 @@
         },
         "thumbnail": {
             "type": "string",
-            "default": "full"
+            "default": "fill"
         },
         "imageSize": {
             "type": "string",
@@ -54,7 +54,7 @@
         },
         "moreButtonText": {
             "type": "string",
-            "default": "Load More"
+            "default": "Show More"
         },
         "initalNumImg": {
             "type": "number",
@@ -68,7 +68,7 @@
             "type": "object",
             "default": {
                 "Desktop": "center",
-                "Tablet": "center",
+                "Tablet": "",
                 "Mobile": ""
             },
             "isStyle": true
@@ -84,7 +84,7 @@
         },
         "gradientLocationOne": {
             "type": "number",
-            "default": "0",
+            "default": 0,
             "isStyle": true
         },
         "gradientColorTwo": {
@@ -94,7 +94,7 @@
         },
         "gradientLocationTwo": {
             "type": "number",
-            "default": "100",
+            "default": 100,
             "isStyle": true
         },
         "gradientAngle": {
@@ -121,7 +121,7 @@
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
-                    "unit": "px"
+                    "Mobile": "px"
                 }
             },
             "isStyle": true
@@ -129,13 +129,13 @@
         "gradientPos": {
             "type": "object",
             "default": {
-                "Desktop": "0",
+                "Desktop": 0,
                 "Tablet": "",
                 "Mobile": "",
                 "unit": {
                     "Desktop": "%",
                     "Tablet": "%",
-                    "unit": "%"
+                    "Mobile": "%"
                 }
             },
             "isStyle": true
@@ -161,7 +161,6 @@
                 }
             ]
         },
-
         "shuffleImages": {
             "type": "boolean",
             "default": false
@@ -170,41 +169,26 @@
             "type": "boolean",
             "default": false
         },
-        "activeIndex": {
-            "type": "number",
-            "default": 0
-        },
         "catAlign": {
             "type": "object",
             "default": {
                 "Desktop": "center",
-                "Tablet": "center",
-                "Mobile": "center"
+                "Tablet": "",
+                "Mobile": ""
             },
             "isStyle": true
-        },
-        "mediaGallery": {
-            "type": "array",
-            "default": []
-        },
-        "mediaIDs": {
-            "type": "array",
-            "default": []
         },
         "repeaterMedia": {
             "type": "array",
             "default": [],
             "isStyle": true
         },
-        "youtubeThumbnil": {
-            "type": "string"
-        },
         "imgGap": {
             "type": "object",
             "default": {
                 "Desktop": "10",
-                "Tablet": "10",
-                "Mobile": "10",
+                "Tablet": "",
+                "Mobile": "",
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
@@ -226,7 +210,7 @@
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
-                    "unit": "px"
+                    "Mobile": "px"
                 }
             },
             "isStyle": true
@@ -235,20 +219,10 @@
             "type": "string",
             "default": "zoomin"
         },
-        "rtlMode": {
-            "type": "boolean",
-            "default": false
-        },
-
         "linksIcon": {
             "type": "string",
             "default": "dashicons admin-links"
         },
-        "vedioIcon": {
-            "type": "string",
-            "default": "dashicons admin-collapse"
-        },
-
         "contentAlign": {
             "type": "object",
             "default": {
@@ -261,10 +235,6 @@
         "enableLightbox": {
             "type": "boolean",
             "default": true
-        },
-        "lightboxStyle": {
-            "type": "string",
-            "default": "pp_default"
         },
         "lightBoxIcon": {
             "type": "string",
@@ -501,11 +471,11 @@
         "imgHoverfilter": {
             "type": "object",
             "default": {
-                "contrast": "",
-                "blur": "",
-                "bright": "",
-                "saturation": "",
-                "hue": ""
+                "contrast": "100",
+                "blur": "0",
+                "bright": "100",
+                "saturation": "100",
+                "hue": "0"
             }
         },
         "imgMargin": {
@@ -590,8 +560,8 @@
                     "Mobile": "",
                     "unit": "px"
                 },
-                "textDecoration": "none",
-                "textTransform": "none",
+                "textDecoration": "",
+                "textTransform": "",
                 "fontSize": {
                     "Desktop": "",
                     "Tablet": "",
@@ -611,11 +581,7 @@
                 "Desktop": "",
                 "Tablet": "",
                 "Mobile": "",
-                "unit": {
-                    "Desktop": "px",
-                    "Tablet": "px",
-                    "Mobile": "px"
-                }
+                "unit": "px"
             },
             "isStyle": true
         },
@@ -641,8 +607,8 @@
                     "Mobile": "",
                     "unit": "px"
                 },
-                "textDecoration": "none",
-                "textTransform": "none",
+                "textDecoration": "",
+                "textTransform": "",
                 "fontSize": {
                     "Desktop": "",
                     "Tablet": "",
@@ -837,8 +803,8 @@
             "type": "object",
             "default": {
                 "Desktop": "25",
-                "Tablet": "25",
-                "Mobile": "25",
+                "Tablet": "",
+                "Mobile": "",
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
@@ -1123,8 +1089,8 @@
                     "Mobile": "",
                     "unit": "px"
                 },
-                "textDecoration": "none",
-                "textTransform": "none",
+                "textDecoration": "",
+                "textTransform": "",
                 "fontSize": {
                     "Desktop": "",
                     "Tablet": "",
@@ -1401,8 +1367,8 @@
                     "Mobile": "",
                     "unit": "px"
                 },
-                "textDecoration": "none",
-                "textTransform": "none",
+                "textDecoration": "",
+                "textTransform": "",
                 "fontSize": {
                     "Desktop": "",
                     "Tablet": "",
@@ -1419,10 +1385,6 @@
         "btnColor": {
             "type": "string",
             "default": ""
-        },
-        "spinnerColor": {
-            "type": "string",
-            "default": "#54595F"
         },
         "btnTextShadow": {
             "type": "object",
@@ -1589,19 +1551,6 @@
         "btnColorHover": {
             "type": "string",
             "default": ""
-        },
-        "spinnerColorHover": {
-            "type": "string",
-            "default": ""
-        },
-        "btnTextShadowHover": {
-            "type": "object",
-            "default": {
-                "color": "transparent",
-                "blur": "10",
-                "horizontal": "0",
-                "vertical": "0"
-            }
         },
         "btnBGHover": {
             "type": "object",

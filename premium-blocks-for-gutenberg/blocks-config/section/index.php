@@ -19,18 +19,12 @@
 function get_premium_section_css_style( $attr, $unique_id ) {
 	$css = new Premium_Blocks_css();
 
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Desktop'], isset( $padding['unit']['Desktop'] ) ? $padding['unit']['Desktop'] : $padding['unit'] ) , '!important' );
-	}
-
-	if ( isset( $attr['margin'] ) ) {
-		$margin = $attr['margin'];
-		$css->set_selector( "body .entry-content {$unique_id}.premium-section" );
-		$css->add_property( 'margin', $css->render_spacing( $margin['Desktop'], isset( $margin['unit']['Desktop'] ) ? $margin['unit']['Desktop'] : $margin['unit'] ) );
-	}
-
+  $css->set_selector( $unique_id );
+  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Desktop', null, '!important');
+	
+  $css->set_selector( "body .entry-content {$unique_id}.premium-section" );
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Desktop');
+	
 	if ( isset( $attr['border'] ) ) {
 		$border        = $attr['border'];
 		$border_width  = $border['borderWidth'];
@@ -55,17 +49,11 @@ function get_premium_section_css_style( $attr, $unique_id ) {
 
 	$css->start_media_query( 'tablet' );
 
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Tablet'], isset( $padding['unit']['Tablet'] ) ? $padding['unit']['Tablet'] : $padding['unit'] ) );
-	}
+	$css->set_selector( $unique_id );
+  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Tablet', null, '!important');
 
-	if ( isset( $attr['margin'] ) ) {
-		$margin = $attr['margin'];
-		$css->set_selector( "body .entry-content {$unique_id}.premium-section" );
-		$css->add_property( 'margin', $css->render_spacing( $margin['Tablet'], isset( $margin['unit']['Tablet'] ) ? $margin['unit']['Tablet'] : $margin['unit'] ) );
-	}
+	$css->set_selector( "body .entry-content {$unique_id}.premium-section" );
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Tablet');
 
 	if ( isset( $attr['border'] ) ) {
 		$border        = $attr['border'];
@@ -92,17 +80,11 @@ function get_premium_section_css_style( $attr, $unique_id ) {
 
 	$css->start_media_query( 'mobile' );
 
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Mobile'], isset( $padding['unit']['Mobile'] ) ? $padding['unit']['Mobile'] : $padding['unit'] ) );
-	}
+	$css->set_selector( $unique_id );
+  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Mobile', null, '!important');
 
-	if ( isset( $attr['margin'] ) ) {
-		$margin = $attr['margin'];
-		$css->set_selector( "body .entry-content {$unique_id}.premium-section" );
-		$css->add_property( 'margin', $css->render_spacing( $margin['Mobile'], isset( $margin['unit']['Mobile'] ) ? $margin['unit']['Mobile'] : $margin['unit'] ) );
-	}
+	$css->set_selector( "body .entry-content {$unique_id}.premium-section" );
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Mobile');
 
 	if ( isset( $attr['border'] ) ) {
 		$border        = $attr['border'];

@@ -26,11 +26,30 @@ function get_premium_accordion_css_style( $attr, $unique_id ) {
 			$css->add_property( 'background-color', $css->render_color( $title_styles['titleBack'] ) );
 		}
 	
-if(isset( $title_styles['titleColor'] )){
-	$css->set_selector( ".{$unique_id} .premium-accordion__title_wrap .premium-accordion__title_text" );
-		$css->add_property( 'color', $css->render_color( $title_styles['titleColor'] ) );
-}
-	
+		if(isset( $title_styles['titleColor'] )){
+			$css->set_selector( ".{$unique_id} .premium-accordion__title_wrap .premium-accordion__title_text" );
+				$css->add_property( 'color', $css->render_color( $title_styles['titleColor'] ) );
+		}
+			
+	}
+	if(isset($attr['titleHoverBack'] )){
+		$css->set_selector( ".{$unique_id}  .premium-accordion__title_wrap:hover" );
+		$css->add_property( 'background-color', $css->render_color( $attr['titleHoverBack'] ) );
+	}
+
+	if(isset( $attr['titleHoverColor'] )){
+		$css->set_selector( ".{$unique_id} .premium-accordion__title_wrap:hover .premium-accordion__title_text" );
+			$css->add_property( 'color', $css->render_color( $attr['titleHoverColor'] ) );
+	}
+
+		if(isset($attr['titleActiveBack'] )){
+		$css->set_selector( ".{$unique_id} .is-active  .premium-accordion__title_wrap" );
+		$css->add_property( 'background-color', $css->render_color( $attr['titleActiveBack'] ) );
+	}
+
+	if(isset( $attr['titleActiveColor'] )){
+		$css->set_selector( ".{$unique_id}  .is-active .premium-accordion__title_wrap .premium-accordion__title_text" );
+			$css->add_property( 'color', $css->render_color( $attr['titleActiveColor'] ) );
 	}
 	if ( isset( $attr['arrowStyles'] ) && isset( $attr['arrowStyles'][0] ) ) {
 		$arrows_styles = $attr['arrowStyles'][0];
@@ -51,6 +70,50 @@ if(isset( $title_styles['titleColor'] )){
 		$css->add_property( 'height', $css->render_string( $arrows_styles['arrowSize'], 'px' ) );
 	}
 
+		if ( isset( $attr['arrowStyles'] ) && isset( $attr['arrowStyles'][0] ) ) {
+		$arrows_styles = $attr['arrowStyles'][0];
+		$css->set_selector( ".{$unique_id} .premium-accordion__icon_wrap" );
+		$css->add_property( 'padding', $css->render_string( $arrows_styles['arrowPadding'], 'px' ) );
+		$css->add_property( 'border-radius', $css->render_string( $arrows_styles['arrowRadius'], 'px' ) );
+		if(isset($arrows_styles['arrowBack'])){
+			$css->add_property( 'background-color', $css->render_color( $arrows_styles['arrowBack'] ) );
+
+		}
+
+		$css->set_selector( ".{$unique_id} .premium-accordion__icon_wrap svg.premium-accordion__icon" );
+		if(isset($arrows_styles['arrowColor'])){
+			$css->add_property( 'fill', $css->render_color( $arrows_styles['arrowColor'] ) );
+
+		}
+		$css->add_property( 'width', $css->render_string( $arrows_styles['arrowSize'], 'px' ) );
+		$css->add_property( 'height', $css->render_string( $arrows_styles['arrowSize'], 'px' ) );
+	}
+	if(isset($attr['arrowHoverBack'])){
+		$css->set_selector( ".{$unique_id} .premium-accordion__icon_wrap:hover" );
+
+		$css->add_property( 'background-color', $css->render_color( $attr['arrowHoverBack'] ) );
+
+	}
+
+	if(isset($attr['arrowHoverColor'])){
+		$css->set_selector( ".{$unique_id} .premium-accordion__icon_wrap:hover svg.premium-accordion__icon" );
+
+		$css->add_property( 'fill', $css->render_color( $attr['arrowHoverColor'] ) );
+
+	}
+	if(isset($attr['arrowActiveBack'])){
+		$css->set_selector( ".{$unique_id} .is-active .premium-accordion__icon_wrap" );
+
+		$css->add_property( 'background-color', $css->render_color( $attr['arrowActiveBack'] ) );
+
+	}
+
+	if(isset($attr['arrowActiveColor'])){
+		$css->set_selector( ".{$unique_id} .is-active .premium-accordion__icon_wrap svg.premium-accordion__icon" );
+
+		$css->add_property( 'fill', $css->render_color( $attr['arrowActiveColor'] ) );
+
+	}
 	if ( isset( $attr['titleShadow'] ) ) {
 		$title_shadow = $attr['titleShadow'];
 		$css->set_selector( ".{$unique_id} .premium-accordion__title_wrap .premium-accordion__title_text" );

@@ -342,6 +342,38 @@
         "expandFirstItem": {
             "type": "boolean",
             "default": true
+        },
+        "titleHoverColor": {
+            "type": "string",
+            "default": ""
+        },
+        "titleHoverBack": {
+            "type": "string",
+            "default": ""
+        },
+        "titleActiveColor": {
+            "type": "string",
+            "default": ""
+        },
+        "titleActiveBack": {
+            "type": "string",
+            "default": ""
+        },
+        "arrowHoverColor": {
+            "type": "string",
+            "default": ""
+        },
+        "arrowHoverBack": {
+            "type": "string",
+            "default": ""
+        },
+        "arrowActiveColor": {
+            "type": "string",
+            "default": ""
+        },
+        "arrowActiveBack": {
+            "type": "string",
+            "default": ""
         }
     },
     "editorScript": "pbg-blocks-js",
