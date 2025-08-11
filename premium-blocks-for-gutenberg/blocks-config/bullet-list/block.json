@@ -7,7 +7,13 @@
     "description": "Organize your website’s content with attractive lists using Premium Bullet List Block.",
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
-    "keywords": ["icon list", "image list", "bullet list", "list", "content list"],
+    "keywords": [
+        "icon list",
+        "image list",
+        "bullet list",
+        "list",
+        "content list"
+    ],
     "attributes": {
         "blockId": {
             "type": "string",
@@ -20,78 +26,6 @@
                 "Tablet": "",
                 "Mobile": ""
             },
-            "isStyle": true
-        },
-        "repeaterBulletList": {
-            "type": "array",
-            "default": [
-                {
-                    "id": 1,
-                    "label": "Title #1",
-                    "image_icon": "icon",
-                    "icon": "ic_circleRight",
-                    "imageURL": "",
-                    "imageID": "",
-                    "icon_color": "",
-                    "label_color": "",
-                    "icon_hover_color": "",
-                    "label_hover_color": "",
-                    "icon_bg_color": "",
-                    "icon_bg_hover_color": "",
-                    "item_bg_color": "",
-                    "item_bg_hover_color": "",
-                    "link": "#",
-                    "target": false,
-                    "disableLink": true,
-                    "showContent": false,
-                    "showBulletIcon": true,
-                    "linkTarget": false
-                },
-                {
-                    "id": 2,
-                    "label": "Title #2",
-                    "image_icon": "icon",
-                    "icon": "ic_circleRight",
-                    "imageURL": "",
-                    "imageID": "",
-                    "icon_color": "",
-                    "label_color": "",
-                    "icon_hover_color": "",
-                    "label_hover_color": "",
-                    "icon_bg_color": "",
-                    "icon_bg_hover_color": "",
-                    "item_bg_color": "",
-                    "item_bg_hover_color": "",
-                    "link": "#",
-                    "target": false,
-                    "disableLink": true,
-                    "showContent": false,
-                    "showBulletIcon": true,
-                    "linkTarget": false
-                },
-                {
-                    "id": 3,
-                    "label": "Title #3",
-                    "image_icon": "icon",
-                    "icon": "ic_circleRight",
-                    "imageURL": "",
-                    "imageID": "",
-                    "icon_color": "",
-                    "label_color": "",
-                    "icon_hover_color": "",
-                    "label_hover_color": "",
-                    "icon_bg_color": "",
-                    "icon_bg_hover_color": "",
-                    "item_bg_color": "",
-                    "item_bg_hover_color": "",
-                    "link": "#",
-                    "target": false,
-                    "disableLink": true,
-                    "showContent": false,
-                    "showBulletIcon": true,
-                    "linkTarget": false
-                }
-            ],
             "isStyle": true
         },
         "bulletIconStyles": {
@@ -113,8 +47,7 @@
             "default": [
                 {
                     "titleColor": "",
-                    "titleHoverColor": "",
-                    "titlemarginType": "px"
+                    "titleHoverColor": ""
                 }
             ],
             "isStyle": true
@@ -124,9 +57,7 @@
             "default": [
                 {
                     "generalBackgroundColor": "",
-                    "generalHoverBackgroundColor": "",
-                    "generalpaddingUnit": "px",
-                    "generalmarginType": "px"
+                    "generalHoverBackgroundColor": ""
                 }
             ],
             "isStyle": true
@@ -295,13 +226,68 @@
             },
             "isStyle": true
         },
+        "itemBorder": {
+            "type": "object",
+            "default": {
+                "borderType": "",
+                "borderColor": "",
+                "borderWidth": {
+                    "Desktop": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "link": true
+                },
+                "borderRadius": {
+                    "Desktop": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Tablet": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "Mobile": {
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
+                    },
+                    "link": true
+                }
+            },
+            "isStyle": true
+        },
+        "itemHoverBorderColor": {
+            "type": "string",
+            "default": "",
+            "isStyle": true
+        },
         "itemmargin": {
             "type": "object",
             "default": {
                 "Desktop": {
-                    "top": "",
+                    "top": "3",
                     "right": "",
-                    "bottom": "",
+                    "bottom": "3",
                     "left": ""
                 },
                 "Tablet": {
@@ -535,7 +521,7 @@
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
-                "position": " "
+                "position": ""
             },
             "isStyle": true
         },
@@ -546,7 +532,7 @@
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
-                "position": " "
+                "position": ""
             },
             "isStyle": true
         },
@@ -609,7 +595,7 @@
         "imgWidth": {
             "type": "object",
             "default": {
-                "Desktop": "20",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": "",
                 "unit": {

@@ -16,7 +16,7 @@ function get_premium_image_css($attr, $unique_id)
   if($mask_shape && $mask_shape !== "none"){
     $image_path = PREMIUM_BLOCKS_URL . 'assets/icons/masks/' . $mask_shape . '.svg';
 		if ($mask_shape === "custom") {
-			$image_path = $css->pbg_get_value($attr, 'maskCustomShape.url');
+			$image_path = $css->pbg_get_value($attr, 'maskCustomShape.url') ?? '';
 		}
 		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap  img , ' . '.' . $unique_id . ' > .premium-image-container' . ' .premium-image-overlay');
 		$css->add_property('mask-image', 'url(' . $image_path . ')');

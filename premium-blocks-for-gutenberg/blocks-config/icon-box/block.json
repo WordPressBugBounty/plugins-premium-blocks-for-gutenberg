@@ -5,7 +5,15 @@
     "name": "premium/icon-box",
     "title": "Icon Box",
     "description": "Add informative info boxes along with Icon, Description, and CTA using Premium Icon Box Block.",
-    "keywords": ["Icon", "Font Awesome", "Box", "Icon Box", "Info Box", "Call to Action", "CTA"],
+    "keywords": [
+        "Icon",
+        "Font Awesome",
+        "Box",
+        "Icon Box",
+        "Info Box",
+        "Call to Action",
+        "CTA"
+    ],
     "textdomain": "premium-blocks-for-gutenberg",
     "category": "premium-blocks",
     "attributes": {
@@ -209,6 +217,15 @@
             "isStyle": true
         },
         "align": {
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
+            },
+            "isStyle": true
+        },
+        "verticalAlign": {
             "type": "object",
             "default": {
                 "Desktop": "",

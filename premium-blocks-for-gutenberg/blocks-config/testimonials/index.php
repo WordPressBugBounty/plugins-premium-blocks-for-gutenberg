@@ -32,7 +32,10 @@ function get_premium_testimonials_css_style( $attr, $unique_id ) {
 	}
 
 	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( $unique_id );
+		$css->set_selector( $unique_id . ' .premium-text-wrap');
+		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
+
+    $css->set_selector( $unique_id . ' .premium-icon-container' );
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
 
 		$css->set_selector( $unique_id . ' .premium-image-container' );
@@ -71,7 +74,10 @@ function get_premium_testimonials_css_style( $attr, $unique_id ) {
 		$css->render_background( $attr['background'], 'Tablet' );
 	}
 	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( $unique_id );
+		$css->set_selector( $unique_id . ' .premium-text-wrap');
+		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
+
+    $css->set_selector( $unique_id . ' .premium-icon-container' );
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
 
 		$css->set_selector( $unique_id . ' .premium-image-container' );
@@ -109,7 +115,10 @@ function get_premium_testimonials_css_style( $attr, $unique_id ) {
 		$css->render_background( $attr['background'], 'Mobile' );
 	}
 	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( $unique_id );
+		$css->set_selector( $unique_id . ' .premium-text-wrap');
+		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
+
+    $css->set_selector( $unique_id . ' .premium-icon-container' );
 		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
 
 		$css->set_selector( $unique_id . ' .premium-image-container' );

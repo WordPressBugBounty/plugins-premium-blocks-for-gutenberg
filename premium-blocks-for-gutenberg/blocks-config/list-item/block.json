@@ -1,0 +1,199 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "premium/list-item",
+    "title": "List Item",
+    "category": "premium-blocks",
+    "description": "List Item Description.",
+    "parent": ["premium/bullet-list"],
+    "keywords": ["list-item"],
+    "textdomain": "premium-blocks-for-gutenberg",
+    "attributes": {
+        "blockId": {
+            "type": "string"
+        },
+        "showIcon": {
+            "type": "boolean",
+            "default": true
+        },
+        "title": {
+            "type": "string"
+        },
+        "iconType": {
+            "type": "string",
+            "default": "icon"
+        },
+        "icon": {
+            "type": "string",
+            "default": "ic_circleRight"
+        },
+        "enableLink": {
+            "type": "boolean",
+            "default": false
+        },
+        "linkURL": {
+            "type": "string",
+            "default": "#"
+        },
+        "openInNewTab": {
+            "type": "boolean",
+            "default": false
+        },
+        "imageID": {
+            "type": "number"
+        },
+        "imageURL": {
+            "type": "string"
+        },
+        "alt": {
+            "type": "string",
+            "default": ""
+        },
+        "layoutPos": {
+            "type": "string",
+            "isStyle": true
+        },
+        "divider": {
+            "type": "boolean",
+            "default": false
+        },
+        "iconSize": {
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
+        },
+        "icons": {
+            "type": "array",
+            "default": [
+                {
+                    "iconn": "ic_circleRight",
+                    "link": "",
+                    "target": "_self",
+                    "size": "20",
+                    "width": "2",
+                    "title": "",
+                    "style": "default"
+                }
+            ],
+            "isStyle": true
+        },
+        "iconTypeSelect": {
+            "type": "string",
+            "default": ""
+        },
+        "selectedIcon": {
+            "type": "string",
+            "default": ""
+        },
+        "lottieURl": {
+            "type": "string"
+        },
+        "loop": {
+            "type": "boolean",
+            "default": true
+        },
+        "imgTagHeight": {
+            "type": "number",
+            "default": 0
+        },
+        "imgTagWidth": {
+            "type": "number",
+            "default": 0
+        },
+        "reversedir": {
+            "type": "boolean",
+            "default": false
+        },
+        "svgUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "description": {
+            "type": "string",
+            "default": ""
+        },
+        "follow": {
+            "type": "boolean",
+            "default": false
+        },
+        "itemBackgroundColor": {
+            "type": "string",
+            "default": ""
+        },
+        "itemBackgroundHoverColor": {
+            "type": "string",
+            "default": ""
+        },
+        "iconColor": {
+            "type": "string",
+            "default": ""
+        },
+        "iconHoverColor": {
+            "type": "string",
+            "default": ""
+        },
+        "titleColor": {
+            "type": "string",
+            "default": ""
+        },
+        "titleHoverColor": {
+            "type": "string",
+            "default": ""
+        },
+        "descriptionColor": {
+            "type": "string",
+            "default": ""
+        },
+        "descriptionHoverColor": {
+            "type": "string",
+            "default": ""
+        },
+        "parentIconTypeSelect": {
+            "type": "string",
+            "default": "icon"
+        },
+        "parentSelectedIcon": {
+            "type": "string",
+            "default": "ic_circleRight"
+        },
+        "parentSvgUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "parentImageID": {
+            "type": "number"
+        },
+        "parentImageURL": {
+            "type": "string"
+        },
+        "parentImgTagHeight": {
+            "type": "number",
+            "default": 0
+        },
+        "parentImgTagWidth": {
+            "type": "number",
+            "default": 0
+        },
+        "parentLottieURl": {
+            "type": "string"
+        },
+        "parentLoop": {
+            "type": "boolean",
+            "default": true
+        },
+        "parentReversedir": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "usesContext": ["layoutPos", "divider"]
+}

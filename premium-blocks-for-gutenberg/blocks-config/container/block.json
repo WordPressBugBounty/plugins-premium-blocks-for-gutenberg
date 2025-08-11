@@ -5,7 +5,15 @@
     "name": "premium/container",
     "title": "Container",
     "description": "Organize your Gutenberg Blocks into rows and sections.",
-    "keywords": ["row", "container", "section", "layout", "flexbox", "grid", "flex"],
+    "keywords": [
+        "row",
+        "container",
+        "section",
+        "layout",
+        "flexbox",
+        "grid",
+        "flex"
+    ],
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
@@ -138,7 +146,7 @@
                 "backgroundImageID": "",
                 "backgroundImageURL": "",
                 "backgroundPosition": {
-                    "Desktop": "",
+                    "Desktop": "center center",
                     "Tablet": "",
                     "Mobile": ""
                 },
@@ -176,7 +184,7 @@
                 "backgroundImageID": "",
                 "backgroundImageURL": "",
                 "backgroundPosition": {
-                    "Desktop": "",
+                    "Desktop": "center center",
                     "Tablet": "",
                     "Mobile": ""
                 },
@@ -208,17 +216,17 @@
                 "backgroundImageID": "",
                 "backgroundImageURL": "",
                 "backgroundPosition": {
-                    "Desktop": "",
+                    "Desktop": "center center",
                     "Tablet": "",
                     "Mobile": ""
                 },
                 "backgroundRepeat": {
-                    "Desktop": "",
+                    "Desktop": "no-repeat",
                     "Tablet": "",
                     "Mobile": ""
                 },
                 "backgroundSize": {
-                    "Desktop": "",
+                    "Desktop": "cover",
                     "Tablet": "",
                     "Mobile": ""
                 },
@@ -235,7 +243,7 @@
         "border": {
             "type": "object",
             "default": {
-                "borderType": "none",
+                "borderType": "",
                 "borderColor": "",
                 "borderWidth": {
                     "Desktop": {
@@ -285,7 +293,7 @@
         "borderHover": {
             "type": "object",
             "default": {
-                "borderType": "none",
+                "borderType": "",
                 "borderColor": "",
                 "borderWidth": {
                     "Desktop": {
@@ -372,8 +380,8 @@
                 },
                 "height": {
                     "Desktop": "40",
-                    "Tablet": "40",
-                    "Mobile": "40",
+                    "Tablet": "",
+                    "Mobile": "",
                     "unit": {
                         "Desktop": "px",
                         "Tablet": "px",
@@ -404,8 +412,8 @@
                 },
                 "height": {
                     "Desktop": "40",
-                    "Tablet": "40",
-                    "Mobile": "40",
+                    "Tablet": "",
+                    "Mobile": "",
                     "unit": {
                         "Desktop": "px",
                         "Tablet": "px",
@@ -413,7 +421,7 @@
                     }
                 },
                 "flipShapeDivider": false,
-                "invertShapeDivider": true,
+                "invertShapeDivider": false,
                 "front": false
             },
             "isStyle": true
@@ -429,16 +437,25 @@
             "isStyle": true
         },
         "innerWidth": {
-            "type": "number",
-            "default": 1200,
+            "type": "object",
+            "default": {
+                "Desktop": 1200,
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
             "isStyle": true
         },
         "columnGutter": {
             "type": "object",
             "default": {
                 "Desktop": "20",
-                "Tablet": "20",
-                "Mobile": "20",
+                "Tablet": "",
+                "Mobile": "",
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
@@ -451,8 +468,8 @@
             "type": "object",
             "default": {
                 "Desktop": "20",
-                "Tablet": "20",
-                "Mobile": "20",
+                "Tablet": "",
+                "Mobile": "",
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
@@ -465,8 +482,8 @@
             "type": "object",
             "default": {
                 "Desktop": "0",
-                "Tablet": "0",
-                "Mobile": "0",
+                "Tablet": "",
+                "Mobile": "",
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
@@ -501,27 +518,27 @@
         "alignItems": {
             "type": "object",
             "default": {
-                "Desktop": "center",
-                "Tablet": "center",
-                "Mobile": "center"
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
             },
             "isStyle": true
         },
         "justifyItems": {
             "type": "object",
             "default": {
-                "Desktop": "center",
-                "Tablet": "center",
-                "Mobile": "center"
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
             },
             "isStyle": true
         },
         "wrapItems": {
             "type": "object",
             "default": {
-                "Desktop": "nowrap",
-                "Tablet": "nowrap",
-                "Mobile": "nowrap"
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
             },
             "isStyle": true
         },
@@ -566,16 +583,17 @@
         "hoverOverlayFilter": {
             "type": "object",
             "default": {
-                "contrast": "",
-                "blur": "",
-                "bright": "",
-                "saturation": "",
-                "hue": ""
+                "contrast": "100",
+                "blur": "0",
+                "bright": "100",
+                "saturation": "100",
+                "hue": "0"
             },
             "isStyle": true
         },
         "transition": {
             "type": "number",
+            "default": 0.3,
             "isStyle": true
         },
         "equalHeight": {

@@ -37,6 +37,13 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
   $css->set_selector( $unique_id . ' .premium-mask-span' );
   $css->pbg_render_spacing($attr, 'mask_padding', 'padding', 'Desktop');
 
+  // Handling conflict with the global settings style for line-height.
+  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title');
+  $line_height_value = $css->pbg_get_value($attr, 'firstTypography.lineHeight', 'Desktop') ?? $css->pbg_get_value($attr, 'secondTypography.lineHeight', 'Desktop');
+  if($line_height_value){
+    $css->add_property( 'line-height', 'unset');
+  }
+
 	// First Style FontSize.
   $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
   $css->pbg_render_typography( $attr, 'firstTypography', 'Desktop');
@@ -75,6 +82,13 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 	$css->set_selector( $unique_id . ' .premium-mask-span' );
   $css->pbg_render_spacing($attr, 'mask_padding', 'padding', 'Tablet');
 
+  // Handling conflict with the global settings style for line-height.
+  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title');
+  $line_height_value = $css->pbg_get_value($attr, 'firstTypography.lineHeight', 'Tablet') ?? $css->pbg_get_value($attr, 'secondTypography.lineHeight', 'Tablet');
+  if($line_height_value){
+    $css->add_property( 'line-height', 'unset');
+  }
+
 	// First Style FontSize.
   $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
   $css->pbg_render_typography( $attr, 'firstTypography', 'Tablet');
@@ -105,6 +119,13 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 	
   $css->set_selector( $unique_id . ' .premium-mask-span' );
   $css->pbg_render_spacing($attr, 'mask_padding', 'padding', 'Mobile');
+
+  // Handling conflict with the global settings style for line-height.
+  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title');
+  $line_height_value = $css->pbg_get_value($attr, 'firstTypography.lineHeight', 'Mobile') ?? $css->pbg_get_value($attr, 'secondTypography.lineHeight', 'Mobile');
+  if($line_height_value){
+    $css->add_property( 'line-height', 'unset');
+  }
 
 	// First Style FontSize.
   $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );

@@ -38,14 +38,16 @@ function get_premium_off_canvas_css( $attributes, $unique_id ) {
 
   // Styles for Icon inside Button Trigger
   $icon_position = $css->pbg_get_value($attributes, 'iconPosition');
-  $css->set_selector('.' . $unique_id . ' .premium-off-canvas-trigger .premium-off-canvas-trigger-btn.premium-button__' . $icon_position .' .premium-off-canvas-icon, .'. $unique_id .' .premium-off-canvas-trigger .premium-off-canvas-trigger-btn.premium-button__' . $icon_position . ' img, .'. $unique_id .' .premium-off-canvas-trigger .premium-off-canvas-trigger-btn.premium-button__'. $icon_position .' .premium-off-canvas-svg-class, .'. $unique_id .' .premium-off-canvas-trigger .premium-off-canvas-trigger-btn.premium-button__'. $icon_position .' .premium-off-canvas-lottie-animation');
-  if($icon_position === "before"){
-    $css->pbg_render_range($attributes, 'triggerSettings.iconSpacing', 'margin-right', null, null, 'px');
+  if($icon_position){
+    $css->set_selector('.' . $unique_id . ' .premium-off-canvas-trigger .premium-off-canvas-trigger-btn.premium-button__' . $icon_position .' .premium-off-canvas-icon, .'. $unique_id .' .premium-off-canvas-trigger .premium-off-canvas-trigger-btn.premium-button__' . $icon_position . ' img, .'. $unique_id .' .premium-off-canvas-trigger .premium-off-canvas-trigger-btn.premium-button__'. $icon_position .' .premium-off-canvas-svg-class, .'. $unique_id .' .premium-off-canvas-trigger .premium-off-canvas-trigger-btn.premium-button__'. $icon_position .' .premium-off-canvas-lottie-animation');
+    if($icon_position === "before"){
+      $css->pbg_render_range($attributes, 'triggerSettings.iconSpacing', 'margin-right', null, null, 'px');
+    }
+    if($icon_position === "after"){
+      $css->pbg_render_range($attributes, 'triggerSettings.iconSpacing', 'margin-left', null, null, 'px');
+    }
   }
-  if($icon_position === "after"){
-    $css->pbg_render_range($attributes, 'triggerSettings.iconSpacing', 'margin-left', null, null, 'px');
-  }
-
+  
   $css->set_selector(
     ".{$unique_id} .premium-off-canvas-trigger .premium-off-canvas-trigger-btn .premium-off-canvas-icon svg, " .
     ".{$unique_id} .premium-off-canvas-trigger .premium-off-canvas-trigger-icon svg, " .

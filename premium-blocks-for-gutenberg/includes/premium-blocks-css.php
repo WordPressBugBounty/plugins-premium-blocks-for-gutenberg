@@ -1118,7 +1118,7 @@ class Premium_Blocks_css {
 
   public function pbg_get_value($attributes, $name, $device = ''){
     if (empty($attributes) || !is_array($attributes) || empty($name)) {
-      return false;
+      return;
     }
 
     $value = $this->find_nested_keys($attributes, $name);
@@ -1128,12 +1128,12 @@ class Premium_Blocks_css {
 
     if($is_responsive){
       if (null === $value || !is_array($value) || !isset($value[$device]) || $value[$device] === '') {
-        return false;
+        return;
       }
       $final_value = $value[$device];
     }else{
       if (null === $value || !isset($value) || $value === '') {
-        return false;
+        return;
       }
       $final_value = $value;
     }

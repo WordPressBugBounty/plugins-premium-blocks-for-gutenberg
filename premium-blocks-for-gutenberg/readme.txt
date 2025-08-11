@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.11
+Stable tag: 2.2.12
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -126,6 +126,21 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.12 =
+- Fixed: Gallery block style issues.
+- Fixed: Button block alignment issue.
+- Fixed: Lineheight style issue in the Dual Heading block.
+- Fixed: Accordion block content area issue.
+- Fixed: Separator block width issue.
+- Fixed: Counter block style issues.
+- Fixed: Video block not working when adding two videos on the same page.
+- Added: Border style option for list items in the Bullet List block.
+- Added: Tabs icon color and background options for the active state, and fixed alignment issues.
+- Added: Active color option for the Tab icon.
+- Added: Content vertical alignment option for Icon Box block (Style 3).
+- Added: Ability to insert Icon block into the Testimonials block.
+- Tweak: Made the Section block’s min-height option responsive.
+
 = 2.2.11 =
 - Tweak: Improved performance and enhanced compatibility with Gutenberg for the Gallery block.
 - Tweak: Added playsinline support to the Video Gutenberg block.

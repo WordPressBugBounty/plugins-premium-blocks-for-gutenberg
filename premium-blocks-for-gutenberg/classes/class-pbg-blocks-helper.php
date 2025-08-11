@@ -2281,7 +2281,7 @@ class PBG_Blocks_Helper
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/instagram-feed-header/index.php';
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/instagram-feed-posts/index.php';
 			} elseif ($slug === 'bullet-list') {
-				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/list-item.php';
+				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/list-item/index.php';
 			} elseif ($slug === 'tabs') {
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/tab-item/index.php';
 			} elseif ($slug === 'form') {

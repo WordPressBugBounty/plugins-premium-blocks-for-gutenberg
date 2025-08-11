@@ -37,16 +37,31 @@
             "isStyle": true
         },
         "innerWidth": {
-            "type": "number",
+            "type": "object",
+            "default": {
+                "Desktop": 1140,
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
             "isStyle": true
         },
         "minHeight": {
-            "type": "number",
-            "isStyle": true
-        },
-        "minHeightUnit": {
-            "type": "string",
-            "default": "px",
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
             "isStyle": true
         },
         "vPos": {

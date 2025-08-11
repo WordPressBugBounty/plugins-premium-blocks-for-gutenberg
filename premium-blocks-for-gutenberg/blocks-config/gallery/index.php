@@ -18,7 +18,7 @@ function register_block_pbg_gallery()
                 wp_register_script(
                   'image-gallery-isotope-js',
                   PREMIUM_BLOCKS_URL . 'assets/js/lib/isotope.pkgd.min.js',
-                  array('jquery'),
+                  array(),
                   PREMIUM_BLOCKS_VERSION,
                   true
                 );

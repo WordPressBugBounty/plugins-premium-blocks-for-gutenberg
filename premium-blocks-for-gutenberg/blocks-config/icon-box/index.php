@@ -20,6 +20,8 @@ function get_premium_icon_box_css_style($attr, $unique_id)
 {
 	$css = new Premium_Blocks_css();
 
+  $variation_name = $css->pbg_get_value($attr, 'variation.name');
+  
 	// container style
   $css->set_selector('.' . $unique_id . " .premium-icon-box-content");
   $css->pbg_render_background($attr, 'containerBackground', 'Desktop');
@@ -28,6 +30,9 @@ function get_premium_icon_box_css_style($attr, $unique_id)
   $css->pbg_render_spacing($attr, 'containerPadding', 'padding', 'Desktop');
   $css->pbg_render_spacing($attr, 'containerMargin', 'margin', 'Desktop');
   $css->pbg_render_shadow($attr, 'containerShadow', 'box-shadow');
+  if($variation_name === 'horizontal'){
+    $css->pbg_render_value($attr, 'verticalAlign', 'align-items', 'Desktop');
+  }
 
   $css->set_selector('.' . $unique_id . ' .premium-icon-container');
   $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
@@ -55,6 +60,9 @@ function get_premium_icon_box_css_style($attr, $unique_id)
   $css->pbg_render_border($attr, 'containerBorder', 'Tablet');
   $css->pbg_render_spacing($attr, 'containerPadding', 'padding', 'Tablet');
   $css->pbg_render_spacing($attr, 'containerMargin', 'margin', 'Tablet');
+  if($variation_name === 'horizontal'){
+    $css->pbg_render_value($attr, 'verticalAlign', 'align-items', 'Tablet');
+  }
 
   $css->set_selector('.' . $unique_id . ' .premium-icon-container');
   $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
@@ -76,6 +84,9 @@ function get_premium_icon_box_css_style($attr, $unique_id)
   $css->pbg_render_border($attr, 'containerBorder', 'Mobile');
   $css->pbg_render_spacing($attr, 'containerPadding', 'padding', 'Mobile');
   $css->pbg_render_spacing($attr, 'containerMargin', 'margin', 'Mobile');
+  if($variation_name === 'horizontal'){
+    $css->pbg_render_value($attr, 'verticalAlign', 'align-items', 'Mobile');
+  }
 
   $css->set_selector('.' . $unique_id . ' .premium-icon-container');
   $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
