@@ -43,7 +43,7 @@ function get_premium_lottie_css_style($attr, $unique_id)
 		$css->add_property('padding', $css->render_spacing($attr['padding']['Desktop'], isset($attr['padding']['unit']['Desktop']) ? $attr['padding']['unit']['Desktop'] : $attr['padding']['unit']));
 	}
 	if (isset($attr['margin'])) {
-		$css->set_selector($unique_id . ' .premium-lottie-animation');
+    $css->set_selector( ":root:has({$unique_id}) {$unique_id}.wp-block-premium-lottie" );
 		$css->add_property('margin', $css->render_spacing($attr['margin']['Desktop'], isset($attr['margin']['unit']['Desktop']) ? $attr['margin']['unit']['Desktop'] : $attr['margin']['unit']));
 	}
 
@@ -106,7 +106,7 @@ function get_premium_lottie_css_style($attr, $unique_id)
 	}
 
 	if (isset($attr['margin'])) {
-		$css->set_selector($unique_id . ' .premium-lottie-animation');
+		$css->set_selector( ":root:has({$unique_id}) {$unique_id}.wp-block-premium-lottie" );
 		$css->add_property('margin', $css->render_spacing($attr['margin']['Tablet'], isset($attr['margin']['unit']['Tablet']) ? $attr['margin']['unit']['Tablet'] : $attr['margin']['unit']));
 	}
 
@@ -144,7 +144,7 @@ function get_premium_lottie_css_style($attr, $unique_id)
 	}
 
 	if (isset($attr['margin'])) {
-		$css->set_selector($unique_id . ' .premium-lottie-animation');
+		$css->set_selector( ":root:has({$unique_id}) {$unique_id}.wp-block-premium-lottie" );
 		$css->add_property('margin', $css->render_spacing($attr['margin']['Mobile'], isset($attr['margin']['unit']['Mobile']) ? $attr['margin']['unit']['Mobile'] : $attr['margin']['unit']));
 	}
 

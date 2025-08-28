@@ -15,9 +15,9 @@ function get_premium_off_canvas_css( $attributes, $unique_id ) {
   // Styles for Button Trigger
   $css->set_selector('.' . $unique_id . ' .premium-off-canvas-trigger');
   $css->pbg_render_value($attributes, 'align', 'text-align', 'Desktop');
+  $css->pbg_render_spacing($attributes, 'triggerMargin', 'margin', 'Desktop');
 
   $css->set_selector('.' . $unique_id . ' .premium-off-canvas-trigger .premium-off-canvas-trigger-btn');
-  $css->pbg_render_spacing($attributes, 'triggerMargin', 'margin', 'Desktop');
   $css->pbg_render_spacing($attributes, 'triggerPadding', 'padding', 'Desktop');
   $css->pbg_render_border($attributes, 'triggerBorder', 'Desktop');
   $css->pbg_render_color($attributes, 'triggerStyles.color', 'color');
@@ -135,7 +135,6 @@ function get_premium_off_canvas_css( $attributes, $unique_id ) {
   $css->pbg_render_range($attributes, 'imgWidth', 'width', 'Desktop');
   $css->pbg_render_border($attributes, 'triggerBorder', 'Desktop');
   $css->pbg_render_spacing($attributes, 'triggerPadding', 'padding', 'Desktop');
-  $css->pbg_render_spacing($attributes, 'triggerMargin', 'margin', 'Desktop');
   $css->pbg_render_shadow($attributes, 'triggerShadow', 'box-shadow');
 
   $css->set_selector('.' . $unique_id . ' .premium-off-canvas-trigger .premium-off-canvas-trigger-img:hover');
@@ -225,9 +224,9 @@ function get_premium_off_canvas_css( $attributes, $unique_id ) {
   // Styles for Button Trigger
   $css->set_selector('.' . $unique_id . ' .premium-off-canvas-trigger');
   $css->pbg_render_value($attributes, 'align', 'text-align', 'Tablet');
+  $css->pbg_render_spacing($attributes, 'triggerMargin', 'margin', 'Tablet');
 
   $css->set_selector('.' . $unique_id . ' .premium-off-canvas-trigger .premium-off-canvas-trigger-btn');
-  $css->pbg_render_spacing($attributes, 'triggerMargin', 'margin', 'Tablet');
   $css->pbg_render_spacing($attributes, 'triggerPadding', 'padding', 'Tablet');
   $css->pbg_render_border($attributes, 'triggerBorder', 'Tablet');
   $css->pbg_render_background($attributes, 'triggerStyles.triggerBack', 'Tablet');
@@ -299,7 +298,6 @@ function get_premium_off_canvas_css( $attributes, $unique_id ) {
   $css->pbg_render_range($attributes, 'imgWidth', 'width', 'Tablet');
   $css->pbg_render_border($attributes, 'triggerBorder', 'Tablet');
   $css->pbg_render_spacing($attributes, 'triggerPadding', 'padding', 'Tablet');
-  $css->pbg_render_spacing($attributes, 'triggerMargin', 'margin', 'Tablet');
   // End of Styles for Trigger Image
 
   // Styles for Content Panel
@@ -373,9 +371,9 @@ function get_premium_off_canvas_css( $attributes, $unique_id ) {
   // Styles for Button Trigger
   $css->set_selector('.' . $unique_id . ' .premium-off-canvas-trigger');
   $css->pbg_render_value($attributes, 'align', 'text-align', 'Mobile');
+  $css->pbg_render_spacing($attributes, 'triggerMargin', 'margin', 'Mobile');
   
   $css->set_selector('.' . $unique_id . ' .premium-off-canvas-trigger .premium-off-canvas-trigger-btn');
-  $css->pbg_render_spacing($attributes, 'triggerMargin', 'margin', 'Mobile');
   $css->pbg_render_spacing($attributes, 'triggerPadding', 'padding', 'Mobile');
   $css->pbg_render_border($attributes, 'triggerBorder', 'Mobile');
   $css->pbg_render_background($attributes, 'triggerStyles.triggerBack', 'Mobile');
@@ -447,7 +445,6 @@ function get_premium_off_canvas_css( $attributes, $unique_id ) {
   $css->pbg_render_range($attributes, 'imgWidth', 'width', 'Mobile');
   $css->pbg_render_border($attributes, 'triggerBorder', 'Mobile');
   $css->pbg_render_spacing($attributes, 'triggerPadding', 'padding', 'Mobile');
-  $css->pbg_render_spacing($attributes, 'triggerMargin', 'margin', 'Mobile');
   // End of Styles for Trigger Image
 
   // Styles for Content Panel

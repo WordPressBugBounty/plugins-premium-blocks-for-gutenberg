@@ -152,6 +152,12 @@ if (! class_exists('Pbg_Assets_Generator')) {
 
 			// Set up directory paths
 			$upload_dir = wp_upload_dir();
+      
+      // Ensure baseurl uses https if site is SSL
+      if (is_ssl() || stripos(get_option('siteurl'), 'https://') === 0 || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')) {
+				$upload_dir['baseurl'] = str_ireplace('http://', 'https://', $upload_dir['baseurl']);
+			}
+
 			$dir = trailingslashit($upload_dir['basedir']) . 'premium-blocks-for-gutenberg/';
 			$wp_upload_url = trailingslashit($upload_dir['baseurl']) . 'premium-blocks-for-gutenberg/';
 

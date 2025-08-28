@@ -820,7 +820,56 @@ class Premium_Blocks_css {
     $this->add_property($property, $prefix . $final_value . $postfix);
   }
 
-  public function pbg_render_spacing($attributes, $name, $property, $device = '', $prefix = '', $postfix = ''){
+  public function pbg_render_text_align($attributes, $name, $property, $device = '', $prefix = '', $postfix = '') {
+    if (empty($attributes) || !is_array($attributes) || empty($name) || empty($property)) {
+      return false;
+    }
+
+    $value = $this->find_nested_keys($attributes, $name);
+
+    $is_responsive = !empty($device);
+    $final_value = '';
+
+    if($is_responsive){
+      if (null === $value || !is_array($value) || !isset($value[$device]) || $value[$device] === '') {
+        return false;
+      }
+      switch ($value[$device]) {
+        case "flex-start":
+          $final_value="left";
+          break;
+        case "flex-end":
+          $final_value="right";
+          break;
+        case "center":
+          $final_value="center";
+          break;
+        default:
+          break;
+      }
+    }else{
+      if (null === $value || !isset($value) || $value === '') {
+        return false;
+      }
+      switch ($value) {
+        case "left":
+          $final_value="flex-start";
+          break;
+        case "right":
+          $final_value="flex-end";
+          break;
+        case "center":
+          $final_value="center";
+          break;
+        default:
+          break;
+      }
+    }
+    
+    $this->add_property($property, $prefix . $final_value . $postfix);
+  }
+
+  public function pbg_render_spacing($attributes, $name, $property, $device = '', $prefix = '', $postfix = '', $single_side = ''){
     if (empty($attributes) || !is_array($attributes) || empty($name) || empty($property)) {
       return false;
     }
@@ -860,6 +909,19 @@ class Premium_Blocks_css {
     ) {
 			return false;
 		}
+
+    // Handle single side rendering if specified
+    if (!empty($single_side)) {
+        $valid_sides = ['top', 'right', 'bottom', 'left'];
+        if (in_array($single_side, $valid_sides)) {
+            $single_value = (isset($device_values[$single_side]) && is_numeric($device_values[$single_side])) 
+                ? $device_values[$single_side] 
+                : '0';
+            
+            $this->add_property($property . '-' . $single_side, $prefix . $single_value . $unit . $postfix);
+            return;
+        }
+    }
 
     $top    = (isset($device_values['top'])    && is_numeric($device_values['top']))    ? $device_values['top']    : '0';
     $right  = (isset($device_values['right'])  && is_numeric($device_values['right']))  ? $device_values['right']  : '0';
@@ -1053,7 +1115,7 @@ class Premium_Blocks_css {
 		}
 	}
 
-  public function pbg_render_shadow( $attributes, $name, $property, $postfix = '') {
+  public function pbg_render_shadow( $attributes, $name, $property, $prefix = '', $postfix = '') {
     if(empty($attributes) || !is_array($attributes) || empty($name) || empty($property)){
       return false;
     }
@@ -1082,7 +1144,7 @@ class Premium_Blocks_css {
 			$shadow_string = ( ! empty( $shadow['horizontal'] ) ? $shadow['horizontal'] : '0' ) . 'px ' . ( ! empty( $shadow['vertical'] ) ? $shadow['vertical'] : '0' ) . 'px ' . ( ! empty( $shadow['blur'] ) ? $shadow['blur'] : '0' ) . 'px ' . ( ! empty( $shadow['color'] ) ? $shadow['color'] : "#00000080" );
 		}
 
-    $this->add_property($property, $shadow_string . $postfix);
+    $this->add_property($property, $prefix . $shadow_string . $postfix);
 	}
 
   public function pbg_render_filters( $attributes, $name, $postfix = '') {

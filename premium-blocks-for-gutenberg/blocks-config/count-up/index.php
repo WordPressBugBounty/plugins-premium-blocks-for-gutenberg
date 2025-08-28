@@ -18,6 +18,8 @@
 function get_premium_count_up_css_style( $attr, $unique_id ) {
 	$css = new Premium_Blocks_css();
 
+  $icon_position = $css->pbg_get_value($attr, 'iconPosition');
+
 	// Container Style
 	if ( isset( $attr['padding'] ) ) {
 		$padding = $attr['padding'];
@@ -39,6 +41,14 @@ function get_premium_count_up_css_style( $attr, $unique_id ) {
 		$css->render_background( $attr['background'], 'Desktop' );
 
 	}
+
+  if($icon_position !== 'top'){
+    $css->set_selector( $unique_id . ' .premium-countup-content-wrapper' );
+    $css->pbg_render_value( $attr, 'contentAlign', 'justify-content', 'Desktop' );
+
+    $css->set_selector( $unique_id . ' .premium-countup-content-wrapper .wp-block-premium-icon' );
+    $css->pbg_render_value( $attr, 'iconVerticalAlign', 'align-self', 'Desktop' );
+  }
 
 	$css->start_media_query( 'tablet' );
 
@@ -64,6 +74,14 @@ function get_premium_count_up_css_style( $attr, $unique_id ) {
 
 	}
 
+  if($icon_position !== 'top'){
+    $css->set_selector( $unique_id . ' .premium-countup-content-wrapper' );
+    $css->pbg_render_value( $attr, 'contentAlign', 'justify-content', 'Tablet' );
+
+    $css->set_selector( $unique_id . ' .premium-countup-content-wrapper .wp-block-premium-icon' );
+    $css->pbg_render_value( $attr, 'iconVerticalAlign', 'align-self', 'Tablet' );
+  }
+
 	$css->stop_media_query();
 	$css->start_media_query( 'mobile' );
 
@@ -88,6 +106,14 @@ function get_premium_count_up_css_style( $attr, $unique_id ) {
 		$css->render_background( $attr['background'], 'Mobile' );
 
 	}
+
+  if($icon_position !== 'top'){
+    $css->set_selector( $unique_id . ' .premium-countup-content-wrapper' );
+    $css->pbg_render_value( $attr, 'contentAlign', 'justify-content', 'Mobile' );
+
+    $css->set_selector( $unique_id . ' .premium-countup-content-wrapper .wp-block-premium-icon' );
+    $css->pbg_render_value( $attr, 'iconVerticalAlign', 'align-self', 'Mobile' );
+  }
 
 	$css->stop_media_query();
 	return $css->css_output();

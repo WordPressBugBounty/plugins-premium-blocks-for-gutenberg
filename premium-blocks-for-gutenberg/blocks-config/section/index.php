@@ -26,14 +26,18 @@ function get_premium_section_css_style( $attr, $unique_id ) {
   $is_stretched_section = $css->pbg_get_value($attr, 'stretchSection');
   
   $css->set_selector( $unique_id );
-  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Desktop', null, '!important');
+  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Desktop');
   $css->pbg_render_border($attr, 'border', 'Desktop');
   $css->pbg_render_value($attr, 'horAlign', 'text-align', 'Desktop');
   $css->pbg_render_background($attr, 'background', 'Desktop');
   $css->pbg_render_shadow($attr, 'boxShadow', 'box-shadow');
 	
-  $css->set_selector( "body .entry-content {$unique_id}.premium-section" );
+  $css->set_selector( "body .entry-content {$unique_id}:not(.alignfull)" );
   $css->pbg_render_spacing($attr, 'margin', 'margin', 'Desktop');  
+
+  $css->set_selector( "body .entry-content {$unique_id}.alignfull" );
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Desktop', null, null, 'top');  
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Desktop', null, null, 'bottom');  
 
   $css->set_selector( $unique_id  . ' .premium-section__content_wrap');
   if($min_height_type === 'min'){
@@ -61,13 +65,17 @@ function get_premium_section_css_style( $attr, $unique_id ) {
 	$css->start_media_query( 'tablet' );
 
 	$css->set_selector( $unique_id );
-  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Tablet', null, '!important');
+  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Tablet');
   $css->pbg_render_border($attr, 'border', 'Tablet');
   $css->pbg_render_value($attr, 'horAlign', 'text-align', 'Tablet');
   $css->pbg_render_background($attr, 'background', 'Tablet');
 
-	$css->set_selector( "body .entry-content {$unique_id}.premium-section" );
-  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Tablet');
+	$css->set_selector( "body .entry-content {$unique_id}:not(.alignfull)" );
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Tablet');  
+
+  $css->set_selector( "body .entry-content {$unique_id}.alignfull" );
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Tablet', null, null, 'top');  
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Tablet', null, null, 'bottom');  
 
   $css->set_selector( $unique_id  . ' .premium-section__content_wrap');
   if($min_height_type === 'min'){
@@ -84,13 +92,17 @@ function get_premium_section_css_style( $attr, $unique_id ) {
 	$css->start_media_query( 'mobile' );
 
 	$css->set_selector( $unique_id );
-  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Mobile', null, '!important');
+  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Mobile');
   $css->pbg_render_border($attr, 'border', 'Mobile');
   $css->pbg_render_value($attr, 'horAlign', 'text-align', 'Mobile');
   $css->pbg_render_background($attr, 'background', 'Mobile');
 
-	$css->set_selector( "body .entry-content {$unique_id}.premium-section" );
-  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Mobile');
+	$css->set_selector( "body .entry-content {$unique_id}:not(.alignfull)" );
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Mobile');  
+
+  $css->set_selector( "body .entry-content {$unique_id}.alignfull" );
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Mobile', null, null, 'top');  
+  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Mobile', null, null, 'bottom');  
 
   $css->set_selector( $unique_id  . ' .premium-section__content_wrap');
   if($min_height_type === 'min'){

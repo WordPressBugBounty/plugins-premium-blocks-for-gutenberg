@@ -23,7 +23,7 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
   $css->pbg_render_border($attr, 'containerBorder', 'Desktop');
   $css->pbg_render_background($attr, 'background', 'Desktop');
   $css->pbg_render_spacing($attr, 'padding', 'padding', 'Desktop');
-  $css->pbg_render_range($attr, 'rotate', 'transform', null, 'rotate(', 'deg)');
+  $css->pbg_render_range($attr, 'rotate', 'transform', 'Desktop', 'rotate(', ')');
   if(isset($attr['rotate']) && !empty($attr['rotate'])){
 		$css->add_property( 'transform-origin', ($attr['transform_origin_x'] ?? '') . ' ' . ($attr['transform_origin_y'] ?? ''));
 	}
@@ -75,7 +75,8 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
   $css->pbg_render_border($attr, 'containerBorder', 'Tablet');
   $css->pbg_render_background($attr, 'background', 'Tablet');
   $css->pbg_render_spacing($attr, 'padding', 'padding', 'Tablet');
-  
+  $css->pbg_render_range($attr, 'rotate', 'transform', 'Tablet', 'rotate(', ')');
+ 
   $css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
   $css->pbg_render_spacing($attr, 'margin', 'margin', 'Tablet');
 
@@ -113,7 +114,8 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
   $css->pbg_render_border($attr, 'containerBorder', 'Mobile');
   $css->pbg_render_background($attr, 'background', 'Mobile');
   $css->pbg_render_spacing($attr, 'padding', 'padding', 'Mobile');
-  
+  $css->pbg_render_range($attr, 'rotate', 'transform', 'Mobile', 'rotate(', ')');
+
   $css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
   $css->pbg_render_spacing($attr, 'margin', 'margin', 'Mobile');
 	

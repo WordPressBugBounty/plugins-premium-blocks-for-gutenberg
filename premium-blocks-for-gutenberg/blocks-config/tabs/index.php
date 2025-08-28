@@ -12,951 +12,510 @@
  */
 function get_premium_tabs_css_style( $attr, $unique_id ) {
 	$css = new Premium_Blocks_css();
-    ////////////////////////////////////////////////// tab style //////////////////////////////////
-    if(isset($attr['tabsAlign'])){
-        $css->set_selector( "{$unique_id}:not(.premium-tabs-icon-column) .premium-tab-link" );
-		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['tabsAlign'], 'Desktop' ) );
-        $css->set_selector( "{$unique_id}.premium-tabs-icon-column .premium-tab-link , {$unique_id}  .premium-tab-link .premium-tab-title-container" );
-		$css->add_property( 'align-items', $css->render_string( $css->get_responsive_css( $attr['tabsAlign'], 'Desktop' ) , "!important") );
-        $css->add_property( 'text-align', $css->render_text_align( $attr['tabsAlign'], 'Desktop' ));
 
-    }
-    if(isset($attr['tabVerticalAlign'])  && $attr['tabsTypes'] == "vertical"){
-        $css->set_selector( "{$unique_id} .premium-content-wrap" );
-		$css->add_property( 'align-self',  $css->get_responsive_css( $attr['tabVerticalAlign'], 'Desktop' )  );
-    }
-    if(isset($attr['circleSize']) && $attr['tabStyle'] == "style2"){
-        $css->set_selector( $unique_id  . ".premium-tabs-style-style2 .premium-tabs-nav.horizontal li .active-line");
-        $css->add_property( 'height', $css->render_range( $attr['circleSize'], 'Desktop' ));
-        $css->set_selector( $unique_id  . ".premium-tabs-style-style2 .premium-tabs-nav.vertical li .active-line");
+  $tabs_type = $css->pbg_get_value($attr, 'tabsTypes');
+  $tabs_style = $css->pbg_get_value($attr, 'tabStyle');
+  $title_tabs = $css->pbg_get_value($attr, 'titleTabs');
+  $icon_position = $css->pbg_get_value($attr, 'iconPosition');
 
-        $css->add_property( 'width', $css->render_range( $attr['circleSize'], 'Desktop' ));
-    }
+  $css->set_selector( $unique_id . ' .premium-tabs-nav .premium-tabs-nav-list' );
+  $css->pbg_render_value($attr, 'menuAlign', 'justify-content', 'Desktop');
 
-    if(isset($attr['bottomColor']) && $attr['tabStyle'] == "style2"){
-        $css->set_selector( $unique_id  . ".premium-tabs-style-style2 .premium-tabs-nav li .active-line");
-        $css->add_property( 'background-color', $css->render_color( $attr['bottomColor'] ));
-    }
-    if(isset($attr['sepColor'])){
-        $css->set_selector( $unique_id  . ".premium-tabs-style-style2 ul.premium-tabs-horizontal li::after,  " .  $unique_id . '.premium-tabs-style-style2 ul.premium-tabs-vertical li::after , ' . $unique_id . '.premium-tabs-style-style3 ul.premium-tabs-horizontal li::after, ' . $unique_id . '.premium-tabs-style-style3 ul.premium-tabs-vertical li::after');
-        $css->add_property( 'background-color', $css->render_color($attr['sepColor'] ) );  
-    }
-    if(isset($attr['tabsWidth'])){
-        $css->set_selector( $unique_id  . ".premium-tabs-vertical .premium-tabs-nav" );
-        $css->add_property( 'width', $css->render_range( $attr['tabsWidth'], 'Desktop' ));
-        $css->set_selector( $unique_id  . ".premium-tabs-vertical .premium-content-wrap" );
-        $css->add_property( 'width','calc(100% - ' .  $attr['tabsWidth'][ 'Desktop'] . '% )');
-    }
+  $css->set_selector( "{$unique_id}:not(.premium-tabs-icon-column) .premium-tab-link" );
+  $css->pbg_render_value($attr, 'tabsAlign', 'justify-content', 'Desktop');
 
-    if(isset($attr['tabGap'])){
-        $css->set_selector( $unique_id  . ".premium-tabs-vertical " );
-        $css->add_property( 'gap', $css->render_range( $attr['tabGap'], 'Desktop' ));
-        $css->set_selector( $unique_id  . ".premium-tabs-horizontal .premium-tabs-nav " );
-        $css->add_property( "margin-bottom", $css->render_range( $attr['tabGap'], 'Desktop' ));
+  $css->set_selector( "{$unique_id}.premium-tabs-icon-column .premium-tab-link" );
+  $css->pbg_render_value($attr, 'tabsAlign', 'align-items', 'Desktop');
+
+  $css->set_selector( "{$unique_id}  .premium-tab-link .premium-tab-title-container" );
+  $css->pbg_render_value($attr, 'tabsAlign', 'align-items', 'Desktop');
+  if($icon_position === 'row-reverse'){
+    $align_value = $css->pbg_get_value($attr, 'tabsAlign', 'Desktop');
+    if($align_value === 'flex-start'){
+      $css->add_property( 'align-items', 'flex-end');
+    }elseif($align_value === 'flex-end'){
+      $css->add_property( 'align-items', 'flex-start');
+    }elseif($align_value === 'center'){
+      $css->add_property( 'align-items', 'center');
     }
+  }
+
+  if($tabs_type === 'vertical'){
+    $css->set_selector( "{$unique_id} .premium-content-wrap" );
+    $css->pbg_render_value($attr, 'tabVerticalAlign', 'align-self', 'Desktop');
+  }
   
-    if ( isset( $attr['tabMargin'] ) ) {
-        $tab_margin = $attr['tabMargin'];
-        $css->set_selector( $unique_id  . "  li.premium-tabs-nav-list-item .premium-tab-link "  );
-        $css->add_property( 'margin', $css->render_spacing( $tab_margin['Desktop'],  $tab_margin['unit']['Desktop']  ) );
-    }
-    if ( isset( $attr['tabPadding'] ) ) {
-        $tab_padding = $attr['tabPadding'];
-        $css->set_selector( $unique_id  . " li.premium-tabs-nav-list-item .premium-tab-link" );
-        $css->add_property( 'padding', $css->render_spacing( $tab_padding['Desktop'],  $tab_padding['unit']['Desktop']  ) );
-    }
-    if ( isset( $attr['tabBorder'] )  ) {
-        $border        = $attr['tabBorder'];
+  if($tabs_style === 'style2'){
+    $css->set_selector( $unique_id  . ".premium-tabs-style-style2 .premium-tabs-nav li .active-line");
+    $css->pbg_render_color($attr,  'bottomColor', 'background-color');
 
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li .premium-tab-link" );
-        $css->render_border( $border , 'Desktop' );
+    $css->set_selector( $unique_id  . ".premium-tabs-style-style2 .premium-tabs-nav.horizontal li .active-line");
+    $css->pbg_render_range($attr, 'circleSize', 'height', 'Desktop');
+    $css->set_selector( $unique_id  . ".premium-tabs-style-style2 .premium-tabs-nav.vertical li .active-line");
+    $css->pbg_render_range($attr, 'circleSize', 'width', 'Desktop');
+  }
 
-    }
-    if ( isset( $attr['tabActiveBorder'] ) ) {
-        $border        = $attr['tabActiveBorder'];
+  $css->set_selector( $unique_id . '.premium-tabs-style-style3 ul.premium-tabs-horizontal li::after, ' . $unique_id . '.premium-tabs-style-style3 ul.premium-tabs-vertical li::after');
+  $css->pbg_render_color($attr, 'sepColor', 'background-color');
 
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li.active .premium-tab-link" );
-        $css->render_border( $border , 'Desktop' );
-
-    }
-   
-    if ( isset( $attr['tabShadow'] )) {
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li .premium-tab-link  "  );
-        $css->add_property( 'filter', 'drop-shadow('. $attr['tabShadow']['horizontal'] . 'px '. $attr['tabShadow']['vertical'] . 'px ' . $attr['tabShadow']['blur'] . 'px '. $attr['tabShadow']['color'] . ')' );
-    }
-    if ( isset( $attr['tabBorderHover'] )) {
-        $border        = $attr['tabBorderHover'];
-
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li:hover .premium-tab-link "  );
-        $css->render_border( $border , 'Desktop' );
-    }
-    if ( isset( $attr['tabHoverShadow'] )) {
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li .premium-tab-link:hover "  );
-        $css->add_property( 'filter', 'drop-shadow('. $attr['tabHoverShadow']['horizontal'] . 'px '. $attr['tabHoverShadow']['vertical'] . 'px ' . $attr['tabHoverShadow']['blur'] . 'px '. $attr['tabHoverShadow']['color'] . ')' );
-    }
-    if ( isset( $attr['tabActiveShadow'] ) ) {
-        $css->set_selector( $unique_id  . " .premium-tabs-nav li.active .premium-tab-link " );
-        $css->add_property( 'filter', 'drop-shadow('. $attr['tabActiveShadow']['horizontal'] . 'px '. $attr['tabActiveShadow']['vertical'] . 'px ' . $attr['tabActiveShadow']['blur'] . 'px '. $attr['tabActiveShadow']['color'] . ')' );
-    }
-   
-    if ( isset( $attr['tabActiveMargin'] ) ) {
-        $tab_margin = $attr['tabActiveMargin'];
-        $css->set_selector( $unique_id  . " .premium-tabs-nav li.active .premium-tab-link "  );
-        $css->add_property( 'margin', $css->render_spacing( $tab_margin['Desktop'],  $tab_margin['unit']['Desktop']  ) );
-    }
-    if ( isset( $attr['tabActivePadding'] ) ) {
-        $tab_padding = $attr['tabActivePadding'];
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav ul li.premium-tabs-nav-list-item:hover .premium-tab-link" );
-        $css->add_property( 'padding', $css->render_spacing( $tab_padding['Desktop'],  $tab_padding['unit']['Desktop']  ) );
-    }
+  $css->set_selector( $unique_id  . ".premium-tabs-vertical .premium-tabs-nav" );
+  $css->pbg_render_range($attr, 'tabsWidth', 'width', 'Desktop');
   
-    if ( isset( $attr['tabHoverMargin'] ) ) {
-        $tab_margin = $attr['tabHoverMargin'];
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li:hover  .premium-tab-link " );
-        $css->add_property( 'margin', $css->render_spacing( $tab_margin['Desktop'],  $tab_margin['unit']['Desktop']  ) );
+  $css->set_selector( $unique_id  . ".premium-tabs-vertical .premium-content-wrap" );
+  $css->pbg_render_range($attr, 'tabsWidth', 'width', 'Desktop', 'calc(100% - ', ')');
+
+  $css->set_selector( $unique_id  . ".premium-tabs-vertical " );
+  $css->pbg_render_range($attr, 'tabGap', 'gap', 'Desktop');
+
+  $css->set_selector( $unique_id  . ".premium-tabs-horizontal .premium-tabs-nav " );
+  $css->pbg_render_range($attr, 'tabGap', 'margin-bottom', 'Desktop');
+
+  $css->set_selector( $unique_id  . " .premium-tabs-nav ul li .premium-tab-link");
+  $css->pbg_render_shadow($attr, 'tabShadow', 'filter', 'drop-shadow(', ')');
+  $css->pbg_render_border($attr, 'tabBorder', 'Desktop');
+  $css->pbg_render_background($attr, 'backColor', 'Desktop');
+  $css->pbg_render_spacing($attr, 'tabPadding', 'padding', 'Desktop');
+  $css->pbg_render_spacing($attr, 'tabMargin', 'margin', 'Desktop');
+
+  $css->set_selector( $unique_id  . " .premium-tabs-nav ul li.active .premium-tab-link");
+  $css->pbg_render_shadow($attr, 'tabActiveShadow', 'filter', 'drop-shadow(', ')');
+  $css->pbg_render_border($attr, 'tabActiveBorder', 'Desktop');
+  $css->pbg_render_background($attr, 'BackActiveColor', 'Desktop');
+  $css->pbg_render_spacing($attr, 'tabActivePadding', 'padding', 'Desktop');
+  $css->pbg_render_spacing($attr, 'tabActiveMargin', 'margin', 'Desktop');
+
+  $css->set_selector( $unique_id  . " .premium-tabs-nav ul li:not(.active):hover .premium-tab-link");
+  $css->pbg_render_shadow($attr, 'tabHoverShadow', 'filter', 'drop-shadow(', ')');
+  $css->pbg_render_border($attr, 'tabBorderHover', 'Desktop');
+  $css->pbg_render_background($attr, 'backHover', 'Desktop');
+  $css->pbg_render_spacing($attr, 'tabHoverPadding', 'padding', 'Desktop');
+  $css->pbg_render_spacing($attr, 'tabHoverMargin', 'margin', 'Desktop');
+
+  // Icon Styles
+  if(is_array($title_tabs)){
+    foreach ( $title_tabs as $index => $tab){
+      $css->set_selector("{$unique_id} .premium-tabs-nav #premium-tabs__tab{$index} .premium-tab-link svg");
+      $css->pbg_render_range($tab, 'iconSize', 'width', 'Desktop', null, '!important');
+      $css->pbg_render_range($tab, 'iconSize', 'height', 'Desktop', null, '!important');
+
+      $css->set_selector("{$unique_id} .premium-tabs-nav #premium-tabs__tab{$index} .premium-tab-link img");
+      $css->pbg_render_range($tab, 'iconSize', 'width', 'Desktop', null, '!important');
     }
-    if ( isset( $attr['tabHoverPadding'] ) ) {
-        $tab_padding = $attr['tabHoverPadding'];
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav ul li.premium-tabs-nav-list-item:hover .premium-tab-link" );
-        $css->add_property( 'padding', $css->render_spacing( $tab_padding['Desktop'],  $tab_padding['unit']['Desktop']  ) );
-    }
+  }
 
-    if(isset($attr['backColor'])){
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li .premium-tab-link " );
-		$css->render_background( $attr['backColor'], 'Desktop' );
-    }
-    if(isset($attr['BackActiveColor'])){
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li.active  .premium-tab-link " );
-		$css->render_background( $attr['BackActiveColor'], 'Desktop' );
-    }
-    if(isset($attr['backHover'])){
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li:not(.active):hover  .premium-tab-link " );
-		$css->render_background( $attr['backHover'], 'Desktop' );
-    }
-    if ( isset( $attr['tabActiveShadow'] ) ) {
-        $css->set_selector( $unique_id  . " .premium-tabs-style-style4 .premium-tabs-nav li.active" );
-        $css->add_property( 'box-shadow', $css->render_shadow( $attr['tabActiveShadow'] ) );
-    }
-    ////////////////////////////////////////////icon style ///////////////////////////////////////////
-    if(isset($attr['titleTabs'])){
-        for ($x = 0; $x < count($attr['titleTabs']) ; $x++) {
-            $css->set_selector( $unique_id  . " .premium-tabs-nav #premium-tabs__tab{$x} .premium-tab-link  svg , " .  $unique_id . ".premium-tabs-nav #premium-tabs__tab{$x} .premium-tab-link .premium-icon svg > * " );
-            $css->add_property( 'width', $css->render_string( $css->render_range( $attr['titleTabs'][$x]['iconSize'], 'Desktop' ), '' ) );
-    
-            $css->add_property( 'height', $css->render_string( $css->render_range( $attr['titleTabs'][$x]['iconSize'], 'Desktop' ), '' ) );
-            $css->set_selector(   $unique_id . "  .premium-tabs-nav #premium-tabs__tab{$x} .premium-tab-link > img " );
-            $css->add_property( 'width', $css->render_string( $css->render_range( $attr['titleTabs'][$x]['iconSize'], 'Desktop' ), '' ) );
-        } 
-    }
+  $css->set_selector(
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-icon-type, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link img, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-tabs-svg-class svg, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-lottie-animation svg"
+  );
+  $css->pbg_render_shadow($attr, 'iconShadow', 'filter', 'drop-shadow(', ')');
+  $css->pbg_render_border($attr, 'iconBorder', 'Desktop');
+  $css->pbg_render_spacing($attr, 'iconPadding', 'padding', "Desktop");
+  $css->pbg_render_spacing($attr, 'iconMargin', 'margin', 'Desktop');
 
-    if(isset($attr['iconColor'])){
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tab-link .premium-icon-type , " . $unique_id . '   .premium-tabs-nav li .premium-tab-link .premium-tabs-svg-class svg , ' . $unique_id  . "   .premium-tabs-nav .premium-tab-link .premium-icon-type:not(.icon-type-fe) svg ," . $unique_id  . "  .premium-tabs-nav .premium-tab-link .premium-icon-type:not(.icon-type-fe) svg > *" );
-        $css->add_property( 'fill', $css->render_color($attr['iconColor'] ) );
-        $css->add_property( 'color', $css->render_color($attr['iconColor'] ) );
+  $css->set_selector( 
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-icon-type, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-icon-type:not(.icon-type-fe) svg, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-icon-type:not(.icon-type-fe) svg *, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-tabs-svg-class svg, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-tabs-svg-class svg *"
+  );
+  $css->pbg_render_color($attr, 'iconColor', 'color');
+  $css->pbg_render_color($attr, 'iconColor', 'fill');
 
-    }
-      if(isset($attr['iconBackground'])){
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tab-link .premium-icon-type , " . $unique_id . '   .premium-tabs-nav li .premium-tab-link .premium-tabs-svg-class , ' . $unique_id  . "   .premium-tabs-nav .premium-tab-link .premium-icon-type:not(.icon-type-fe)  ," . $unique_id  . "  .premium-tabs-nav .premium-tab-link .premium-lottie-animation " );
-        $css->add_property( 'background-color', $css->render_color($attr['iconBackground'] ) );
-
-    }
-       if(isset($attr['iconHoverBackground'])){
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tab-link:hover .premium-icon-type , " . $unique_id . '   .premium-tabs-nav li:hover .premium-tab-link .premium-tabs-svg-class , ' . $unique_id  . "   .premium-tabs-nav .premium-tab-link:hover .premium-icon-type:not(.icon-type-fe)  ," . $unique_id  . "  .premium-tabs-nav .premium-tab-link:hover .premium-lottie-animation " );
-        $css->add_property( 'background-color', $css->render_color($attr['iconHoverBackground'] ) );
-
-    }
-
-    if(isset($attr['iconActiveBackground'])){
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav li.active .premium-icon-type , " . $unique_id . '   .premium-tabs-nav li.active .premium-tab-link .premium-tabs-svg-class , ' . $unique_id  . "   .premium-tabs-nav li.active .premium-icon-type:not(.icon-type-fe)  ," . $unique_id  . "  .premium-tabs-nav li.active .premium-lottie-animation " );
-        $css->add_property( 'background-color', $css->render_color($attr['iconActiveBackground'] ) );
-
-    }
-
-    if(isset($attr['iconActiveColor'])){
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav li.active .premium-tab-link .premium-icon-type , " . $unique_id . '   .premium-tabs-nav li.active .premium-tab-link .premium-tabs-svg-class svg ,  ' . $unique_id  . "   .premium-tabs-nav li.active .premium-tab-link .premium-icon-type:not(.icon-type-fe) svg ," . $unique_id  . "  .premium-tabs-nav li.active .premium-tab-link .premium-icon-type:not(.icon-type-fe) svg > *" );
-        $css->add_property( 'fill', $css->render_color($attr['iconActiveColor'] ) );
-        $css->add_property( 'color', $css->render_color($attr['iconActiveColor'] ) );
-    }
- 
-
-    if(isset($attr['iconHoverColor'])){
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav li:hover .premium-tab-link .premium-icon-type , " . $unique_id . '   .premium-tabs-nav li:hover .premium-tab-link .premium-tabs-svg-class svg ,' . $unique_id  . "   .premium-tabs-nav li:hover .premium-tab-link .premium-icon-type:not(.icon-type-fe) svg ," . $unique_id  . "  .premium-tabs-nav li:hover .premium-tab-link .premium-icon-type:not(.icon-type-fe) svg > *" );
-        $css->add_property( 'fill', $css->render_color($attr['iconHoverColor'] ) );
-        $css->add_property( 'color', $css->render_color($attr['iconHoverColor'] ) );
-
-    }
-
-    if ( isset( $attr['iconMargin'] ) ) {
-        $icon_margin = $attr['iconMargin'];
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '  .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link img" );
-        $css->add_property( 'margin', $css->render_spacing( $icon_margin['Desktop'],  $icon_margin['unit']['Desktop']  ) );
-    }
-    if ( isset( $attr['iconPadding'] ) ) {
-        $icon_padding = $attr['iconPadding'];
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '  .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link img" );
-        $css->add_property( 'padding', $css->render_spacing( $icon_padding['Desktop'],  $icon_padding['unit']['Desktop']  ) );
-    }
-    if ( isset( $attr['iconBorder'] ) ) {
-        $border        = $attr['iconBorder'];
-       
-
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '  .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link img" );
-        $css->render_border( $border , 'Desktop' );
-
-    }
-     if ( isset( $attr['iconActiveBorder'] )  && $attr['iconActiveBorder']['borderType'] !== "none") {
-        $border        = $attr['iconActiveBorder'];
-
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li.active .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '   .premium-tabs-nav .premium-tabs-nav-list li.active .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li.active .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li.active .premium-tab-link img" );
-        $css->render_border( $border , 'Desktop' );
-
-    }
-      if ( isset( $attr['iconHoverBorder'] )  && $attr['iconHoverBorder']['borderType'] !== "none") {
-        $border        = $attr['iconHoverBorder'];
-       
-
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '   .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link img" );
-        $css->render_border( $border , 'Desktop' );
-
-    }
-    if ( isset( $attr['iconShadow'] ) ) {
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-icon, " . $unique_id . '  .premium-lottie-animation' );
-        $css->add_property( 'box-shadow', $css->render_shadow( $attr['iconShadow'] ) );
-    }
-
-
-    ///////////////////////////////////////////////// title Styling/////////////////////////////////////////////
-        if(isset($attr['titleColor'])){
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-            $css->add_property( 'color', $css->render_color($attr['titleColor'] ) );
-        }
-        if(isset($attr['titleHoverColor'])){
-            $css->set_selector( $unique_id  . " .premium-tabs-nav-list-item:hover  .premium-tab-link .premium-tab-title");
-            $css->add_property( 'color', $css->render_color($attr['titleHoverColor'] ) );
-        }
-        if(isset($attr['titleActiveColor'])){
-            $css->set_selector( $unique_id  . " .active .premium-tab-title");
-            $css->add_property( 'color', $css->render_string( $css->render_color($attr['titleActiveColor'] ), "!important") );
-        }
-
-        $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-        $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
-        
-        if ( isset( $attr['titleMargin'] ) ) {
-            $title_margin = $attr['titleMargin'];
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-            $css->add_property( 'margin', $css->render_spacing( $title_margin['Desktop'],  $title_margin['unit']['Desktop']  ) );
-        }
-        if ( isset( $attr['titlePadding'] ) ) {
-            $title_padding = $attr['titlePadding'];
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-            $css->add_property( 'padding', $css->render_spacing( $title_padding['Desktop'],  $title_padding['unit']['Desktop']  ) );
-        }
-        if ( isset( $attr['titleBorder'] ) ) {
-            $border        = $attr['titleBorder'];
-        
-
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-            $css->render_border( $border , 'Desktop' );
-        }
-        if ( isset( $attr['titleShadow'] ) ) {
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-            $css->add_property( 'text-shadow', $css->render_shadow( $attr['titleShadow'] ) );
-        }
-
-        ////////////////////////////////////////// Sub Title Styling/////////////////////////
-
-        if(isset($attr['subColor'])){
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
-            $css->add_property( 'color', $css->render_color($attr['subColor'] ) );
-        }
-        if(isset($attr['subHoverColor'])){
-            $css->set_selector( $unique_id  . " .premium-tabs-nav-list-item:hover  .premium-tab-link .premium-tab-desc");
-            $css->add_property( 'color', $css->render_color($attr['subHoverColor'] ) );
-        }
-        if(isset($attr['subActiveColor'])){
-            $css->set_selector( $unique_id  . " .active .premium-tab-desc");
-            $css->add_property( 'color', $css->render_string( $css->render_color($attr['subActiveColor'] ), "!important") );
-        }
-
-        $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
-        $css->pbg_render_typography($attr, 'subTypography', 'Desktop');
-        
-        if ( isset( $attr['subMargin'] ) ) {
-            $sub_margin = $attr['subMargin'];
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
-            $css->add_property( 'margin', $css->render_spacing( $sub_margin['Desktop'],  $sub_margin['unit']['Desktop']  ) );
-        }
-        if ( isset( $attr['subPadding'] ) ) {
-            $sub_padding = $attr['subPadding'];
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
-            $css->add_property( 'padding', $css->render_spacing( $sub_padding['Desktop'],  $sub_padding['unit']['Desktop']  ) );
-        }
-        if ( isset( $attr['subBorder'] ) ) {
-            $border        = $attr['subBorder'];
-           
-
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
-            $css->render_border( $border , 'Desktop' );
-
-        }
-        if ( isset( $attr['subShadow'] ) ) {
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
-            $css->add_property( 'text-shadow', $css->render_shadow( $attr['subShadow'] ) );
-        }
-
-        /////////////////////////////// description Styling ////////////////////
-
-        if(isset($attr['descBackColor'])){
-            $css->set_selector( $unique_id  . "  .premium-tab-content");
-            $css->add_property( 'background-color', $css->render_color($attr['descBackColor'] ) );
-        }
-     
-        if ( isset( $attr['descMargin'] ) ) {
-            $desc_margin = $attr['descMargin'];
-            $css->set_selector( $unique_id  . "  .premium-tab-content");
-            $css->add_property( 'margin', $css->render_spacing( $desc_margin['Desktop'],  $desc_margin['unit']['Desktop']  ) );
-        }
-        if ( isset( $attr['descPadding'] ) ) {
-            $desc_padding = $attr['descPadding'];
-            $css->set_selector( $unique_id  . "  .premium-tab-content");
-            $css->add_property( 'padding', $css->render_spacing( $desc_padding['Desktop'],  $desc_padding['unit']['Desktop']  ) );
-        }
-        if ( isset( $attr['descBorder'] ) ) {
-            $border        = $attr['descBorder'];
-        
-
-            $css->set_selector( $unique_id  . "  .premium-tab-content");
-            $css->render_border( $border , 'Desktop' );
-
-        }
-     
-        if ( isset( $attr['descBoxShadow'] ) ) {
-            $css->set_selector( $unique_id  . "  .premium-tab-content");
-            $css->add_property( 'box-shadow', $css->render_shadow( $attr['descBoxShadow'] ) );
-        }
-
-        ///////////////////////////////////////Tabs Wrap ////////////////////////////
-
-        if(isset($attr['wrapBackColor']) && $attr['tabStyle'] == "style3"){
-            $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list ");
-            $css->add_property( 'background-color', $css->render_color($attr['wrapBackColor'] ) );
-        }
-        if ( isset( $attr['wrapMargin'] )&& $attr['tabStyle'] == "style3" ) {
-            $wrap_margin = $attr['wrapMargin'];
-            $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list");
-            $css->add_property( 'margin', $css->render_spacing( $wrap_margin['Desktop'],  $wrap_margin['unit']['Desktop']  ) );
-        }
-        if ( isset( $attr['wrapPadding'] ) && $attr['tabStyle'] == "style3") {
-            $wrap_padding = $attr['wrapPadding'];
-            $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list");
-            $css->add_property( 'padding', $css->render_spacing( $wrap_padding['Desktop'],  $wrap_padding['unit']['Desktop']  ) );
-        }
-        if ( isset( $attr['wrapBorder'] )&& $attr['tabStyle'] == "style3" ) {
-            $border        = $attr['wrapBorder'];
-        
-
-            $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list");
-            $css->render_border( $border , 'Desktop' );
-
-        }
-      
-        if ( isset( $attr['wrapBoxShadow'] )&& $attr['tabStyle'] == "style3" ) {
-            $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list");
-            $css->add_property( 'box-shadow', $css->render_shadow( $attr['wrapBoxShadow'] ) );
-        }
-        /////////////////////////////// container Style  ////////////////////////////////
-        if(isset($attr['containerBackColor'])){
-            $css->set_selector( $unique_id  );
-            $css->add_property( 'background-color', $css->render_color($attr['containerBackColor'] ) );
-        }
-         if ( isset( $attr['containerMargin'] ) ) {
-            $container_margin = $attr['containerMargin'];
-            $css->set_selector( "body .entry-content {$unique_id}.premium-tabs" );
-            $css->add_property( 'margin',$css->render_spacing( $container_margin['Desktop'],  $container_margin['unit']['Desktop']));
-        }
-        if ( isset( $attr['containerPadding'] ) ) {
-            $container_padding = $attr['containerPadding'];
-            $css->set_selector( $unique_id );
-            $css->add_property( 'padding',$css->render_spacing( $container_padding['Desktop'],  $container_padding['unit']['Desktop']));
-        }
-        if ( isset( $attr['containerBorder'] ) ) {
-            $border        = $attr['containerBorder'];
-       
-
-            $css->set_selector( $unique_id );
-            $css->render_border( $border , 'Desktop' );
-        }
-        if ( isset( $attr['containerBoxShadow'] ) ) {
-            $css->set_selector( $unique_id );
-            $css->add_property( 'box-shadow', $css->render_shadow( $attr['containerBoxShadow'] ) );
-        }
-
-
-
-        $css->start_media_query( 'tablet' );
-
-
-    if(isset($attr['tabsAlign'])){
-        $css->set_selector( "{$unique_id}:not(.premium-tabs-icon-column) .premium-tab-link" );
-        $css->add_property( 'justify-content', $css->get_responsive_css( $attr['tabsAlign'], 'Tablet' ) );
-        $css->set_selector( "{$unique_id}.premium-tabs-icon-column .premium-tab-link , {$unique_id}  .premium-tab-link .premium-tab-title-container" );
-        $css->add_property( 'align-items', $css->render_string( $css->get_responsive_css( $attr['tabsAlign'], 'Tablet' ) , "!important") );
-        $css->add_property( 'text-align', $css->render_text_align( $attr['tabsAlign'], 'Tablet' ));
-
-    }
-    if(isset($attr['tabVerticalAlign'])  && $attr['tabsTypes'] == "vertical"){
-        $css->set_selector( "{$unique_id} .premium-content-wrap" );
-		$css->add_property( 'align-self',  $css->get_responsive_css( $attr['tabVerticalAlign'], 'Tablet' )  );
-    }
-    if(isset($attr['circleSize']) && $attr['tabStyle'] == "style2"){
-        $css->set_selector( $unique_id  . ".premium-tabs-style-style2 .premium-tabs-nav li::before");
-        $css->add_property( 'width', $css->render_range( $attr['circleSize'], 'Tablet' ));
-        $css->add_property( 'height', $css->render_range( $attr['circleSize'], 'Tablet' ));
-    }
-    if(isset($attr['tabsWidth'])){
-        $css->set_selector( $unique_id  . ".premium-tabs-vertical .premium-tabs-nav" );
-        $css->add_property( 'width', $css->render_range( $attr['tabsWidth'], 'Tablet' ));
-        $css->set_selector( $unique_id  . ".premium-tabs-vertical .premium-content-wrap" );
-        $css->add_property( 'width','calc(100% - ' .  $attr['tabsWidth'][ 'Tablet'] . '% )');
-    }
-
-    if(isset($attr['tabGap'])){
-        $css->set_selector( $unique_id  . ".premium-tabs-vertical " );
-        $css->add_property( 'gap', $css->render_range( $attr['tabGap'], 'Tablet' ));
-        $css->set_selector( $unique_id  . ".premium-tabs-horizontal .premium-tabs-nav " );
-        $css->add_property( "margin-bottom", $css->render_range( $attr['tabGap'], 'Tablet' ));
-    }
+  $css->set_selector(
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-icon-type, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-tabs-svg-class svg, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-lottie-animation svg"
+  );
+  $css->pbg_render_color($attr, 'iconBackground', 'background-color');
   
-    if ( isset( $attr['tabMargin'] ) ) {
-        $tab_margin = $attr['tabMargin'];
-        $css->set_selector( $unique_id  . "  li.premium-tabs-nav-list-item .premium-tab-link, " . $unique_id . '.premium-tabs-style-style4 .premium-tabs-nav .premium-tabs-nav-list.premium-tabs-horizontal li:first-child .premium-tab-link' );
-        $css->add_property( 'margin', $css->render_spacing( $tab_margin['Tablet'],  $tab_margin['unit']['Tablet']  ) );
-    }
-    if ( isset( $attr['tabPadding'] ) ) {
-        $tab_padding = $attr['tabPadding'];
-        $css->set_selector( $unique_id  . " li.premium-tabs-nav-list-item .premium-tab-link" );
-        $css->add_property( 'padding', $css->render_spacing( $tab_padding['Tablet'],  $tab_padding['unit']['Tablet']  ) );
-    }
-    if ( isset( $attr['tabBorder'] )  &&  $attr['tabStyle'] !== "style4") {
-        $border        = $attr['tabBorder'];
-        $border_width  = $border['borderWidth'];
-        $border_radius = $border['borderRadius'];
+  // Icon Hovering Styles
+  $css->set_selector( 
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link .premium-icon-type, " .
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link .premium-icon-type:not(.icon-type-fe) svg *, " .
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link .premium-tabs-svg-class svg, " .
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link .premium-tabs-svg-class svg *"
+  );
+  $css->pbg_render_color($attr, 'iconHoverColor', 'color');
+  $css->pbg_render_color($attr, 'iconHoverColor', 'fill');
 
+  $css->set_selector(
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link .premium-icon-type, " .
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link .premium-tabs-svg-class svg, " .
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link .premium-lottie-animation svg"
+  );
+  $css->pbg_render_color($attr, 'iconHoverBackground', 'background-color');
+  $css->pbg_render_border($attr, 'iconHoverBorder', 'Desktop');
 
-        $css->set_selector( $unique_id  . ":not(.premium-tabs-style-style2) .premium-tabs-nav ul li .premium-tab-link, " . $unique_id . '.premium-tabs-style-style2 .premium-tabs-nav ul  li::before, '. $unique_id . '.premium-tabs-style-style4 .premium-tabs-nav ul li .premium-tab-link::after' );
-        $css->add_property( 'border-width', $css->render_spacing( $border_width['Tablet'], 'px' ) );
-        $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
+  $css->set_selector("{$unique_id} .premium-tabs-nav li:hover .premium-tab-link img");
+  $css->pbg_render_border($attr, 'iconHoverBorder', 'Desktop');
+
+  // Icon Active Styles
+  $css->set_selector( 
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link .premium-icon-type, " .
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link .premium-icon-type:not(.icon-type-fe) svg *, " .
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link .premium-tabs-svg-class svg, " .
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link .premium-tabs-svg-class svg *"
+  );
+  $css->pbg_render_color($attr, 'iconActiveColor', 'color');
+  $css->pbg_render_color($attr, 'iconActiveColor', 'fill');
+
+  $css->set_selector(
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link .premium-icon-type, " .
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link .premium-tabs-svg-class svg, " .
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link .premium-lottie-animation svg"
+  );
+  $css->pbg_render_color($attr, 'iconActiveBackground', 'background-color');
+  $css->pbg_render_border($attr, 'iconActiveBorder', 'Desktop');
+
+  $css->set_selector("{$unique_id} .premium-tabs-nav li.active .premium-tab-link img");
+  $css->pbg_render_border($attr, 'iconActiveBorder', 'Desktop');
+
+  ///////////////////////////////////////////////// title Styling/////////////////////////////////////////////
+  $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
+  $css->pbg_render_shadow($attr, 'titleShadow', 'text-shadow');
+  $css->pbg_render_color($attr, 'titleColor', 'color');
+  $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
+  $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Desktop');
+  $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Desktop');
+  $css->pbg_render_border($attr, 'titleBorder', 'Desktop');
+
+  $css->set_selector( $unique_id  . " .premium-tabs-nav-list-item:hover  .premium-tab-link .premium-tab-title-container .premium-tab-title");
+  $css->pbg_render_color($attr, 'titleHoverColor', 'color');
+
+  $css->set_selector( $unique_id  . " .active .premium-tab-title");
+  $css->pbg_render_color($attr, 'titleActiveColor', 'color', null, '!important');
+
+  ////////////////////////////////////////// Sub Title Styling/////////////////////////
+  $css->set_selector( $unique_id . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
+  $css->pbg_render_shadow($attr, 'subShadow', 'text-shadow');
+  $css->pbg_render_color($attr, 'subColor', 'color');
+  $css->pbg_render_typography($attr, 'subTypography', 'Desktop');
+  $css->pbg_render_spacing($attr, 'subPadding', 'padding', 'Desktop');
+  $css->pbg_render_spacing($attr, 'subMargin', 'margin', 'Desktop');
+  $css->pbg_render_border($attr, 'subBorder', 'Desktop');
+
+  $css->set_selector( $unique_id . " .premium-tabs-nav-list-item:hover .premium-tab-link .premium-tab-title-container .premium-tab-desc");
+  $css->pbg_render_color($attr, 'subHoverColor', 'color');
+
+  $css->set_selector( $unique_id . " .active .premium-tab-desc");
+  $css->pbg_render_color($attr, 'subActiveColor', 'color', null, '!important');
+
+  /////////////////////////////// description Styling ////////////////////
+  $css->set_selector( $unique_id . " .premium-tab-content");
+  $css->pbg_render_color($attr, 'descBackColor', 'background-color');
+  $css->pbg_render_shadow($attr, 'descBoxShadow', 'box-shadow');
+  $css->pbg_render_border($attr, 'descBorder', 'Desktop');
+  $css->pbg_render_spacing($attr, 'descPadding', 'padding', 'Desktop');
+  $css->pbg_render_spacing($attr, 'descMargin', 'margin', 'Desktop');
+
+  ///////////////////////////////////////Tabs Wrap ////////////////////////////
+  if($tabs_style === 'style3'){
+    $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list");
+    $css->pbg_render_color($attr, 'wrapBackColor', 'background-color');
+    $css->pbg_render_shadow($attr, 'wrapBoxShadow', 'box-shadow');
+    $css->pbg_render_border($attr, 'wrapBorder', 'Desktop');
+    $css->pbg_render_spacing($attr, 'wrapPadding', 'padding', 'Desktop');
+    $css->pbg_render_spacing($attr, 'wrapMargin', 'margin', 'Desktop');
+  }
+
+  /////////////////////////////// container Style  ////////////////////////////////
+  $css->set_selector( $unique_id );
+  $css->pbg_render_color($attr, 'containerBackColor', 'background-color');
+  $css->pbg_render_shadow($attr, 'containerBoxShadow', 'box-shadow');
+  $css->pbg_render_border($attr, 'containerBorder', 'Desktop');
+  $css->pbg_render_spacing($attr, 'containerPadding', 'padding', 'Desktop');
+
+  $css->set_selector( "body .entry-content {$unique_id}.premium-tabs" );
+  $css->pbg_render_spacing($attr, 'containerMargin', 'margin', 'Desktop');
+
+  $css->start_media_query( 'tablet' );
+
+  $css->set_selector( $unique_id . ' .premium-tabs-nav .premium-tabs-nav-list' );
+  $css->pbg_render_value($attr, 'menuAlign', 'justify-content', 'Tablet');
+
+  $css->set_selector( "{$unique_id}:not(.premium-tabs-icon-column) .premium-tab-link" );
+  $css->pbg_render_value($attr, 'tabsAlign', 'justify-content', 'Tablet');
+
+  $css->set_selector( "{$unique_id}.premium-tabs-icon-column .premium-tab-link" );
+  $css->pbg_render_value($attr, 'tabsAlign', 'align-items', 'Tablet');
+
+  $css->set_selector( "{$unique_id}  .premium-tab-link .premium-tab-title-container" );
+  $css->pbg_render_value($attr, 'tabsAlign', 'align-items', 'Tablet');
+  if($icon_position === 'row-reverse'){
+    $align_value = $css->pbg_get_value($attr, 'tabsAlign', 'Tablet');
+    if($align_value === 'flex-start'){
+      $css->add_property( 'align-items', 'flex-end');
+    }elseif($align_value === 'flex-end'){
+      $css->add_property( 'align-items', 'flex-start');
+    }elseif($align_value === 'center'){
+      $css->add_property( 'align-items', 'center');
+    }
+  }
+
+  if($tabs_type === 'vertical'){
+    $css->set_selector( "{$unique_id} .premium-content-wrap" );
+    $css->pbg_render_value($attr, 'tabVerticalAlign', 'align-self', 'Tablet');
+  }
+
+  if($tabs_style === 'style2'){
+    $css->set_selector( $unique_id  . ".premium-tabs-style-style2 .premium-tabs-nav.horizontal li .active-line");
+    $css->pbg_render_range($attr, 'circleSize', 'height', 'Tablet');
+    $css->set_selector( $unique_id  . ".premium-tabs-style-style2 .premium-tabs-nav.vertical li .active-line");
+    $css->pbg_render_range($attr, 'circleSize', 'width', 'Tablet');
+  }
+  
+  $css->set_selector( $unique_id  . ".premium-tabs-vertical .premium-tabs-nav" );
+  $css->pbg_render_range($attr, 'tabsWidth', 'width', 'Tablet');
+  
+  $css->set_selector( $unique_id  . ".premium-tabs-vertical .premium-content-wrap" );
+  $css->pbg_render_range($attr, 'tabsWidth', 'width', 'Tablet', 'calc(100% - ', ')');
+
+  $css->set_selector( $unique_id  . ".premium-tabs-vertical " );
+  $css->pbg_render_range($attr, 'tabGap', 'gap', 'Tablet');
+
+  $css->set_selector( $unique_id  . ".premium-tabs-horizontal .premium-tabs-nav " );
+  $css->pbg_render_range($attr, 'tabGap', 'margin-bottom', 'Tablet');
+
+  $css->set_selector( $unique_id  . " .premium-tabs-nav ul li .premium-tab-link");
+  $css->pbg_render_border($attr, 'tabBorder', 'Tablet');
+  $css->pbg_render_background($attr, 'backColor', 'Tablet');
+  $css->pbg_render_spacing($attr, 'tabPadding', 'padding', 'Tablet');
+  $css->pbg_render_spacing($attr, 'tabMargin', 'margin', 'Tablet');
+
+  $css->set_selector( $unique_id  . " .premium-tabs-nav ul li.active .premium-tab-link");
+  $css->pbg_render_border($attr, 'tabActiveBorder', 'Tablet');
+  $css->pbg_render_background($attr, 'BackActiveColor', 'Tablet');
+  $css->pbg_render_spacing($attr, 'tabActivePadding', 'padding', 'Tablet');
+  $css->pbg_render_spacing($attr, 'tabActiveMargin', 'margin', 'Tablet');
+
+  $css->set_selector( $unique_id  . " .premium-tabs-nav ul li:not(.active):hover .premium-tab-link");
+  $css->pbg_render_border($attr, 'tabBorderHover', 'Tablet');
+  $css->pbg_render_background($attr, 'backHover', 'Tablet');
+  $css->pbg_render_spacing($attr, 'tabHoverPadding', 'padding', 'Tablet');
+  $css->pbg_render_spacing($attr, 'tabHoverMargin', 'margin', 'Tablet'); 
+  
+  // Icon Styles
+  if(is_array($title_tabs)){
+    foreach ( $title_tabs as $index => $tab){
+      $css->set_selector("{$unique_id} .premium-tabs-nav #premium-tabs__tab{$index} .premium-tab-link svg");
+      $css->pbg_render_range($tab, 'iconSize', 'width', 'Tablet', null, '!important');
+      $css->pbg_render_range($tab, 'iconSize', 'height', 'Tablet', null, '!important');
+
+      $css->set_selector("{$unique_id} .premium-tabs-nav #premium-tabs__tab{$index} .premium-tab-link img");
+      $css->pbg_render_range($tab, 'iconSize', 'width', 'Tablet', null, '!important');
+    }
+  }
+
+  $css->set_selector(
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-icon-type, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link img, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-tabs-svg-class svg, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-lottie-animation svg"
+  );
+  $css->pbg_render_border($attr, 'iconBorder', 'Tablet');
+  $css->pbg_render_spacing($attr, 'iconPadding', 'padding', "Tablet");
+  $css->pbg_render_spacing($attr, 'iconMargin', 'margin', 'Tablet');
+  
+  // Icon Hovering Styles
+  $css->set_selector(
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link .premium-icon-type, " .
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link .premium-tabs-svg-class svg, " .
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link .premium-lottie-animation svg, " .
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link img"
+  );
+  $css->pbg_render_border($attr, 'iconHoverBorder', 'Tablet');
+
+  // Icon Active Styles
+  $css->set_selector(
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link .premium-icon-type, " .
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link .premium-tabs-svg-class svg, " .
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link .premium-lottie-animation svg, " . 
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link img"
+  );
+  $css->pbg_render_border($attr, 'iconActiveBorder', 'Tablet');
+
+  ///////////////////////////////////////////////// title Styling/////////////////////////////////////////////
+  $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
+  $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
+  $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Tablet');
+  $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Tablet');
+  $css->pbg_render_border($attr, 'titleBorder', 'Tablet');   
+
+  /////////////////////////////////// Sub Title Styling ///////////////////////////////
+  $css->set_selector( $unique_id . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
+  $css->pbg_render_typography($attr, 'subTypography', 'Tablet');
+  $css->pbg_render_spacing($attr, 'subPadding', 'padding', 'Tablet');
+  $css->pbg_render_spacing($attr, 'subMargin', 'margin', 'Tablet');
+  $css->pbg_render_border($attr, 'subBorder', 'Tablet');
+
+  /////////////////////////////// description Styling ////////////////////
+  $css->set_selector( $unique_id . " .premium-tab-content");
+  $css->pbg_render_border($attr, 'descBorder', 'Tablet');
+  $css->pbg_render_spacing($attr, 'descPadding', 'padding', 'Tablet');
+  $css->pbg_render_spacing($attr, 'descMargin', 'margin', 'Tablet');
+
+  ////////////////////////////////// Tabs Wrap /////////////////////////////////////
+  if($tabs_style === 'style3'){
+    $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list");
+    $css->pbg_render_border($attr, 'wrapBorder', 'Tablet');
+    $css->pbg_render_spacing($attr, 'wrapPadding', 'padding', 'Tablet');
+    $css->pbg_render_spacing($attr, 'wrapMargin', 'margin', 'Tablet');
+  }    
+  /////////////////////////////// container Style  ////////////////////////////////
+  $css->set_selector( $unique_id );
+  $css->pbg_render_border($attr, 'containerBorder', 'Tablet');
+  $css->pbg_render_spacing($attr, 'containerPadding', 'padding', 'Tablet');
+
+  $css->set_selector( "body .entry-content {$unique_id}.premium-tabs" );
+  $css->pbg_render_spacing($attr, 'containerMargin', 'margin', 'Tablet');
+
+  $css->stop_media_query();
+  $css->start_media_query( 'mobile' );
+
+  $css->set_selector( $unique_id . ' .premium-tabs-nav .premium-tabs-nav-list' );
+  $css->pbg_render_value($attr, 'menuAlign', 'justify-content', 'Mobile');
+
+  $css->set_selector( "{$unique_id}:not(.premium-tabs-icon-column) .premium-tab-link" );
+  $css->pbg_render_value($attr, 'tabsAlign', 'justify-content', 'Mobile');
+
+  $css->set_selector( "{$unique_id}.premium-tabs-icon-column .premium-tab-link" );
+  $css->pbg_render_value($attr, 'tabsAlign', 'align-items', 'Mobile');
+
+  $css->set_selector( "{$unique_id}  .premium-tab-link .premium-tab-title-container" );
+  $css->pbg_render_value($attr, 'tabsAlign', 'align-items', 'Mobile');
+  if($icon_position === 'row-reverse'){
+    $align_value = $css->pbg_get_value($attr, 'tabsAlign', 'Mobile');
+    if($align_value === 'flex-start'){
+      $css->add_property( 'align-items', 'flex-end');
+    }elseif($align_value === 'flex-end'){
+      $css->add_property( 'align-items', 'flex-start');
+    }elseif($align_value === 'center'){
+      $css->add_property( 'align-items', 'center');
+    }
+  }
+
+  if($tabs_type === 'vertical'){
+    $css->set_selector( "{$unique_id} .premium-content-wrap" );
+    $css->pbg_render_value($attr, 'tabVerticalAlign', 'align-self', 'Mobile');
+  }
+
+  if($tabs_style === 'style2'){
+    $css->set_selector( $unique_id  . ".premium-tabs-style-style2 .premium-tabs-nav.horizontal li .active-line");
+    $css->pbg_render_range($attr, 'circleSize', 'height', 'Mobile');
+    $css->set_selector( $unique_id  . ".premium-tabs-style-style2 .premium-tabs-nav.vertical li .active-line");
+    $css->pbg_render_range($attr, 'circleSize', 'width', 'Mobile');
+  }
+
+  $css->set_selector( $unique_id  . ".premium-tabs-vertical .premium-tabs-nav" );
+  $css->pbg_render_range($attr, 'tabsWidth', 'width', 'Mobile');
+  
+  $css->set_selector( $unique_id  . ".premium-tabs-vertical .premium-content-wrap" );
+  $css->pbg_render_range($attr, 'tabsWidth', 'width', 'Mobile', 'calc(100% - ', ')');
+
+  $css->set_selector( $unique_id  . ".premium-tabs-vertical " );
+  $css->pbg_render_range($attr, 'tabGap', 'gap', 'Mobile');
+
+  $css->set_selector( $unique_id  . ".premium-tabs-horizontal .premium-tabs-nav " );
+  $css->pbg_render_range($attr, 'tabGap', 'margin-bottom', 'Mobile');
+
+  $css->set_selector( $unique_id  . " .premium-tabs-nav ul li .premium-tab-link");
+  $css->pbg_render_border($attr, 'tabBorder', 'Mobile');
+  $css->pbg_render_background($attr, 'backColor', 'Mobile');
+  $css->pbg_render_spacing($attr, 'tabPadding', 'padding', 'Mobile');
+  $css->pbg_render_spacing($attr, 'tabMargin', 'margin', 'Mobile');
+
+  $css->set_selector( $unique_id  . " .premium-tabs-nav ul li.active .premium-tab-link");
+  $css->pbg_render_border($attr, 'tabActiveBorder', 'Mobile');
+  $css->pbg_render_background($attr, 'BackActiveColor', 'Mobile');
+  $css->pbg_render_spacing($attr, 'tabActivePadding', 'padding', 'Mobile');
+  $css->pbg_render_spacing($attr, 'tabActiveMargin', 'margin', 'Mobile');
+
+  $css->set_selector( $unique_id  . " .premium-tabs-nav ul li:not(.active):hover .premium-tab-link");
+  $css->pbg_render_border($attr, 'tabBorderHover', 'Mobile');
+  $css->pbg_render_background($attr, 'backHover', 'Mobile');
+  $css->pbg_render_spacing($attr, 'tabHoverPadding', 'padding', 'Mobile');
+  $css->pbg_render_spacing($attr, 'tabHoverMargin', 'margin', 'Mobile'); 
+  
+  // Icon Styles
+  if(is_array($title_tabs)){
+    foreach ( $title_tabs as $index => $tab){
+      $css->set_selector("{$unique_id} .premium-tabs-nav #premium-tabs__tab{$index} .premium-tab-link svg");
+      $css->pbg_render_range($tab, 'iconSize', 'width', 'Mobile', null, '!important');
+      $css->pbg_render_range($tab, 'iconSize', 'height', 'Mobile', null, '!important');
+
+      $css->set_selector("{$unique_id} .premium-tabs-nav #premium-tabs__tab{$index} .premium-tab-link img");
+      $css->pbg_render_range($tab, 'iconSize', 'width', 'Mobile', null, '!important');
+    }
+  }
+
+  $css->set_selector(
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-icon-type, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link img, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-tabs-svg-class svg, " .
+    "{$unique_id} .premium-tabs-nav .premium-tab-link .premium-lottie-animation svg"
+  );
+  $css->pbg_render_border($attr, 'iconBorder', 'Mobile');
+  $css->pbg_render_spacing($attr, 'iconPadding', 'padding', "Mobile");
+  $css->pbg_render_spacing($attr, 'iconMargin', 'margin', 'Mobile');
+  
+  // Icon Hovering Styles
+  $css->set_selector(
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link .premium-icon-type, " .
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link .premium-tabs-svg-class svg, " .
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link .premium-lottie-animation svg, " .
+    "{$unique_id} .premium-tabs-nav li:hover .premium-tab-link img"
+  );
+  $css->pbg_render_border($attr, 'iconHoverBorder', 'Mobile');
+
+  // Icon Active Styles
+  $css->set_selector(
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link .premium-icon-type, " .
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link .premium-tabs-svg-class svg, " .
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link .premium-lottie-animation svg, " . 
+    "{$unique_id} .premium-tabs-nav li.active .premium-tab-link img"
+  );
+  $css->pbg_render_border($attr, 'iconActiveBorder', 'Mobile');
       
-    }
-    if ( isset( $attr['tabActiveBorder'] ) ) {
-        $border        = $attr['tabActiveBorder'];
-        $border_width  = $border['borderWidth'];
-        $border_radius = $border['borderRadius'];
-
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li.active .premium-tab-link" );
-        $css->add_property( 'border-width', $css->render_spacing( $border_width['Tablet'], 'px' ) );
-        $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
-      
-    }
-
-    if ( isset( $attr['tabActiveMargin'] ) ) {
-        $tab_margin = $attr['tabActiveMargin'];
-        $css->set_selector( $unique_id  . " .premium-tabs-nav li.active .premium-tab-link, " . $unique_id . '.premium-tabs-style-style4 .premium-tabs-nav .premium-tabs-nav-list.premium-tabs-horizontal li.active:first-child .premium-tab-link' );
-        $css->add_property( 'margin', $css->render_spacing( $tab_margin['Tablet'],  $tab_margin['unit']['Tablet']  ) );
-    }
-    if ( isset( $attr['tabActivePadding'] ) ) {
-        $tab_padding = $attr['tabActivePadding'];
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav ul li.premium-tabs-nav-list-item:hover .premium-tab-link" );
-        $css->add_property( 'padding', $css->render_spacing( $tab_padding['Tablet'],  $tab_padding['unit']['Tablet']  ) );
-    }
-    if ( isset( $attr['tabBorderHover'] )) {
-        $border        = $attr['tabBorderHover'];
-
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li:hover .premium-tab-link "  );
-        $css->render_border( $border , 'Tablet' );
-    }
-    if ( isset( $attr['tabHoverMargin'] ) ) {
-        $tab_margin = $attr['tabHoverMargin'];
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li:hover  .premium-tab-link, " . $unique_id . '.premium-tabs-style-style4 .premium-tabs-nav .premium-tabs-nav-list.premium-tabs-horizontal li:first-child:hover .premium-tab-link' );
-        $css->add_property( 'margin', $css->render_spacing( $tab_margin['Tablet'],  $tab_margin['unit']['Tablet']  ) );
-    }
-    if ( isset( $attr['tabHoverPadding'] ) ) {
-        $tab_padding = $attr['tabHoverPadding'];
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav ul li.premium-tabs-nav-list-item:hover .premium-tab-link" );
-        $css->add_property( 'padding', $css->render_spacing( $tab_padding['Tablet'],  $tab_padding['unit']['Tablet']  ) );
-    }
-    if(isset($attr['backColor'])){
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li .premium-tab-link " );
-		$css->render_background( $attr['backColor'], 'Tablet' );
-    }
-    if(isset($attr['BackActiveColor'])){
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li.active  .premium-tab-link " );
-		$css->render_background( $attr['BackActiveColor'], 'Tablet' );
-    }
-    if(isset($attr['backHover'])){
-        $css->set_selector( $unique_id  . " .premium-tabs-nav ul li:not(.active):hover  .premium-tab-link " );
-		$css->render_background( $attr['backHover'], 'Tablet' );
-    }
- 
-    ////////////////////////////////////////////icon style ///////////////////////////////////////////
-    if(isset($attr['titleTabs'])){
-        for ($x = 0; $x < count($attr['titleTabs']) ; $x++) {
-            $css->set_selector( $unique_id  . " .premium-tabs-nav #premium-tabs__tab{$x} .premium-tab-link  svg , " .  $unique_id . ".premium-tabs-nav #premium-tabs__tab{$x} .premium-tab-link .premium-icon svg > * "  );
-            $css->add_property( 'width', $css->render_string( $css->render_range( $attr['titleTabs'][$x]['iconSize'], 'Tablet' ), '' ) );
-            $css->add_property( 'height', $css->render_string( $css->render_range( $attr['titleTabs'][$x]['iconSize'], 'Tablet' ), '' ) );
-            $css->set_selector(   $unique_id . "  .premium-tabs-nav #premium-tabs__tab{$x} .premium-tab-link > img " );
-            $css->add_property( 'width', $css->render_string( $css->render_range( $attr['titleTabs'][$x]['iconSize'], 'Tablet' ), '' ) );
-
+  ///////////////////////////////////////////////// title Styling/////////////////////////////////////////////
+  $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
+  $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');
+  $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Mobile');
+  $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Mobile');
+  $css->pbg_render_border($attr, 'titleBorder', 'Mobile');          
     
-        } 
-    }
+  /////////////////////////////////// Sub Title Styling ///////////////////////////////
+  $css->set_selector( $unique_id . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
+  $css->pbg_render_typography($attr, 'subTypography', 'Mobile');
+  $css->pbg_render_spacing($attr, 'subPadding', 'padding', 'Mobile');
+  $css->pbg_render_spacing($attr, 'subMargin', 'margin', 'Mobile');
+  $css->pbg_render_border($attr, 'subBorder', 'Mobile');
 
-   
-    if ( isset( $attr['iconMargin'] ) ) {
-        $icon_margin = $attr['iconMargin'];
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-icon, " . $unique_id . '  .premium-lottie-animation' );
-        $css->add_property( 'margin', $css->render_spacing( $icon_margin['Tablet'],  $icon_margin['unit']['Tablet']  ) );
-    }
-    if ( isset( $attr['iconPadding'] ) ) {
-        $icon_padding = $attr['iconPadding'];
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav li  .premium-tabs-svg-class , " . $unique_id . '  .premium-lottie-animation' );
-        $css->add_property( 'padding', $css->render_spacing( $icon_padding['Tablet'],  $icon_padding['unit']['Tablet']  ) );
-    }
-    if ( isset( $attr['iconBorder'] ) ) {
-        $border        = $attr['iconBorder'];
-        $border_width  = $border['borderWidth'];
-        $border_radius = $border['borderRadius'];
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '  .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link img" );
-        $css->add_property( 'border-width', $css->render_spacing( $border_width['Tablet'], 'px' ) );
-        $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
-      
-    }
-    if ( isset( $attr['iconActiveBorder'] )  && $attr['iconActiveBorder']['borderType'] !== "none") {
-        $border        = $attr['iconActiveBorder'];
-
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li.active .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '   .premium-tabs-nav .premium-tabs-nav-list li.active .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li.active .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li.active .premium-tab-link img" );
-        $css->render_border( $border , 'Tablet' );
-
-    }
-
-       if ( isset( $attr['iconHoverBorder'] ) ) {
-        $border        = $attr['iconHoverBorder'];
-       
-
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '   .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link img" );
-        $css->render_border( $border , 'Tablet' );
-
-    }
-
-
-
-    ///////////////////////////////////////////////// title Styling/////////////////////////////////////////////
-     
-
-        $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-        $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
-
-        if ( isset( $attr['titleMargin'] ) ) {
-            $title_margin = $attr['titleMargin'];
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-            $css->add_property( 'margin', $css->render_spacing( $title_margin['Tablet'],  $title_margin['unit']['Tablet']  ) );
-        }
-        if ( isset( $attr['titlePadding'] ) ) {
-            $title_padding = $attr['titlePadding'];
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-            $css->add_property( 'padding', $css->render_spacing( $title_padding['Tablet'],  $title_padding['unit']['Tablet']  ) );
-        }
-        if ( isset( $attr['titleBorder'] ) ) {
-            $border        = $attr['titleBorder'];
-            $border_width  = $border['borderWidth'];
-            $border_radius = $border['borderRadius'];
-
-
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-            $css->add_property( 'border-width', $css->render_spacing( $border_width['Tablet'], 'px' ) );
-            $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
-           
-        }
-    /////////////////////////////////// Sub Title Styling ///////////////////////////////
-    $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
-    $css->pbg_render_typography($attr, 'subTypography', 'Tablet');
-
-    if ( isset( $attr['subMargin'] ) ) {
-        $sub_margin = $attr['subMargin'];
-        $css->set_selector( $unique_id  . " .premium-tabs-nav-list-item  .premium-tab-link .premium-tab-desc");
-        $css->add_property( 'margin', $css->render_spacing( $sub_margin['Tablet'],  $sub_margin['unit']['Tablet']  ) );
-    }
-    if ( isset( $attr['subPadding'] ) ) {
-        $sub_padding = $attr['subPadding'];
-        $css->set_selector( $unique_id  . " .premium-tabs-nav-list-item  .premium-tab-link .premium-tab-desc");
-        $css->add_property( 'padding', $css->render_spacing( $sub_padding['Tablet'],  $sub_padding['unit']['Tablet']  ) );
-    }
-    if ( isset( $attr['subBorder'] ) ) {
-        $border        = $attr['subBorder'];
-        $border_width  = $border['borderWidth'];
-        $border_radius = $border['borderRadius'];
-
-
-        $css->set_selector( $unique_id  . " .premium-tabs-nav-list-item  .premium-tab-link .premium-tab-desc");
-        $css->add_property( 'border-width', $css->render_spacing( $border_width['Tablet'], 'px' ) );
-        $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
-       
-    }
-
-        /////////////////////////////// description Styling ////////////////////
-      
-        if ( isset( $attr['descMargin'] ) ) {
-            $desc_margin = $attr['descMargin'];
-            $css->set_selector( $unique_id  . "  .premium-tab-content");
-            $css->add_property( 'margin', $css->render_spacing( $desc_margin['Tablet'],  $desc_margin['unit']['Tablet']  ) );
-        }
-        if ( isset( $attr['descPadding'] ) ) {
-            $desc_padding = $attr['descPadding'];
-            $css->set_selector( $unique_id  . "  .premium-tab-content");
-            $css->add_property( 'padding', $css->render_spacing( $desc_padding['Tablet'],  $desc_padding['unit']['Tablet']  ) );
-        }
-        if ( isset( $attr['descBorder'] ) ) {
-            $border        = $attr['descBorder'];
-            $border_width  = $border['borderWidth'];
-            $border_radius = $border['borderRadius'];
-
-
-            $css->set_selector( $unique_id  . "  .premium-tab-content");
-            $css->add_property( 'border-width', $css->render_spacing( $border_width['Tablet'], 'px' ) );
-            $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
-           
-        }
-        ////////////////////////////////// Tabs Wrap /////////////////////////////////////
-        if ( isset( $attr['wrapMargin'] )  && $attr['tabStyle'] == "style3") {
-            $wrap_margin = $attr['wrapMargin'];
-            $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list");
-            $css->add_property( 'margin', $css->render_spacing( $wrap_margin['Tablet'],  $wrap_margin['unit']['Tablet']  ) );
-        }
-        if ( isset( $attr['wrapPadding'] )&& $attr['tabStyle'] == "style3" ) {
-            $wrap_padding = $attr['wrapPadding'];
-            $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list");
-            $css->add_property( 'padding', $css->render_spacing( $wrap_padding['Tablet'],  $wrap_padding['unit']['Tablet']  ) );
-        }
-        if ( isset( $attr['wrapBorder'] )&& $attr['tabStyle'] == "style3" ) {
-            $border        = $attr['wrapBorder'];
-            $border_width  = $border['borderWidth'];
-            $border_radius = $border['borderRadius'];
-
-            $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list");
-            $css->add_property( 'border-width', $css->render_spacing( $border_width['Tablet'], 'px' ) );
-            $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
-           
-        }
-
-    
-        /////////////////////////////// container Style  ////////////////////////////////
-   
-         if ( isset( $attr['containerMargin'] ) ) {
-            $container_margin = $attr['containerMargin'];
-            $css->set_selector( "body .entry-content {$unique_id}.premium-tabs" );
-            $css->add_property( 'margin', $css->render_spacing( $container_margin['Tablet'],  $container_margin['unit']['Tablet']));
-        }
-        if ( isset( $attr['containerPadding'] ) ) {
-            $container_padding = $attr['containerPadding'];
-            $css->set_selector( $unique_id );
-            $css->add_property( 'padding', $css->render_spacing( $container_padding['Tablet'],  $container_padding['unit']['Tablet']));
-        }
-        if ( isset( $attr['containerBorder'] ) ) {
-            $border        = $attr['containerBorder'];
-            $border_width  = $border['borderWidth'];
-            $border_radius = $border['borderRadius'];
-
-            $css->set_selector( $unique_id );
-            $css->add_property( 'border-width',$css->render_string( $css->render_spacing( $border_width['Tablet'], 'px' )," !important") );
-            $css->add_property( 'border-radius',$css->render_string( $css->render_spacing( $border_radius['Tablet'], 'px' )," !important") );
-            
-        }
+  /////////////////////////////// description Styling ////////////////////
+  $css->set_selector( $unique_id . " .premium-tab-content");
+  $css->pbg_render_border($attr, 'descBorder', 'Mobile');
+  $css->pbg_render_spacing($attr, 'descPadding', 'padding', 'Mobile');
+  $css->pbg_render_spacing($attr, 'descMargin', 'margin', 'Mobile');
         
+  ////////////////////////////////// Tabs Wrap /////////////////////////////////////
+  if($tabs_style === 'style3'){
+    $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list");
+    $css->pbg_render_border($attr, 'wrapBorder', 'Mobile');
+    $css->pbg_render_spacing($attr, 'wrapPadding', 'padding', 'Mobile');
+    $css->pbg_render_spacing($attr, 'wrapMargin', 'margin', 'Mobile');
+  }    
 
+  /////////////////////////////// container Style  ////////////////////////////////
+  $css->set_selector( $unique_id ); 
+  $css->pbg_render_border($attr, 'containerBorder', 'Mobile');
+  $css->pbg_render_spacing($attr, 'containerPadding', 'padding', 'Mobile');
 
-        $css->stop_media_query();
-
-        $css->start_media_query( 'mobile' );
-
-        if(isset($attr['tabVerticalAlign'])  && $attr['tabsTypes'] == "vertical"){
-            $css->set_selector( "{$unique_id} .premium-content-wrap" );
-            $css->add_property( 'align-self',  $css->get_responsive_css( $attr['tabVerticalAlign'], 'Mobile' )  );
-        }
-        if(isset($attr['tabsAlign'])){
-            $css->set_selector( "{$unique_id}:not(.premium-tabs-icon-column) .premium-tab-link" );
-            $css->add_property( 'justify-content', $css->get_responsive_css( $attr['tabsAlign'], 'Mobile' ) );
-            $css->set_selector( "{$unique_id}.premium-tabs-icon-column .premium-tab-link , {$unique_id}  .premium-tab-link .premium-tab-title-container" );
-            $css->add_property( 'align-items', $css->render_string( $css->get_responsive_css( $attr['tabsAlign'], 'Mobile' ) , "!important") );
-            $css->add_property( 'text-align', $css->render_text_align( $attr['tabsAlign'], 'Mobile' ));
-
-        }
-
-        if(isset($attr['circleSize']) && $attr['tabStyle'] == "style2"){
-            $css->set_selector( $unique_id  . ".premium-tabs-style-style2 .premium-tabs-nav li::before");
-            $css->add_property( 'width', $css->render_range( $attr['circleSize'], 'Mobile' ));
-            $css->add_property( 'height', $css->render_range( $attr['circleSize'], 'Mobile' ));
-        }
-
-        if(isset($attr['tabsWidth'])){
-            $css->set_selector( $unique_id  . ".premium-tabs-vertical .premium-tabs-nav" );
-            $css->add_property( 'width', $css->render_range( $attr['tabsWidth'], 'Mobile' ));
-            $css->set_selector( $unique_id  . ".premium-tabs-vertical .premium-content-wrap" );
-            $css->add_property( 'width','calc(100% - ' .  $attr['tabsWidth'][ 'Mobile'] . '% )');
-        }
-    
-        if(isset($attr['tabGap'])){
-            $css->set_selector( $unique_id  . ".premium-tabs-vertical " );
-            $css->add_property( 'gap', $css->render_range( $attr['tabGap'], 'Mobile' ));
-            $css->set_selector( $unique_id  . ".premium-tabs-horizontal .premium-tabs-nav " );
-            $css->add_property( "margin-bottom", $css->render_range( $attr['tabGap'], 'Mobile' ));
-        }
-     
-        if ( isset( $attr['tabMargin'] ) ) {
-            $tab_margin = $attr['tabMargin'];
-            $css->set_selector( $unique_id  . "  li.premium-tabs-nav-list-item .premium-tab-link, " . $unique_id . '.premium-tabs-style-style4 .premium-tabs-nav .premium-tabs-nav-list.premium-tabs-horizontal li:first-child .premium-tab-link' );
-            $css->add_property( 'margin', $css->render_spacing( $tab_margin['Mobile'],  $tab_margin['unit']['Mobile']  ) );
-        }
-        if ( isset( $attr['tabPadding'] ) ) {
-            $tab_padding = $attr['tabPadding'];
-            $css->set_selector( $unique_id  . " li.premium-tabs-nav-list-item .premium-tab-link" );
-            $css->add_property( 'padding', $css->render_spacing( $tab_padding['Mobile'],  $tab_padding['unit']['Mobile']  ) );
-        }
-        if ( isset( $attr['tabBorder'] )  &&  $attr['tabStyle'] !== "style4") {
-            $border        = $attr['tabBorder'];
-            $border_width  = $border['borderWidth'];
-            $border_radius = $border['borderRadius'];
-    
-            $css->set_selector( $unique_id  . ":not(.premium-tabs-style-style2) .premium-tabs-nav ul li .premium-tab-link, " . $unique_id . '.premium-tabs-style-style2 .premium-tabs-nav ul  li::before, '. $unique_id . '.premium-tabs-style-style4 .premium-tabs-nav ul li .premium-tab-link::after' );
-            $css->add_property( 'border-width', $css->render_spacing( $border_width['Mobile'], 'px' ) );
-            $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
-          
-        }
-        if ( isset( $attr['tabActiveBorder'] ) ) {
-            $border        = $attr['tabActiveBorder'];
-            $border_width  = $border['borderWidth'];
-            $border_radius = $border['borderRadius'];
-    
-            $css->set_selector( $unique_id  . " .premium-tabs-nav ul li.active .premium-tab-link" );
-            $css->add_property( 'border-width', $css->render_spacing( $border_width['Mobile'], 'px' ) );
-            $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
-           
-        }
-    
-        if ( isset( $attr['tabActiveMargin'] ) ) {
-            $tab_margin = $attr['tabActiveMargin'];
-            $css->set_selector( $unique_id  . " .premium-tabs-nav li.active .premium-tab-link, " . $unique_id . '.premium-tabs-style-style4 .premium-tabs-nav .premium-tabs-nav-list.premium-tabs-horizontal li.active:first-child .premium-tab-link' );
-            $css->add_property( 'margin', $css->render_spacing( $tab_margin['Mobile'],  $tab_margin['unit']['Mobile']  ) );
-        }
-        if ( isset( $attr['tabActivePadding'] ) ) {
-            $tab_padding = $attr['tabActivePadding'];
-            $css->set_selector( $unique_id  . "  .premium-tabs-nav ul li.premium-tabs-nav-list-item:hover .premium-tab-link" );
-            $css->add_property( 'padding', $css->render_spacing( $tab_padding['Mobile'],  $tab_padding['unit']['Mobile']  ) );
-        }
+  $css->set_selector( "body .entry-content {$unique_id}.premium-tabs" );
+  $css->pbg_render_spacing($attr, 'containerMargin', 'margin', 'Mobile');
       
-        if ( isset( $attr['tabBorderHover'] )) {
-            $border        = $attr['tabBorderHover'];
-    
-            $css->set_selector( $unique_id  . " .premium-tabs-nav ul li:hover .premium-tab-link "  );
-            $css->render_border( $border , 'Mobile' );
-        }
-        if ( isset( $attr['tabHoverMargin'] ) ) {
-            $tab_margin = $attr['tabHoverMargin'];
-            $css->set_selector( $unique_id  . " .premium-tabs-nav ul li:hover  .premium-tab-link, " . $unique_id . '.premium-tabs-style-style4 .premium-tabs-nav .premium-tabs-nav-list.premium-tabs-horizontal li:first-child:hover .premium-tab-link' );
-            $css->add_property( 'margin', $css->render_spacing( $tab_margin['Mobile'],  $tab_margin['unit']['Mobile']  ) );
-        }
-        if ( isset( $attr['tabHoverPadding'] ) ) {
-            $tab_padding = $attr['tabHoverPadding'];
-            $css->set_selector( $unique_id  . "  .premium-tabs-nav ul li.premium-tabs-nav-list-item:hover .premium-tab-link" );
-            $css->add_property( 'padding', $css->render_spacing( $tab_padding['Mobile'],  $tab_padding['unit']['Mobile']  ) );
-        }
-
-        if(isset($attr['backColor'])){
-            $css->set_selector( $unique_id  . " .premium-tabs-nav ul li .premium-tab-link " );
-            $css->render_background( $attr['backColor'], 'Mobile' );
-        }
-        if(isset($attr['BackActiveColor'])){
-            $css->set_selector( $unique_id  . " .premium-tabs-nav ul li.active  .premium-tab-link " );
-            $css->render_background( $attr['BackActiveColor'], 'Mobile' );
-        }
-        if(isset($attr['backHover'])){
-            $css->set_selector( $unique_id  . " .premium-tabs-nav ul li:not(.active):hover  .premium-tab-link " );
-            $css->render_background( $attr['backHover'], 'Mobile' );
-        }
-     
-        ////////////////////////////////////////////icon style ///////////////////////////////////////////
-        if(isset($attr['titleTabs'])){
-            for ($x = 0; $x < count($attr['titleTabs']) ; $x++) {
-                $css->set_selector( $unique_id  . " .premium-tabs-nav #premium-tabs__tab{$x} .premium-tab-link  svg , " .  $unique_id . ".premium-tabs-nav #premium-tabs__tab{$x} .premium-tab-link .premium-icon svg > * "  );
-                $css->add_property( 'width', $css->render_string( $css->render_range( $attr['titleTabs'][$x]['iconSize'], 'Mobile' ), '' ) );
-                $css->add_property( 'height', $css->render_string( $css->render_range( $attr['titleTabs'][$x]['iconSize'], 'Mobile' ), '' ) );
-
-                $css->set_selector(   $unique_id . "  .premium-tabs-nav #premium-tabs__tab{$x} .premium-tab-link > img " );
-                $css->add_property( 'width', $css->render_string( $css->render_range( $attr['titleTabs'][$x]['iconSize'], 'Mobile' ), '' ) );
-            } 
-        }
-    
-       
-        if ( isset( $attr['iconMargin'] ) ) {
-            $icon_margin = $attr['iconMargin'];
-            $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-icon, " . $unique_id . '  .premium-lottie-animation' );
-            $css->add_property( 'margin', $css->render_spacing( $icon_margin['Mobile'],  $icon_margin['unit']['Mobile']  ) );
-        }
-        if ( isset( $attr['iconPadding'] ) ) {
-            $icon_padding = $attr['iconPadding'];
-            $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-icon, " . $unique_id . '  .premium-lottie-animation' );
-            $css->add_property( 'padding', $css->render_spacing( $icon_padding['Mobile'],  $icon_padding['unit']['Mobile']  ) );
-        }
-        if ( isset( $attr['iconBorder'] ) ) {
-            $border        = $attr['iconBorder'];
-            $border_width  = $border['borderWidth'];
-            $border_radius = $border['borderRadius'];
-    
-            $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '  .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li .premium-tab-link img" );
-            $css->add_property( 'border-width', $css->render_spacing( $border_width['Mobile'], 'px' ) );
-            $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
-          
-        }
-        if ( isset( $attr['iconActiveBorder'] )  && $attr['iconActiveBorder']['borderType'] !== "none") {
-        $border        = $attr['iconActiveBorder'];
-
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li.active .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '   .premium-tabs-nav .premium-tabs-nav-list li.active .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li.active .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li.active .premium-tab-link img" );
-        $css->render_border( $border , 'Mobile' );
-
-    }
-           if ( isset( $attr['iconHoverBorder'] ) ) {
-        $border        = $attr['iconHoverBorder'];
-       
-
-        $css->set_selector( $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link  .premium-tabs-svg-class , " . $unique_id . '   .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-lottie-animation , ' . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link .premium-icon ," . $unique_id  . "  .premium-tabs-nav .premium-tabs-nav-list li:hover .premium-tab-link img" );
-        $css->render_border( $border , 'Mobile' );
-
-    }
-    
-    
-    
-        ///////////////////////////////////////////////// title Styling/////////////////////////////////////////////
-         
-    
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-            $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');
-
-            if ( isset( $attr['titleMargin'] ) ) {
-                $title_margin = $attr['titleMargin'];
-                $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-                $css->add_property( 'margin', $css->render_spacing( $title_margin['Mobile'],  $title_margin['unit']['Mobile']  ) );
-            }
-            if ( isset( $attr['titlePadding'] ) ) {
-                $title_padding = $attr['titlePadding'];
-                $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-                $css->add_property( 'padding', $css->render_spacing( $title_padding['Mobile'],  $title_padding['unit']['Mobile']  ) );
-            }
-            if ( isset( $attr['titleBorder'] ) ) {
-                $border        = $attr['titleBorder'];
-                $border_width  = $border['borderWidth'];
-                $border_radius = $border['borderRadius'];
-    
-                $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-title");
-                $css->add_property( 'border-width', $css->render_spacing( $border_width['Mobile'], 'px' ) );
-                $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
-               
-            }
-
-                  /////////////////////////////////// Sub Title Styling ///////////////////////////////
-            $css->set_selector( $unique_id  . " .premium-tabs-nav .premium-tab-link .premium-tab-title-container .premium-tab-desc");
-            $css->pbg_render_typography($attr, 'subTypography', 'Mobile');
-            if ( isset( $attr['subMargin'] ) ) {
-                $sub_margin = $attr['subMargin'];
-                $css->set_selector( $unique_id  . " .premium-tabs-nav-list-item  .premium-tab-link .premium-tab-desc");
-                $css->add_property( 'margin', $css->render_spacing( $sub_margin['Mobile'],  $sub_margin['unit']['Mobile']  ) );
-            }
-            if ( isset( $attr['subPadding'] ) ) {
-                $sub_padding = $attr['subPadding'];
-                $css->set_selector( $unique_id  . " .premium-tabs-nav-list-item  .premium-tab-link .premium-tab-desc");
-                $css->add_property( 'padding', $css->render_spacing( $sub_padding['Mobile'],  $sub_padding['unit']['Mobile']  ) );
-            }
-            if ( isset( $attr['subBorder'] ) ) {
-                $border        = $attr['subBorder'];
-                $border_width  = $border['borderWidth'];
-                $border_radius = $border['borderRadius'];
-
-                $css->set_selector( $unique_id  . " .premium-tabs-nav-list-item  .premium-tab-link .premium-tab-desc");
-                $css->add_property( 'border-width', $css->render_spacing( $border_width['Mobile'], 'px' ) );
-                $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
-            
-            }
-          
-            /////////////////////////////// description Styling ////////////////////
-     
-            if ( isset( $attr['descMargin'] ) ) {
-                $desc_margin = $attr['descMargin'];
-                $css->set_selector( $unique_id  . "  .premium-tab-content");
-                $css->add_property( 'margin', $css->render_spacing( $desc_margin['Mobile'],  $desc_margin['unit']['Mobile']  ) );
-            }
-            if ( isset( $attr['descPadding'] ) ) {
-                $desc_padding = $attr['descPadding'];
-                $css->set_selector( $unique_id  . "  .premium-tab-content");
-                $css->add_property( 'padding', $css->render_spacing( $desc_padding['Mobile'],  $desc_padding['unit']['Mobile']  ) );
-
-            }
-            if ( isset( $attr['descBorder'] ) ) {
-                $border        = $attr['descBorder'];
-                $border_width  = $border['borderWidth'];
-                $border_radius = $border['borderRadius'];
-    
-                $css->set_selector( $unique_id  . "  .premium-tab-content");
-                $css->add_property( 'border-width', $css->render_spacing( $border_width['Mobile'], 'px' ) );
-                $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
-               
-            }
-        
-               ////////////////////////////////// Tabs Wrap /////////////////////////////////////
-        if ( isset( $attr['wrapMargin'] ) && $attr['tabStyle'] == "style3" ) {
-            $wrap_margin = $attr['wrapMargin'];
-            $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list");
-            $css->add_property( 'margin', $css->render_spacing( $wrap_margin['Mobile'],  $wrap_margin['unit']['Mobile']  ) );
-        }
-        if ( isset( $attr['wrapPadding'] ) && $attr['tabStyle'] == "style3") {
-            $wrap_padding = $attr['wrapPadding'];
-            $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list");
-            $css->add_property( 'padding', $css->render_spacing( $wrap_padding['Mobile'],  $wrap_padding['unit']['Mobile']  ) );
-        }
-        if ( isset( $attr['wrapBorder'] )&& $attr['tabStyle'] == "style3" ) {
-            $border        = $attr['wrapBorder'];
-            $border_width  = $border['borderWidth'];
-            $border_radius = $border['borderRadius'];
-
-            $css->set_selector( $unique_id  . ".premium-tabs-style-style3 .premium-tabs-nav ul.premium-tabs-nav-list");
-            $css->add_property( 'border-width', $css->render_spacing( $border_width['Mobile'], 'px' ) );
-            $css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
-           
-        }
-            /////////////////////////////// container Style  ////////////////////////////////
-       
-             if ( isset( $attr['containerMargin'] ) ) {
-                $container_margin = $attr['containerMargin'];
-                $css->set_selector( "body .entry-content {$unique_id}.premium-tabs" );
-                $css->add_property( 'margin', $css->render_spacing( $container_margin['Mobile'],  $container_margin['unit']['Mobile']));
-            }
-            if ( isset( $attr['containerPadding'] ) ) {
-                $container_padding = $attr['containerPadding'];
-                $css->set_selector( $unique_id );
-                $css->add_property( 'padding', $css->render_spacing( $container_padding['Mobile'],  $container_padding['unit']['Mobile']));
-            }
-            if ( isset( $attr['containerBorder'] ) ) {
-                $border        = $attr['containerBorder'];
-                $border_width  = $border['borderWidth'];
-                $border_radius = $border['borderRadius'];
-    
-                $css->set_selector( $unique_id );
-                $css->add_property( 'border-width',$css->render_string( $css->render_spacing( $border_width['Mobile'], 'px' )," !important") );
-                $css->add_property( 'border-radius',$css->render_string( $css->render_spacing( $border_radius['Mobile'], 'px' )," !important") );
-                
-            }
-            
-    
-
-        $css->stop_media_query();
+  $css->stop_media_query();
 	return $css->css_output();
 }
 
@@ -974,26 +533,30 @@ function render_block_pbg_tabs( $attributes, $content, $block ) {
 	$block_helpers = pbg_blocks_helper();
 	if ( $block_helpers->it_is_not_amp() ) {
 			wp_enqueue_script(
-				'pbg-lottie',
-				PREMIUM_BLOCKS_URL . 'assets/js/minified/lottie.min.js',
-				array( 'jquery' ),
-				PREMIUM_BLOCKS_VERSION,
-				true
-			);
-		
-	}
-
-	if ( $block_helpers->it_is_not_amp() ) {
-
-			wp_enqueue_script(
 				'pbg-tabs',
 				PREMIUM_BLOCKS_URL . 'assets/js/minified/tabs.min.js',
-				array( 'jquery' ),
+				array(),
 				PREMIUM_BLOCKS_VERSION,
 				true
-			);
-		
+			);		
 	}
+
+  $media_query            = array();
+  $media_query['mobile']  = apply_filters('Premium_BLocks_mobile_media_query', '(max-width: 767px)');
+  $media_query['tablet']  = apply_filters('Premium_BLocks_tablet_media_query', '(max-width: 1024px)');
+  $media_query['desktop'] = apply_filters('Premium_BLocks_desktop_media_query', '(min-width: 1025px)');
+
+  $data = array(
+    'breakPoints' => $media_query,
+  );
+
+  wp_scripts()->add_data('pbg-tabs', 'before', array());
+
+  wp_add_inline_script(
+      'pbg-tabs',
+      'var PBG_TABS = ' . wp_json_encode($data) . ';',
+      'before'
+  );
 
   /* 
     Handling new feature of WordPress 6.7.2 --> sizes='auto' for old versions that doesn't contain wp-image-{$id} class.
@@ -1004,6 +567,17 @@ function render_block_pbg_tabs( $attributes, $content, $block ) {
     $image_tag =  new WP_HTML_Tag_Processor($content);
 
     foreach ($attributes['titleTabs'] as $index => $tab){
+      // Check if this tab uses a lottie icon
+      if (isset($tab['icon']['iconTypeSelect']) && $tab['icon']['iconTypeSelect'] === 'lottie') {
+        wp_enqueue_script(
+          'pbg-lottie',
+          PREMIUM_BLOCKS_URL . 'assets/js/lib/lottie.min.js',
+          array( 'jquery' ),
+          PREMIUM_BLOCKS_VERSION,
+          true
+		  	);
+      }
+
       // Skip if this tab doesn't use an image icon
       if (!isset($tab['icon']['iconTypeSelect']) || $tab['icon']['iconTypeSelect'] !== 'img') {
         continue;

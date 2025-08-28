@@ -14,44 +14,6 @@
         },
         "tabId": {
             "type": "integer"
-        },
-        "initialTabActive": {
-            "type": "number",
-            "default": 0
-        },
-        "alt": {
-            "type": "string",
-            "default": ""
-        },
-        "imgTagHeight": {
-            "type": "number",
-            "default": 0
-        },
-        "imgTagWidth": {
-            "type": "number",
-            "default": 0
-        },
-
-        "hideDesktop": {
-            "type": "boolean",
-            "default": false
-        },
-        "hideTablet": {
-            "type": "boolean",
-            "default": false
-        },
-        "hideMobile": {
-            "type": "boolean",
-            "default": false
-        },
-
-        "width": {
-            "type": "object",
-            "default": {
-                "Desktop": "",
-                "Tablet": "",
-                "Mobile": ""
-            }
         }
     }
 }

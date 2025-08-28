@@ -102,17 +102,18 @@ function get_premium_form_css_style($attr, $unique_id)
 	// radioColors.
 	if (isset($attr['radioColors'])) {
 		$radio_colors = $attr['radioColors'];
+    
 		$css->set_selector(".{$unique_id}.premium-form .premium-radio-item .premium-radio-item-input-wrap .premium-radio-item-input-checkmark");
-		$css->add_property('background-color', $radio_colors['background']);
+		$css->add_property('background-color', $radio_colors['background'] ?? "");
 		// Element color.
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-radio-item .premium-radio-item-input-wrap .premium-radio-item-input-checkmark:after");
-		$css->add_property('background-color', $radio_colors['element']);
+		$css->add_property('background-color', $radio_colors['element'] ?? "");
 		// Focus.
 		$css->set_selector(".{$unique_id}.premium-form .premium-radio-item .premium-radio-item-input-wrap input:checked ~ .premium-radio-item-input-checkmark");
-		$css->add_property('background-color', $radio_colors['focusBackground']);
+		$css->add_property('background-color', $radio_colors['focusBackground'] ?? "");
 		// Element color.
 		$css->set_selector(".{$unique_id}.premium-form .premium-radio-item .premium-radio-item-input-wrap input:checked ~ .premium-radio-item-input-checkmark:after");
-		$css->add_property('background-color', $radio_colors['elementFocus']);
+		$css->add_property('background-color', $radio_colors['elementFocus'] ?? "");
 	}
 
 	// radioBorder.
@@ -221,11 +222,11 @@ function get_premium_form_css_style($attr, $unique_id)
 
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input__icon-wrap + .premium-form-input:not(textarea)");
 		$css->add_property("height",  $css->render_string($css->render_range($attr['iconSize'], 'Desktop')));
-		$css->add_property("padding-left",  $css->render_string($css->get_responsive_css($attr['iconSize'], 'Desktop') + 15 . $css->get_responsive_css($attr['iconSize']['unit'], 'Desktop')));
-
+		$css->add_property("padding-left",  $css->render_string('calc(' . $css->render_range($attr['iconSize'], 'Desktop') . ' + 15px)'));
+		
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input__icon-wrap + .premium-form-input:is(textarea)");
-		$css->add_property("height",  $css->render_string($css->get_responsive_css($attr['iconSize'], 'Desktop') + 50 . $css->get_responsive_css($attr['iconSize']['unit'], 'Desktop')));
-		$css->add_property("padding-left",  $css->render_string($css->get_responsive_css($attr['iconSize'], 'Desktop') + 15 . $css->get_responsive_css($attr['iconSize']['unit'], 'Desktop')));
+    $css->add_property("height",  $css->render_string('calc(' . $css->render_range($attr['iconSize'], 'Desktop') . ' + 50px)'));
+    $css->add_property("padding-left",  $css->render_string('calc(' . $css->render_range($attr['iconSize'], 'Desktop') . ' + 15px)'));
 	}
 
 	if (isset($attr['iconMargin'])) {
@@ -438,11 +439,11 @@ function get_premium_form_css_style($attr, $unique_id)
 
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input__icon-wrap + .premium-form-input:not(textarea)");
 		$css->add_property("height",  $css->render_string($css->render_range($attr['iconSize'], 'Tablet')));
-		$css->add_property("padding-left",  $css->render_string($css->get_responsive_css($attr['iconSize'], 'Tablet') + 15 . $css->get_responsive_css($attr['iconSize']['unit'], 'Tablet')));
-
+		$css->add_property("padding-left",  $css->render_string('calc(' . $css->render_range($attr['iconSize'], 'Tablet') . ' + 15px)'));
+		
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input__icon-wrap + .premium-form-input:is(textarea)");
-		$css->add_property("height",  $css->render_string($css->get_responsive_css($attr['iconSize'], 'Tablet') + 50 . $css->get_responsive_css($attr['iconSize']['unit'], 'Tablet')));
-		$css->add_property("padding-left",  $css->render_string($css->get_responsive_css($attr['iconSize'], 'Tablet') + 15 . $css->get_responsive_css($attr['iconSize']['unit'], 'Tablet')));
+    $css->add_property("height",  $css->render_string('calc(' . $css->render_range($attr['iconSize'], 'Tablet') . ' + 50px)'));
+    $css->add_property("padding-left",  $css->render_string('calc(' . $css->render_range($attr['iconSize'], 'Tablet') . ' + 15px)'));
 	}
 
 	if (isset($attr['iconMargin'])) {
@@ -612,11 +613,11 @@ function get_premium_form_css_style($attr, $unique_id)
 
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input__icon-wrap + .premium-form-input:not(textarea)");
 		$css->add_property("height",  $css->render_string($css->render_range($attr['iconSize'], 'Mobile')));
-		$css->add_property("padding-left",  $css->render_string($css->get_responsive_css($attr['iconSize'], 'Mobile') + 15 . $css->get_responsive_css($attr['iconSize']['unit'], 'Mobile')));
-
+		$css->add_property("padding-left",  $css->render_string('calc(' . $css->render_range($attr['iconSize'], 'Mobile') . ' + 15px)'));
+		
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input__icon-wrap + .premium-form-input:is(textarea)");
-		$css->add_property("height",  $css->render_string($css->get_responsive_css($attr['iconSize'], 'Mobile') + 50 . $css->get_responsive_css($attr['iconSize']['unit'], 'Mobile')));
-		$css->add_property("padding-left",  $css->render_string($css->get_responsive_css($attr['iconSize'], 'Mobile') + 15 . $css->get_responsive_css($attr['iconSize']['unit'], 'Mobile')));
+    $css->add_property("height",  $css->render_string('calc(' . $css->render_range($attr['iconSize'], 'Mobile') . ' + 50px)'));
+    $css->add_property("padding-left",  $css->render_string('calc(' . $css->render_range($attr['iconSize'], 'Mobile') . ' + 15px)'));
 	}
 
 	if (isset($attr['iconMargin'])) {

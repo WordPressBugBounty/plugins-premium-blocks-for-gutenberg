@@ -15,13 +15,12 @@
             "type": "number",
             "default": 0
         },
-
         "tabGap": {
             "type": "object",
             "default": {
                 "Desktop": 15,
-                "Tablet": 15,
-                "Mobile": 15,
+                "Tablet": "",
+                "Mobile": "",
                 "unit": {
                     "Desktop": "px",
                     "Tablet": "px",
@@ -29,25 +28,10 @@
                 }
             }
         },
-
         "tabActiveFront": {
             "type": "number",
             "default": 0
         },
-
-        "hideDesktop": {
-            "type": "boolean",
-            "default": false
-        },
-        "hideTablet": {
-            "type": "boolean",
-            "default": false
-        },
-        "hideMobile": {
-            "type": "boolean",
-            "default": false
-        },
-
         "showIcon": {
             "type": "boolean",
             "default": false
@@ -64,7 +48,6 @@
             "type": "number",
             "default": 3
         },
-
         "titleTabs": {
             "type": "array",
             "default": [
@@ -83,8 +66,8 @@
                     },
                     "iconSize": {
                         "Desktop": "22",
-                        "Tablet": "22",
-                        "Mobile": "22",
+                        "Tablet": "",
+                        "Mobile": "",
                         "unit": {
                             "Desktop": "px",
                             "Tablet": "px",
@@ -107,8 +90,8 @@
                     },
                     "iconSize": {
                         "Desktop": "22",
-                        "Tablet": "22",
-                        "Mobile": "22",
+                        "Tablet": "",
+                        "Mobile": "",
                         "unit": {
                             "Desktop": "px",
                             "Tablet": "px",
@@ -131,8 +114,8 @@
                     },
                     "iconSize": {
                         "Desktop": "22",
-                        "Tablet": "22",
-                        "Mobile": "22",
+                        "Tablet": "",
+                        "Mobile": "",
                         "unit": {
                             "Desktop": "px",
                             "Tablet": "px",
@@ -153,13 +136,11 @@
                 }
             ]
         },
-
         "iconPosition": {
             "type": "string",
             "default": "row",
             "isStyle": true
         },
-
         "tabsTypes": {
             "type": "string",
             "default": "horizontal"
@@ -176,36 +157,28 @@
             "type": "string",
             "default": "style2"
         },
+        "menuAlign": {
+            "type": "object",
+            "default": {
+                "Desktop": "flex-start",
+                "Tablet": "",
+                "Mobile": ""
+            }
+        },
         "tabsAlign": {
             "type": "object",
             "default": {
                 "Desktop": "center",
-                "Tablet": "center",
-                "Mobile": "center"
+                "Tablet": "",
+                "Mobile": ""
             }
         },
         "tabVerticalAlign": {
             "type": "string",
             "default": {
                 "Desktop": "flex-start",
-                "Tablet": "flex-start",
-                "Mobile": "flex-start"
-            }
-        },
-        "carouselTabs": {
-            "type": "boolean",
-            "default": false
-        },
-        "tabsDevices": {
-            "type": "array",
-            "default": []
-        },
-        "tabsToShow": {
-            "type": "object",
-            "default": {
-                "Desktop": 5,
-                "Tablet": 3,
-                "Mobile": 1
+                "Tablet": "",
+                "Mobile": ""
             }
         },
         "tabsWidth": {
@@ -218,23 +191,6 @@
                     "Desktop": "%",
                     "Tablet": "%",
                     "Mobile": "%"
-                }
-            }
-        },
-        "enableCarouselArrow": {
-            "type": "boolean",
-            "default": false
-        },
-        "arrowPosition": {
-            "type": "object",
-            "default": {
-                "Desktop": "",
-                "Tablet": "",
-                "Mobile": "",
-                "unit": {
-                    "Desktop": "px",
-                    "Tablet": "px",
-                    "Mobile": "px"
                 }
             }
         },
@@ -385,7 +341,7 @@
         "tabShadow": {
             "type": "object",
             "default": {
-                "color": "undefined",
+                "color": "transparent",
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
@@ -451,7 +407,7 @@
         "tabHoverShadow": {
             "type": "object",
             "default": {
-                "color": "undefined",
+                "color": "transparent",
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
@@ -643,7 +599,7 @@
         "tabActiveShadow": {
             "type": "object",
             "default": {
-                "color": "undefined",
+                "color": "transparent",
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
@@ -734,7 +690,7 @@
             "type": "object",
             "default": {
                 "borderColor": "",
-                "borderType": "none",
+                "borderType": "",
                 "borderRadius": {
                     "Desktop": {
                         "top": "",
@@ -781,7 +737,7 @@
             "type": "object",
             "default": {
                 "borderColor": "",
-                "borderType": "none",
+                "borderType": "",
                 "borderRadius": {
                     "Desktop": {
                         "top": "",
@@ -828,7 +784,7 @@
             "type": "object",
             "default": {
                 "borderColor": "",
-                "borderType": "none",
+                "borderType": "",
                 "borderRadius": {
                     "Desktop": {
                         "top": "",
@@ -874,7 +830,7 @@
         "iconShadow": {
             "type": "object",
             "default": {
-                "color": "undefined",
+                "color": "transparent",
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
@@ -1031,7 +987,7 @@
         "titleShadow": {
             "type": "object",
             "default": {
-                "color": "undefined",
+                "color": "transparent",
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
@@ -1094,7 +1050,6 @@
                 }
             }
         },
-
         "subColor": {
             "type": "string",
             "default": ""
@@ -1189,7 +1144,7 @@
         "subShadow": {
             "type": "object",
             "default": {
-                "color": "undefined",
+                "color": "transparent",
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
@@ -1252,7 +1207,6 @@
                 }
             }
         },
-
         "descBackColor": {
             "type": "string",
             "default": ""
@@ -1304,11 +1258,10 @@
                 }
             }
         },
-
         "descBoxShadow": {
             "type": "object",
             "default": {
-                "color": "undefined",
+                "color": "transparent",
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
@@ -1425,7 +1378,7 @@
         "containerBoxShadow": {
             "type": "object",
             "default": {
-                "color": "undefined",
+                "color": "transparent",
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
@@ -1542,7 +1495,7 @@
         "wrapBoxShadow": {
             "type": "object",
             "default": {
-                "color": "undefined",
+                "color": "transparent",
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",

@@ -35,7 +35,6 @@ function get_premium_button_css_style($attr, $unique_id)
   $css->set_selector('.' . $unique_id . ' .premium-button:hover');
   $css->pbg_render_background($attr, 'backgroundHoverOptions', 'Desktop');
   $css->pbg_render_shadow($attr, 'boxShadowHover', 'box-shadow');
-  $css->pbg_render_color($attr, 'btnStyles[0].backHoverColor', 'background-color', null, '!important' );
   $css->pbg_render_color($attr, 'btnStyles[0].borderHoverColor', 'border-color', null, '!important' );
 
   $css->set_selector('.' . $unique_id . ' .premium-button:hover .premium-button-text-edit');

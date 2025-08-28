@@ -54,9 +54,11 @@ function get_premium_heading_css_style($attr, $unique_id)
   $css->set_selector($unique_id);
   $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
 
+  $css->set_selector($unique_id . ' .premium-title-container');
+  $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Desktop');
+
   $css->set_selector($unique_id . ' .premium-title-header');
   $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Desktop');
-  $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Desktop');
   $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Desktop'); 
   $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Desktop');
 	
@@ -168,9 +170,11 @@ function get_premium_heading_css_style($attr, $unique_id)
 	$css->set_selector($unique_id);
   $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
 
+  $css->set_selector($unique_id . ' .premium-title-container');
+  $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Tablet');
+
   $css->set_selector($unique_id . ' .premium-title-header');
   $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Tablet');
-  $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Tablet');
   $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Tablet'); 
   $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Tablet');
 
@@ -255,9 +259,11 @@ function get_premium_heading_css_style($attr, $unique_id)
 	$css->set_selector($unique_id);
   $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
 
+  $css->set_selector($unique_id . ' .premium-title-container');
+  $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Mobile');
+
   $css->set_selector($unique_id . ' .premium-title-header');
   $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Mobile');
-  $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Mobile');
   $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Mobile'); 
   $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Mobile');
 

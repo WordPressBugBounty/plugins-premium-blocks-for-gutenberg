@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.12
+Stable tag: 2.2.13
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -126,6 +126,16 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.13 =
+- Fixed: Issue with the left position option for the quotation element in the Testimonials block.
+- Fixed: Styling issues in the Gallery block.
+- Fixed: Button styling issue.
+- Fixed: Section full-width styling issue.
+- Fixed: Styling issues in the Tabs block.
+- Fixed: Styling issues in the Section Block.
+- Tweak: Allowed dual heading support in the Icon Box block.
+- Tweak: Added option to align the icon to the left or right in the Counter block.
+
 = 2.2.12 =
 - Fixed: Gallery block style issues.
 - Fixed: Button block alignment issue.
