@@ -37,14 +37,11 @@ if ( ! class_exists( 'PBG_Rest_API' ) ) {
          * Constructor
          */
         public function __construct() {
-
-            // Activation hook.
-            add_action( 'rest_api_init', array( $this, 'blocks_register_rest_fields' ) );
-            add_action( 'init', array( $this, 'register_rest_orderby_fields' ) );
-            add_filter( 'register_post_type_args', array( $this, 'add_cpts_to_api' ), 10, 2 );
-
-        
-
+          // Activation hook.
+          add_action( 'rest_api_init', array( $this, 'blocks_register_rest_fields' ) );
+          add_action( 'init', array( $this, 'register_rest_orderby_fields' ) );
+          add_action( 'init', array( $this, 'enable_taxonomy_rest_support' ) );
+          add_filter( 'register_post_type_args', array( $this, 'add_cpts_to_api' ), 10, 2 );
         }
 
 
@@ -58,112 +55,52 @@ if ( ! class_exists( 'PBG_Rest_API' ) ) {
             $post_type = PBG_Blocks_Helper::get_post_types();
 
             foreach ( $post_type as $key => $value ) {
-                // Add featured image source.
-                register_rest_field(
-                    $value['value'],
-                    'pbg_featured_image_src',
-                    array(
-                        'get_callback'    => array( $this, 'get_image_src' ),
-                        'update_callback' => null,
-                        'schema'          => null,
-                    )
-                );
+              $post_type = $value['value'];
 
-                // Add author info.
-                register_rest_field(
-                    $value['value'],
-                    'pbg_author_info',
-                    array(
-                        'get_callback'    => array( $this, 'get_author_info' ),
-                        'update_callback' => null,
-                        'schema'          => null,
-                    )
-                );
+              // Add featured image source.
+              register_rest_field(
+                  $post_type,
+                  'pbg_featured_image_src',
+                  array(
+                      'get_callback'    => array( $this, 'get_image_src' ),
+                      'update_callback' => null,
+                      'schema'          => null,
+                  )
+              );
 
-                // Add comment info.
-                register_rest_field(
-                    $value['value'],
-                    'pbg_comment_info',
-                    array(
-                        'get_callback'    => array( $this, 'get_comment_info' ),
-                        'update_callback' => null,
-                        'schema'          => null,
-                    )
-                );
+              // Add author info.
+              register_rest_field(
+                  $post_type,
+                  'pbg_author_info',
+                  array(
+                      'get_callback'    => array( $this, 'get_author_info' ),
+                      'update_callback' => null,
+                      'schema'          => null,
+                  )
+              );
 
-                // Add excerpt info.
-                register_rest_field(
-                    $value['value'],
-                    'pbg_excerpt',
-                    array(
-                        'get_callback'    => array( $this, 'get_excerpt' ),
-                        'update_callback' => null,
-                        'schema'          => null,
-                    )
-                );
+              // Add comment info.
+              register_rest_field(
+                  $post_type,
+                  'pbg_comment_info',
+                  array(
+                      'get_callback'    => array( $this, 'get_comment_info' ),
+                      'update_callback' => null,
+                      'schema'          => null,
+                  )
+              );
 
+              // Add excerpt info.
+              register_rest_field(
+                  $post_type,
+                  'pbg_excerpt',
+                  array(
+                      'get_callback'    => array( $this, 'get_excerpt' ),
+                      'update_callback' => null,
+                      'schema'          => null,
+                  )
+              );
             }
-
-            register_rest_route(
-                'premium-blocks-for-gutenberg/v1',
-                'all_taxonomy',
-                array(
-                    array(
-                        'methods'             => 'GET',
-                        'callback'            => array( $this, 'get_related_taxonomy' ),
-                        'permission_callback' => array( $this, 'get_items_permissions_check' ),
-                        'args'                => array(),
-                    ),
-                )
-            );
-        }
-
-        /**
-         * Get all taxonomies.
-         *
-         * @since 1.11.0
-         * @access public
-         */
-        public function get_related_taxonomy() {
-
-            $post_types = self::get_post_types();
-
-            $return_array = array();
-
-            foreach ( $post_types as $key => $value ) {
-                $post_type = $value['value'];
-
-                $taxonomies = get_object_taxonomies( $post_type, 'objects' );
-                $data       = array();
-
-                foreach ( $taxonomies as $tax_slug => $tax ) {
-                    if ( ! $tax->public || ! $tax->show_ui || ! $tax->show_in_rest ) {
-                        continue;
-                    }
-
-                    $data[ $tax_slug ] = $tax;
-
-                    $terms = get_terms( $tax_slug );
-
-                    $related_tax = array();
-
-                    if ( ! empty( $terms ) ) {
-                        foreach ( $terms as $t_index => $t_obj ) {
-                            $related_tax[] = array(
-                                'id'    => $t_obj->term_id,
-                                'name'  => $t_obj->name,
-                                'child' => get_term_children( $t_obj->term_id, $tax_slug ),
-                            );
-                        }
-                        $return_array[ $post_type ]['terms'][ $tax_slug ] = $related_tax;
-                    }
-                }
-
-                $return_array[ $post_type ]['taxonomy'] = $data;
-
-            }
-
-            return apply_filters( 'pbg_post_loop_taxonomies', $return_array );
         }
 
         /**
@@ -207,7 +144,7 @@ if ( ! class_exists( 'PBG_Rest_API' ) ) {
         public function get_items_permissions_check( $request ) {
 
             if ( ! current_user_can( 'manage_options' ) ) {
-                return new \WP_Error( 'uag_rest_cannot_view', __( 'Sorry, you cannot list resources.', 'premium-blocks-for-gutenberg' ), array( 'status' => rest_authorization_required_code() ) );
+                return new \WP_Error( 'pbg_rest_cannot_view', __( 'Sorry, you cannot list resources.', 'premium-blocks-for-gutenberg' ), array( 'status' => rest_authorization_required_code() ) );
             }
 
             return true;
@@ -260,7 +197,7 @@ if ( ! class_exists( 'PBG_Rest_API' ) ) {
 
             // Get the author link.
             $author_data['author_link'] = get_author_posts_url( $author );
-$author_data['author_img']=get_avatar( get_the_author_meta( 'ID' ), 128, '', get_the_author_meta( 'display_name' ) );
+            $author_data['author_img'] = get_avatar( get_the_author_meta( 'ID' ), 128, '', get_the_author_meta( 'display_name' ) );
             // Return the author data.
             return $author_data;
         }
@@ -342,6 +279,35 @@ $author_data['author_img']=get_avatar( get_the_author_meta( 'ID' ), 128, '', get
             }
 
             return $args;
+        }
+
+        /**
+         * Enable REST API support for taxonomies that don't have it
+         *
+         * @since 0.0.1
+         */
+        public function enable_taxonomy_rest_support() {
+            $post_types = PBG_Blocks_Helper::get_post_types();
+
+            foreach ( $post_types as $key => $value ) {
+                $post_type = $value['value'];
+                $taxonomies = get_object_taxonomies( $post_type, 'objects' );
+                
+                foreach ( $taxonomies as $tax_slug => $tax ) {
+                    if ( ! $tax->public || ! $tax->show_ui ) {
+                        continue;
+                    }
+                    
+                    // Enable REST support for taxonomies that don't have it
+                    if ( ! $tax->show_in_rest ) {
+                        global $wp_taxonomies;
+                        if ( isset( $wp_taxonomies[ $tax_slug ] ) ) {
+                            $wp_taxonomies[ $tax_slug ]->show_in_rest = true;
+                            $wp_taxonomies[ $tax_slug ]->rest_base = $tax_slug;
+                        }
+                    }
+                }
+            }
         }
     }
 

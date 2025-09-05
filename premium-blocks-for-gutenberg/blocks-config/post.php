@@ -15,10 +15,9 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 		 */
 		private static $instance;
 
-
 		private static $settings;
 
-
+    private static $block_helpers = null;
 
 		public static function get_instance() {
 			if ( ! isset( self::$instance ) ) {
@@ -27,7 +26,6 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			return self::$instance;
 		}
 
-
 		private static $meta_separators = array(
 			'dot' => '•',
 			'space' => ' ',
@@ -35,22 +33,23 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			'dash' => '—',
 			'pipe' => '|',
 		);
+
 		/**
 		 * Constructor
 		 */
 		public function __construct() {
-			add_action( 'init', array( $this, 'register_blocks' ) );
-			add_action( 'wp_ajax_premium_post_pagination', array( $this, 'post_pagination' ) );
-			add_action( 'wp_ajax_nopriv_premium_post_pagination', array( $this, 'post_pagination' ) );
-
-			add_action( 'wp_footer', array( $this, 'add_post_dynamic_script' ), 1000 );
+      self::$block_helpers = pbg_blocks_helper();
+      $this->register_blocks();
 		}
 
+    /**
+     * Registers the block types.
+     */
 		public function register_blocks() {
-			// Check if the register function exists.
 			if ( ! function_exists( 'register_block_type' ) ) {
 				return;
 			}
+
 			register_block_type_from_metadata(
 				PREMIUM_BLOCKS_PATH . '/blocks-config/post-carousel/block.json',
 				array(
@@ -59,6 +58,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 					'editor_script'   => 'pbg-blocks-js',
 				)
 			);
+
 			register_block_type_from_metadata(
 				PREMIUM_BLOCKS_PATH . '/blocks-config/post-grid/block.json',
 				array(
@@ -69,527 +69,484 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			);
 		}
 
-
+    /**
+     * Renders the post grid block on server.
+     * @param array  $attributes Array of block attributes.
+     * @param string $content Block content.
+     * @param object $block Block instance.
+     */
 		public function get_post_grid_content( $attributes, $content, $block ) {
-			$page_key = isset( $attributes['queryId'] ) ? 'pbg-query-' . $attributes['queryId'] . '-p' : 'query-page';
-			$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
+      $page_key = ! empty( $attributes['queryId'] ) 
+        ? 'pbg-query-' . sanitize_key( $attributes['queryId'] ) . '-p' 
+        : 'query-page';
+      
+      $paged = ! empty( $_GET[ $page_key ] ) ? max( 1, (int) $_GET[ $page_key ] ) : 1;
 
-			$block_helpers = pbg_blocks_helper();
-			if ( $block_helpers->it_is_not_amp() ) {
-			
-				wp_enqueue_script(
-					'pbg-image-loaded',
-					PREMIUM_BLOCKS_URL . 'assets/js/lib/imageLoaded.min.js',
-					array( 'jquery' ),
-					PREMIUM_BLOCKS_VERSION,
-					true
-				);
-			
-        wp_enqueue_script(
-          'PBG_POST_GRID',
-          PREMIUM_BLOCKS_URL . 'assets/js/minified/post.min.js',
+      $query = self::$block_helpers->get_query( $attributes, 'grid', $paged );
+
+			ob_start();
+			$this->get_post_html( $attributes, $query, 'grid' );
+			return ob_get_clean();
+		}
+
+    /**
+     * Renders the post carousel block on server.
+     * @param array  $attributes Array of block attributes.
+     * @param string $content Block content.
+     * @param object $block Block instance.
+     */
+		public function get_post_carousel_content( $attributes, $content, $block ) {
+      self::$settings['carousel'][ $attributes['blockId'] ] = $attributes;
+      
+			if ( self::$block_helpers->it_is_not_amp() ) {
+        wp_register_script(
+          'pbg-image-loaded',
+          PREMIUM_BLOCKS_URL . 'assets/js/lib/imageLoaded.min.js',
           array( 'jquery' ),
           PREMIUM_BLOCKS_VERSION,
           true
         );
-				
-			}
-			if ( isset( $attributes['blockId'] ) && ! empty( $attributes['blockId'] ) ) {
-				$unique_id = $attributes['blockId'];
-			} else {
-				$unique_id = rand( 100, 10000 );
+        wp_enqueue_style(
+          'pbg-splide',
+          PREMIUM_BLOCKS_URL . 'assets/css/minified/splide.min.css',
+          array(),
+          PREMIUM_BLOCKS_VERSION,
+        );
+        wp_register_script(
+          'pbg-splide',
+          PREMIUM_BLOCKS_URL . 'assets/js/lib/splide.min.js',
+          array( 'jquery' ),
+          PREMIUM_BLOCKS_VERSION,
+          true
+        );
+
+        wp_register_script(
+          'pbg-post-carousel',
+          '',
+          array('pbg-image-loaded', 'pbg-splide'),
+          PREMIUM_BLOCKS_VERSION,
+          true,
+        );
+
+        wp_enqueue_script('pbg-post-carousel');
+
+        wp_scripts()->add_data('pbg-post-carousel', 'after', array());
+        wp_add_inline_script('pbg-post-carousel', $this->add_post_dynamic_script());
 			}
 
-			$css = $this->get_premium_post_css_style( $attributes, $unique_id );
-
-			$style_id = 'pbg-blocks-style' . esc_attr( $unique_id );
-			if ( ! empty( $css ) ) {
-				if ( $block_helpers->should_render_inline( 'post-grid', $unique_id ) ) {
-					$block_helpers->add_custom_block_css( $css );
-				} else {
-					$block_helpers->render_inline_css( $css, $style_id, true );
-				}
-			}
-
-			 $query = $block_helpers->get_query( $attributes, 'grid', $page );
-			self::$settings['grid'][ $attributes['blockId'] ] = $attributes;
+			$query = self::$block_helpers->get_query( $attributes, 'carousel' );
 
 			ob_start();
-			$this->get_post_html( $attributes, $query, 'grid' );
-			// Output the post markup.
-			return ob_get_clean();
-
-		}
-
-		public function get_post_carousel_content( $attributes, $content, $block ) {
-			$page_key = isset( $attributes['queryId'] ) ? 'pbg-query-' . $attributes['queryId'] . '-p' : 'query-page';
-			$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
-
-			$block_helpers = pbg_blocks_helper();
-
-			if ( $block_helpers->it_is_not_amp() ) {
-					wp_enqueue_script(
-						'pbg-image-loaded',
-						PREMIUM_BLOCKS_URL . 'assets/js/lib/imageLoaded.min.js',
-						array( 'jquery' ),
-						PREMIUM_BLOCKS_VERSION,
-						true
-					);
-          wp_enqueue_style(
-            'pbg-splide',
-            PREMIUM_BLOCKS_URL . 'assets/css/minified/splide.min.css',
-            array(),
-            PREMIUM_BLOCKS_VERSION,
-          );
-          wp_enqueue_script(
-						'pbg-splide',
-						PREMIUM_BLOCKS_URL . 'assets/js/lib/splide.min.js',
-						array( 'jquery' ),
-						PREMIUM_BLOCKS_VERSION,
-						true
-					);
-					wp_enqueue_script(
-						'PBG_POST_CAROUSEL',
-						PREMIUM_BLOCKS_URL . 'assets/js/minified/post.min.js',
-						array( 'jquery' ),
-						PREMIUM_BLOCKS_VERSION,
-						true
-					);
-				
-			}
-			if ( isset( $attributes['blockId'] ) && ! empty( $attributes['blockId'] ) ) {
-					 $unique_id = $attributes['blockId'];
-			} else {
-					$unique_id = rand( 100, 10000 );
-			}
-
-			$css = $this->get_premium_post_css_style( $attributes, $unique_id );
-
-			$style_id = 'pbg-blocks-style' . esc_attr( $unique_id );
-			if ( ! empty( $css ) ) {
-				if ( $block_helpers->should_render_inline( 'post-carousel', $unique_id ) ) {
-					$block_helpers->add_custom_block_css( $css );
-				} else {
-					$block_helpers->render_inline_css( $css, $style_id, true );
-				}
-			}
-
-			$query = $block_helpers->get_query( $attributes, 'carousel' );
-			self::$settings['carousel'][ $attributes['blockId'] ] = $attributes;
-
-			ob_start();
-
 			$this->get_post_html( $attributes, $query, 'carousel' );
-			// Output the post markup.
 			return ob_get_clean();
-
 		}
 
-				/**
-				 * Renders the post grid block on server.
-				 *
-				 * @param array  $attributes Array of block attributes.
-				 *
-				 * @param object $query WP_Query object.
-				 * @since 0.0.1
-				 */
+    /**
+     * Renders the post grid block on server.
+     *
+     * @param array  $attributes Array of block attributes.
+     * @param object $query WP_Query object.
+     * @param string $type Type of post display (carousel or grid).
+     * @since 0.0.1
+     */
 		public function get_post_html( $attributes, $query, $type ) {
-        if(! $query->have_posts()) return;
+			if ( ! $query->have_posts() ) return;
 
-				$wrap = array(
-          $type === "carousel" ? 'splide' : '',
-					'premium-blog-wrap',
-					'premium-blog-even',
-					'premium-post-' . $type,
+			$is_carousel = 'carousel' === $type;
+			$show_pagination = $attributes['pagination'] ?? false;
+			$show_arrows = $is_carousel && $attributes['navigationArrow'] ;
 
-
-				);
-					$outerwrap = array(
-						'premium-blog',
-						$attributes['blockId'],
-						'wp-block-premium-post-' . $type,
-            isset($attributes['className']) ? $attributes['className'] : '',
-					);
-
-					?>
-
-   
-			<div class="<?php echo esc_html( implode( ' ', $outerwrap ) ); ?>">
-				<section class="<?php echo esc_html( implode( ' ', $wrap ) ); ?>" aria-label="<?php echo esc_attr("premium-blog-carousel") ?>" >
-          <?php 
-            if($type === "carousel"){
-              ?>
-              <?php if(isset($attributes['navigationArrow']) && $attributes['navigationArrow']){
-                ?>
-                  <div class="splide__arrows">
-                    <button
-                        class="splide__arrow splide__arrow--prev"
-                    >
-                        <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 256 512"
-                            class="pbg-post-carousel-icons"
-                        >
-                            <path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path>
-                        </svg>
-                    </button>
-                    <button
-                        class="splide__arrow splide__arrow--next"
-                    >
-                        <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 256 512"
-                            className="pbg-post-carousel-icons"
-                        >
-                            <path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path>
-                        </svg>
-                    </button>
-                  </div>
-                <?php
-              } ?>
-                <div class="splide__track">
-                <ul class="splide__list">
-              <?php
-            }
-          ?>
-              <?php
-                $this->posts_articles_markup( $query, $attributes, $type );
-              ?>
-              <?php 
-              if($type === "carousel"){
-                ?>
-                </ul>
-                </div>
-                <?php
-              }
-              ?>
-			</section>
-			<?php
-
-							if ( ( isset( $attributes['pagination'] ) && true === $attributes['pagination'] ) ) {
-?>
-<div class="premium-blog-pagination-container">
-	<?php
-										// content already escaped using wp_kses_post.
-										echo $this->render_premium_pagination( $query, $attributes ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-								?>
-								</div>
-								<?php
-								
-							}
-			
-?>
-			</div>
-			<?php
-		}
-
-				/**
-				 * Render Posts HTML
-				 *
-				 * @param object $query WP_Query object.
-				 * @param array  $attributes Array of block attributes.
-				 * @since 1.18.1
-				 */
-		public function posts_articles_markup( $query, $attributes, $type ) {		
-      $post_not_found = $query->found_posts;
-      $style          = $attributes['style'];
-
-			if ( 0 === $post_not_found ) {
-				?>
-				<p class="premium-post__no-posts">
-					<?php echo esc_html( $attributes['postDisplaytext'] ); ?>
-				</p>
-				<?php
-			}
-			$postContainer = array(
-				'premium-blog-post-container',
-				'premium-blog-skin-' . $style,
+			$wrap_classes = array(
+				$is_carousel ? 'splide' : '',
+				'premium-blog-wrap',
+				'premium-blog-even',
+				'premium-post-' . $type,
 			);
-			$postOuter     = array( 'premium-blog-post-outer-container' );
-			if ( $attributes['equalHeight'] ) {
-				array_push( $postOuter, 'premium-post-equal-height' );
-			}
-			while ( $query->have_posts() ) {
-				$query->the_post();
 
-				$thumb = !$attributes['displayPostImage'] ? 'empty-thumb' : '';
-				$contentWrap     = array( 'premium-blog-content-wrapper',$thumb);
-				// Filter to modify the attributes based on content requirement.
-				$attributes = apply_filters( 'premium_post_alter_attributes', $attributes, get_the_ID() );
-				?>
-        <?php if($type === "carousel"){
-          ?>    
-          <li class="splide__slide">
-          <?php
-        } 
-        ?>
-        <div class="<?php echo esc_html( implode( ' ', $postOuter ) ); ?>">
-					<div class="<?php echo esc_html( implode( ' ', $postContainer ) ); ?>">
-						<?php $this->render_image( $attributes ); ?>
-						<?php if ( 'cards' === $attributes['style'] ) : ?>
+			$outer_wrap_classes = array(
+				'premium-blog',
+				$attributes['blockId'],
+				'wp-block-premium-post-' . $type,
+				$attributes['className'] ?? '',
+			);
 
-							<?php if ( $attributes['authorImg'] ) : ?>
-						<div class="premium-blog-author-thumbnail">
-								<?php echo get_avatar( get_the_author_meta( 'ID' ), 128, '', get_the_author_meta( 'display_name' ) ); ?>
+			$arrow_svg_path = 'M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z';
+
+			?>
+			<div class="<?php echo esc_attr( implode( ' ', $outer_wrap_classes ) ); ?>">
+				<section class="<?php echo esc_attr( implode( ' ', $wrap_classes ) ); ?>" aria-label="<?php echo esc_attr( 'premium-blog-carousel' ); ?>">
+					<?php if ( $show_arrows ) : ?>
+						<div class="splide__arrows">
+							<button class="splide__arrow splide__arrow--prev">
+								<svg width="20" height="20" viewBox="0 0 256 512" class="pbg-post-carousel-icons">
+									<path d="<?php echo esc_attr( $arrow_svg_path ); ?>"></path>
+								</svg>
+							</button>
+							<button class="splide__arrow splide__arrow--next">
+								<svg width="20" height="20" viewBox="0 0 256 512" class="pbg-post-carousel-icons">
+									<path d="<?php echo esc_attr( $arrow_svg_path ); ?>"></path>
+								</svg>
+							</button>
 						</div>
 					<?php endif; ?>
-				<?php endif; ?>
-				<div class="<?php echo esc_html( implode( ' ', $contentWrap ) ); ?>">
-					<div class="premium-blog-content-wrapper-inner">
-					<div class="premium-blog-inner-container">
-					<?php if ( in_array( $attributes['style'], array( 'banner' ), true ) && $attributes['showCategories'] ) { ?>
-							<div class="premium-blog-cats-container">
-								<ul class="post-categories">
-									<?php
-										$post_cats = get_the_category();
-									if ( count( $post_cats ) ) {
-										foreach ( $post_cats as $index => $cat ) {
-											echo wp_kses_post( sprintf( '<li><a href="%s" >%s</a></li>', get_category_link( $cat->cat_ID ), $cat->name ) );
-										}
-									}
 
-									?>
-								</ul>
-							</div>
-						<?php } ?>
-							<?php $this->render_post_title( $attributes ); ?>
-							 <?php
-								if ( 'cards' !== $attributes['style'] ) {
-									$this->render_meta( $attributes );
+					<?php if ( $is_carousel ) : ?>
+						<div class="splide__track">
+							<ul class="splide__list">
+					<?php endif; ?>
 
-								}
-								?>
-						
-					</div>
-							<?php
-							if (  $attributes['showContent'] ) {
-								$this->get_post_content( $attributes ); 
-							}
-							?>
-							<?php
-							if ( 'cards' === $attributes['style'] ) {
-								$this->render_meta( $attributes );
+					<?php $this->posts_articles_markup( $query, $attributes, $type ); ?>
 
-							}
-							?>
-							</div>
+					<?php if ( $is_carousel ) : ?>
+							</ul>
 						</div>
-					</div>
-				</div>
-        <?php if($type === "carousel"){
-          ?>
-            </li>
-          <?php
-        } 
-        ?>
-			  <?php
-			}
+					<?php endif; ?>
+				</section>
 
-			wp_reset_postdata();
+				<?php if ( $show_pagination ) : ?>
+					<div class="premium-blog-pagination-container">
+						<?php echo $this->render_pagination( $query, $attributes ); ?>
+					</div>
+				<?php endif; ?>
+			</div>
+			<?php
 		}
 
-		public function render_image( $attributes ) {
-			if ( ! $attributes['displayPostImage'] && $attributes['style'] !== "banner" ) {
-				return;
-			}
-	
-			$attributes['displayPostImage']
-						= array(
-							'id' => get_post_thumbnail_id(),
-						);
-						$wrapImage          = array(
-							'premium-blog-thumbnail-container',
-							'premium-blog-' .
-							$attributes['hoverEffect'] .
-						   '-effect',
-						);
-						$bottomShapeClasses = 'premium-shape-divider premium-bottom-shape';
-						if ( isset( $attributes['shapeBottom'] ) && isset( $attributes['shapeBottom']['flipShapeDivider'] ) ) {
-							$bottomShapeClasses .= ' premium-shape-flip';
-						}
-						if ( isset( $attributes['shapeBottom'] ) && isset( $attributes['shapeBottom']['front'] ) ) {
-							$bottomShapeClasses .= ' premium-shape-above-content';
-						}
-						if ( isset( $attributes['shapeBottom'] ) && isset( $attributes['shapeBottom']['invertShapeDivider'] ) ) {
-							$bottomShapeClasses .= ' premium-shape__invert';
-						}
-						$block_helpers = pbg_blocks_helper();
+    /**
+     * Render Posts HTML
+     *
+     * @param object $query WP_Query object.
+     * @param array  $attributes Array of block attributes.
+     * @param string $type Type of post display (carousel or grid).
+     * @since 1.18.1
+     */
+    public function posts_articles_markup( $query, $attributes, $type ) {
+      $post_count = $query->found_posts;
+      $style = $attributes['style'] ?? 'classic';
 
-						$shapes = $block_helpers->getSvgShapes();
+      if ( 0 === $post_count ) {
+        ?>
+          <p class="premium-post__no-posts">
+            <?php echo esc_html( $attributes['postDisplaytext'] ?? 'No Posts Found!' ); ?>
+          </p>
+				<?php
+        return;
+      }
 
-						?>
-			<div class="premium-blog-thumb-effect-wrapper">
-				<div class="<?php echo esc_html( implode( ' ', $wrapImage ) ); ?>">
-				 <?php
-					if ( in_array( $attributes['style'], array( 'modern', 'cards' ), true ) ) {
-						?>
-              <a href="<?php esc_url(  get_the_permalink() ); ?>" >
-            <?php
-					}
+      static $base_classes = null;
+      if ( null === $base_classes ) {
+        $base_classes = array(
+          'container' => array( 'premium-blog-post-container' ),
+          'outer' => array( 'premium-blog-post-outer-container' ),
+          'content' => array( 'premium-blog-content-wrapper' ),
+        );
+      }
 
-          if(get_post_thumbnail_id()){
-            echo wp_get_attachment_image( get_post_thumbnail_id(), $attributes['imageSize'] );
-          }else{
-            $default_img = PREMIUM_BLOCKS_URL . 'assets/img/author.jpg';
-            ?>  
-              <img src="<?php echo esc_url( $default_img ); ?>" />
+      $is_carousel = ( 'carousel' === $type );
+      $is_cards_style = ( 'cards' === $style );
+      $is_banner_style = ( 'banner' === $style );
+      $show_image = $attributes['displayPostImage'];
+      $post_container = array_merge( $base_classes['container'], array( 'premium-blog-skin-' . $style ) );
+      $post_outer = $base_classes['outer'];
+      $content_wrap = $base_classes['content'];
+      $meta_taxonomies = is_array( $attributes['metaTaxonomies'] ) ? $attributes['metaTaxonomies'] : array();
+      
+      /**
+       *  Backward compatibility: if showCategories is false, empty the meta_taxonomies
+       *  Can be removed after few versions
+       */
+      if ( isset($attributes['showCategories']) && $attributes['showCategories'] === false ) {
+        $meta_taxonomies = array();
+      }
+
+      while ( $query->have_posts() ) {
+        $query->the_post();
+
+        if ( $attributes['equalHeight']) {
+          $post_outer[] = 'premium-post-equal-height';
+        }
+
+        if ( ! $show_image ) {
+          $content_wrap[] = 'empty-thumb';
+        }
+
+        // Output carousel wrapper if needed
+        if ( $is_carousel ) {
+          ?>    
+            <li class="splide__slide">
+          <?php
+        }
+
+        $terms = array();
+        foreach ( $meta_taxonomies as $taxonomy ) {
+          $post_terms = get_the_term_list( $query->post->ID, $taxonomy, '<li>', '</li><li>', '</li>' );
+          if ( ! is_wp_error( $post_terms ) && ! empty( $post_terms ) ) {
+            $terms[] = $post_terms;
+          }
+        }
+
+        ?>
+          <div class="<?php echo esc_attr( implode( ' ', $post_outer ) ); ?>">
+            <div class="<?php echo esc_attr( implode( ' ', $post_container ) ); ?>">
+              <?php
+              // Render post image
+              $this->render_image( $attributes );
+
+              // Render author thumbnail for cards style
+              if ( $is_cards_style && $attributes['authorImg'] ) : ?>
+                <div class="premium-blog-author-thumbnail">
+                    <?php echo get_avatar( get_the_author_meta( 'ID' ), 128, '', get_the_author_meta( 'display_name' ) ); ?>
+                </div>
+              <?php endif; ?>
+
+              <div class="<?php echo esc_attr( implode( ' ', $content_wrap ) ); ?>">
+                <div class="premium-blog-content-wrapper-inner">
+                  <div class="premium-blog-inner-container">
+                    <?php
+                    // Render taxonomies for banner style
+                    if ( $is_banner_style && ! empty( $meta_taxonomies ) ) :
+                      ?>
+                      <div class="premium-blog-cats-container">
+                        <ul class="post-categories">
+                          <?php echo wp_kses_post( implode( $terms ) ); ?>
+                        </ul>
+                      </div>
+                      <?php
+                    endif;
+
+                    // Render post title
+                    $this->render_post_title( $attributes );
+
+                    // Render meta for non-cards style
+                    if ( ! $is_cards_style ) {
+                      $this->render_meta( $attributes );
+                    }
+                    ?>
+                  </div>
+                  <?php
+                  // Render post content
+                  if ( $attributes['showContent'] ) {
+                      $this->render_post_content( $attributes );
+                  }
+
+                  // Render meta for cards style
+                  if ( $is_cards_style ) {
+                      $this->render_meta( $attributes );
+                  }
+                  ?>
+                </div>
+              </div>
+            </div>
+          </div>
+          <?php
+          // Close carousel wrapper if needed
+          if ( $is_carousel ) {
+            ?>    
+              </li>
             <?php
           }
+          ?>
+        <?php
 
-					if ( in_array( $attributes['style'], array( 'modern', 'cards' ), true ) ) {
-						?>
-				      </a>
-						<?php
-					}
-					?>
-				 <?php
-					if ( isset( $attributes['shapeBottom'] ) && isset( $attributes['shapeBottom']['style'] ) ) {
-						?>
-						 <div class="<?php echo ( $bottomShapeClasses ); ?>">
-						<?php
-						echo ( $shapes[ $attributes['shapeBottom']['style'] ] );
-						?>
-				</div>
-						<?php
-					}
-					?>
-   
-				</div>
-				 <?php if ( in_array( $attributes['style'], array( 'modern', 'cards' ), true ) ) : ?>
-							<div class="premium-blog-effect-container <?php echo esc_attr( 'premium-blog-' . $attributes['overlayEffect'] . '-effect' ); ?>">
-								<a class="premium-blog-post-link" href="<?php the_permalink(); ?>" target=""></a>
-								<?php if ( 'squares' === $attributes['overlayEffect'] ) { ?>
-									<div class="premium-blog-squares-square-container"></div>
-								<?php } ?>
-							</div>
-						<?php else : ?>
-							<div class="premium-blog-thumbnail-overlay">
-								<a  href="<?php the_permalink(); ?>" target="" ></a>
-							</div>
-						<?php endif; ?>
-			</div>
-			<?php
-		}
+      }
 
+      wp_reset_postdata();
+    }
 
-		public function render_premium_pagination($query,$attributes) {
-			$block_helpers = pbg_blocks_helper();
+    /**
+     * Render The Post Image
+     *
+     * @param array $attributes Array of block attributes.
+     */
+    public function render_image( $attributes ) {
+      $style = $attributes['style'] ?? 'classic';
+      $target = $attributes['newTab'] ? '_blank' : '_self';
       
-      $page_key = isset( $attributes['queryId'] ) ? 'pbg-query-' . $attributes['queryId'] . '-p' : 'query-page';
-			$paged               =  empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];;
+      if ( empty( $attributes['displayPostImage'] ) && $style !== 'banner' ) {
+        return;
+      }
 
-			$permalink_structure = get_option( 'permalink_structure' );
-			$base                = untrailingslashit( wp_specialchars_decode( get_pagenum_link() ) );
-			$base                = $block_helpers->build_base_url( $permalink_structure, $base );
-			$p_limit             = $attributes['pageLimit'];
-			$page_limit          = min( $p_limit, $query->max_num_pages );
-			$page_limit          = isset( $page_limit ) ? $page_limit :  $attributes['query']['perPage'];
+      $thumbnail_id = get_post_thumbnail_id();
+      $permalink = get_the_permalink();
+      $is_modern_or_cards = in_array( $style, array( 'modern', 'cards' ), true );
+      
+      $wrap_image_classes = array(
+        'premium-blog-thumbnail-container',
+        'premium-blog-' . ( $attributes['hoverEffect'] ?? 'none' ) . '-effect',
+      );
 
-			$links = paginate_links(
-				array(
-					'base'      => $base . '%_%',
-					'format'    => "?$page_key=%#%",
-					'current'   => ( ! $paged ) ? 1 : $paged,
-					'total'     => $page_limit,
-					'type'      => 'array',
-					'mid_size'  => 4,
-					'end_size'  => 4,
-					'prev_next' => $attributes['showPrevNext'],
-					'prev_text' => $attributes['prevString'],
-					'next_text' => $attributes['nextString'],
-				)
-			);
+      $bottom_shape_classes = array( 'premium-shape-divider', 'premium-bottom-shape' );
+      if ( ! empty( $attributes['shapeBottom']['flipShapeDivider'] ) ) {
+        $bottom_shape_classes[] = 'premium-shape-flip';
+      }
+      if ( ! empty( $attributes['shapeBottom']['front'] ) ) {
+        $bottom_shape_classes[] = 'premium-shape-above-content';
+      }
+      if ( ! empty( $attributes['shapeBottom']['invertShapeDivider'] ) ) {
+        $bottom_shape_classes[] = 'premium-shape__invert';
+      }
 
-			if ( isset( $links ) ) {
+      $has_shape = ! empty( $attributes['shapeBottom']['openShape'] ) && ! empty( $attributes['shapeBottom']['style'] ) && ! empty( self::$block_helpers->getSvgShapes()[ $attributes['shapeBottom']['style'] ] );
 
-				return wp_kses_post( implode( PHP_EOL, $links ) );
-			}
+      ?>
+      <div class="premium-blog-thumb-effect-wrapper">
+        <div class="<?php echo esc_attr( implode( ' ', $wrap_image_classes ) ); ?>">
+          <?php if ( $is_modern_or_cards ) : ?>
+            <a href="<?php echo esc_url( $permalink ); ?>" target="<?php echo esc_attr( $target ); ?>">
+          <?php endif; ?>
 
-			return '';
+          <?php if ( $thumbnail_id ) : ?>
+            <?php echo wp_get_attachment_image( $thumbnail_id, $attributes['imageSize'] ); ?>
+          <?php else : ?>
+            <img src="<?php echo esc_url( PREMIUM_BLOCKS_URL . 'assets/img/author.jpg' ); ?>" alt="<?php echo esc_attr( get_the_title() ?? 'Post Featured Image' ); ?>" />
+          <?php endif; ?>
 
-				}
+          <?php if ( $is_modern_or_cards ) : ?>
+            </a>
+          <?php endif; ?>
 
+          <?php if ( $has_shape ) : ?>
+            <div class="<?php echo esc_attr( implode( ' ', $bottom_shape_classes ) ); ?>">
+              <?php echo self::$block_helpers->getSvgShapes()[ $attributes['shapeBottom']['style'] ]; ?>
+            </div>
+          <?php endif; ?>
+        </div>
 
-		
+        <?php if ( $is_modern_or_cards ) : ?>
+          <div class="premium-blog-effect-container <?php echo esc_attr( 'premium-blog-' . $attributes['overlayEffect'] . '-effect' ); ?>">
+            <a class="premium-blog-post-link" href="<?php echo esc_url( $permalink ); ?>" target="<?php echo esc_attr( $target ); ?>"></a>
+            <?php if ( 'squares' === $attributes['overlayEffect'] ) : ?>
+              <div class="premium-blog-squares-square-container"></div>
+            <?php endif; ?>
+          </div>
+        <?php else : ?>
+          <div class="premium-blog-thumbnail-overlay">
+            <a href="<?php echo esc_url( $permalink ); ?>" target="<?php echo esc_attr( $target ); ?>"></a>
+          </div>
+        <?php endif; ?>
+      </div>
+      <?php
+    }
 
+    /**
+     * Render The Post Title
+     * 
+     * @param object $query WP_Query object.
+     * @param array $attributes Array of block attributes.
+     */
+    public function render_pagination( $query, $attributes ) {
+      if ( empty( $query ) || ! $query->max_num_pages || $query->max_num_pages <= 1 ) {
+        return '';
+      }
 
+      $page_key = ! empty( $attributes['queryId'] ) 
+        ? 'pbg-query-' . sanitize_key( $attributes['queryId'] ) . '-p' 
+        : 'query-page';
+      
+      $paged = ! empty( $_GET[ $page_key ] ) ? max( 1, (int) $_GET[ $page_key ] ) : 1;
 
-		/**
-		 * Render Post Meta - Author HTML.
-		 *
-		 * @param array $attributes Array of block attributes.
-		 *
-		 * @since 1.14.0
-		 */
-		public function render_meta_author( $attributes ) {
-			if ( ! $attributes['showAuthor'] ) {
-				return;
-			}
-			?>
-				<div class="premium-blog-post-author premium-blog-meta-data">
-					
-					<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24"><defs></defs><path id="Author" class="cls-1" d="m0,20.63c0,2.74,5.72,3.36,11,3.37,5.28,0,11-.62,11-3.37,0-3.63-3.93-4.85-7.25-5.96-.24-.07-1.25-.67-1.25-2.23,1.65-1.56,3.4-4.11,3.4-6.61,0-3.83-2.71-5.84-5.9-5.84s-5.9,2-5.9,5.84c0,2.5,1.75,5.05,3.4,6.61,0,1.56-1.01,2.15-1.25,2.23-3.32,1.11-7.25,2.33-7.25,5.96Z"/></svg>
-						 <?php the_author_posts_link(); ?>
-			
-				</div>
-			<?php
-		}
+      static $permalink_structure = null;
+      if ( null === $permalink_structure ) {
+        $permalink_structure = get_option( 'permalink_structure' );
+      }
 
+      $base = self::$block_helpers->build_base_url( 
+        $permalink_structure, 
+        untrailingslashit( wp_specialchars_decode( get_pagenum_link() ) ) 
+      );
 
-		/**
-		 * Render Post Meta - Date HTML.
-		 *
-		 * @param array $attributes Array of block attributes.
-		 *
-		 * @since 1.14.0
-		 */
-		public function render_meta_date( $attributes ) {
-			if ( ! $attributes['showDate'] ) {
-				return;
-			}
-			global $post;
+      $page_limit = isset( $attributes['pageLimit'] ) && $attributes['pageLimit'] > 0
+        ? min( $attributes['pageLimit'], $query->max_num_pages )
+        : $query->max_num_pages;
 
-			?>
-			
-			<span class="premium-blog-meta-separtor"><?php echo (self::$meta_separators[$attributes['metaSeparator']?$attributes['metaSeparator']:'dot' ])?></span>
+      // Prepare pagination arguments
+      $pagination_args = array(
+        'base'      => $base . '%_%',
+        'format'    => "?$page_key=%#%",
+        'current'   => $paged,
+        'total'     => $page_limit,
+        'type'      => 'array',
+        'mid_size'  => 4,
+        'end_size'  => 4,
+        'prev_next' => ! empty( $attributes['showPrevNext'] ),
+        'prev_text' => $attributes['prevString'],
+        'next_text' => $attributes['nextString'],
+      );
 
-			<div class="premium-blog-post-time premium-blog-meta-data">
+      $links = paginate_links( $pagination_args );
 
-				<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><defs></defs><path id="Date" class="cls-1" d="m20.93,6.54c-.07-.9-.23-1.64-.57-2.32-.56-1.11-1.47-2.01-2.57-2.57-.68-.35-1.42-.5-2.32-.57-.89-.07-1.99-.07-3.41-.07h-2.11c-1.42,0-2.51,0-3.41.07-.9.07-1.64.23-2.32.57-1.11.56-2.01,1.47-2.57,2.57-.35.68-.5,1.42-.57,2.32-.07.89-.07,1.99-.07,3.41v2.11c0,1.42,0,2.51.07,3.41.07.9.23,1.64.57,2.32.56,1.11,1.47,2.01,2.57,2.57.68.35,1.42.5,2.32.57.89.07,1.99.07,3.41.07h2.11c1.42,0,2.51,0,3.41-.07.9-.07,1.64-.23,2.32-.57,1.11-.56,2.01-1.47,2.57-2.57.35-.68.5-1.42.57-2.32.07-.89.07-1.99.07-3.41v-2.11c0-1.42,0-2.51-.07-3.41Zm-4.72,9.92c-.2.19-.45.29-.71.29s-.51-.1-.71-.29l-4.5-4.5c-.18-.19-.29-.44-.29-.71v-5c0-.55.45-1,1-1s1,.45,1,1v4.59l4.21,4.2c.39.39.39,1.03,0,1.42Z"/></svg>  
-				<span>	<?php echo esc_html( get_the_date( '', $post->ID ) ); ?> </span>
-			</div>
-			<?php
-		}
+      return ! empty( $links ) ? wp_kses_post( implode( PHP_EOL, $links ) ) : '';
+    }
 
-		/**
-		 * Render Post Meta - Comment HTML.
-		 *
-		 * @param array $attributes Array of block attributes.
-		 *
-		 * @since 1.14.0
-		 */
-		public function render_meta_comment( $attributes ) {
-			if ( ! $attributes['showComments'] ) {
-				return;
-			}
-				$comments_strings = array(
-				'no-comments'       => __( 'No Comments', 'premium-blocks-for-gutenberg' ),
-				'one-comment'       => __( '1 Comment', 'premium-blocks-for-gutenberg' ),
-				'multiple-comments' => __( '% Comments', 'premium-blocks-for-gutenberg' ),
-			);
-			?>
-							<span class="premium-blog-meta-separtor"><?php echo( self::$meta_separators[$attributes['metaSeparator']?$attributes['metaSeparator']:'dot' ])?></span>
+    /**
+     * Render The Post Title
+     *
+     * @param array $attributes Array of block attributes.
+     */
+    public function render_post_title( $attributes ) {
+      $target = ( $attributes['newTab'] ?? false ) ? '_blank' : '_self';
+      $allowed_title_tags = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' );
+      $title_tag = $attributes['level'] ?? 'h2';
+      $title_tag = in_array($title_tag, $allowed_title_tags, true) ? sanitize_key($title_tag) : 'h2';
 
-				<div class='premium-blog-post-comments premium-blog-meta-data'>
+      ?>
+        <<?php echo esc_html( $title_tag ); ?> class="premium-blog-entry-title">
+          <a href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>" rel="bookmark noopener noreferrer">
+            <?php echo esc_html( get_the_title() ); ?>
+          </a>
+        </<?php echo esc_html( $title_tag ); ?>>
+      <?php
+    }
 
-					<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><defs></defs><path id="Comments" class="cls-1" d="m11,0C5.03,0,0,4.38,0,10c0,2.63,1.45,5.01,3.48,6.71,1.79,1.49,4.11,2.52,6.52,2.74v1.55c0,.33.16.64.44.83.27.18.62.22.93.1,1.76-.71,4.37-2.14,6.55-4.13,2.17-1.97,4.08-4.64,4.08-7.8C22,4.38,16.97,0,11,0Zm-5,11.5c-.83,0-1.5-.67-1.5-1.5s.67-1.5,1.5-1.5,1.5.67,1.5,1.5-.67,1.5-1.5,1.5Zm5,0c-.83,0-1.5-.67-1.5-1.5s.67-1.5,1.5-1.5,1.5.67,1.5,1.5-.67,1.5-1.5,1.5Zm5,0c-.83,0-1.5-.67-1.5-1.5s.67-1.5,1.5-1.5,1.5.67,1.5,1.5-.67,1.5-1.5,1.5Z"/></svg>
-					<?php comments_popup_link( $comments_strings['no-comments'], $comments_strings['one-comment'], $comments_strings['multiple-comments'], '', $comments_strings['no-comments'] ); ?>
-				</div>
-			 <?php
-		}
-		/**
+    /**
+     * Render Post Meta - Author HTML.
+     *
+     * @param array $attributes Array of block attributes.
+     *
+     * @since 1.14.0
+     */
+    public function render_meta_author( $attributes ) {
+      if ( empty( $attributes['showAuthor'] ) ) {
+        return;
+      }
+
+      ?>
+        <div class="premium-blog-post-author premium-blog-meta-data">
+            <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24" aria-hidden="true"><path id="Author" class="cls-1" d="m0,20.63c0,2.74,5.72,3.36,11,3.37,5.28,0,11-.62,11-3.37,0-3.63-3.93-4.85-7.25-5.96-.24-.07-1.25-.67-1.25-2.23,1.65-1.56,3.4-4.11,3.4-6.61,0-3.83-2.71-5.84-5.9-5.84s-5.9,2-5.9,5.84c0,2.5,1.75,5.05,3.4,6.61,0,1.56-1.01,2.15-1.25,2.23-3.32,1.11-7.25,2.33-7.25,5.96Z"/></svg>
+            <?php echo get_the_author_posts_link(); ?>
+        </div>
+      <?php
+    }
+
+    /**
+     * Render Post Meta - Date HTML.
+     *
+     * @param array $attributes Array of block attributes.
+     *
+     * @since 1.14.0
+     */
+    public function render_meta_date( $attributes ) {
+      if ( empty( $attributes['showDate'] ) ) {
+        return;
+      }
+
+      if( ! empty ( $attributes['showAuthor'] ) ) {
+        ?>
+          <span class="premium-blog-meta-separator">
+            <?php echo esc_html( self::$meta_separators[ $attributes['metaSeparator'] ] ); ?>
+          </span>
+        <?php
+      }
+
+      ?>
+        <div class="premium-blog-post-time premium-blog-meta-data">
+          <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path id="Date" class="cls-1" d="m20.93,6.54c-.07-.9-.23-1.64-.57-2.32-.56-1.11-1.47-2.01-2.57-2.57-.68-.35-1.42-.5-2.32-.57-.89-.07-1.99-.07-3.41-.07h-2.11c-1.42,0-2.51,0-3.41.07-.9.07-1.64.23-2.32.57-1.11.56-2.01,1.47-2.57,2.57-.35.68-.5,1.42-.57,2.32-.07.89-.07,1.99-.07,3.41v2.11c0,1.42,0,2.51.07,3.41.07.9.23,1.64.57,2.32.56,1.11,1.47,2.01,2.57,2.57.68.35,1.42.5,2.32.57.89.07,1.99.07,3.41.07h2.11c1.42,0,2.51,0,3.41-.07.9-.07,1.64-.23,2.32-.57,1.11-.56,2.01-1.47,2.57-2.57.35-.68.5-1.42.57-2.32.07-.89.07-1.99.07-3.41v-2.11c0-1.42,0-2.51-.07-3.41Zm-4.72,9.92c-.2.19-.45.29-.71.29s-.51-.1-.71-.29l-4.5-4.5c-.18-.19-.29-.44-.29-.71v-5c0-.55.45-1,1-1s1,.45,1,1v4.59l4.21,4.2c.39.39.39,1.03,0,1.42Z"/></svg>
+          <span><?php echo esc_html( get_the_date() ); ?></span>
+        </div>
+      <?php
+    }
+
+    /**
 		 * Render Post Meta - Comment HTML.
 		 *
 		 * @param array $attributes Array of block attributes.
@@ -597,95 +554,136 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 		 * @since 1.14.0
 		 */
 		public function render_meta_taxonomy( $attributes ) {
-			if ( ! $attributes['showCategories'] ||   in_array( $attributes['style'], array( 'side', 'banner' ), true ) )  {
+			// Check for both new metaTaxonomies and old showCategories for backward compatibility
+			if ( ( empty( $attributes['metaTaxonomies'] ) && empty( $attributes['showCategories'] ) ) || $attributes['style'] === 'banner' ) {
 				return;
 			}
+
 			global $post;
 
-			$terms = get_the_terms( $post->ID, 'category' );
-			if ( is_wp_error( $terms ) ) {
+			$meta_taxonomies = is_array( $attributes['metaTaxonomies'] ) ? $attributes['metaTaxonomies'] : array();
+			
+			/**
+       *  Backward compatibility: if showCategories is false, empty the meta_taxonomies
+       *  Can be removed after few versions
+       */
+			if ( isset($attributes['showCategories']) && $attributes['showCategories'] === false ) {
+        $meta_taxonomies = array();
+      }
+
+      $terms = array();
+      foreach ( $meta_taxonomies as $taxonomy ) {
+        $post_terms = get_the_term_list( $post->ID, $taxonomy, '', ',&nbsp;' );
+        if ( ! is_wp_error( $post_terms ) && ! empty( $post_terms ) ) {
+          $terms[] = $post_terms;
+        }
+      }
+
+      if ( is_wp_error( $terms ) || empty( $terms ) ) {
 				return;
 			}
-			if ( ! isset( $terms[0] ) ) {
-				return;
-			}
-			?>
-				<span class="premium-blog-meta-separtor"><?php echo(self::$meta_separators[$attributes['metaSeparator']?$attributes['metaSeparator']:'dot' ])?></span>
 
-				<div class="premium-blog-post-categories premium-blog-meta-data">
+      if( ! empty ( $attributes['showAuthor'] ) || ! empty ( $attributes['showDate'] ) ) {
+        ?>
+          <span class="premium-blog-meta-separator">
+            <?php echo esc_html( self::$meta_separators[ $attributes['metaSeparator'] ] ); ?>
+          </span>
+        <?php
+      }
 
-					<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><defs></defs><path id="Categories" class="cls-1" d="m2,4c0,.55.45,1,1,1h16c.55,0,1-.45,1-1s-.45-1-1-1H3c-.55,0-1,.45-1,1Zm0,5c0,.55.45,1,1,1h11c.55,0,1-.45,1-1s-.45-1-1-1H3c-.55,0-1,.45-1,1Zm0,5h0c0-.55.45-1,1-1h16c.55,0,1,.45,1,1h0c0,.55-.45,1-1,1H3c-.55,0-1-.45-1-1Zm1,6c-.55,0-1-.45-1-1s.45-1,1-1h7c.55,0,1,.45,1,1s-.45,1-1,1H3Z"/></svg>
-
-						 <?php the_category( ',' ); ?>
-				</div>
-			<?php
+      ?>
+        <div class="premium-blog-post-categories premium-blog-meta-data">
+          <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path id="Categories" class="cls-1" d="m2,4c0,.55.45,1,1,1h16c.55,0,1-.45,1-1s-.45-1-1-1H3c-.55,0-1,.45-1,1Zm0,5c0,.55.45,1,1,1h11c.55,0,1-.45,1-1s-.45-1-1-1H3c-.55,0-1,.45-1,1Zm0,5h0c0-.55.45-1,1-1h16c.55,0,1,.45,1,1h0c0,.55-.45,1-1,1H3c-.55,0-1-.45-1-1Zm1,6c-.55,0-1-.45-1-1s.45-1,1-1h7c.55,0,1,.45,1,1s-.45,1-1,1H3Z"/></svg>
+          <?php echo wp_kses_post( implode( ',&nbsp;', $terms ) ); ?>
+        </div>
+      <?php
 		}
+
+		/**
+		 * Render Post Meta - Comment HTML.
+		 *
+		 * @param array $attributes Array of block attributes.
+		 *
+		 * @since 1.14.0
+		 */
+    public function render_meta_comment( $attributes ) {
+      if ( empty( $attributes['showComments'] ) ) {
+        return;
+      }
+
+      static $comments_strings = null;
+      if ( null === $comments_strings ) {
+        $comments_strings = array(
+          'no-comments'       => __( 'No Comments', 'premium-blocks-for-gutenberg' ),
+          'one-comment'       => __( '1 Comment', 'premium-blocks-for-gutenberg' ),
+          'multiple-comments' => __( '% Comments', 'premium-blocks-for-gutenberg' ),
+        );
+      }
+
+      $meta_taxonomies = is_array( $attributes['metaTaxonomies'] ) ? $attributes['metaTaxonomies'] : array();
+      
+      /**
+       *  Backward compatibility: if showCategories is false, empty the meta_taxonomies
+       *  Can be removed after few versions
+       */
+      if ( isset($attributes['showCategories']) && $attributes['showCategories'] === false ) {
+        $meta_taxonomies = array();
+      }
+
+      if( ! empty ( $attributes['showAuthor'] ) || ! empty ( $attributes['showDate'] ) || ! empty ( $meta_taxonomies ) ) {
+        ?>
+          <span class="premium-blog-meta-separator">
+            <?php echo esc_html( self::$meta_separators[ $attributes['metaSeparator'] ] ); ?>
+          </span>
+        <?php
+      }
+
+      ?>
+        <div class="premium-blog-post-comments premium-blog-meta-data">
+          <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path id="Comments" class="cls-1" d="m11,0C5.03,0,0,4.38,0,10c0,2.63,1.45,5.01,3.48,6.71,1.79,1.49,4.11,2.52,6.52,2.74v1.55c0,.33.16.64.44.83.27.18.62.22.93.1,1.76-.71,4.37-2.14,6.55-4.13,2.17-1.97,4.08-4.64,4.08-7.8C22,4.38,16.97,0,11,0Zm-5,11.5c-.83,0-1.5-.67-1.5-1.5s.67-1.5,1.5-1.5,1.5.67,1.5,1.5-.67,1.5-1.5,1.5Zm5,0c-.83,0-1.5-.67-1.5-1.5s.67-1.5,1.5-1.5,1.5.67,1.5,1.5-.67,1.5-1.5,1.5Zm5,0c-.83,0-1.5-.67-1.5-1.5s.67-1.5,1.5-1.5,1.5.67,1.5,1.5-.67,1.5-1.5,1.5Z"/></svg>
+          <?php 
+            comments_popup_link( 
+              $comments_strings['no-comments'], 
+              $comments_strings['one-comment'], 
+              $comments_strings['multiple-comments'], 
+              '', 
+              $comments_strings['no-comments'] 
+            ); 
+          ?>
+        </div>
+      <?php
+    }
 
 		/**
 		 * Render Post Meta HTML.
 		 *
 		 * @param array $attributes Array of block attributes.
 		 */
-		public function render_meta( $attributes ) {
-			$meta_content = '';
-			global $post;
-			$classes            = array();
-			$classes[]          = 'premium-blog-entry-meta';
-			$wrapper_attributes = get_block_wrapper_attributes( array( 'class' => implode( ' ', $classes ) ) );
+		public function render_meta( $attributes ) {	
+      ?>
+        <div class="premium-blog-entry-meta">
+          <?php
+            static $meta_sequence = array( 'author', 'date', 'taxonomy', 'comment' );
 
-			do_action( 'pbg_single_post_before_meta', get_the_ID(), $attributes );
-			$meta_sequence = array( 'author', 'date', 'taxonomy', 'comment' );
-			?>
-				<div class="premium-blog-entry-meta">
-					<?php
-					foreach ( $meta_sequence as $key => $sequence ) {
-						switch ( $sequence ) {
-							case 'author':
-								$meta_content .= $this->render_meta_author( $attributes );
-								break;
-							case 'date':
-								$meta_content .= $this->render_meta_date( $attributes );
-								break;
-							case 'comment':
-								$meta_content .= $this->render_meta_comment( $attributes );
-								break;
-							case 'taxonomy':
-								$meta_content .= $this->render_meta_taxonomy( $attributes );
-								break;
-							default:
-								break;
-						}
-					}
-					?>
-				</div>
-				<?php
-				return sprintf( '<div %1$s>%2$s</div>', $wrapper_attributes, $meta_content );
-				do_action( 'pbg_single_post_after_meta', get_the_ID(), $attributes );
-		}
-
-			/****
-			 *
-			 *
-			 * Render The Post Title
-			 *
-			 * @param array $attributes Array of block attributes.
-			 */
-		public function render_post_title( $attributes ) {
-			$block_helpers = pbg_blocks_helper();
-
-			$target = ( $attributes['newTab'] ) ? '_blank' : '_self';
-			$array_of_allowed_HTML = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span', 'p' );
-			$title_tag = $block_helpers -> title_tag_allowed_html( $attributes['level'], $array_of_allowed_HTML, 'h2' );
-
-			?>
-				  
-			<<?php echo esc_html( $title_tag ); ?> class="premium-blog-entry-title" >
-				<a href="<?php the_permalink(); ?>"   target="<?php echo esc_attr( $target ); ?>" rel="bookmark noopener noreferrer" >
-					<?php esc_html( the_title() ); ?>
-				</a>
-			</<?php echo esc_html( $title_tag ); ?>>                   
-						  
-			<?php
+            foreach ( $meta_sequence as $sequence ) {
+              switch ( $sequence ) {
+                  case 'author':
+                      $this->render_meta_author( $attributes );
+                      break;
+                  case 'date':
+                      $this->render_meta_date( $attributes );
+                      break;
+                  case 'taxonomy':
+                      $this->render_meta_taxonomy( $attributes );
+                      break;
+                  case 'comment':
+                      $this->render_meta_comment( $attributes );
+                      break;
+              }
+            }
+          ?>
+        </div>
+      <?php
 		}
 
 		/**
@@ -695,1009 +693,609 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 		 *
 		 * @since 0.0.1
 		 */
-		public function get_post_content( $attributes ) {
-			$show_content=$attributes['showContent'];
-			$src          = $attributes['displayPostExcerpt'];
+		public function render_post_content( $attributes ) {
+			$show_content = $attributes['showContent'];
+			$post_content_type = $attributes['displayPostExcerpt'];
 			$excerpt_type = $attributes['excerptTypeLink'];
 			$excerpt_text = $attributes['readMoreText'];
 			$length       = $attributes['excerptLen'];
-			$content      = '';
-			$content     .= $show_content?'<p class="premium-blog-post-content">' . $this->render_post_content( $src, $length, $excerpt_type, $excerpt_text ) . '</p>':"";
 
-			if ( $excerpt_type ) {
-				if ( empty( $excerpt_text ) ) {
-					return;
+      if( ! $show_content ) {
+        return '';
+      }
+
+      if ( 'Post Full Content' === $post_content_type && ! empty ( get_the_content() ) ) {
+        ?>
+        <div class="premium-blog-post-content">
+          <?php the_content() ?>
+        </div>
+        <?php
+			} elseif ( 'Post Excerpt' === $post_content_type && ! empty ( get_the_excerpt() ) ) {
+        $excerpt = wp_strip_all_tags( get_the_excerpt() );
+			  $excerpt = wp_trim_words( $excerpt, $length, ' ...' );
+        ?>
+        <p class="premium-blog-post-content">
+          <?php echo esc_html( $excerpt ); ?>
+        </p>
+        <?php
+			}
+
+			if ( $excerpt_type && ! empty( $excerpt_text ) ) {
+        ?>
+          <div class="premium-blog-excerpt-link-wrap">
+            <a class="premium-blog-excerpt-link wp-block-button__link <?php echo esc_attr( $attributes['fullWidth'] ? 'premium-blog-full-link' : '' ); ?>" href="<?php echo esc_url( get_the_permalink() ); ?>">
+              <?php echo esc_html( $excerpt_text ); ?>
+            </a>
+          </div>
+        <?php
+			}
+		}
+
+    /**
+     * Add Dynamic JS for Post Carousel
+     */
+		public function add_post_dynamic_script() {
+			if ( empty( self::$settings['carousel'] ) || ! is_array( self::$settings['carousel'] ) ) {
+				return '';
+			}
+
+			$css = new Premium_Blocks_css();
+			$is_rtl = is_rtl();
+			$carousel_configs = array();
+
+			foreach ( self::$settings['carousel'] as $key => $value ) {
+				if ( empty( $value ) || ! is_array( $value ) ) {
+					continue;
 				}
-				$wrapbutton     = 'premium-blog-excerpt-link-wrap';
-				$wrapbutton    .= ( isset( $attributes['fullWidth'] ) && $attributes['fullWidth'] ) ? ' premium-blog-full-link' : '';
-				$wrapper_class = get_block_wrapper_attributes( array( 'class' => trim( $wrapbutton ) ) );
-				$button_content = '<a class="premium-blog-excerpt-link wp-block-button__link" href="' . esc_url( get_the_permalink() ) . '">' . wp_kses_post( $attributes['readMoreText'] ) . '</a>';
-				$content       .= sprintf(
-					'<div %1$s>%2$s</div>',
-					$wrapper_class,
-					$button_content
+
+				$desktop_gap = $css->pbg_render_range( $value, 'columnGap', 'gap', 'Desktop' );
+				$tablet_gap = $css->pbg_render_range( $value, 'columnGap', 'gap', 'Tablet' );
+				$mobile_gap = $css->pbg_render_range( $value, 'columnGap', 'gap', 'Mobile' );
+				
+				$desktop_width = $css->pbg_render_range( $value, 'slidesWidth', 'width', 'Desktop' );
+				$tablet_width = $css->pbg_render_range( $value, 'slidesWidth', 'width', 'Tablet' );
+				$mobile_width = $css->pbg_render_range( $value, 'slidesWidth', 'width', 'Mobile' );
+
+				// Prepare configuration data
+				$carousel_configs[ $key ] = array(
+					'desktop_cols' => intval( $value['columns']['Desktop'] ?? 2 ),
+					'tablet_cols' => intval( $value['columns']['Tablet'] ?? 2 ),
+					'mobile_cols' => intval( $value['columns']['Mobile'] ?? 1 ),
+					'per_page' => intval( $value['query']['perPage'] ?? 1 ),
+					'slide_to_scroll' => intval( $value['slideToScroll'] ?? 1 ),
+					'infinite_loop' => !empty( $value['infiniteLoop'] ),
+					'autoplay' => !empty( $value['Autoplay'] ),
+					'pause_on_hover' => !empty( $value['pauseOnHover'] ),
+					'navigation_arrow' => !empty( $value['navigationArrow'] ),
+					'navigation_dots' => !empty( $value['navigationDots'] ),
+					'autoplay_speed' => intval( $value['autoplaySpeed'] ?? 3000 ),
+					'fixed_width' => !empty( $value['fixedWidth'] ),
+					'gaps' => array(
+						'desktop' => $desktop_gap,
+						'tablet' => $tablet_gap,
+						'mobile' => $mobile_gap,
+					),
+					'widths' => array(
+						'desktop' => $desktop_width,
+						'tablet' => $tablet_width,
+						'mobile' => $mobile_width,
+					),
 				);
 			}
-			echo $content;
-		}
 
-		public  function pbg_get_excerpt_text(  $content, $length_fallback ) {
-
-			// If there's an excerpt provided from meta, use it.
-			$excerpt = $content;
-
-			if ( empty( $excerpt ) ) { // If no excerpt provided from meta.
-				$max_excerpt = 100;
-				// If the content present on post, then trim it and use that.
-				if ( ! empty( $content ) ) {
-					$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $content, $max_excerpt ) );
-				}
-			}
-			// Trim the excerpt.
-			if ( ! empty( $excerpt ) ) {
-				$excerpt = explode( ' ', $excerpt );
-				if ( count( $excerpt ) > $length_fallback ) {
-					$excerpt = implode( ' ', array_slice( $excerpt, 0, $length_fallback ) ) . '...';
-				} else {
-					$excerpt = implode( ' ', $excerpt );
-				}
+			if ( empty( $carousel_configs ) ) {
+				return;
 			}
 
-			return empty( $excerpt ) ? '' : $excerpt;
+      ob_start();
+			?>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const carouselConfigs = <?php echo wp_json_encode( $carousel_configs ); ?>;
+          const isRTL = <?php echo wp_json_encode( $is_rtl ); ?>;
+
+          function initCarousel(blockClass, config) {
+            const scope = document.querySelector('.' + blockClass + ' .splide .splide__track .splide__list');
+            if (!scope) return;
+
+            let desktopCols = config.desktop_cols;
+            if (desktopCols > scope.children.length) {
+              desktopCols = Math.min(scope.children.length, 1);
+            }
+
+            const carouselSettings = {
+              type: config.infinite_loop ? 'loop' : 'slide',
+              perPage: desktopCols,
+              perMove: config.slide_to_scroll,
+              autoplay: config.autoplay,
+              pauseOnHover: config.pause_on_hover,
+              arrows: config.navigation_arrow,
+              pagination: config.navigation_dots,
+              interval: config.autoplay_speed,
+              speed: 500,
+              direction: isRTL ? 'rtl' : 'ltr',
+              gap: config.gaps.desktop,
+              breakpoints: {
+                1024: {
+                  perPage: Math.min(config.tablet_cols, config.per_page, scope.children.length) || 1,
+                  perMove: 1,
+                  focus: 0,
+                  omitEnd: true,
+                  ...(config.gaps.tablet && { gap: config.gaps.tablet }),
+                  ...(config.fixed_width && config.widths.tablet && { fixedWidth: config.widths.tablet }),
+                },
+                767: {
+                  perPage: Math.min(config.mobile_cols, config.per_page, scope.children.length) || 1,
+                  perMove: 1,
+                  focus: 0,
+                  omitEnd: true,
+                  ...(config.gaps.mobile && { gap: config.gaps.mobile }),
+                  ...(config.fixed_width && config.widths.mobile && { fixedWidth: config.widths.mobile }),
+                }
+              }
+            };
+
+            if (config.slide_to_scroll === 1) {
+              carouselSettings.focus = 0;
+              carouselSettings.omitEnd = true;
+            }
+
+            if (config.fixed_width && config.widths.desktop) {
+              carouselSettings.fixedWidth = config.widths.desktop;
+            }
+
+            if (typeof imagesLoaded === 'function') {
+              imagesLoaded(scope, function() {
+                const splide = new Splide('.' + blockClass + ' .splide', carouselSettings);
+                splide.mount();
+              });
+            } else {
+              const splide = new Splide('.' + blockClass + ' .splide', carouselSettings);
+              splide.mount();
+            }
+          }
+
+          Object.keys(carouselConfigs).forEach(function(blockClass) {
+            initCarousel(blockClass, carouselConfigs[blockClass]);
+          });
+        });
+      </script>
+			<?php
+
+      return strip_tags( ob_get_clean() );
 		}
 
-
-				/**
-				 * Function runder Button
-				 *
-				 * @param [type] $read_more
-				 * @param [type] $attributes
-				 * @return void
-				 */
-		public function render_post_content( $source, $excerpt_length, $cta_type ) {
-			$excerpt = '';
-			if ( 'Post Full Content' === $source ) {
-				// Print post full content.
-				$excerpt = get_the_content();
-			} else {
-
-				$excerpt = $this->pbg_get_excerpt_text( get_the_excerpt(),$excerpt_length );
-			}
-			return $excerpt;
-		}
-
-
-		public function add_post_dynamic_script() {
-      $css                    = new Premium_Blocks_css();
-      
-      if ( isset( self::$settings['carousel'] ) ) {
-				foreach ( self::$settings['carousel'] as $key => $value ) {
-					$tcolumns     = ( isset( $value['columns']['Tablet'] ) ) ? $value['columns']['Tablet'] : 2;
-					$mcolumns     = ( isset( $value['columns']['Mobile'] ) ) ? $value['columns']['Mobile'] : 1;
-					$equal_height = isset( $value['equalHeight'] ) ? $value['equalHeight'] : '';
-					$slideToScroll = ( isset( $value['slideToScroll'] ) );
-					$is_rtl        = is_rtl();
-					?>
-								<script type="text/javascript"  id="<?php echo esc_attr( $key ); ?>" >
-                  document.addEventListener( 'DOMContentLoaded', function() {
-                    let cols = parseInt('<?php echo esc_html( $value['columns']['Desktop'] ); ?>');
-                    let tabletGap = Boolean('<?php echo esc_html($value['columnGap']['Tablet']) ?>');
-                    let mobileGap = Boolean('<?php echo esc_html($value['columnGap']['Mobile']) ?>');
-				   let desktopWidth = Boolean('<?php echo esc_html($value['slidesWidth']['Desktop']) ?>');
-
-					let tabletWidth = Boolean('<?php echo esc_html($value['slidesWidth']['Tablet']) ?>');
-                    let mobileWidth = Boolean('<?php echo esc_html($value['slidesWidth']['Mobile']) ?>');
-					let fixedWidth = Boolean('<?php echo esc_html($value['fixedWidth']) ?>');
-
-	                  let scope = document.querySelector('.<?php echo esc_html( $key );?> .splide .splide__track .splide__list');
-                    
-                    if(cols > scope.children.length){
-                      cols = 1;
-                    }
-
-                    const carouselSettings = {
-                      type: '<?php echo esc_html( $value['infiniteLoop'] ? "loop" : "slide" ); ?>',
-                      perPage: cols,
-                      perMove: <?php echo esc_html( $value['slideToScroll'] ); ?>,
-                      autoplay: Boolean( '<?php echo esc_html( $value['Autoplay'] ); ?>' ),
-                      pauseOnHover: Boolean( '<?php echo esc_html( $value['pauseOnHover'] ); ?>' ),
-                      arrows: Boolean( '<?php echo esc_html( $value['navigationArrow'] ); ?>' ),
-                      pagination: Boolean( '<?php echo esc_html( $value['navigationDots'] ); ?>' ),
-                      interval: <?php echo esc_html( $value['autoplaySpeed'] ); ?>,
-                      speed: 500,
-                      ...(<?php echo esc_html( $value['slideToScroll'] ); ?> == 1 ? { focus: 0, omitEnd: true } : {}),
-                      direction: '<?php echo esc_html( $is_rtl ? "rtl" : "ltr" ); ?>',
-                      gap: '<?php echo esc_html($value['columnGap']['Desktop']) . esc_html($value['columnGap']['unit']['Desktop']); ?>',
-					  ...(fixedWidth  && desktopWidth? { fixedWidth : '<?php echo esc_html($value['slidesWidth']['Desktop']) . esc_html($value['slidesWidth']['unit']['Desktop']); ?>'} : {}),
-                      breakpoints : {
-                        1024: {
-                          perPage: <?php echo esc_html( $tcolumns <= $value['query']['perPage'] ? $tcolumns : 1); ?>,
-                          perMove: 1,
-                          focus: 0,
-                          omiteEnd: true,
-                          ...(tabletGap ? {gap: '<?php echo esc_html($value['columnGap']['Tablet']) . esc_html($value['columnGap']['unit']['Tablet']); ?>'} : {}),
-						  ...(tabletWidth && fixedWidth ? {fixedWidth: '<?php echo esc_html($value['slidesWidth']['Tablet']) . esc_html($value['slidesWidth']['unit']['Tablet']); ?>'} : {}),
-
-                        },
-                        767: {
-                          perPage: <?php echo esc_html( $mcolumns <= $value['query']['perPage'] ? $mcolumns : 1); ?>,
-                          perMove: 1,
-                          focus: 0,
-                          omiteEnd: true,
-						...(mobileWidth && fixedWidth ? {fixedWidth: '<?php echo esc_html($value['slidesWidth']['Mobile']) . esc_html($value['slidesWidth']['unit']['Mobile']); ?>'} : {}),
-
-                          ...(mobileGap ? {gap: '<?php echo esc_html($value['columnGap']['Mobile']) . esc_html($value['columnGap']['unit']['Mobile']); ?>'} : {}),
-                        }
-                      },
-                    };
-
-                    imagesLoaded(scope, function(){
-                      var splide = new Splide( '.<?php echo esc_html($key) ?> .splide', carouselSettings);
-                      splide.mount();
-                    })
-                    
-                  });
-								</script>
-				
-					<?php
-				}
-			}
-		}
-
-
+    /**
+     * Generate the CSS for Post Block
+     * @param array  $attr Array of block attributes.
+     * @param string $unique_id Unique ID of the block.
+     */
 		public function get_premium_post_css_style( $attr, $unique_id ) {
 			$css                    = new Premium_Blocks_css();
-			$media_query            = array();
-			$media_query['mobile']  = apply_filters( 'Premium_BLocks_mobile_media_query', '(max-width: 767px)' );
-			$media_query['tablet']  = apply_filters( 'Premium_BLocks_tablet_media_query', '(max-width: 1024px)' );
-			$media_query['desktop'] = apply_filters( 'Premium_BLocks_tablet_media_query', '(min-width: 1025px)' );
+			
+      $is_advanced_border = $css->pbg_get_value($attr, 'advancedBorder');
       
-			if ( isset( $attr['columns'] ) && ! empty( $attr['columns']['Desktop'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
-				$css->add_property( 'width', 'calc(100% / ' . $attr['columns']['Desktop'] . ')' );
-			}
-			if ( isset( $attr['plusColor'] ) ) {
+      $css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
+      $css->pbg_render_value($attr, 'columns', 'width', 'Desktop', 'calc(100% / ', ')');
+      $css->pbg_render_range($attr, 'columnGap', 'padding-right', 'Desktop', 'calc( ', ' / 2 )');
+      $css->pbg_render_range($attr, 'columnGap', 'padding-left', 'Desktop', 'calc( ', ' / 2 )');
+      $css->pbg_render_spacing($attr, 'margin', 'padding', 'Desktop');
 
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-thumbnail-container:before , .' . $unique_id . ' .premium-blog-thumbnail-container:after' );
-				$css->add_property( 'background-color', $css->render_string( $css->render_color( $attr['plusColor'] ), ' !important' ) );
+      $css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
+      $css->pbg_render_range($attr, 'columnGap', 'margin-right', 'Desktop', 'calc( -', ' / 2 )');
+      $css->pbg_render_range($attr, 'columnGap', 'margin-left', 'Desktop', 'calc( -', ' / 2 )');
+      $css->pbg_render_range($attr, 'rowGap', 'row-gap', 'Desktop');
+			
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-thumbnail-container:before , .' . $unique_id . ' .premium-blog-thumbnail-container:after' );
+      $css->pbg_render_color($attr, 'plusColor', 'background-color');
+			
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-link:before, .' . $unique_id . ' .premium-blog-post-link:after' );
+      $css->pbg_render_color($attr, 'borderedColor', 'border-color');
+		
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-skin-modern .premium-blog-content-wrapper' );
+      $css->pbg_render_range($attr, 'contentOffset', 'top', 'Desktop');
+			
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-author-thumbnail' );
+      $css->pbg_render_range($attr, 'authorImgPosition', 'top', 'Desktop');
+			
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container.premium-blog-skin-banner .premium-blog-content-wrapper' );
+      $css->pbg_render_value($attr, 'verticalAlign', 'justify-content', 'Desktop');
+			
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
+      $css->pbg_render_shadow($attr, 'boxShadow', 'box-shadow');
+      $css->pbg_render_color($attr, 'ContainerBackground', 'background-color');
+      $css->pbg_render_border($attr, 'border', 'Desktop');
+      $css->pbg_render_spacing($attr, 'padding', 'padding', 'Desktop');
+			if ( $is_advanced_border ) {
+        $css->pbg_render_value($attr, 'advancedBorderValue', 'border-radius', null, null, '!important');
 			}
-			if ( isset( $attr['borderedColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-link:before, .' . $unique_id . ' .premium-blog-post-link:after' );
-				$css->add_property( 'border-color', $css->render_color( $attr['borderedColor'] ) );
-			}
-			if ( isset( $attr['contentOffset'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-skin-modern .premium-blog-content-wrapper' );
-				$css->add_property( 'top', $css->render_string( $attr['contentOffset']['Desktop'], 'px' ) );
-			}
-			if ( isset( $attr['authorImgPosition'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-author-thumbnail' );
-				$css->add_property( 'top', $css->render_string( $attr['authorImgPosition']['Desktop'], 'px' ) );
-			}
-			if ( isset( $attr['verticalAlign'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper' );
-				$css->add_property( 'justify-content', $css->get_responsive_css( $attr['verticalAlign'], 'Desktop'  ) );
-			}
-			if ( isset( $attr['columnGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
-				$css->add_property( 'padding-right','calc(' . $css->render_range( $attr['columnGap'], 'Desktop' ).'/2 )' );
-				$css->add_property( 'padding-left','calc(' . $css->render_range( $attr['columnGap'], 'Desktop' ).'/2 )'  );
-				
-        $css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
-				$css->add_property( 'margin-right','calc(-' . $css->render_range( $attr['columnGap'], 'Desktop' ).'/2 )' );
-				$css->add_property( 'margin-left','calc(-' . $css->render_range( $attr['columnGap'], 'Desktop' ).'/2 )'  );
-			}
-			if ( isset( $attr['rowGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
-				$css->add_property( 'row-gap', $css->render_range( $attr['rowGap'], 'Desktop' ) );
-			}
+		
+      $css->set_selector( '.' . $unique_id . ' .post-categories , .'. $unique_id . '  .premium-blog-post-tags-container, .' . $unique_id . ' .premium-blog-entry-meta');
+      $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Desktop');
 
-			if ( isset( $attr['margin'] ) ) {
-				$container_margin = $attr['margin'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
-				$css->add_property( 'padding', $css->render_spacing( $container_margin['Desktop'], isset($container_margin['unit']['Desktop'])?$container_margin['unit']['Desktop']:$container_margin['unit']  ) );
-			}
-			if ( isset( $attr['padding'] ) ) {
-				$container_padding = $attr['padding'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
-				$css->add_property( 'padding', $css->render_spacing( $container_padding['Desktop'], isset($container_padding['unit']['Desktop']) ?$container_padding['unit']['Desktop']:$container_padding['unit'] ) );
-			}
-			if ( isset( $attr['boxShadow'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
-				$css->add_property( 'box-shadow', $css->render_shadow( $attr['boxShadow'] ) );
-			}
-			if ( isset( $attr['ContainerBackground'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
-				$css->add_property( 'background-color', $css->render_color( $attr['ContainerBackground'] ) );
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-inner-container');
+      $css->pbg_render_align_self($attr, 'align', 'align-items', 'Desktop');
 
-			}
-			if ( isset( $attr['border'] ) ) {
-				$border_width  = $attr['border']['borderWidth'];
-				$border_radius = $attr['border']['borderRadius'];
-				$border_style  = $attr['border']['borderType'];
-				$border_color  = $attr['border']['borderColor'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
-				$css->add_property( 'border-color', $css->render_color( $border_color ) );
-				$css->add_property( 'border-style', $border_style );
-				$css->add_property( 'border-width', $css->render_spacing( $border_width['Desktop'], 'px' ) );
-				$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Desktop'], 'px' ) );
-			}
-			if ( isset( $attr['advancedBorder'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
-				$css->add_property( 'border-radius', $attr['advancedBorder'] ? $css->render_string( $attr['advancedBorderValue'] , '!important' ): '' );
-			}
-			if ( isset( $attr['contentBoxMargin'] ) ) {
-				$content_margin = $attr['contentBoxMargin'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
-				$css->add_property( 'margin', $css->render_spacing( $content_margin['Desktop'], isset($content_margin['unit']['Desktop'])?$content_margin['unit']['Desktop']:$content_margin['unit']  ) );
-			}
-			if ( isset( $attr['contentPadding'] ) ) {
-				$content_padding = $attr['contentPadding'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
-				$css->add_property( 'padding', $css->render_spacing( $content_padding['Desktop'], isset($content_padding['unit']['Desktop'])?$content_padding['unit']['Desktop']:$content_padding['unit']  ) );
-			}
-			if ( isset( $attr['contentBackground'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
-				$css->add_property( 'background-color', $css->render_color( $attr['contentBackground'] ) );
-			}
-			if ( isset( $attr['align'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
-				$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
-			}
-			if ( isset( $attr['align'] ) ) {
-				$content_align      = $css->get_responsive_css( $attr['align'], 'Desktop' );
-				$css->set_selector( '.' . $unique_id . ' .post-categories , .'. $unique_id . '  .premium-blog-post-tags-container');
-				$css->add_property( 'justify-content', $css->render_align_self($content_align)  );
-			}
-			if ( isset( $attr['align'] ) ) {
-				$content_align      = $css->get_responsive_css( $attr['align'], 'Desktop' );
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-inner-container');
-				$css->add_property( 'align-items', $css->render_align_self($content_align)  );
-			}
-			if ( isset( $attr['contentBoxShadow'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
-				$css->add_property( 'box-shadow', $css->render_shadow( $attr['contentBoxShadow'] ) );
-			}
-
-			if ( isset( $attr['contentColor'] ) && ! empty( $attr['contentColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
-				$css->add_property( 'color',$css->render_string( $css->render_color( $attr['contentColor'] ). '!important' ));
-			}
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
+      $css->pbg_render_color($attr, 'contentBackground', 'background-color');
+      $css->pbg_render_shadow($attr, 'contentBoxShadow', 'box-shadow');
+      $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
+      $css->pbg_render_spacing($attr, 'contentPadding', 'padding', 'Desktop');
+      $css->pbg_render_spacing($attr, 'contentBoxMargin', 'margin', 'Desktop');
 
       $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
       $css->pbg_render_typography( $attr, 'contentTypography', 'Desktop' );
-			
-			if ( isset( $attr['contentMargin'] ) ) {
-				$content_spacing = $attr['contentMargin'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
-				$css->add_property( 'margin', $css->render_spacing( $content_spacing['Desktop'], isset($content_spacing['unit']['Desktop'])?$content_spacing['unit']['Desktop']:$content_spacing['unit']  ) );
-			}
+      $css->pbg_render_spacing($attr, 'contentMargin', 'margin', 'Desktop');
+      $css->pbg_render_color($attr, 'contentColor', 'color');
       
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title , .' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title >* ' );
+      // Title Styles
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title' );
       $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
-			
-			if ( isset( $attr['shapeBottom'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-bottom-shape svg' );
-				$css->add_property( 'fill', $css->render_color( $attr['shapeBottom']['color'] ) );
-				$css->add_property( 'width', $css->render_range( $attr['shapeBottom']['width'], 'Desktop' ) );
-				$css->add_property( 'height', $css->render_range( $attr['shapeBottom']['height'], 'Desktop' ) );
-			}
-			if ( isset( $attr['titleColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title >* ' );
-				$css->add_property( 'color', $css->render_string( $css->render_color( $attr['titleColor']) , ' !important') );
-			}
-			if ( isset( $attr['titleBottomSpacing'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title' );
-				$css->add_property( 'margin-bottom', $css->render_range( $attr['titleBottomSpacing'], 'Desktop' ) );
-			}
-			if ( isset( $attr['titleHoverColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title:hover > *' );
-				$css->add_property( 'color', $css->render_string( $css->render_color($attr['titleHoverColor'] ), ' !important' ));
-			}
+      $css->pbg_render_range($attr, 'titleBottomSpacing', 'margin-bottom', 'Desktop');
+      $css->pbg_render_color($attr, 'titleColor', 'color');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title > *' );
+      $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title:hover' );
+      $css->pbg_render_color($attr, 'titleHoverColor', 'color');
+
+      // Shape Styles
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-bottom-shape svg' );
+      $css->pbg_render_range($attr, 'shapeBottom.width', 'width', 'Desktop');
+      $css->pbg_render_range($attr, 'shapeBottom.height', 'height', 'Desktop');
+      $css->pbg_render_color($attr, 'shapeBottom.color', 'fill');
+
 			// Meta
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data , .'. $unique_id . ' .premium-blog-meta-data > a' );
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data, .' . $unique_id . ' .premium-blog-meta-data a' );
       $css->pbg_render_typography( $attr, 'metaTypography', 'Desktop' );
-			
-			if ( isset( $attr['metaTypography']['fontSize'] ) ) {
-				$iconSize = $attr['metaTypography']['fontSize'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data svg' );
-				$css->add_property( 'width', $css->render_range( $iconSize, 'Desktop' ) );
-				$css->add_property( 'height', $css->render_range( $iconSize, 'Desktop' ) );
 
-			}
-			if ( isset( $attr['metaColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-meta-data' );
-				$css->add_property( 'color', $css->render_color( $attr['metaColor'] ) );
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-meta-data svg' );
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-meta-data svg .cls-1' );
-				$css->add_property( 'fill', $css->render_color( $attr['metaColor'] ) );
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data' );
+      $css->pbg_render_color($attr, 'metaColor', 'color');
+      $css->pbg_render_color($attr, 'metaColor', 'fill');
 
-			}
-			if ( isset( $attr['metaHoverColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data:hover ' );
-				$css->add_property( 'color', $css->render_color( $attr['metaHoverColor'] ) );
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data:hover  svg' );
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data:hover  svg .cls-1' );
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data :is(svg, svg .cls-1)');
+      $css->pbg_render_range($attr, 'metaTypography.fontSize', 'width', 'Desktop');
+      $css->pbg_render_range($attr, 'metaTypography.fontSize', 'height', 'Desktop');
 
-				$css->add_property( 'fill', $css->render_color( $attr['metaHoverColor'] ) );
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data:has(a):hover' );
+      $css->pbg_render_color($attr, 'metaHoverColor', 'color');
+      $css->pbg_render_color($attr, 'metaHoverColor', 'fill');
 
-			}
-
-			if ( isset( $attr['sepColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-separtor' );
-				$css->add_property( 'color', $css->render_string( $css->render_color( $attr['sepColor'] ), '!important' ) );
-			}
-
-			// Image
-
-			if ( isset( $attr['thumbnail'] ) && !empty($attr['thumbnail']) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container img ' );
-				$css->add_property( 'object-fit',  $attr['thumbnail'] );
-			}
-			if ( isset( $attr['height'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-thumbnail-container img' );
-				$css->add_property( 'height', $css->render_range( $attr['height'], 'Desktop' ) );
-			}
-			if(isset($attr['hoverEffect']) &&($attr['hoverEffect']=="zoomin" ||$attr['hoverEffect']=="zoomout"||$attr['hoverEffect']=="scale"||$attr['hoverEffect']=="trans")){
-				if ( isset( $attr['filter'] ) ) {
-					$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container img' );
-					$css->add_property('filter', $css->render_filter($attr['filter'] )		);
-	
-				}	
-			}
-			if(isset($attr['hoverEffect']) &&($attr['hoverEffect']=="zoomin" ||$attr['hoverEffect']=="zoomout"||$attr['hoverEffect']=="scale"||$attr['hoverEffect']=="trans")){
-
-        if ( isset( $attr['Hoverfilter'] ) ) {
-          $css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container:hover img' );
-          $css->add_property('filter', $css->render_filter($attr['Hoverfilter'] )		);
-        }
-		  }
-			if ( isset( $attr['colorOverlay'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-thumbnail-overlay  , .' . $unique_id . ' .premium-blog-framed-effect , .' . $unique_id . ' .premium-blog-bordered-effect, .' . $unique_id . ' .premium-blog-squares-effect:before , .' . $unique_id . ' .premium-blog-squares-effect:after , .' . $unique_id . '  .premium-blog-squares-square-container:before, .' . $unique_id . ' .premium-blog-squares-square-container:after' );
-				$css->add_property( 'background-color', $css->render_color( $attr['colorOverlay'] ) );
-			}
-			if ( isset( $attr['colorOverlayHover'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container:hover  .premium-blog-thumbnail-overlay  , .' . $unique_id . ' .premium-blog-post-container:hover  .premium-blog-framed-effect , .' . $unique_id . ' .premium-blog-post-container:hover  .premium-blog-bordered-effect, .' . $unique_id . ' .premium-blog-post-container:hover  .premium-blog-squares-effect:before , .' . $unique_id . ' .premium-blog-post-container:hover  .premium-blog-squares-effect:after , .' . $unique_id . ' .premium-blog-post-container:hover   .premium-blog-squares-square-container:before, .' . $unique_id . ' .premium-blog-post-container:hover  .premium-blog-squares-square-container:after' );
-				$css->add_property( 'background-color', $css->render_color( $attr['colorOverlayHover'] ) );
-			}
-			// excerpt
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-      $css->pbg_render_typography( $attr, 'btnTypography', 'Desktop' );
-			
-			if ( isset( $attr['buttonSpacing'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->add_property( 'margin-top', $css->render_range( $attr['buttonSpacing'], 'Desktop' ) );
-			}
-			if ( isset( $attr['btnBorder'] ) ) {
-				$content_border_width  = $attr['btnBorder']['borderWidth'];
-				$content_border_radius = $attr['btnBorder']['borderRadius'];
-				$content_border_color  = $attr['btnBorder']['borderColor'];
-				$content_border_type   = $attr['btnBorder']['borderType'];
-
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->add_property( 'border-color', $css->render_color( $content_border_color ) );
-				$css->add_property( 'border-style',$css->render_string( $content_border_type ,''));
-
-				$css->add_property( 'border-width', $css->render_spacing( $content_border_width['Desktop'], 'px' ) );
-				$css->add_property( 'border-radius', $css->render_spacing( $content_border_radius['Desktop'], 'px' ) );
-			}
-			if ( isset( $attr['btnBorderHover'] ) ) {
-				$content_border_width  = $attr['btnBorderHover']['borderWidth'];
-				$content_border_radius = $attr['btnBorderHover']['borderRadius'];
-				$content_border_color  = $attr['btnBorderHover']['borderColor'];
-				$content_border_type   = $attr['btnBorderHover']['borderType'];
-
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link:hover' );
-				if($content_border_type !=="none"){
-					$css->add_property( 'border-color', $css->render_color( $content_border_color ) );
-					$css->add_property( 'border-style',$css->render_string( $content_border_type ,'' ));
-	
-					$css->add_property( 'border-width', $css->render_spacing( $content_border_width['Desktop'], 'px' ) );
-	
-				}
-				$css->add_property( 'border-radius', $css->render_spacing( $content_border_radius['Desktop'], 'px' ) );
-			}
-			if ( isset( $attr['btnPadding'] ) ) {
-				$button_padding = $attr['btnPadding'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->add_property( 'padding', $css->render_spacing( $button_padding['Desktop'],  isset($button_padding['unit']['Desktop'] )?$button_padding['unit']['Desktop']:$button_padding['unit']) );
-			}
-
-			if ( isset( $attr['buttonColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->add_property( 'color', $css->render_color( $attr['buttonColor'] ) );
-			}
-			if ( isset( $attr['buttonBackground'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->add_property( 'background-color', $css->render_color( $attr['buttonBackground'] ) );
-			}
-			if ( isset( $attr['buttonhover'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link:hover' );
-				$css->add_property( 'color', $css->render_color( $attr['buttonhover'] ) );
-			}
-			if ( isset( $attr['hoverBackground'] ) ) {
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-excerpt-link:hover' );
-				$css->add_property( 'background-color', $css->render_color( $attr['hoverBackground'] ) );
-			}
-			if ( isset( $attr['arrowSize'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow svg' );
-				$css->add_property( 'width',$css->render_string($attr['arrowSize'], 'px') );
-				$css->add_property( 'height',$css->render_string($attr['arrowSize'], 'px') );
-
-			}
-			if ( isset( $attr['arrowColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow svg' );
-				$css->add_property( 'fill',$css->render_color( $attr['arrowColor'] ));
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
-				$css->add_property( 'fill',$css->render_color( $attr['arrowColor'] ));
-			}
-			if ( isset( $attr['arrowPadding'] ) && !empty($attr['arrowPadding']) ) {
-				$arrowPadding=$attr['arrowPadding'];
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
-				$css->add_property( 'padding', $css->render_spacing( $arrowPadding['Desktop'], isset($arrowPadding['unit']['Desktop'])?$arrowPadding['unit']['Desktop']:$arrowPadding['unit']  ) );
-			}
-			if ( isset( $attr['arrowBack'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow ' );
-				$css->add_property( 'background-color', $css->render_color($attr['arrowBack']) );
-			}
-			if ( isset( $attr['arrowPosition'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--prev, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--next');
-				$css->add_property( 'left', $css->render_range( $attr['arrowPosition'], 'Desktop' ) );
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--next, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--prev');
-				$css->add_property( 'right', $css->render_range( $attr['arrowPosition'], 'Desktop' ) );
-			}
-			if ( isset( $attr['arrowBorderRadius'] ) && !empty($attr['arrowBorderRadius']) ) {
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
-				$css->add_property( 'border-radius', $attr['arrowBorderRadius'] . 'px' );
-			}
-			if ( isset( $attr['dotsColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
-				$css->add_property( 'background-color', $css->render_color( $attr['dotsColor'] ));
-			}
-			if ( isset( $attr['dotMargin'] ) ) {
-				$dotMargin=$attr['dotMargin'];
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
-				$css->add_property( 'margin', $css->render_spacing( $dotMargin['Desktop'], isset($dotMargin['unit']['Desktop'])?$dotMargin['unit']['Desktop']:$dotMargin['unit']  ) );
-			}
-			if ( isset( $attr['dotsActiveColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page.is-active' );
-				$css->add_property( 'background-color',$css->render_color( $attr['dotsActiveColor'] ));
-			}
-
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
-      $css->pbg_render_typography( $attr, 'catTypography', 'Desktop' );
-			
-			if ( isset( $attr['catColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
-				$css->add_property( 'color',$css->render_color($attr['catColor']) );
-			}
-			if ( isset( $attr['backCat'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
-				$css->add_property( 'background-color',$css->render_color( $attr['backCat']) );
-			}
-			if ( isset( $attr['hoverCatColor'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a:hover' );
-				$css->add_property( 'color', $css->render_color($attr['hoverCatColor'] ));
-			}
-			if ( isset( $attr['backHoverCat'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a:hover' );
-				$css->add_property( 'background-color', $css->render_color($attr['backHoverCat']) );
-			}
-			if ( isset( $attr['catBorder'] ) ) {
-				$border_width  = $attr['catBorder']['borderWidth'];
-				$border_radius = $attr['catBorder']['borderRadius'];
-				$border_style  = $attr['catBorder']['borderType'];
-				$border_color  = $attr['catBorder']['borderColor'];
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-cats-container a' );
-				$css->add_property( 'border-style', $border_style );
-				$css->add_property( 'border-color',$css->render_color( $border_color) );
-				$css->add_property( 'border-width', $css->render_spacing( $border_width['Desktop'], 'px' ) );
-				$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Desktop'], 'px' ) );
-			}
-			if ( isset( $attr['catPadding'] ) ) {
-				$category_padding = $attr['catPadding'];
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-cats-container a' );
-				$css->add_property('padding', $css->render_spacing($category_padding['Desktop'], isset($category_padding['unit']['Desktop'])?$category_padding['unit']['Desktop']:$category_padding['unit'] ));
-			}
-
-			if (isset($attr['paginationPosition'])) {
-				$css->set_selector( '.' . $unique_id .' .premium-blog-pagination-container');
-				$css->add_property('align-items',  $attr['paginationPosition']['Desktop']);
-				$css->add_property('justify-content',  $attr['paginationPosition']['Desktop']);
-
-			}
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-entry-meta .premium-blog-meta-separator' );
+      $css->pbg_render_color($attr, 'sepColor', 'color');
       
-      $css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
-      $css->pbg_render_typography( $attr, 'paginationTypography', 'Desktop' );
-			
-			if (isset($attr['paginationColor'])) {
-				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers');
-				$css->add_property('color',  $css->render_color($attr["paginationColor"]));
-			}
-			if (isset($attr['paginationBackColor'])) {
-				$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
-				$css->add_property('background-color',  $css->render_color($attr["paginationBackColor"]));
-			}
-			if (isset($attr['paginationBorder'])) {
-				$content_border_width  = $attr['paginationBorder']['borderWidth'];
-				$content_border_radius = $attr['paginationBorder']['borderRadius'];
-				$content_border_color = $attr['paginationBorder']['borderColor'];
-				$content_border_type = $attr['paginationBorder']['borderType'];
-		
-				$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
-				$css->add_property('border-color', $css->render_color($content_border_color));
-				$css->add_property('border-style', $content_border_type);
-				$css->add_property('border-width', $css->render_spacing($content_border_width['Desktop'], 'px'));
-				$css->add_property('border-radius', $css->render_spacing($content_border_radius['Desktop'], 'px'));
-			}
-			if (isset($attr['paginationMargin'])) {
-				$content_margin = $attr['paginationMargin'];
-				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers');
-				$css->add_property('margin', $css->render_spacing($content_margin['Desktop'], isset($content_margin['unit']['Desktop'])?$content_margin['unit']['Desktop']:$content_margin['unit'] ));
-			}
-			if (isset($attr['paginationPadding'])) {
-				$content_padding = $attr['paginationPadding'];
-				$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
-				$css->add_property('padding', $css->render_spacing($content_padding['Desktop'], isset($content_padding['unit']['Desktop'])?$content_padding['unit']['Desktop']:$content_padding['unit'] ));
-			}
-			// hover
-			if (isset($attr['paginationHoverColor'])) {
-				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers:hover');
-				$css->add_property('color',  $css->render_color($attr["paginationHoverColor"]));
-			}
-			if (isset($attr['paginationHoverback'])) {
-				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers:hover');
-				$css->add_property('background-color',  $css->render_color($attr["paginationHoverback"]));
-			}
-			if (isset($attr['paginationHoverBorder'])) {
-				$content_border_width  = $attr['paginationHoverBorder']['borderWidth'];
-				$content_border_radius = $attr['paginationHoverBorder']['borderRadius'];
-				$content_border_color = $attr['paginationHoverBorder']['borderColor'];
-				$content_border_type = $attr['paginationHoverBorder']['borderType'];
-		
-				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers:hover');
-				$css->add_property('border-color', $css->render_color($content_border_color));
-				$css->add_property('border-style', $content_border_type);
-				$css->add_property('border-width', $css->render_spacing($content_border_width['Desktop'], 'px'));
-				$css->add_property('border-radius', $css->render_spacing($content_border_radius['Desktop'], 'px'));
-			}
-			//active
-			if (isset($attr['paginationActiveColor'])) {
-				$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container span.page-numbers.current');
-				$css->add_property('color',  $css->render_color($attr["paginationActiveColor"]));
-			}
-			if (isset($attr['paginationActiveBack'])) {
-				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.page-numbers.current');
-				$css->add_property('background-color',  $css->render_color($attr["paginationActiveBack"]));
-			}
-			if (isset($attr['paginationActiveBorder'])) {
-				$content_border_width  = $attr['paginationActiveBorder']['borderWidth'];
-				$content_border_radius = $attr['paginationActiveBorder']['borderRadius'];
-				$content_border_color = $attr['paginationActiveBorder']['borderColor'];
-				$content_border_type = $attr['paginationActiveBorder']['borderType'];
-		
-				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.page-numbers.current');
-				$css->add_property('border-color', $css->render_color($content_border_color));
-				$css->add_property('border-style', $content_border_type);
-				$css->add_property('border-width', $css->render_spacing($content_border_width['Desktop'], 'px'));
-				$css->add_property('border-radius', $css->render_spacing($content_border_radius['Desktop'], 'px'));
-			}
-			$css->start_media_query( 'tablet' );
-
-			// Tablet//////////////////////////////////////
-			if ( isset( $attr['contentOffset'] ) && !empty($attr['contentOffset']['Tablet']) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-skin-modern .premium-blog-content-wrapper' );
-				$css->add_property( 'top', $attr['contentOffset']['Tablet'] . 'px' );
-			}
-			if ( isset( $attr['authorImgPosition'] ) && !empty($attr['authorImgPosition']['Tablet'])) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-author-thumbnail' );
-				$css->add_property( 'top', $attr['authorImgPosition']['Tablet'] . 'px' );
-			}
-			if ( isset( $attr['verticalAlign'] ) && !empty($attr['verticalAlign']['Tablet']) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper' );
-				$css->add_property( 'justify-content', $attr['verticalAlign']['Tablet'] );
-			}
-			if ( isset( $attr['columns'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
-				$css->add_property( 'width', 'calc(100% / ' . $attr['columns']['Tablet'] . ')' );
-
-			}
-			if ( isset( $attr['columnGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
-				$css->add_property( 'padding-right','calc(' . $css->render_range( $attr['columnGap'], 'Tablet' ).'/2 )' );
-				$css->add_property( 'padding-left','calc(' . $css->render_range( $attr['columnGap'], 'Tablet' ).'/2 )'  );
-
-        $css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
-				$css->add_property( 'margin-right','calc(-' . $css->render_range( $attr['columnGap'], 'Tablet' ).'/2 )' );
-				$css->add_property( 'margin-left','calc(-' . $css->render_range( $attr['columnGap'], 'Tablet' ).'/2 )'  );
-
-			}
-			if ( isset( $attr['rowGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
-				$css->add_property( 'row-gap', $css->render_range( $attr['rowGap'], 'Tablet' ) );
-			}
-
-			if ( isset( $attr['margin'] ) ) {
-				$container_margin = $attr['margin'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
-				$css->add_property( 'padding', $css->render_spacing( $container_margin['Tablet'], isset($container_margin['unit']['Tablet'])?$container_margin['unit']['Tablet']:$container_margin['unit']   ) );
-			}
-			if ( isset( $attr['padding'] ) ) {
-				$container_padding = $attr['padding'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
-				$css->add_property( 'padding', $css->render_spacing( $container_padding['Tablet'], isset($container_padding['unit']['Tablet'])?$container_padding['unit']['Tablet']:$container_padding['unit']  ) );
-			}
-			if ( isset( $attr['border'] ) ) {
-				$border_width  = $attr['border']['borderWidth'];
-				$border_radius = $attr['border']['borderRadius'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
-				$css->add_property( 'border-width', $css->render_spacing( $border_width['Tablet'], 'px' ) );
-				$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
-			}
-			if ( isset( $attr['advancedBorder'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
-				$css->add_property( 'border-radius', $attr['advancedBorder'] ? $attr['advancedBorderValue'] . '!important' : '' );
-			}
-			if ( isset( $attr['contentBoxMargin'] ) ) {
-				$content_margin = $attr['contentBoxMargin'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
-				$css->add_property( 'margin', $css->render_spacing( $content_margin['Tablet'], isset($content_margin['unit']['Tablet'])?$content_margin['unit']['Tablet']:$content_margin['unit']  ) );
-			}
-			if ( isset( $attr['contentPadding'] ) ) {
-				$content_padding = $attr['contentPadding'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
-				$css->add_property( 'padding', $css->render_spacing( $content_padding['Tablet'], isset($content_padding['unit']['Tablet'])?$content_padding['unit']['Tablet']:$content_padding['unit']  ) );
-			}
-			if ( isset( $attr['align'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
-				$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
-			}
-			if ( isset( $attr['align'] ) ) {
-				$content_align      = $css->get_responsive_css( $attr['align'], 'Tablet' );
-				$css->set_selector( '.' . $unique_id . ' .post-categories , .'. $unique_id . '  .premium-blog-post-tags-container');
-				$css->add_property( 'justify-content', $css->render_align_self($content_align)  );
-			}
-			if ( isset( $attr['align'] ) ) {
-				$content_align      = $css->get_responsive_css( $attr['align'], 'Tablet' );
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-inner-container');
-				$css->add_property( 'align-items', $css->render_align_self($content_align)  );
-			}
-
-			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
-      $css->pbg_render_typography( $attr, 'contentTypography', 'Tablet' );
-
-			if ( isset( $attr['contentMargin'] ) ) {
-				$content_spacing = $attr['contentMargin'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
-				$css->add_property( 'margin', $css->render_spacing( $content_spacing['Tablet'], isset($content_spacing['unit']['Tablet'])?$content_spacing['unit']['Tablet']:$content_spacing['unit']  ) );
-			}
-			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title , .' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title >* ' );
-      $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
-			if ( isset( $attr['shapeBottom'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-bottom-shape svg' );
-				$css->add_property( 'width', $css->render_range( $attr['shapeBottom']['width'], 'Tablet' ) );
-				$css->add_property( 'height', $css->render_range( $attr['shapeBottom']['height'], 'Tablet' ) );
-			}
-			if ( isset( $attr['titleBottomSpacing'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title' );
-				$css->add_property( 'margin-bottom', $css->render_range( $attr['titleBottomSpacing'], 'Tablet' ) );
-			}
-			// Meta
-			$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data , .'. $unique_id . ' .premium-blog-meta-data > a' );
-      $css->pbg_render_typography( $attr, 'metaTypography', 'Tablet' );
-			
-			if ( isset( $attr['metaTypography']['fontSize'] ) ) {
-				$iconSize = $attr['metaTypography']['fontSize'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data svg' );
-				$css->add_property( 'width', $css->render_range( $iconSize, 'Tablet' ) );
-				$css->add_property( 'height', $css->render_range( $iconSize, 'Tablet' ) );
-
-			}
-
 			// Image
+      $hover_effect = $css->pbg_get_value($attr, 'hoverEffect');
 
-			if ( isset( $attr['height'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container  .premium-blog-thumb-effect-wrapper ' );
-				$css->add_property( 'height', $css->render_range( $attr['height'], 'Tablet' ) );
-			}
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container img' );
+      $css->pbg_render_value($attr, 'thumbnail', 'object-fit');
+      if(in_array($hover_effect, ['zoomin', 'zoomout', 'scale' , 'trans'])){
+        $css->pbg_render_filters($attr, 'filter');
 
-			// excerpt
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-      $css->pbg_render_typography( $attr, 'btnTypography', 'Tablet' );
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container:hover img' );
+        $css->pbg_render_filters($attr, 'Hoverfilter');
+      }
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-thumbnail-container img');
+      $css->pbg_render_range($attr, 'height', 'height', 'Desktop', null, '!important');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-thumbnail-overlay  , .' . $unique_id . ' .premium-blog-framed-effect , .' . $unique_id . ' .premium-blog-bordered-effect, .' . $unique_id . ' .premium-blog-squares-effect:before , .' . $unique_id . ' .premium-blog-squares-effect:after , .' . $unique_id . '  .premium-blog-squares-square-container:before, .' . $unique_id . ' .premium-blog-squares-square-container:after' );
+      $css->pbg_render_color($attr, 'colorOverlay', 'background-color');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container:hover  .premium-blog-thumbnail-overlay  , .' . $unique_id . ' .premium-blog-post-container:hover  .premium-blog-framed-effect , .' . $unique_id . ' .premium-blog-post-container:hover  .premium-blog-bordered-effect, .' . $unique_id . ' .premium-blog-post-container:hover  .premium-blog-squares-effect:before , .' . $unique_id . ' .premium-blog-post-container:hover  .premium-blog-squares-effect:after , .' . $unique_id . ' .premium-blog-post-container:hover   .premium-blog-squares-square-container:before, .' . $unique_id . ' .premium-blog-post-container:hover  .premium-blog-squares-square-container:after' );
+      $css->pbg_render_color($attr, 'colorOverlayHover', 'background-color');
 			
-			if ( isset( $attr['buttonSpacing'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->add_property( 'margin-top', $css->render_range( $attr['buttonSpacing'], 'Tablet' ) );
-			}
-			if ( isset( $attr['btnBorder'] ) ) {
-				$content_border_width  = $attr['btnBorder']['borderWidth'];
-				$content_border_radius = $attr['btnBorder']['borderRadius'];
-				$content_border_color  = $attr['btnBorder']['borderColor'];
-				$content_border_type   = $attr['btnBorder']['borderType'];
+			// Excerpt Link Styles
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link' );
+      $css->pbg_render_color($attr, 'buttonColor', 'color');
+      $css->pbg_render_color($attr, 'buttonBackground', 'background-color');
+      $css->pbg_render_range($attr, 'buttonSpacing', 'margin-top', 'Desktop');
+      $css->pbg_render_typography( $attr, 'btnTypography', 'Desktop' );
+      $css->pbg_render_border($attr, 'btnBorder', 'Desktop');
+      $css->pbg_render_spacing($attr, 'btnPadding', 'padding', 'Desktop');
 
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->add_property( 'border-color', $css->render_color( $content_border_color ) );
-				$css->add_property( 'border-style', $content_border_type );
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link:hover' );
+      $css->pbg_render_color($attr, 'buttonhover', 'color');
+      $css->pbg_render_color($attr, 'hoverBackground', 'background-color');
+      $css->pbg_render_border($attr, 'btnBorderHover', 'Desktop');
 
-				$css->add_property( 'border-width', $css->render_spacing( $content_border_width['Tablet'], 'px' ) );
-				$css->add_property( 'border-radius', $css->render_spacing( $content_border_radius['Tablet'], 'px' ) );
-			}
-			if ( isset( $attr['btnBorderHover'] ) ) {
-				$content_border_width  = $attr['btnBorderHover']['borderWidth'];
-				$content_border_radius = $attr['btnBorderHover']['borderRadius'];
-				$content_border_color  = $attr['btnBorderHover']['borderColor'];
-				$content_border_type   = $attr['btnBorderHover']['borderType'];
+      // Carousel Styles
+      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
+      $css->pbg_render_color($attr, 'arrowBack', 'background-color');
+      $css->pbg_render_range($attr, 'borderRadius', 'border-radius', null, null, 'px');
+      $css->pbg_render_spacing($attr, 'arrowPadding', 'padding', 'Desktop');
+			
+      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow svg' );
+      $css->pbg_render_range($attr, 'arrowSize', 'width', null, null, 'px');
+      $css->pbg_render_range($attr, 'arrowSize', 'height', null, null, 'px');
+      $css->pbg_render_color($attr, 'arrowColor', 'fill');
 
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link:hover' );
-				$css->add_property( 'border-color', $css->render_color( $content_border_color ) );
-				$css->add_property( 'border-style', $content_border_type );
+      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--prev, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--next');
+      $css->pbg_render_range($attr, 'arrowPosition', 'left', 'Desktop');
+			
+      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--next, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--prev');
+      $css->pbg_render_range($attr, 'arrowPosition', 'right', 'Desktop');
+      
+      $css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
+      $css->pbg_render_color($attr, 'dotsColor', 'background-color');
+      $css->pbg_render_spacing($attr, 'dotMargin', 'margin', 'Desktop');
+      
+			$css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page.is-active' );
+      $css->pbg_render_color($attr, 'dotsActiveColor', 'background-color');
 
-				$css->add_property( 'border-width', $css->render_spacing( $content_border_width['Tablet'], 'px' ) );
-				$css->add_property( 'border-radius', $css->render_spacing( $content_border_radius['Tablet'], 'px' ) );
-			}
-			if ( isset( $attr['btnPadding'] ) ) {
-				$button_padding = $attr['btnPadding'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->add_property( 'padding', $css->render_spacing( $button_padding['Tablet'], isset( $button_padding['unit']['Tablet'])? $button_padding['unit']['Tablet']: $button_padding['unit'] ) );
-			}
+      // Categories Styles For Banner
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
+      $css->pbg_render_color($attr, 'catColor', 'color');
+      $css->pbg_render_color($attr, 'backCat', 'background-color');
+      $css->pbg_render_typography( $attr, 'catTypography', 'Desktop' );
+      $css->pbg_render_border($attr, 'catBorder', 'Desktop');
+      $css->pbg_render_spacing($attr, 'catPadding', 'padding', 'Desktop');
 
+      // Categories Hover Styles For Banner
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a:hover' );
+      $css->pbg_render_color($attr, 'hoverCatColor', 'color');
+      $css->pbg_render_color($attr, 'backHoverCat', 'background-color');
+      
+      // Pagination
+      $css->set_selector( '.' . $unique_id .' .premium-blog-pagination-container');
+      $css->pbg_render_align_self($attr, 'paginationPosition', 'justify-content', 'Desktop');
+
+      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers');
+      $css->pbg_render_color($attr, 'paginationColor', 'color');
+      $css->pbg_render_color($attr, 'paginationBackColor', 'background-color');
+      $css->pbg_render_border($attr, 'paginationBorder', 'Desktop');
+      $css->pbg_render_typography( $attr, 'paginationTypography', 'Desktop' );
+      $css->pbg_render_spacing($attr, 'paginationPadding', 'padding', 'Desktop');
+      $css->pbg_render_spacing($attr, 'paginationMargin', 'margin', 'Desktop');
+			
+			// Pagination Hover
+      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers:hover');
+      $css->pbg_render_color($attr, 'paginationHoverColor', 'color');
+      $css->pbg_render_color($attr, 'paginationHoverback', 'background-color');
+      $css->pbg_render_border($attr, 'paginationHoverBorder', 'Desktop');
+			
+			// Pagination Active
+      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.page-numbers.current');
+      $css->pbg_render_color($attr, 'paginationActiveColor', 'color');
+      $css->pbg_render_color($attr, 'paginationActiveBack', 'background-color');
+      $css->pbg_render_border($attr, 'paginationActiveBorder', 'Desktop');
+			
+      // Tablet
+			$css->start_media_query( 'tablet' );
+			
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-skin-modern .premium-blog-content-wrapper' );
+      $css->pbg_render_range($attr, 'contentOffset', 'top', 'Tablet');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-author-thumbnail' );
+      $css->pbg_render_range($attr, 'authorImgPosition', 'top', 'Tablet');
+			
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container.premium-blog-skin-banner .premium-blog-content-wrapper' );
+      $css->pbg_render_value($attr, 'verticalAlign', 'justify-content', 'Tablet');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
+      $css->pbg_render_value($attr, 'columns', 'width', 'Tablet', 'calc(100% / ', ')');
+      $css->pbg_render_range($attr, 'columnGap', 'padding-right', 'Tablet', 'calc( ', ' / 2 )');
+      $css->pbg_render_range($attr, 'columnGap', 'padding-left', 'Tablet', 'calc( ', ' / 2 )');
+      $css->pbg_render_spacing($attr, 'margin', 'padding', 'Tablet');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
+      $css->pbg_render_range($attr, 'columnGap', 'margin-right', 'Tablet', 'calc( -', ' / 2 )');
+      $css->pbg_render_range($attr, 'columnGap', 'margin-left', 'Tablet', 'calc( -', ' / 2 )');
+      $css->pbg_render_range($attr, 'rowGap', 'row-gap', 'Tablet');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
+      $css->pbg_render_border($attr, 'border', 'Tablet');
+      $css->pbg_render_spacing($attr, 'padding', 'padding', 'Tablet');
+			
+      $css->set_selector( '.' . $unique_id . ' .post-categories , .'. $unique_id . '  .premium-blog-post-tags-container, .' . $unique_id . ' .premium-blog-entry-meta');
+      $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Tablet');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-inner-container');
+      $css->pbg_render_align_self($attr, 'align', 'align-items', 'Tablet');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
+      $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
+      $css->pbg_render_spacing($attr, 'contentPadding', 'padding', 'Tablet');
+      $css->pbg_render_spacing($attr, 'contentBoxMargin', 'margin', 'Tablet');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
+      $css->pbg_render_typography( $attr, 'contentTypography', 'Tablet' );
+      $css->pbg_render_spacing($attr, 'contentMargin', 'margin', 'Tablet');
+
+			// Title Styles
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title' );
+      $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
+      $css->pbg_render_range($attr, 'titleBottomSpacing', 'margin-bottom', 'Tablet');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title > *' );
+      $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
+
+      // Shape Styles
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-bottom-shape svg' );
+      $css->pbg_render_range($attr, 'shapeBottom.width', 'width', 'Tablet');
+      $css->pbg_render_range($attr, 'shapeBottom.height', 'height', 'Tablet');
+
+			// Meta
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data, .' . $unique_id . ' .premium-blog-meta-data a' );
+      $css->pbg_render_typography( $attr, 'metaTypography', 'Tablet' );
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data :is(svg, svg .cls-1)');
+      $css->pbg_render_range($attr, 'metaTypography.fontSize', 'width', 'Tablet');
+      $css->pbg_render_range($attr, 'metaTypography.fontSize', 'height', 'Tablet');
+			
+			// Image
+			$css->set_selector( '.' . $unique_id . ' .premium-blog-thumbnail-container img');
+      $css->pbg_render_range($attr, 'height', 'height', 'Tablet', null, '!important');
+
+      // Excerpt Link Styles
+			$css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link' );
+      $css->pbg_render_range($attr, 'buttonSpacing', 'margin-top', 'Tablet');
+      $css->pbg_render_typography( $attr, 'btnTypography', 'Tablet' );
+      $css->pbg_render_border($attr, 'btnBorder', 'Tablet');
+      $css->pbg_render_spacing($attr, 'btnPadding', 'padding', 'Tablet');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link:hover' );
+      $css->pbg_render_border($attr, 'btnBorderHover', 'Tablet');
+
+      // Categories Styles For Banner
       $css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
       $css->pbg_render_typography( $attr, 'catTypography', 'Tablet' );
+      $css->pbg_render_border($attr, 'catBorder', 'Tablet');
+      $css->pbg_render_spacing($attr, 'catPadding', 'padding', 'Tablet');
 
-			if ( isset( $attr['catBorder'] ) ) {
-				$border_width  = $attr['catBorder']['borderWidth'];
-				$border_radius = $attr['catBorder']['borderRadius'];
-			
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-cats-container a' );
-				
-				$css->add_property( 'border-width', $css->render_spacing( $border_width['Tablet'], 'px' ) );
-				$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
-			}
-			if (isset($attr['paginationPosition'])) {
-				$css->set_selector( '.' . $unique_id .' .premium-blog-pagination-container');
-				$css->add_property('align-items',  $attr['paginationPosition']['Tablet']);
-				$css->add_property('justify-content',  $attr['paginationPosition']['Tablet']);
+      // Pagination
+      $css->set_selector( '.' . $unique_id .' .premium-blog-pagination-container');
+      $css->pbg_render_align_self($attr, 'paginationPosition', 'justify-content', 'Tablet');
 
-			}
-			$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
+      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers');
+      $css->pbg_render_border($attr, 'paginationBorder', 'Tablet');
       $css->pbg_render_typography( $attr, 'paginationTypography', 'Tablet' );
+      $css->pbg_render_spacing($attr, 'paginationPadding', 'padding', 'Tablet');
+      $css->pbg_render_spacing($attr, 'paginationMargin', 'margin', 'Tablet');
+			
+			// Pagination Hover
+      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers:hover');
+      $css->pbg_render_border($attr, 'paginationHoverBorder', 'Tablet');
+			
+			// Pagination Active
+      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.page-numbers.current');
+      $css->pbg_render_border($attr, 'paginationActiveBorder', 'Tablet');
+			
+      // Carousel Styles
+      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
+      $css->pbg_render_spacing($attr, 'arrowPadding', 'padding', 'Tablet');
+			
+      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--prev, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--next');
+      $css->pbg_render_range($attr, 'arrowPosition', 'left', 'Tablet');
+			
+      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--next, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--prev');
+      $css->pbg_render_range($attr, 'arrowPosition', 'right', 'Tablet');
 
-			if (isset($attr['paginationMargin'])) {
-				$content_margin = $attr['paginationMargin'];
-				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers');
-				$css->add_property('padding', $css->render_spacing($content_margin['Tablet'], isset($content_margin['unit']['Tablet'])?$content_margin['unit']['Tablet']:$content_margin['unit'] ));
-			}
-			if (isset($attr['paginationPadding'])) {
-				$content_padding = $attr['paginationPadding'];
-				$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
-				$css->add_property('padding', $css->render_spacing($content_padding['Tablet'], isset( $content_padding['unit']['Tablet'])? $content_padding['unit']['Tablet']: $content_padding['unit']));
-			}
-			if ( isset( $attr['dotMargin'] ) ) {
-				$dotMargin=$attr['dotMargin'];
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
-				$css->add_property( 'margin', $css->render_spacing( $dotMargin['Tablet'], isset($dotMargin['unit']['Tablet'])?$dotMargin['unit']['Tablet']:$dotMargin['unit']  ) );
-			}
-			if ( isset( $attr['arrowPosition'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--prev, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--next');
-				$css->add_property( 'left', $css->render_range( $attr['arrowPosition'], 'Tablet' ) );
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--next, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--prev');
-				$css->add_property( 'right', $css->render_range( $attr['arrowPosition'], 'Tablet' ) );
-			}
+      $css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
+      $css->pbg_render_spacing($attr, 'dotMargin', 'margin', 'Tablet');
 
+      // Mobile
 			$css->stop_media_query();
-
 			$css->start_media_query( 'mobile' );
 
-			if ( isset( $attr['contentOffset'] ) && !empty($attr['contentOffset']['Mobile'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-skin-modern .premium-blog-content-wrapper' );
-				$css->add_property( 'top', $attr['contentOffset']['Mobile'] . 'px' );
-			}
-			if ( isset( $attr['authorImgPosition'] ) && !empty($attr['authorImgPosition']['Mobile']) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-author-thumbnail' );
-				$css->add_property( 'top', $attr['authorImgPosition']['Mobile'] . 'px' );
-			}
-			if ( isset( $attr['verticalAlign'] ) && !empty($attr['verticalAlign']['Mobile']) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper' );
-				$css->add_property( 'justify-content', $attr['verticalAlign']['Mobile'] );
-			}
-			if ( isset( $attr['columns'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
-				$css->add_property( 'width', 'calc(100% / ' . $attr['columns']['Mobile'] . ')' );
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-skin-modern .premium-blog-content-wrapper' );
+      $css->pbg_render_range($attr, 'contentOffset', 'top', 'Mobile');
+			
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-author-thumbnail' );
+      $css->pbg_render_range($attr, 'authorImgPosition', 'top', 'Mobile');
+			
+			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container.premium-blog-skin-banner .premium-blog-content-wrapper' );
+      $css->pbg_render_value($attr, 'verticalAlign', 'justify-content', 'Mobile');
 
-			}
-			if ( isset( $attr['columnGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
-				$css->add_property( 'padding-right','calc(' . $css->render_range( $attr['columnGap'], 'Mobile' ).'/2 )' );
-				$css->add_property( 'padding-left','calc(' . $css->render_range( $attr['columnGap'], 'Mobile' ).'/2 )'  );
+      $css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
+      $css->pbg_render_value($attr, 'columns', 'width', 'Mobile', 'calc(100% / ', ')');
+      $css->pbg_render_range($attr, 'columnGap', 'padding-right', 'Mobile', 'calc( ', ' / 2 )');
+      $css->pbg_render_range($attr, 'columnGap', 'padding-left', 'Mobile', 'calc( ', ' / 2 )');
+      $css->pbg_render_spacing($attr, 'margin', 'padding', 'Mobile');
 
-        $css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
-				$css->add_property( 'margin-right','calc(-' . $css->render_range( $attr['columnGap'], 'Mobile' ).'/2 )' );
-				$css->add_property( 'margin-left','calc(-' . $css->render_range( $attr['columnGap'], 'Mobile' ).'/2 )'  );
-			}
-			if ( isset( $attr['rowGap'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
-				$css->add_property( 'row-gap', $css->render_range( $attr['rowGap'], 'Mobile' ) );
-			}
+      $css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
+      $css->pbg_render_range($attr, 'columnGap', 'margin-right', 'Mobile', 'calc( -', ' / 2 )');
+      $css->pbg_render_range($attr, 'columnGap', 'margin-left', 'Mobile', 'calc( -', ' / 2 )');
+      $css->pbg_render_range($attr, 'rowGap', 'row-gap', 'Mobile');   
 
-			if ( isset( $attr['margin'] ) ) {
-				$container_margin = $attr['margin'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container' );
-				$css->add_property( 'padding', $css->render_spacing( $container_margin['Mobile'],isset($container_margin['unit']['Mobile'])?$container_margin['unit']['Mobile']:$container_margin['unit']  ) );
-			}
-			if ( isset( $attr['padding'] ) ) {
-				$container_padding = $attr['padding'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
-				$css->add_property( 'padding', $css->render_spacing( $container_padding['Mobile'], isset($container_padding['unit']['Mobile'])?$container_padding['unit']['Mobile']:$container_padding['unit']  ) );
-			}
-			if ( isset( $attr['border'] ) ) {
-				$border_width  = $attr['border']['borderWidth'];
-				$border_radius = $attr['border']['borderRadius'];
-				
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
-				$css->add_property( 'border-width', $css->render_spacing( $border_width['Mobile'], 'px' ) );
-				$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
-			}
-			if ( isset( $attr['advancedBorder'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
-				$css->add_property( 'border-radius', $attr['advancedBorder'] ? $attr['advancedBorderValue'] . '!important' : '' );
-			}
-			if ( isset( $attr['contentBoxMargin'] ) ) {
-				$content_margin = $attr['contentBoxMargin'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
-				$css->add_property( 'margin', $css->render_spacing( $content_margin['Mobile'], isset($content_margin['unit']['Mobile'])?$content_margin['unit']['Mobile']:$content_margin['unit']  ) );
-			}
-			if ( isset( $attr['contentPadding'] ) ) {
-				$content_padding = $attr['contentPadding'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
-				$css->add_property( 'padding', $css->render_spacing( $content_padding['Mobile'],isset($content_padding['unit']['Mobile'])?$content_padding['unit']['Mobile']:$content_padding['unit']  ) );
-			}
-			if ( isset( $attr['align'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
-				$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
-			}
-			if ( isset( $attr['align'] ) ) {
-				$content_align      = $css->get_responsive_css( $attr['align'], 'Mobile' );
-				$css->set_selector( '.' . $unique_id . ' .post-categories , .'. $unique_id . '  .premium-blog-post-tags-container');
-				$css->add_property( 'justify-content', $css->render_align_self($content_align)  );
-			}
-			if ( isset( $attr['align'] ) ) {
-				$content_align      = $css->get_responsive_css( $attr['align'], 'Mobile' );
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-inner-container');
-				$css->add_property( 'align-items', $css->render_align_self($content_align)  );
-			}
+			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
+      $css->pbg_render_border($attr, 'border', 'Tablet');
+      $css->pbg_render_spacing($attr, 'padding', 'padding', 'Tablet');
+			
+      $css->set_selector( '.' . $unique_id . ' .post-categories , .'. $unique_id . '  .premium-blog-post-tags-container, .' . $unique_id . ' .premium-blog-entry-meta');
+      $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Mobile');
 
-			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-inner-container');
+      $css->pbg_render_align_self($attr, 'align', 'align-items', 'Mobile');
+
+			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
+      $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
+      $css->pbg_render_spacing($attr, 'contentPadding', 'padding', 'Mobile');
+      $css->pbg_render_spacing($attr, 'contentBoxMargin', 'margin', 'Mobile');
+
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
       $css->pbg_render_typography( $attr, 'contentTypography', 'Mobile' );
+      $css->pbg_render_spacing($attr, 'contentMargin', 'margin', 'Mobile');
 
-			if ( isset( $attr['contentMargin'] ) ) {
-				$content_spacing = $attr['contentMargin'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
-				$css->add_property( 'margin', $css->render_spacing( $content_spacing['Mobile'],isset($content_spacing['unit']['Mobile'])?$content_spacing['unit']['Mobile']:$content_spacing['unit']  ) );
-			}
+      // Title Styles
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title' );
+      $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');
+      $css->pbg_render_range($attr, 'titleBottomSpacing', 'margin-bottom', 'Mobile');
 
-			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title , .' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title >* ' );
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title > *' );
       $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');
 
-			if ( isset( $attr['shapeBottom'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-bottom-shape svg' );
-				$css->add_property( 'width', $css->render_range( $attr['shapeBottom']['width'], 'Mobile' ) );
-				$css->add_property( 'height', $css->render_range( $attr['shapeBottom']['height'], 'Mobile' ) );
-			}
-			if ( isset( $attr['titleBottomSpacing'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title' );
-				$css->add_property( 'margin-bottom', $css->render_range( $attr['titleBottomSpacing'], 'Mobile' ) );
-			}
-			// Meta
-			$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data , .'. $unique_id . ' .premium-blog-meta-data > a' );
-      $css->pbg_render_typography( $attr, 'metaTypography', 'Mobile' );
+      // Shape Styles
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-bottom-shape svg' );
+      $css->pbg_render_range($attr, 'shapeBottom.width', 'width', 'Mobile');
+      $css->pbg_render_range($attr, 'shapeBottom.height', 'height', 'Mobile');
 			
-			if ( isset( $attr['metaTypography']['fontSize'] ) ) {
-				$iconSize = $attr['metaTypography']['fontSize'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data svg' );
-				$css->add_property( 'width', $css->render_range( $iconSize, 'Mobile' ) );
-				$css->add_property( 'height', $css->render_range( $iconSize, 'Mobile' ) );
+			// Meta
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data, .' . $unique_id . ' .premium-blog-meta-data a' );
+      $css->pbg_render_typography( $attr, 'metaTypography', 'Mobile' );
 
-			}
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data :is(svg, svg .cls-1)');
+      $css->pbg_render_range($attr, 'metaTypography.fontSize', 'width', 'Mobile');
+      $css->pbg_render_range($attr, 'metaTypography.fontSize', 'height', 'Mobile');
 
 			// Image
+			$css->set_selector( '.' . $unique_id . ' .premium-blog-thumbnail-container img');
+      $css->pbg_render_range($attr, 'height', 'height', 'Mobile', null, '!important');
 
-			if ( isset( $attr['height'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-post-outer-container  .premium-blog-thumb-effect-wrapper ' );
-				$css->add_property( 'height', $css->render_range( $attr['height'], 'Mobile' ) );
-			}
-
-			// excerpt
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
+      // Excerpt Link Styles
+			$css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link' );
+      $css->pbg_render_range($attr, 'buttonSpacing', 'margin-top', 'Mobile');
       $css->pbg_render_typography( $attr, 'btnTypography', 'Mobile' );
-			
-			if ( isset( $attr['buttonSpacing'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->add_property( 'margin-top', $css->render_range( $attr['buttonSpacing'], 'Mobile' ) );
-			}
-			if ( isset( $attr['btnBorder'] ) ) {
-				$content_border_width  = $attr['btnBorder']['borderWidth'];
-				$content_border_radius = $attr['btnBorder']['borderRadius'];
-				$content_border_color  = $attr['btnBorder']['borderColor'];
-				$content_border_type   = $attr['btnBorder']['borderType'];
+      $css->pbg_render_border($attr, 'btnBorder', 'Mobile');
+      $css->pbg_render_spacing($attr, 'btnPadding', 'padding', 'Mobile');
 
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->add_property( 'border-color', $css->render_color( $content_border_color ) );
-				$css->add_property( 'border-style', $content_border_type );
+      $css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link:hover' );
+      $css->pbg_render_border($attr, 'btnBorderHover', 'Mobile');
 
-				$css->add_property( 'border-width', $css->render_spacing( $content_border_width['Mobile'], 'px' ) );
-				$css->add_property( 'border-radius', $css->render_spacing( $content_border_radius['Mobile'], 'px' ) );
-			}
-			if ( isset( $attr['btnBorderHover'] ) ) {
-				$content_border_width  = $attr['btnBorderHover']['borderWidth'];
-				$content_border_radius = $attr['btnBorderHover']['borderRadius'];
-				$content_border_color  = $attr['btnBorderHover']['borderColor'];
-				$content_border_type   = $attr['btnBorderHover']['borderType'];
-
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link:hover' );
-				$css->add_property( 'border-color', $css->render_color( $content_border_color ) );
-				$css->add_property( 'border-style', $content_border_type );
-
-				$css->add_property( 'border-width', $css->render_spacing( $content_border_width['Mobile'], 'px' ) );
-				$css->add_property( 'border-radius', $css->render_spacing( $content_border_radius['Mobile'], 'px' ) );
-			}
-			if ( isset( $attr['btnPadding'] ) ) {
-				$button_padding = $attr['btnPadding'];
-				$css->set_selector( '.' . $unique_id . ' .premium-blog-excerpt-link' );
-				$css->add_property( 'padding', $css->render_spacing( $button_padding['Mobile'],isset($button_padding['unit']['Mobile'])?$button_padding['unit']['Mobile']:$button_padding['unit']  ) );
-			}
-
+      // Categories Styles For Banner
       $css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
       $css->pbg_render_typography( $attr, 'catTypography', 'Mobile' );
-
-			if ( isset( $attr['catBorder'] ) ) {
-				$border_width  = $attr['catBorder']['borderWidth'];
-				$border_radius = $attr['catBorder']['borderRadius'];
-			
-				$css->set_selector( '.' . $unique_id . '  .premium-blog-cats-container a' );
-				$css->add_property( 'border-width', $css->render_spacing( $border_width['Mobile'], 'px' ) );
-				$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
-			}
-			if (isset($attr['paginationPosition'])) {
-				$css->set_selector( '.' . $unique_id .' .premium-blog-pagination-container');
-				$css->add_property('align-items',  $attr['paginationPosition']['Mobile']);
-				$css->add_property('justify-content',  $attr['paginationPosition']['Mobile']);
-
-			}
+      $css->pbg_render_border($attr, 'catBorder', 'Mobile');
+      $css->pbg_render_spacing($attr, 'catPadding', 'padding', 'Mobile');
       
-			$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
-      $css->pbg_render_typography( $attr, 'paginationTypography', 'Mobile' );
+      // Pagination
+      $css->set_selector( '.' . $unique_id .' .premium-blog-pagination-container');
+      $css->pbg_render_align_self($attr, 'paginationPosition', 'justify-content', 'Mobile');
 
-			if (isset($attr['paginationMargin'])) {
-				$content_margin = $attr['paginationMargin'];
-				$css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers');
-				$css->add_property('padding', $css->render_spacing($content_margin['Mobile'], isset($content_margin['unit']['Mobile'])?$content_margin['unit']['Mobile']:$content_margin['unit'] ));
-			}
-			if (isset($attr['paginationPadding'])) {
-				$content_padding = $attr['paginationPadding'];
-				$css->set_selector('.' . $unique_id .' .premium-blog-pagination-container .page-numbers');
-				$css->add_property('padding', $css->render_spacing($content_padding['Mobile'], isset($content_padding['unit']['Mobile'])?$content_padding['unit']['Mobile']:$content_padding['unit'] ));
-			}
-			if ( isset( $attr['dotMargin'] ) ) {
-				$dotMargin=$attr['dotMargin'];
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
-				$css->add_property( 'margin', $css->render_spacing( $dotMargin['Mobile'], isset($dotMargin['unit']['Mobile'])?$dotMargin['unit']['Mobile']:$dotMargin['unit']  ) );
-			}
-			if ( isset( $attr['arrowPosition'] ) ) {
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--prev, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--next');
-				$css->add_property( 'left', $css->render_range( $attr['arrowPosition'], 'Mobile' ) );
-				$css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--next, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--prev');
-				$css->add_property( 'right', $css->render_range( $attr['arrowPosition'], 'Mobile' ) );
-			}
+      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers');
+      $css->pbg_render_border($attr, 'paginationBorder', 'Mobile');
+      $css->pbg_render_typography( $attr, 'paginationTypography', 'Mobile' );
+      $css->pbg_render_spacing($attr, 'paginationPadding', 'padding', 'Mobile');
+      $css->pbg_render_spacing($attr, 'paginationMargin', 'margin', 'Mobile');
+			
+			// Pagination Hover
+      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers:hover');
+      $css->pbg_render_border($attr, 'paginationHoverBorder', 'Mobile');
+			
+			// Pagination Active
+      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.page-numbers.current');
+      $css->pbg_render_border($attr, 'paginationActiveBorder', 'Mobile');
+			
+      // Carousel Styles
+      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
+      $css->pbg_render_spacing($attr, 'arrowPadding', 'padding', 'Mobile');
+			
+      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--prev, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--next');
+      $css->pbg_render_range($attr, 'arrowPosition', 'left', 'Mobile');
+			
+      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--next, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--prev');
+      $css->pbg_render_range($attr, 'arrowPosition', 'right', 'Mobile');
+
+      $css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
+      $css->pbg_render_spacing($attr, 'dotMargin', 'margin', 'Mobile');
 
 			$css->stop_media_query();
 			return $css->css_output();
-
 		}
-
-
 	}
 
 	PBG_Post::get_instance();
-
 }
 
 

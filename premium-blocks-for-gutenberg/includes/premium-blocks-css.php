@@ -986,6 +986,8 @@ class Premium_Blocks_css {
 		}
 
     $this->add_property($property, $prefix . $final_value . $unit . $postfix);
+
+    return $final_value . $unit;
   }
 
   public function pbg_render_color($attributes, $name, $property, $prefix= '', $postfix = ''){

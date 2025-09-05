@@ -1551,22 +1551,6 @@ class PBG_Blocks_Helper
 		return false;
 	}
 
-
-
-	/**
-	 * Get allowed HTML title tag.
-	 *
-	 * @param string $title_Tag HTML tag of title.
-	 * @param array  $allowed_array Array of allowed HTML tags.
-	 * @param string $default_tag Default HTML tag.
-	 * @return string $title_Tag | $default_tag.
-	 */
-	public static function title_tag_allowed_html($title_Tag, $allowed_array, $default_tag)
-	{
-		return in_array($title_Tag, $allowed_array, true) ? sanitize_key($title_Tag) : $default_tag;
-	}
-
-
 	/**
 	 * Check inner blocks.
 	 *
@@ -1664,7 +1648,7 @@ class PBG_Blocks_Helper
 	 */
 	public function register_block_data($block)
 	{
-		$attrs = $block['attrs'];
+		$attrs = $block['attrs'] ?? array();
 		if ($this->is_premium_block($block['blockName'])) {
 			$attrs = $this->get_block_attributes($block);
 		}
@@ -1978,32 +1962,7 @@ class PBG_Blocks_Helper
 		}
 		return $data;
 	}
-	public static function get_default_posts_list($post_type)
-	{
-		$list = get_posts(
-			array(
-				'post_type'              => $post_type,
-				'posts_per_page'         => -1,
-				'update_post_term_cache' => false,
-				'update_post_meta_cache' => false,
-				'fields'                 => array('ids'),
-			)
-		);
-
-		$options = array();
-
-		if (! empty($list) && ! is_wp_error($list)) {
-			foreach ($list as $post) {
-				$options[$post->ID] = $post->post_title;
-			}
-		}
-
-		return $options;
-	}
-
-
-
-
+	
 	/**
 	 * Get authors
 	 *
@@ -2063,9 +2022,8 @@ class PBG_Blocks_Helper
 			'masks'             => PREMIUM_BLOCKS_URL . 'assets/icons/masks',
 			'plugin_url'		=> PREMIUM_BLOCKS_URL,
 			'admin_url'         => admin_url(),
-			'all_taxonomy'      => $this->get_related_taxonomy(),
+			'all_taxonomy'      => $this->get_all_taxonomy(),
 			'image_sizes'       => $this->get_image_sizes(),
-			'post-list'         => $this->get_default_posts_list('post'),
 			'get_authors'       => $this->get_authors(),
 			'post_type'         => $this->get_post_types(),
 			'globalFeatures'    => $this->global_features,
@@ -2297,7 +2255,9 @@ class PBG_Blocks_Helper
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/form-date.php';
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/form-textarea.php';
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/form-select.php';
-			}
+			} elseif ($slug === 'post-carousel' || $slug === 'post-grid') {
+        require_once PREMIUM_BLOCKS_PATH . 'blocks-config/post.php';
+      }
 		}
 	}
 
@@ -2564,7 +2524,7 @@ class PBG_Blocks_Helper
 	}
 
 
-	public function get_related_taxonomy()
+	public function get_all_taxonomy()
 	{
 
 		$post_types = self::get_post_types();
@@ -2582,9 +2542,12 @@ class PBG_Blocks_Helper
 					continue;
 				}
 
-				$data[$tax_slug] = $tax;
+				$data = array_merge($data, [$tax]);
 
-				$terms = get_terms($tax_slug);
+        $terms = get_terms( array(
+            'taxonomy' => $tax_slug,
+            'hide_empty' => false,
+        ) );
 
 				$related_tax = array();
 
@@ -2600,7 +2563,7 @@ class PBG_Blocks_Helper
 				}
 			}
 
-			$return_array[$post_type]['taxonomy'] = $data;
+			$return_array[$post_type]['taxonomies'] = $data;
 		}
 
 		return apply_filters('pbg_post_loop_taxonomies', $return_array);
@@ -2768,7 +2731,7 @@ class PBG_Blocks_Helper
 			'paged'          => 1,
 		);
 		$excluded_posts = array();
-		if (! empty($attributes['query']['exclude']) && $attributes['query']['postType'] === 'post') {
+		if (! empty($attributes['query']['exclude'])) {
 			if ($attributes['postFilterRule'] === 'post__in') {
 				$query_args['post__in'] = $attributes['query']['exclude'];
 			} else {
@@ -2794,14 +2757,34 @@ class PBG_Blocks_Helper
 			$query_args[$attributes['authorFilterRule']] = $attributes['query']['author'];
 		}
 
+    /**
+     * Backwards compatibility for older versions.
+     * handling categories filter. 
+     * This can be removed after few releases as we have added this in taxQuery.
+     */
 		if (isset($attributes['categories']) && ! empty(array_filter($attributes['categories']))) {
 			$query_args['tax_query'][] = array(
 				'taxonomy' => 'category',
-				'field'    => 'id',
+				'field'    => 'term_id',
 				'terms'    => array_filter($attributes['categories']),
-				'operator' => str_replace("'", '', $attributes['categoryFilterRule']),
+				'operator' => str_replace("'", '', $attributes['categoryFilterRule'] ?? "'IN'"),
 			);
 		}
+
+		// Handle taxonomy queries
+		if (isset($attributes['query']['taxQuery']) && !empty($attributes['query']['taxQuery'])) {
+			foreach ($attributes['query']['taxQuery'] as $taxonomy => $tax_data) {		
+        if (!empty($tax_data) && is_array($tax_data) && isset($tax_data['terms']) && ! empty($tax_data['terms'])) {
+          $query_args['tax_query'][] = array(
+            'taxonomy' => $taxonomy,
+            'field'    => 'term_id',
+            'terms'    => $tax_data['terms'],
+            'operator' => $tax_data['operator'] ?? 'IN',
+          );
+        }
+			}
+		}
+
 		if (isset($attributes['pagination']) && true === $attributes['pagination']) {
 
 			$paged = isset($attributes['paged']) ? $attributes['paged'] : $page;

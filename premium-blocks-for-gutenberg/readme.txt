@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.13
+Stable tag: 2.2.14
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -126,6 +126,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.14 =
+- Added: Responsive rotation degree option for Text Block and Dual Heading block.
+- Added: Support for Custom Post Types in Post Grid and Post Carousel blocks.
+- Tweak: Performance improvements and enhanced Gutenberg compatibility for Post Grid and Post Carousel blocks.
+
 = 2.2.13 =
 - Fixed: Issue with the left position option for the quotation element in the Testimonials block.
 - Fixed: Styling issues in the Gallery block.

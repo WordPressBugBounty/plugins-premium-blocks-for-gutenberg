@@ -7,7 +7,6 @@
     "description": "An advanced block that allows displaying post types based on different query parameters and visual configurations.",
     "keywords": ["post", "grid", "posts", "post grid"],
     "textdomain": "premium-blocks-for-gutenberg",
-
     "attributes": {
         "style": {
             "type": "string",
@@ -27,7 +26,7 @@
         },
         "plusColor": {
             "type": "string",
-            "default": ""
+            "default": "#f5f5f5"
         },
         "borderedColor": {
             "type": "string",
@@ -37,11 +36,10 @@
             "type": "object",
             "default": {
                 "Desktop": "left",
-                "Tablet": "left",
-                "Mobile": "left"
+                "Tablet": "",
+                "Mobile": ""
             }
         },
-
         "blockId": {
             "type": "string"
         },
@@ -56,7 +54,7 @@
         "rowGap": {
             "type": "object",
             "default": {
-                "Desktop": "15",
+                "Desktop": 15,
                 "Tablet": "",
                 "Mobile": "",
                 "unit": {
@@ -69,7 +67,7 @@
         "columnGap": {
             "type": "object",
             "default": {
-                "Desktop": "15",
+                "Desktop": 15,
                 "Tablet": "",
                 "Mobile": "",
                 "unit": {
@@ -110,12 +108,9 @@
                 "author": [],
                 "search": "",
                 "exclude": [],
-                "sticky": true
+                "sticky": true,
+                "taxQuery": []
             }
-        },
-        "categoryFilterRule": {
-            "type": "string",
-            "default": "'IN'"
         },
         "authorFilterRule": {
             "type": "string",
@@ -124,15 +119,6 @@
         "postFilterRule": {
             "type": "string",
             "default": "post__not_in"
-        },
-
-        "categories": {
-            "type": "array",
-            "default": []
-        },
-        "postFilter": {
-            "type": "string",
-            "default": "Default"
         },
         "ContainerBackground": {
             "type": "string",
@@ -255,6 +241,15 @@
                 "link": true
             }
         },
+        "contentOffset": {
+            "type": "object",
+            "default": {
+                "Desktop": -50,
+                "Tablet": "",
+                "Mobile": "",
+                "unit": "px"
+            }
+        },
         "contentBackground": {
             "type": "string",
             "default": ""
@@ -267,6 +262,35 @@
                 "horizontal": "0",
                 "vertical": "0",
                 "position": ""
+            }
+        },
+        "contentMargin": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                },
+                "link": true
             }
         },
         "contentBoxMargin": {
@@ -327,7 +351,6 @@
                 "link": true
             }
         },
-
         "displayPostTitle": {
             "type": "boolean",
             "default": true
@@ -354,8 +377,8 @@
                     "Mobile": "",
                     "unit": "px"
                 },
-                "textDecoration": "none",
-                "textTransform": "none",
+                "textDecoration": "",
+                "textTransform": "",
                 "fontSize": {
                     "Desktop": "",
                     "Tablet": "",
@@ -368,7 +391,6 @@
                 }
             }
         },
-
         "titleColor": {
             "type": "string",
             "default": ""
@@ -399,7 +421,7 @@
         },
         "postDisplaytext": {
             "type": "string",
-            "default": "No post found!"
+            "default": "No Posts Found!"
         },
         "showAuthor": {
             "type": "boolean",
@@ -409,15 +431,14 @@
             "type": "boolean",
             "default": true
         },
-        "showCategories": {
-            "type": "boolean",
-            "default": true
-        },
         "showComments": {
             "type": "boolean",
             "default": true
         },
-
+        "metaTaxonomies": {
+            "type": "array",
+            "default": ["category"]
+        },
         "metaTypography": {
             "type": "object",
             "default": {
@@ -436,8 +457,8 @@
                     "Mobile": "",
                     "unit": "px"
                 },
-                "textDecoration": "none",
-                "textTransform": "none",
+                "textDecoration": "",
+                "textTransform": "",
                 "fontSize": {
                     "Desktop": "",
                     "Tablet": "",
@@ -452,7 +473,7 @@
         },
         "metaColor": {
             "type": "string",
-            "default": ""
+            "default": "#adadad"
         },
         "metaHoverColor": {
             "type": "string",
@@ -519,7 +540,6 @@
             "type": "string",
             "default": ""
         },
-
         "shapeBottom": {
             "type": "object",
             "default": {
@@ -579,7 +599,6 @@
             "type": "string",
             "default": "Read More"
         },
-
         "contentTypography": {
             "type": "object",
             "default": {
@@ -598,8 +617,8 @@
                     "Mobile": "",
                     "unit": "px"
                 },
-                "textDecoration": "none",
-                "textTransform": "none",
+                "textDecoration": "",
+                "textTransform": "",
                 "fontSize": {
                     "Desktop": "",
                     "Tablet": "",
@@ -612,7 +631,6 @@
                 }
             }
         },
-
         "color": {
             "type": "string",
             "default": ""
@@ -639,8 +657,8 @@
                     "Mobile": "",
                     "unit": "px"
                 },
-                "textDecoration": "none",
-                "textTransform": "none",
+                "textDecoration": "",
+                "textTransform": "",
                 "fontSize": {
                     "Desktop": "",
                     "Tablet": "",
@@ -659,11 +677,7 @@
                 "Desktop": "",
                 "Tablet": "",
                 "Mobile": "",
-                "unit": {
-                    "Desktop": "px",
-                    "Tablet": "px",
-                    "Mobile": "px"
-                }
+                "unit": "px"
             }
         },
         "buttonColor": {
@@ -733,7 +747,7 @@
             "type": "object",
             "default": {
                 "borderColor": "",
-                "borderType": "none",
+                "borderType": "",
                 "borderRadius": {
                     "Desktop": {
                         "top": "",
@@ -807,85 +821,12 @@
                 "link": true
             }
         },
-        "Autoplay": {
-            "type": "boolean",
-            "default": true
-        },
-        "slideToScroll": {
-            "type": "number",
-            "default": "1"
-        },
-        "autoplaySpeed": {
-            "type": "number",
-            "default": "2000"
-        },
-        "centerMode": {
-            "type": "number",
-            "default": false
-        },
-        "slideSpacing": {
-            "type": "number",
-            "default": "5"
-        },
-        "navigationDots": {
-            "type": "boolean",
-            "default": true
-        },
-        "navigationArrow": {
-            "type": "boolean",
-            "default": true
-        },
-        "arrowPosition": {
-            "type": "object",
-            "default": {
-                "Desktop": "-20",
-                "Tablet": "0",
-                "Mobile": "0"
-            }
-        },
-
-        "pauseOnHover": {
-            "type": "boolean",
-            "default": true
-        },
-        "infiniteLoop": {
-            "type": "boolean",
-            "default": true
-        },
-        "dotsColor": {
-            "type": "string",
-            "default": ""
-        },
-        "dotsActiveColor": {
-            "type": "string",
-            "default": ""
-        },
-        "arrowColor": {
-            "type": "string",
-            "default": ""
-        },
-        "arrowSize": {
-            "type": "number"
-        },
-        "arrowBack": {
-            "type": "string"
-        },
-        "arrowBorderRadius": {
-            "type": "number"
-        },
-        "arrowPadding": {
-            "type": "number"
-        },
-        "pauseOnHover ": {
-            "type": "boolean",
-            "default": true
-        },
         "verticalAlign": {
             "type": "object",
             "default": {
                 "Desktop": "flex-end",
-                "Tablet": "flex-end",
-                "Mobile": "flex-end"
+                "Tablet": "",
+                "Mobile": ""
             }
         },
         "authorImg": {
@@ -893,7 +834,13 @@
             "default": true
         },
         "authorImgPosition": {
-            "type": "number"
+            "type": "object",
+            "default": {
+                "Desktop": -10,
+                "Tablet": "",
+                "Mobile": "",
+                "unit": "px"
+            }
         },
         "overlayEffect": {
             "type": "string",
@@ -982,8 +929,8 @@
                     "Mobile": "",
                     "unit": "px"
                 },
-                "textDecoration": "none",
-                "textTransform": "none",
+                "textDecoration": "",
+                "textTransform": "",
                 "fontSize": {
                     "Desktop": "",
                     "Tablet": "",
@@ -1025,10 +972,13 @@
                 "link": true
             }
         },
-
         "pagination": {
             "type": "boolean",
             "default": false
+        },
+        "paginationStyle": {
+            "type": "string",
+            "default": "default"
         },
         "pageLimit": {
             "type": "number",
