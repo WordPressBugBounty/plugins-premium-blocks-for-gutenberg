@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.14
+Stable tag: 2.2.15
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -89,6 +89,7 @@ Optimize your WordPress website performance with lightning-fast loading times us
 28. [Gallery](https://premiumblocks.io/gutenberg-blocks/gallery-block/) - Engage your Images in various layout
 29. [Tabs](https://premiumblocks.io/gutenberg-blocks/tabs-block/) - For making advanced tabs with content
 30. [Off Canvas](https://premiumblocks.io/gutenberg-blocks/off-canvas-block/) - Create hidden, slide-in panels for navigation menus, sidebars, or promotional content using multiple triggers; Button, Image, Icon, SVG, and Lottie Animations.
+31. [One Page Scroll](https://premiumblocks.io/gutenberg-blocks/one-page-scroll/) - Build engaging full-screen scrolling websites with customizable navigations dots, menu items, arrows and smooth transitions. Ideal for modern landing pages, product showcases, storytelling, portfolios and more.
 
 == Installation ==
 
@@ -126,6 +127,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.15 =
+- New: Released the One Page Scroll Gutenberg Free Block.
+- New: Added a global positioning option for all Gutenberg blocks.
+
 = 2.2.14 =
 - Added: Responsive rotation degree option for Text Block and Dual Heading block.
 - Added: Support for Custom Post Types in Post Grid and Post Carousel blocks.
@@ -137,7 +142,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 - Fixed: Button styling issue.
 - Fixed: Section full-width styling issue.
 - Fixed: Styling issues in the Tabs block.
-- Fixed: Styling issues in the Section Block.
+- Fixed: Styling issues in the Section block.
 - Tweak: Allowed dual heading support in the Icon Box block.
 - Tweak: Added option to align the icon to the left or right in the Counter block.
 

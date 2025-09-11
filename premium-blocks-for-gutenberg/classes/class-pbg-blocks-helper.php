@@ -168,7 +168,50 @@ class PBG_Blocks_Helper
 	public $preview = false;
 	public $file_generation = false;
 
-
+  private static $pbg_attributes = array(
+    'pbgHorizontalOrientation' => array(
+      'type'    => 'object',
+      'default' => array(
+        'Desktop' => 'left',
+        'Tablet'  => '',
+        'Mobile'  => '',
+      ),
+    ),
+    'pbgHorizontalOffset' => array(
+      'type'    => 'object',
+      'default' => array(
+        'Desktop' => 0,
+        'Tablet'  => '',
+        'Mobile'  => '',
+        'unit'    => array(
+          'Desktop' => 'px',
+          'Tablet'  => 'px',
+          'Mobile'  => 'px',
+        ),
+      ),
+    ),
+    'pbgVerticalOrientation' => array(
+      'type'    => 'object',
+      'default' => array(
+        'Desktop' => 'top',
+        'Tablet'  => '',
+        'Mobile'  => '',
+      ),
+    ),
+    'pbgVerticalOffset' => array(
+      'type'    => 'object',
+      'default' => array(
+        'Desktop' => 0,
+        'Tablet'  => '',
+        'Mobile'  => '',
+        'unit'    => array(
+          'Desktop' => 'px',
+          'Tablet'  => 'px',
+          'Mobile'  => 'px',
+        ),
+      ),
+    ),
+  );
 
 	/**
 	 * Constructor for the class
@@ -1051,6 +1094,14 @@ class PBG_Blocks_Helper
 				'name'       => 'off-canvas',
 				'style_func' => 'get_premium_off_canvas_css',
 			),
+      'premium/one-page-scroll'        => array(
+				'name'       => 'one-page-scroll',
+				'style_func' => 'get_premium_one_page_scroll_css',
+			),
+			'premium/one-page-scroll-item'   => array(
+				'name'       => 'one-page-scroll-item',
+				'style_func' => 'get_premium_one_page_scroll_item_css',
+			),
 		);
 
 		return $blocks_array;
@@ -1346,10 +1397,33 @@ class PBG_Blocks_Helper
 			}
 		}
 
+    $pbg_width_type = $css->pbg_get_value($attrs, 'pbgWidthType', 'Desktop');
+    $pbg_position = $css->pbg_get_value($attrs, 'pbgPosition', 'Desktop');
+    $pbg_horizontal_orientation = $css->pbg_get_value($attrs, 'pbgHorizontalOrientation', 'Desktop');
+    $pbg_vertical_orientation = $css->pbg_get_value($attrs, 'pbgVerticalOrientation', 'Desktop');
+
+    $pbg_width_migrated = $css->pbg_get_value($attrs, 'pbgWidthMigrated');
+    
+    /**
+     * Only use custom width if explicitly set to "custom" or if it's an old block (no migration flag) and has custom width (backward compatibility).
+    */
+    $pbg_custom_width = $css->pbg_get_value($attrs, 'pbgWidth', 'Desktop');
+    $should_use_custom_width = ($pbg_width_type === 'custom') || (!$pbg_width_migrated && empty($pbg_width_type) && !empty($pbg_custom_width));
+
 		$css->set_selector(".{$block_id}");
-		$css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Desktop', null, '!important');
-		$css->pbg_render_value($attrs, 'pbgzIndex', 'z-index', null, null, '!important');
 		$css->pbg_render_spacing($attrs, 'blockPadding', 'padding', 'Desktop', null, '!important');
+    if( in_array( $pbg_width_type, array('100%','auto') ) ){
+      $css->pbg_render_value($attrs, 'pbgWidthType', 'width', 'Desktop', null, '!important');
+    }
+    if( $should_use_custom_width ){
+      $css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Desktop', null, '!important');
+    }
+    $css->pbg_render_value($attrs, 'pbgPosition', 'position', 'Desktop', null, '!important');
+    if( $pbg_position === 'absolute' || $pbg_position === 'fixed' ){
+      $css->pbg_render_range($attrs, 'pbgHorizontalOffset', $pbg_horizontal_orientation, 'Desktop', null, '!important');
+      $css->pbg_render_range($attrs, 'pbgVerticalOffset', $pbg_vertical_orientation, 'Desktop', null, '!important');
+    }
+		$css->pbg_render_value($attrs, 'pbgzIndex', 'z-index', null, null, '!important');
 
 		$css->set_selector(":root:has(.{$block_id}) .{$block_id}");
 		$css->pbg_render_spacing($attrs, 'blockMargin', 'margin', 'Desktop');
@@ -1357,9 +1431,39 @@ class PBG_Blocks_Helper
 		// Tablet.
 		$css->start_media_query('tablet');
 
+    $pbg_width_type = $css->pbg_get_value($attrs, 'pbgWidthType', 'Tablet');
+    $pbg_position = $css->pbg_get_value($attrs, 'pbgPosition', 'Tablet', true);
+    $pbg_horizontal_orientation = $css->pbg_get_value($attrs, 'pbgHorizontalOrientation', 'Tablet', true);
+    $pbg_vertical_orientation = $css->pbg_get_value($attrs, 'pbgVerticalOrientation', 'Tablet', true);
+
+    // Backward compatibility: Only apply custom width for old blocks (before migration flag existed)
+    $pbg_custom_width = $css->pbg_get_value($attrs, 'pbgWidth', 'Tablet');
+    $should_use_custom_width = ($pbg_width_type === 'custom') || (!$pbg_width_migrated && empty($pbg_width_type) && !empty($pbg_custom_width));
+
 		$css->set_selector(".{$block_id}");
-		$css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Tablet', null, '!important');
 		$css->pbg_render_spacing($attrs, 'blockPadding', 'padding', 'Tablet', null, '!important');
+		if( in_array( $pbg_width_type, array('100%','auto') ) ){
+      $css->pbg_render_value($attrs, 'pbgWidthType', 'width', 'Tablet', null, '!important');
+    }
+    if( $should_use_custom_width ){
+      $css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Tablet', null, '!important');
+    }
+    $css->pbg_render_value($attrs, 'pbgPosition', 'position', 'Tablet', null, '!important');
+    if( $pbg_position === 'absolute' || $pbg_position === 'fixed' ){
+      if($pbg_horizontal_orientation === 'left'){
+        $css->add_property('right', 'auto !important');
+      }else{
+        $css->add_property('left', 'auto !important');
+      }
+
+      if($pbg_vertical_orientation === 'top'){
+        $css->add_property('bottom', 'auto !important');
+      }else{
+        $css->add_property('top', 'auto !important');
+      }
+      $css->pbg_render_range($attrs, 'pbgHorizontalOffset', $pbg_horizontal_orientation, 'Tablet', null, '!important', true);
+      $css->pbg_render_range($attrs, 'pbgVerticalOffset', $pbg_vertical_orientation, 'Tablet', null, '!important', true);
+    }
 
 		$css->set_selector(":root:has(.{$block_id}) .{$block_id}");
 		$css->pbg_render_spacing($attrs, 'blockMargin', 'margin', 'Tablet');
@@ -1369,9 +1473,39 @@ class PBG_Blocks_Helper
 		// Mobile.
 		$css->start_media_query('mobile');
 
+    $pbg_width_type = $css->pbg_get_value($attrs, 'pbgWidthType', 'Mobile');
+    $pbg_position = $css->pbg_get_value($attrs, 'pbgPosition', 'Mobile', true);
+		$pbg_horizontal_orientation = $css->pbg_get_value($attrs, 'pbgHorizontalOrientation', 'Mobile', true);
+    $pbg_vertical_orientation = $css->pbg_get_value($attrs, 'pbgVerticalOrientation', 'Mobile', true);
+
+    // Backward compatibility: Only apply custom width for old blocks (before migration flag existed)
+    $pbg_custom_width = $css->pbg_get_value($attrs, 'pbgWidth', 'Mobile');
+    $should_use_custom_width = ($pbg_width_type === 'custom') || (!$pbg_width_migrated && empty($pbg_width_type) && !empty($pbg_custom_width));
+
 		$css->set_selector(".{$block_id}");
-		$css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Mobile', null, '!important');
 		$css->pbg_render_spacing($attrs, 'blockPadding', 'padding', 'Mobile', null, '!important');
+		if( in_array( $pbg_width_type, array('100%','auto') ) ){
+      $css->pbg_render_value($attrs, 'pbgWidthType', 'width', 'Mobile', null, '!important');
+    }
+    if( $should_use_custom_width ){
+      $css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Mobile', null, '!important');
+    }
+    $css->pbg_render_value($attrs, 'pbgPosition', 'position', 'Mobile', null, '!important');
+    if( $pbg_position === 'absolute' || $pbg_position === 'fixed' ){
+      if($pbg_horizontal_orientation === 'left'){
+        $css->add_property('right', 'auto !important');
+      }else{
+        $css->add_property('left', 'auto !important');
+      }
+
+      if($pbg_vertical_orientation === 'top'){
+        $css->add_property('bottom', 'auto !important');
+      }else{
+        $css->add_property('top', 'auto !important');
+      }
+      $css->pbg_render_range($attrs, 'pbgHorizontalOffset', $pbg_horizontal_orientation, 'Mobile', null, '!important', true);
+      $css->pbg_render_range($attrs, 'pbgVerticalOffset', $pbg_vertical_orientation, 'Mobile', null, '!important', true);
+    }
 
 		$css->set_selector(":root:has(.{$block_id}) .{$block_id}");
 		$css->pbg_render_spacing($attrs, 'blockMargin', 'margin', 'Mobile');
@@ -1442,7 +1576,7 @@ class PBG_Blocks_Helper
 		$style_func = $block_data['style_func'];
 
 		$attr       = $this->get_block_attributes($block);
-
+    
 		if (! empty($style_func)) {
 			$unique_id = $this->get_block_unique_id($block_name, $attr);
 			if (is_array($style_func)) {
@@ -1718,6 +1852,14 @@ class PBG_Blocks_Helper
 				}
 			}
 		}
+
+    // Append pbg attributes to default attributes.
+    foreach (self::$pbg_attributes as $key => $value) {
+      if (isset($value['default'])) {
+					$default_attrs[$key] = $value['default'];
+      }
+    }
+
 		// Merge default attributes with block attributes.
 		$attr = wp_parse_args($block['attrs'], $default_attrs);
 
@@ -2255,7 +2397,9 @@ class PBG_Blocks_Helper
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/form-date.php';
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/form-textarea.php';
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/form-select.php';
-			} elseif ($slug === 'post-carousel' || $slug === 'post-grid') {
+			} elseif ($slug === 'one-page-scroll') {
+        require_once PREMIUM_BLOCKS_PATH . 'blocks-config/one-page-scroll-item/index.php';
+      } elseif ($slug === 'post-carousel' || $slug === 'post-grid') {
         require_once PREMIUM_BLOCKS_PATH . 'blocks-config/post.php';
       }
 		}

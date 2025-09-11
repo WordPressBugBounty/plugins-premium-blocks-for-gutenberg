@@ -1,0 +1,164 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "premium/one-page-scroll-item",
+    "title": "One Page Scroll Item",
+    "category": "premium-blocks",
+    "description": "Display a single item in a one page scroll block.",
+    "parent": ["premium/one-page-scroll"],
+    "keywords": ["one-page-scroll-item"],
+    "textdomain": "default",
+    "attributes": {
+        "blockId": {
+            "type": "string"
+        },
+        "scrollItemBackground": {
+            "type": "object",
+            "default": {
+                "backgroundType": "",
+                "backgroundColor": "",
+                "backgroundImageID": "",
+                "backgroundImageURL": "",
+                "backgroundPosition": {
+                    "Desktop": "center center",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundRepeat": {
+                    "Desktop": "no-repeat",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundSize": {
+                    "Desktop": "cover",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "fixed": false,
+                "gradientLocationOne": "0",
+                "gradientColorTwo": "",
+                "gradientLocationTwo": "100",
+                "gradientAngle": "180",
+                "gradientPosition": "center center",
+                "gradientType": "linear"
+            },
+            "isStyle": true
+        },
+        "scrollItemBackgroundOverlay": {
+            "type": "object",
+            "default": {
+                "backgroundType": "",
+                "backgroundColor": "",
+                "backgroundImageID": "",
+                "backgroundImageURL": "",
+                "backgroundPosition": {
+                    "Desktop": "center center",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundRepeat": {
+                    "Desktop": "no-repeat",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundSize": {
+                    "Desktop": "cover",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "fixed": false,
+                "gradientLocationOne": "0",
+                "gradientColorTwo": "",
+                "gradientLocationTwo": "100",
+                "gradientAngle": "180",
+                "gradientPosition": "center center",
+                "gradientType": "linear"
+            },
+            "isStyle": true
+        },
+        "overlayOpacity": {
+            "type": "number",
+            "default": 100,
+            "isStyle": true
+        },
+        "overlayFilter": {
+            "type": "object",
+            "default": {
+                "contrast": "100",
+                "blur": "0",
+                "bright": "100",
+                "saturation": "100",
+                "hue": "0"
+            },
+            "isStyle": true
+        },
+        "overlayBlendMode": {
+            "type": "string",
+            "default": ""
+        },
+        "scrollItemMargin": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                },
+                "link": true
+            },
+            "isStyle": true
+        },
+        "scrollItemPadding": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                },
+                "link": true
+            },
+            "isStyle": true
+        },
+        "templateInitialized": {
+            "type": "boolean",
+            "default": false
+        }
+    }
+}

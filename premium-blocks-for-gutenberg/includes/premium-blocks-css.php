@@ -746,7 +746,7 @@ class Premium_Blocks_css {
 
   // New Functions 
 
-  public function pbg_render_value($attributes, $name, $property, $device = '', $prefix = '', $postfix = '') {
+  public function pbg_render_value($attributes, $name, $property, $device = '', $prefix = '', $postfix = '', $enable_fallback = false) {
     if (empty($attributes) || !is_array($attributes) || empty($name) || empty($property)) {
       return false;
     }
@@ -757,10 +757,27 @@ class Premium_Blocks_css {
     $final_value = '';
 
     if($is_responsive){
-      if (null === $value || !is_array($value) || !isset($value[$device]) || $value[$device] === '') {
-        return false;
+      if($enable_fallback){
+        $real_device = $device;
+
+        $fall_back = array('Desktop', 'Tablet', 'Mobile');
+
+        $real_device_index = array_search($real_device, $fall_back); 
+
+        while($real_device_index >= 0){
+          $real_device = $fall_back[$real_device_index];
+          if (null !== $value && is_array($value) && isset($value[$real_device]) && $value[$real_device] !== '') {
+            $final_value = $value[$real_device];
+            break;
+          }
+          $real_device_index--;
+        }
+      }else{
+        if (null === $value || !is_array($value) || !isset($value[$device]) || $value[$device] === '') {
+          return false;
+        }
+        $final_value = $value[$device];
       }
-      $final_value = $value[$device];
     }else{
       if (null === $value || !isset($value) || $value === '') {
         return false;
@@ -956,7 +973,7 @@ class Premium_Blocks_css {
     $this->pbg_render_spacing($value_at_path, 'borderRadius', 'border-radius', $device, null, $postfix);
   }
 
-  public function pbg_render_range($attributes, $name, $property, $device = '', $prefix = '', $postfix = ''){
+  public function pbg_render_range($attributes, $name, $property, $device = '', $prefix = '', $postfix = '', $enable_fallback = false){
     if (empty($attributes) || !is_array($attributes) || empty($name) || empty($property)) {
       return false;
     }
@@ -966,11 +983,27 @@ class Premium_Blocks_css {
     $is_responsive = !empty($device);
     $final_value = '';
     
+    $real_device = $device;
     if($is_responsive){
-      if (null === $value || !is_array($value) || !isset($value[$device]) || $value[$device] === "") {
-        return false;
+      if($enable_fallback){
+        $fall_back = array('Desktop', 'Tablet', 'Mobile');
+
+        $real_device_index = array_search($real_device, $fall_back); 
+
+        while($real_device_index >= 0){
+          $real_device = $fall_back[$real_device_index];
+          if (null !== $value && is_array($value) && isset($value[$real_device]) && $value[$real_device] !== '') {
+            $final_value = $value[$real_device];
+            break;
+          }
+          $real_device_index--;
+        }
+      }else{
+        if (null === $value || !is_array($value) || !isset($value[$real_device]) || $value[$real_device] === "") {
+          return false;
+        }
+        $final_value = $value[$real_device];
       }
-      $final_value = $value[$device];
     }else{
       if (null === $value || !isset($value) || $value === '') {
         return false;
@@ -979,8 +1012,8 @@ class Premium_Blocks_css {
     }
 
     $unit = '';
-		if (isset( $value['unit'][$device] ) && is_array($value['unit']) && ! empty( $value['unit'][$device]   )) {
-			$unit=$value['unit'][$device];
+		if (isset( $value['unit'][$real_device] ) && is_array($value['unit']) && ! empty( $value['unit'][$real_device]   )) {
+			$unit=$value['unit'][$real_device];
 		} elseif(isset( $value['unit'] ) && is_string($value['unit']) && ! empty( $value['unit'] )) {
 			$unit=$value['unit'];
 		}
@@ -1018,7 +1051,7 @@ class Premium_Blocks_css {
     $type = $background['backgroundType'] ?? '';
 
     if($type === 'transparent'){
-      $this->add_property( 'background-color', "transparent" );
+      $this->add_property( 'background-color', "transparent" . $postfix );
       return;
     }
 
@@ -1026,17 +1059,17 @@ class Premium_Blocks_css {
       $color = $background['backgroundColor'] ?? '';
 
       if(!empty($color)){
-        $this->add_property('background-color', $color . '!important');
+        $this->add_property('background-color', $color . $postfix);
       }
 
       $image_url = $background['backgroundImageURL'] ?? '';
       if (!empty($image_url)) {
-        $this->add_property('background-image', 'url(' . $image_url . ')');
+        $this->add_property('background-image', 'url(' . $image_url . ')' . $postfix);
         
         // Add responsive properties if they exist
-        $this->pbg_render_value($background, 'backgroundRepeat', 'background-repeat', $device);
-        $this->pbg_render_value($background, 'backgroundPosition', 'background-position', $device);
-        $this->pbg_render_value($background, 'backgroundSize', 'background-size', $device);
+        $this->pbg_render_value($background, 'backgroundRepeat', 'background-repeat', $device, null, $postfix);
+        $this->pbg_render_value($background, 'backgroundPosition', 'background-position', $device, null, $postfix);
+        $this->pbg_render_value($background, 'backgroundSize', 'background-size', $device, null, $postfix);
       }
       return;
     }
@@ -1070,7 +1103,7 @@ class Premium_Blocks_css {
           );
        }
       
-       $this->add_property('background-image', $gradient);
+       $this->add_property('background-image', $gradient . $postfix);
       }
     }
   }
@@ -1180,7 +1213,7 @@ class Premium_Blocks_css {
     $this->add_property('filter', $filter_string . $postfix);
 	}
 
-  public function pbg_get_value($attributes, $name, $device = ''){
+  public function pbg_get_value($attributes, $name, $device = '', $enable_fallback = false){
     if (empty($attributes) || !is_array($attributes) || empty($name)) {
       return;
     }
@@ -1191,10 +1224,27 @@ class Premium_Blocks_css {
     $final_value = '';
 
     if($is_responsive){
-      if (null === $value || !is_array($value) || !isset($value[$device]) || $value[$device] === '') {
-        return;
+      if($enable_fallback){
+        $real_device = $device;
+
+        $fall_back = array('Desktop', 'Tablet', 'Mobile');
+
+        $real_device_index = array_search($real_device, $fall_back); 
+
+        while($real_device_index >= 0){
+          $real_device = $fall_back[$real_device_index];
+          if (null !== $value && is_array($value) && isset($value[$real_device]) && $value[$real_device] !== '') {
+            $final_value = $value[$real_device];
+            break;
+          }
+          $real_device_index--;
+        }
+      }else{
+        if (null === $value || !is_array($value) || !isset($value[$device]) || $value[$device] === '') {
+          return;
+        }
+        $final_value = $value[$device];
       }
-      $final_value = $value[$device];
     }else{
       if (null === $value || !isset($value) || $value === '') {
         return;

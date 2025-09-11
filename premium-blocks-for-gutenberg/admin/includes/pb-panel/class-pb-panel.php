@@ -172,6 +172,7 @@ if (! class_exists('Pb_Panel')) {
 				'gallery'		       => true,
 				"tabs"             => true,
 				'off-canvas'       => true,
+        "one-page-scroll"   => true,
 			);
 
 			return array_merge($default_options, $options);
@@ -787,6 +788,15 @@ if (! class_exists('Pb_Panel')) {
 					'type'     => 'pb-button',
 					'label'    => __('Off Canvas', 'premium-blocks-for-gutenberg'),
 					'icon'     => 'off_canvas',
+					'category' => array(
+						'all',
+						'content',
+					),
+				),
+        'one-page-scroll'    => array(
+					'type'     => 'pb-button',
+					'label'    => __( 'One Page Scroll', 'premium-blocks-for-gutenberg' ),
+					'icon'     => 'one_page_scroll',
 					'category' => array(
 						'all',
 						'content',
