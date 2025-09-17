@@ -89,7 +89,7 @@ Optimize your WordPress website performance with lightning-fast loading times us
 28. [Gallery](https://premiumblocks.io/gutenberg-blocks/gallery-block/) - Engage your Images in various layout
 29. [Tabs](https://premiumblocks.io/gutenberg-blocks/tabs-block/) - For making advanced tabs with content
 30. [Off Canvas](https://premiumblocks.io/gutenberg-blocks/off-canvas-block/) - Create hidden, slide-in panels for navigation menus, sidebars, or promotional content using multiple triggers; Button, Image, Icon, SVG, and Lottie Animations.
-31. [One Page Scroll](https://premiumblocks.io/gutenberg-blocks/one-page-scroll/) - Build engaging full-screen scrolling websites with customizable navigations dots, menu items, arrows and smooth transitions. Ideal for modern landing pages, product showcases, storytelling, portfolios and more.
+31. [One Page Scroll](https://premiumblocks.io/gutenberg-blocks/one-page-scroll-block/) - Build engaging full-screen scrolling websites with customizable navigations dots, menu items, arrows and smooth transitions. Ideal for modern landing pages, product showcases, storytelling, portfolios and more.
 
 == Installation ==
 
@@ -178,12 +178,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 - Fixed: Styling issue in the Pricing Table badge.
 - Fixed: Block alignment issues across all blocks.
 
-= 2.2.9 =  
-- New: Added a switcher to the Dual Heading block to reverse heading order.  
-- Fixed: Post Carousel offset issue.  
-- Fixed: Icon block spacing styles.  
-- Fixed: Section block alignment issue.  
-- Fixed: Dual Heading block layout issue.  
+= 2.2.9 =
+- New: Added a switcher to the Dual Heading block to reverse heading order.
+- Fixed: Post Carousel offset issue.
+- Fixed: Icon block spacing styles.
+- Fixed: Section block alignment issue.
+- Fixed: Dual Heading block layout issue.
 - Fixed: Button alignment on various screen sizes.
 
 = 2.2.8 =
@@ -392,7 +392,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.1.23 =
 - Added: Responsive controls for Badge Block.
-- Fixed: Container block issues within classes. 
+- Fixed: Container block issues within classes.
 - Fixed: Styling inconsistencies in the responsive mode for the Post Carousel block.
 - Fixed: Preview console errors in the editor.
 
@@ -451,7 +451,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 - Fixed: Styling problem with Heading Block Style 2.
 
 = 2.1.13 =
-- Added: Link Wrapper option to Container Block and Icon Box block. 
+- Added: Link Wrapper option to Container Block and Icon Box block.
 - Added: Added Alt and Caption options to the image block.
 - Fixed: Bullet List alignment issue.
 - Fixed: The Banner Block Content break when reloading the editor.
@@ -580,7 +580,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.0.20 =
 - Fixed: Responsive Alignment option doesn't work in Premium Icon Block.
-- Fixed: Shape divider of container block doesn't work properly. 
+- Fixed: Shape divider of container block doesn't work properly.
 
 = 2.0.19 =
 - Fixed: Block styles don't work in the header and footer template parts.
