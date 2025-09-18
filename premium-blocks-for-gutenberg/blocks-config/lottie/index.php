@@ -22,11 +22,8 @@ function get_premium_lottie_css_style($attr, $unique_id)
 
 	if (isset($attr['lottieAlign'])) {
 		$content_align      = $css->get_responsive_css($attr['lottieAlign'], 'Desktop');
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
 		$css->set_selector($unique_id);
 		$css->add_property('text-align', $content_align);
-		$css->add_property('align-self', $css->render_align_self($content_align));
 	}
 
 	if (isset($attr['size'])) {
@@ -84,11 +81,8 @@ function get_premium_lottie_css_style($attr, $unique_id)
 	$css->start_media_query('tablet');
 	if (isset($attr['lottieAlign'])) {
 		$content_align      = $css->get_responsive_css($attr['lottieAlign'], 'Tablet');
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
 		$css->set_selector($unique_id);
 		$css->add_property('text-align', $content_align);
-		$css->add_property('align-self', $css->render_align_self($content_align));
 	}
 
 	if (isset($attr['size'])) {
@@ -122,11 +116,8 @@ function get_premium_lottie_css_style($attr, $unique_id)
 	$css->start_media_query('mobile');
 	if (isset($attr['lottieAlign'])) {
 		$content_align      = $css->get_responsive_css($attr['lottieAlign'], 'Mobile');
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
 		$css->set_selector($unique_id);
 		$css->add_property('text-align', $content_align);
-		$css->add_property('align-self', $css->render_align_self($content_align));
 	}
 
 	if (isset($attr['size'])) {

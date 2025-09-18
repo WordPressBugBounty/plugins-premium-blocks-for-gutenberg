@@ -17,12 +17,20 @@
             "default": "top"
         },
         "contentAlign": {
-            "type": "string",
-            "default": ""
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
+            }
         },
         "iconVerticalAlign": {
-            "type": "string",
-            "default": ""
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
+            }
         },
         "padding": {
             "type": "object",

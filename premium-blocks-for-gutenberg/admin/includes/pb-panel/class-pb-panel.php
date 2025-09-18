@@ -172,7 +172,8 @@ if (! class_exists('Pb_Panel')) {
 				'gallery'		       => true,
 				"tabs"             => true,
 				'off-canvas'       => true,
-        "one-page-scroll"   => true,
+        		"one-page-scroll"   => true,
+				'star-ratings'       => true,
 			);
 
 			return array_merge($default_options, $options);
@@ -208,6 +209,7 @@ if (! class_exists('Pb_Panel')) {
 				'premium-entrance-animation'            => true,
 				'premium-entrance-animation-all-blocks' => false,
 				'premium-copy-paste-styles'             => true,
+				'premium-display-conditions'            => true
 			);
 
 			return array_merge($default_options, $options);
@@ -800,6 +802,15 @@ if (! class_exists('Pb_Panel')) {
 					'category' => array(
 						'all',
 						'content',
+					),
+				),
+				'star-ratings'       => array(
+					'type'     => 'pb-button',
+					'label'    => __('Star Ratings', 'premium-blocks-for-gutenberg'),
+					'icon'     => 'starRatings',
+					'category' => array(
+						'all',
+						'creative',
 					),
 				),
 			);

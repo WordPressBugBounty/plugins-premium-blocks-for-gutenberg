@@ -24,7 +24,6 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
   $css->set_selector(".{$unique_id}.wp-block-premium-fancy-text");
   $css->pbg_render_spacing($attr, 'fancyPadding', 'padding', 'Desktop', null, '!important');
   $css->pbg_render_value($attr, 'fancyContentAlign', 'text-align', 'Desktop');
-  $css->pbg_render_align_self($attr, 'fancyContentAlign', 'align-self', 'Desktop');
 
 	// FancyText Style
   $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide li, .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
@@ -40,7 +39,6 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 
   $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' );
 	$css->pbg_render_value($attr, 'fancyContentAlign', 'text-align', 'Desktop');
-  $css->pbg_render_align_self($attr, 'fancyContentAlign', 'align-self', 'Desktop');
 
   $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide' );
   $css->pbg_render_value($attr, 'fancyTextAlign', 'text-align', 'Desktop');
@@ -61,7 +59,6 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
   $css->set_selector(".{$unique_id}.wp-block-premium-fancy-text");
   $css->pbg_render_spacing($attr, 'fancyPadding', 'padding', 'Tablet', null, '!important');
   $css->pbg_render_value($attr, 'fancyContentAlign', 'text-align', 'Tablet');
-  $css->pbg_render_align_self($attr, 'fancyContentAlign', 'align-self', 'Tablet');
 
   // FancyText Style
   $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide li, .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
@@ -75,7 +72,6 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
   
   $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' );
 	$css->pbg_render_value($attr, 'fancyContentAlign', 'text-align', 'Tablet');
-  $css->pbg_render_align_self($attr, 'fancyContentAlign', 'align-self', 'Tablet');
 
   $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide' );
   $css->pbg_render_value($attr, 'fancyTextAlign', 'text-align', 'Tablet');
@@ -89,7 +85,6 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
   $css->set_selector(".{$unique_id}.wp-block-premium-fancy-text");
   $css->pbg_render_spacing($attr, 'fancyPadding', 'padding', 'Mobile', null, '!important');
   $css->pbg_render_value($attr, 'fancyContentAlign', 'text-align', 'Mobile');
-  $css->pbg_render_align_self($attr, 'fancyContentAlign', 'align-self', 'Mobile');
 
   // FancyText Style
 	$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide li, .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
@@ -103,7 +98,6 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
   
   $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' );
 	$css->pbg_render_value($attr, 'fancyContentAlign', 'text-align', 'Mobile');
-  $css->pbg_render_align_self($attr, 'fancyContentAlign', 'align-self', 'Mobile');
 
   $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide' );
   $css->pbg_render_value($attr, 'fancyTextAlign', 'text-align', 'Mobile');

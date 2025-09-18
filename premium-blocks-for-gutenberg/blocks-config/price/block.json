@@ -111,7 +111,7 @@
         "align": {
             "type": "object",
             "default": {
-                "Desktop": "center",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             },
@@ -158,7 +158,7 @@
         "slashedAlign": {
             "type": "object",
             "default": {
-                "Desktop": "center",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             },
@@ -210,7 +210,7 @@
         "currencyAlign": {
             "type": "object",
             "default": {
-                "Desktop": "center",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             },
@@ -262,7 +262,7 @@
         "priceAlign": {
             "type": "object",
             "default": {
-                "Desktop": "center",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             },
@@ -314,7 +314,7 @@
         "dividerAlign": {
             "type": "object",
             "default": {
-                "Desktop": "center",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             },
@@ -366,7 +366,7 @@
         "durationAlign": {
             "type": "object",
             "default": {
-                "Desktop": "center",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             },

@@ -7,8 +7,15 @@
     "description": "Add stylish buttons to your Gutenberg page using Premium Button Block.",
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
-    "keywords": [ "button", "link", "call to action", "cta",
-        "buttons", "button group", "button set", "button collection"
+    "keywords": [
+        "button",
+        "link",
+        "call to action",
+        "cta",
+        "buttons",
+        "button group",
+        "button set",
+        "button collection"
     ],
     "attributes": {
         "blockId": {
@@ -125,8 +132,8 @@
             "type": "object",
             "default": {
                 "Desktop": "horizontal",
-                "Tablet": "horizontal",
-                "Mobile": "horizontal"
+                "Tablet": "",
+                "Mobile": ""
             },
             "isStyle": true
         },

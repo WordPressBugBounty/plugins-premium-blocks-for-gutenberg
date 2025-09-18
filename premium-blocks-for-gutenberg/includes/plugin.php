@@ -179,6 +179,14 @@ if ( ! class_exists( 'PBG_Plugin' ) ) {
 			if ( isset( $settings['enable-post-editor-sidebar'] ) && $settings['enable-post-editor-sidebar'] ) {
 				require_once PREMIUM_BLOCKS_PATH . 'global-settings/class-pbg-global-settings.php';
 			}
+
+			$features = apply_filters( 'pb_global_features', get_option( 'pbg_global_features', array() ) );
+ 
+ 			$display_conditions = $features['premium-display-conditions'] ?? true;
+ 			if ( $display_conditions ) {
+ 				require_once PREMIUM_BLOCKS_PATH . 'includes/urlopen.php';
+ 				require_once PREMIUM_BLOCKS_PATH . 'classes/class-pbg-display-conditions.php';
+ 			}
 		}
 
 		/**

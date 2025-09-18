@@ -74,7 +74,7 @@
         "btnAlign": {
             "type": "object",
             "default": {
-                "Desktop": "center",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             },
@@ -179,7 +179,7 @@
         "catAlign": {
             "type": "object",
             "default": {
-                "Desktop": "center",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             },
@@ -233,9 +233,9 @@
         "contentAlign": {
             "type": "object",
             "default": {
-                "Desktop": "center",
-                "Tablet": "center",
-                "Mobile": "center"
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
             },
             "isStyle": true
         },

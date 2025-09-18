@@ -1,0 +1,171 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "version": "0.1.0",
+    "name": "premium/star-ratings",
+    "title": "Star Ratings",
+    "description": "Display reviews with star ratings.",
+    "keywords": [
+        "Star Ratings",
+        "Star",
+        "Ratings",
+        "Review",
+        "Score",
+        "Vote"
+    ],
+    "category": "premium-blocks",
+    "textdomain": "premium-blocks-for-gutenberg",
+    "attributes": {
+        "blockId": {
+            "type": "string"
+        },
+        "classMigrate": {
+            "type": "boolean",
+            "default": false
+        },
+        "rateScale": {
+            "type": "number",
+            "default": 5
+        },
+        "rateValue": {
+            "type": "number",
+            "default": 3
+        },
+        "rateTitle": {
+            "type": "string"
+        },
+        "selectedIcon": {
+            "type": "string",
+            "default": "dashicons star-filled"
+        },
+        "svgUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "icons": {
+            "type": "array",
+            "default": [
+                {
+                    "size": "50",
+                    "width": "2",
+                    "title": "",
+                    "style": "default"
+                }
+            ]
+        },
+        "ratingIcon": {
+            "type": "string",
+            "default": "icon"
+        },
+        "ratePosition": {
+            "type": "object",
+            "default": {
+                "Desktop": "right",
+                "Tablet": "right",
+                "Mobile": "right"
+            },
+            "isStyle": true
+        },
+        "rateGap": {
+            "type": "object",
+            "default": {
+                "Desktop": "2",
+                "Tablet": "2",
+                "Mobile": "2",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
+        },
+        "titleGap": {
+            "type": "object",
+            "default": {
+                "Desktop": "10",
+                "Tablet": "10",
+                "Mobile": "10",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
+        },
+        "rateAlign": {
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
+            },
+            "isStyle": true
+        },
+        "rateSize": {
+            "type": "object",
+            "default": {
+                "Desktop": "24",
+                "Tablet": "24",
+                "Mobile": "24",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
+        },
+        "rateColor": {
+            "type": "string",
+            "default": "#f0ad4e",
+            "isStyle": true
+        },
+        "unmarkedColor": {
+            "type": "string",
+            "default": "#dddddd",
+            "isStyle": true
+        },
+        "textColor": {
+            "type": "string",
+            "default": "",
+            "isStyle": true
+        },
+        "typography": {
+            "type": "object",
+            "default": {
+                "fontWeight": "Default",
+                "fontStyle": "",
+                "letterSpacing": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": "px"
+                },
+                "fontFamily": "Default",
+                "lineHeight": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": "px"
+                },
+                "textDecoration": "",
+                "textTransform": "",
+                "fontSize": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": "",
+                    "unit": {
+                        "Desktop": "px",
+                        "Tablet": "px",
+                        "Mobile": "px"
+                    }
+                }
+            },
+            "isStyle": true
+        }
+    },
+    "editorScript": "pbg-blocks-js",
+    "editorStyle": "premium-blocks-editor-css"
+}

@@ -25,6 +25,8 @@ function get_premium_container_css_style($attr, $unique_id)
     $inner_width_value = $css->pbg_get_value($attr, 'innerWidth');
     $overlay_background_type = $css->pbg_get_value($attr, 'backgroundOverlay.backgroundType');
     $overlay_background_hover_type = $css->pbg_get_value($attr, 'backgroundOverlayHover.backgroundType');
+    $current_direction = explode( '-', $css->pbg_get_value($attr, 'direction', 'Desktop') ?? '' )[0];
+    $childsWidthValue = $css->pbg_get_value($attr, 'childsWidth', 'Desktop');
 
     $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap');
     $css->pbg_render_range($attr, 'minHeight', 'min-height', 'Desktop');
@@ -45,6 +47,11 @@ function get_premium_container_css_style($attr, $unique_id)
       $css->add_property('max-width', 'var(--inner-content-custom-width)');
       $css->add_property('margin-left', 'auto');
       $css->add_property('margin-right', 'auto');
+    }
+
+    if($childsWidthValue === "equal" && $current_direction === "row"){
+      $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *');
+      $css->add_property('flex', '1 1 0%');
     }
      
     $css->set_selector(
@@ -108,6 +115,9 @@ function get_premium_container_css_style($attr, $unique_id)
 
     $css->start_media_query('tablet');
 
+    $current_direction = explode( '-', $css->pbg_get_value($attr, 'direction', 'Tablet') ?? '' )[0];
+    $childsWidthValue = $css->pbg_get_value($attr, 'childsWidth', 'Tablet');
+
     $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap');
     $css->pbg_render_range($attr, 'minHeight', 'min-height', 'Tablet');
     $css->pbg_render_value($attr, 'direction', 'flex-direction', 'Tablet');
@@ -121,6 +131,13 @@ function get_premium_container_css_style($attr, $unique_id)
       if(is_array($inner_width_value)){
         $css->pbg_render_range($attr, 'innerWidth', '--inner-content-custom-width', 'Tablet', 'min(100vw,', ')');  
       }
+    }
+
+    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *');
+    if($childsWidthValue === "equal" && $current_direction === "row"){
+      $css->add_property('flex', '1 1 0%');
+    }else{
+      $css->add_property('flex', 'initial');
     }
 
     $css->set_selector(
@@ -166,6 +183,9 @@ function get_premium_container_css_style($attr, $unique_id)
 
     $css->start_media_query('mobile');
 
+    $current_direction = explode( '-', $css->pbg_get_value($attr, 'direction', 'Mobile') ?? '' )[0];
+    $childsWidthValue = $css->pbg_get_value($attr, 'childsWidth', 'Mobile');
+
     $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap');
     $css->pbg_render_range($attr, 'minHeight', 'min-height', 'Mobile');
     $css->pbg_render_value($attr, 'direction', 'flex-direction', 'Mobile');
@@ -179,6 +199,13 @@ function get_premium_container_css_style($attr, $unique_id)
       if(is_array($inner_width_value)){
         $css->pbg_render_range($attr, 'innerWidth', '--inner-content-custom-width', 'Mobile', 'min(100vw,', ')');  
       }
+    }
+
+    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *');
+    if($childsWidthValue === "equal" && $current_direction === "row"){
+      $css->add_property('flex', '1 1 0%');
+    }else{
+      $css->add_property('flex', 'initial');
     }
 
     $css->set_selector(
@@ -267,7 +294,7 @@ function render_block_pbg_container($attributes, $content, $block)
       $media_query            = array();
       $media_query['mobile']  = apply_filters('Premium_BLocks_mobile_media_query', '(max-width: 767px)');
       $media_query['tablet']  = apply_filters('Premium_BLocks_tablet_media_query', '(max-width: 1024px)');
-      $media_query['desktop'] = apply_filters('Premium_BLocks_tablet_media_query', '(min-width: 1025px)');
+      $media_query['desktop'] = apply_filters('Premium_BLocks_desktop_media_query', '(min-width: 1025px)');
 
       $data = apply_filters(
         "premium_equal_height_localize_script",

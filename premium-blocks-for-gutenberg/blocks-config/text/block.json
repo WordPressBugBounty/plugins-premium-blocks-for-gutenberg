@@ -170,7 +170,7 @@
         "align": {
             "type": "object",
             "default": {
-                "Desktop": "left",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             },

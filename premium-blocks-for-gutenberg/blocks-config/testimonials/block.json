@@ -177,7 +177,7 @@
         "align": {
             "type": "object",
             "default": {
-                "Desktop": "center",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             },

@@ -5,7 +5,13 @@
     "title": "Off Canvas",
     "category": "premium-blocks",
     "description": "Display Slide-in menus, sidebars, and more, all in one compact space with Premium Off Canvas Block",
-    "keywords": ["off-canvas", "side-menu", "sliding-menu", "sidebar", "slide-in"],
+    "keywords": [
+        "off-canvas",
+        "side-menu",
+        "sliding-menu",
+        "sidebar",
+        "slide-in"
+    ],
     "textdomain": "default",
     "attributes": {
         "blockId": {
@@ -14,7 +20,7 @@
         "align": {
             "type": "object",
             "default": {
-                "Desktop": "center",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             }
@@ -458,7 +464,7 @@
         "contentVerticalAlign": {
             "type": "object",
             "default": {
-                "Desktop": "flex-start",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             }

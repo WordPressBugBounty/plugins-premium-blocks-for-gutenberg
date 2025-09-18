@@ -48,9 +48,6 @@ function get_premium_image_css($attr, $unique_id)
   $css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap:hover' . ' > img');
   $css->pbg_render_range($attr, 'imgOpacityHover', 'opacity', null, 'calc(', ' / 100)');
 
-  $css->set_selector('.' . $unique_id);
-  $css->pbg_render_value($attr, 'align', 'align-self', 'Desktop');
-
   $css->set_selector('.' . $unique_id . '.premium-image .premium-image-container');
   $css->pbg_render_value($attr, 'align', 'justify-content', 'Desktop');
 
@@ -74,9 +71,6 @@ function get_premium_image_css($attr, $unique_id)
   $css->pbg_render_range($attr, 'imgWidth', 'width', 'Tablet');
   $css->pbg_render_range($attr, 'imgHeight', 'height', 'Tablet');
 
-	$css->set_selector('.' . $unique_id);
-  $css->pbg_render_value($attr, 'align', 'align-self', 'Tablet');
-  
   $css->set_selector('.' . $unique_id . '.premium-image .premium-image-container');
   $css->pbg_render_value($attr, 'align', 'justify-content', 'Tablet');
 
@@ -100,9 +94,6 @@ function get_premium_image_css($attr, $unique_id)
   $css->pbg_render_range($attr, 'imgWidth', 'width', 'Mobile');
   $css->pbg_render_range($attr, 'imgHeight', 'height', 'Mobile');
 
-	$css->set_selector('.' . $unique_id);
-  $css->pbg_render_value($attr, 'align', 'align-self', 'Mobile');
-  
   $css->set_selector('.' . $unique_id . '.premium-image .premium-image-container');
   $css->pbg_render_value($attr, 'align', 'justify-content', 'Mobile');
 

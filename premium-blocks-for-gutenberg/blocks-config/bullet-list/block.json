@@ -78,9 +78,9 @@
         "bulletAlign": {
             "type": "object",
             "default": {
-                "Desktop": "center",
-                "Tablet": "center",
-                "Mobile": "center"
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
             },
             "isStyle": true
         },

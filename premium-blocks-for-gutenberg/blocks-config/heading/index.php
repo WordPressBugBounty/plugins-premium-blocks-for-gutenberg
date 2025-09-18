@@ -48,7 +48,11 @@ function get_premium_heading_css_style($attr, $unique_id)
     "{$unique_id} .premium-title-style9__wrap .premium-letters-container, " .
     "{$unique_id} .premium-title-text-title" 
   );
+  $css->pbg_render_color($attr, 'titleStyles[0].titleColor', 'color');
   $css->pbg_render_shadow($attr, 'titleShadow', 'text-shadow');
+
+  $css->set_selector($unique_id . ' .premium-title-style9-letter');
+  $css->pbg_render_color($attr, 'titleStyles[0].titleColor', 'color');
 	
 	// Align.
   $css->set_selector($unique_id);
@@ -59,8 +63,10 @@ function get_premium_heading_css_style($attr, $unique_id)
 
   $css->set_selector($unique_id . ' .premium-title-header');
   $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Desktop');
-  $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Desktop'); 
   $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Desktop');
+
+  $css->set_selector($unique_id . ' .premium-title-header.top');
+  $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Desktop'); 
 	
   $css->set_selector($unique_id . ' .premium-title-header .premium-title-text-title, ' . $unique_id . ' .premium-title-header .premium-letters-container');
   $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
@@ -175,8 +181,10 @@ function get_premium_heading_css_style($attr, $unique_id)
 
   $css->set_selector($unique_id . ' .premium-title-header');
   $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Tablet');
-  $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Tablet'); 
   $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Tablet');
+
+  $css->set_selector($unique_id . ' .premium-title-header.top');
+  $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Tablet'); 
 
 	$css->set_selector($unique_id . ' .premium-title-header .premium-title-text-title, ' . $unique_id . ' .premium-title-header .premium-letters-container');
   $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
@@ -264,8 +272,10 @@ function get_premium_heading_css_style($attr, $unique_id)
 
   $css->set_selector($unique_id . ' .premium-title-header');
   $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Mobile');
-  $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Mobile'); 
   $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Mobile');
+
+  $css->set_selector($unique_id . ' .premium-title-header.top');
+  $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Mobile'); 
 
 	$css->set_selector($unique_id . ' .premium-title-header .premium-title-text-title, ' . $unique_id . ' .premium-title-header .premium-letters-container');
   $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');

@@ -19,7 +19,7 @@
         "align": {
             "type": "object",
             "default": {
-                "Desktop": "left",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             },
@@ -49,24 +49,6 @@
         "iconTypeSelect": {
             "type": "string",
             "default": "icon"
-        },
-        "icons": {
-            "type": "array",
-            "default": [
-                {
-                    "iconn": "dashicons admin-site",
-                    "link": "",
-                    "target": "_self",
-                    "size": "40",
-                    "width": "2",
-                    "title": "",
-                    "style": "default"
-                }
-            ]
-        },
-        "icon": {
-            "type": "string",
-            "default": "dashicons admin-site"
         },
         "iconPosition": {
             "type": "string",
@@ -107,7 +89,7 @@
         "iconAlign": {
             "type": "object",
             "default": {
-                "Desktop": "center",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             },
@@ -292,9 +274,9 @@
         "stripeAlign": {
             "type": "object",
             "default": {
-                "Desktop": "center",
-                "Tablet": "center",
-                "Mobile": "center"
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
             },
             "isStyle": true
         },

@@ -35,7 +35,7 @@
         "align": {
             "type": "object",
             "default": {
-                "Desktop": "left",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             }
@@ -824,7 +824,7 @@
         "verticalAlign": {
             "type": "object",
             "default": {
-                "Desktop": "flex-end",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             }

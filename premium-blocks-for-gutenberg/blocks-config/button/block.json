@@ -39,15 +39,6 @@
             "type": "boolean",
             "default": false
         },
-        "btnAlign": {
-            "type": "object",
-            "default": {
-                "Desktop": "center",
-                "Tablet": "center",
-                "Mobile": "center"
-            },
-            "isStyle": true
-        },
         "btnLink": {
             "type": "string",
             "default": ""

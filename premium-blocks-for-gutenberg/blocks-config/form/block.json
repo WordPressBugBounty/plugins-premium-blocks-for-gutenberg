@@ -7,7 +7,16 @@
     "category": "premium-blocks",
     "description": "Send your visitors messages with a contact form.",
     "textdomain": "premium-blocks-for-gutenberg",
-    "keywords": ["form", "contact form", "contact", "email", "email form", "message", "submit", "form block"],
+    "keywords": [
+        "form",
+        "contact form",
+        "contact",
+        "email",
+        "email form",
+        "message",
+        "submit",
+        "form block"
+    ],
     "attributes": {
         "blockId": {
             "type": "string"
@@ -19,9 +28,9 @@
         "align": {
             "type": "object",
             "default": {
-                "Desktop": "left",
-                "Tablet": "left",
-                "Mobile": "left"
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
             }
         },
         "successMessage": {
@@ -40,8 +49,8 @@
             "type": "object",
             "default": {
                 "Desktop": "flex-start",
-                "Tablet": "flex-start",
-                "Mobile": "flex-start"
+                "Tablet": "",
+                "Mobile": ""
             }
         },
         "buttonStyle": {

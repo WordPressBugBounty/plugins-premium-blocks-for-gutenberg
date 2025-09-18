@@ -160,7 +160,7 @@
         "menuAlign": {
             "type": "object",
             "default": {
-                "Desktop": "flex-start",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             }
@@ -168,7 +168,7 @@
         "tabsAlign": {
             "type": "object",
             "default": {
-                "Desktop": "center",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             }
@@ -176,7 +176,7 @@
         "tabVerticalAlign": {
             "type": "string",
             "default": {
-                "Desktop": "flex-start",
+                "Desktop": "",
                 "Tablet": "",
                 "Mobile": ""
             }

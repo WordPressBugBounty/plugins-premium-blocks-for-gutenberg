@@ -829,7 +829,7 @@ class PBG_Blocks_Helper
 		$media_query            = array();
 		$media_query['mobile']  = apply_filters('Premium_BLocks_mobile_media_query', '(max-width: 767px)');
 		$media_query['tablet']  = apply_filters('Premium_BLocks_tablet_media_query', '(max-width: 1024px)');
-		$media_query['desktop'] = apply_filters('Premium_BLocks_tablet_media_query', '(min-width: 1025px)');
+		$media_query['desktop'] = apply_filters('Premium_BLocks_desktop_media_query', '(min-width: 1025px)');
 
 		if (isset($block['attrs']['clickAction']) && 'lightBox' === $block['attrs']['clickAction']) {
 			$images_lightbox_js = PREMIUM_BLOCKS_URL . 'assets/js/lib/fslightbox.js';
@@ -1101,6 +1101,10 @@ class PBG_Blocks_Helper
 			'premium/one-page-scroll-item'   => array(
 				'name'       => 'one-page-scroll-item',
 				'style_func' => 'get_premium_one_page_scroll_item_css',
+			),
+			'premium/star-ratings'        => array(
+				'name'       => 'star-ratings',
+				'style_func' => 'get_premium_star_ratings_css',
 			),
 		);
 
@@ -1431,7 +1435,7 @@ class PBG_Blocks_Helper
 		// Tablet.
 		$css->start_media_query('tablet');
 
-    $pbg_width_type = $css->pbg_get_value($attrs, 'pbgWidthType', 'Tablet');
+    $pbg_width_type = $css->pbg_get_value($attrs, 'pbgWidthType', 'Tablet', true);
     $pbg_position = $css->pbg_get_value($attrs, 'pbgPosition', 'Tablet', true);
     $pbg_horizontal_orientation = $css->pbg_get_value($attrs, 'pbgHorizontalOrientation', 'Tablet', true);
     $pbg_vertical_orientation = $css->pbg_get_value($attrs, 'pbgVerticalOrientation', 'Tablet', true);
@@ -1473,7 +1477,7 @@ class PBG_Blocks_Helper
 		// Mobile.
 		$css->start_media_query('mobile');
 
-    $pbg_width_type = $css->pbg_get_value($attrs, 'pbgWidthType', 'Mobile');
+    $pbg_width_type = $css->pbg_get_value($attrs, 'pbgWidthType', 'Mobile', true);
     $pbg_position = $css->pbg_get_value($attrs, 'pbgPosition', 'Mobile', true);
 		$pbg_horizontal_orientation = $css->pbg_get_value($attrs, 'pbgHorizontalOrientation', 'Mobile', true);
     $pbg_vertical_orientation = $css->pbg_get_value($attrs, 'pbgVerticalOrientation', 'Mobile', true);
@@ -2375,6 +2379,7 @@ class PBG_Blocks_Helper
 			} elseif ($slug === 'testimonials') {
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/image.php';
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/text/index.php';
+				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/star-ratings/index.php';
 			} elseif ($slug === 'buttons') {
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/button/index.php';
 			} elseif ($slug === 'instagram-feed') {

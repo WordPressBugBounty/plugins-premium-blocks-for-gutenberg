@@ -37,10 +37,6 @@
             "type": "boolean",
             "default": false
         },
-        "blockDescendants": {
-            "type": "array",
-            "default": []
-        },
         "colWidth": {
             "type": "object",
             "default": {
@@ -114,10 +110,6 @@
                 "link": true
             },
             "isStyle": true
-        },
-        "rowContainer": {
-            "type": "number",
-            "default": 0
         },
         "minHeight": {
             "type": "object",
@@ -510,12 +502,12 @@
             "type": "object",
             "default": {
                 "Desktop": "column",
-                "Tablet": "column",
-                "Mobile": "column"
+                "Tablet": "",
+                "Mobile": ""
             },
             "isStyle": true
         },
-        "alignItems": {
+        "justifyItems": {
             "type": "object",
             "default": {
                 "Desktop": "",
@@ -524,7 +516,7 @@
             },
             "isStyle": true
         },
-        "justifyItems": {
+        "alignItems": {
             "type": "object",
             "default": {
                 "Desktop": "",
@@ -611,6 +603,9 @@
         "equalHeightDevices": {
             "type": "array",
             "default": ["desktop", "tablet", "mobile"]
+        },
+        "childsWidth": {
+            "type": "object"
         }
     },
     "editorScript": "pbg-blocks-js",

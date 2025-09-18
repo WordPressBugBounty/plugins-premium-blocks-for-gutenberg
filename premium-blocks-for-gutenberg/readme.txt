@@ -1,19 +1,18 @@
 === Premium Blocks - Gutenberg Blocks for WordPress ===
 Contributors: leap13
-Tags: gutenberg editor, gutenberg blocks, blocks, gutenberg addon, gutenberg free blocks
+Tags: gutenberg blocks, gutenberg editor, block editor, gutenberg addons
 Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.15
+Stable tag: 2.2.16
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
-Enhance the functionality and design capabilities of the Gutenberg editor using a batch of well-developed Gutenberg blocks and features that helps building professional-looking WordPress websites with minimum effort.
+Supercharge your WordPress website with advanced Gutenberg blocks, global settings, and display conditions to create stunning, responsive designs effortlessly.
 
 == Description ==
-Take your WordPress website design to the next level with Free Blocks for Gutenberg! This powerful plugin unlocks the full potential of the Gutenberg editor, providing you with a collection of advanced yet user-friendly blocks that go beyond the limitations of the default WordPress editor. Effortlessly create stunning and unique layouts, streamline your workflow, and achieve professional results without needing to write a single line of custom code.
-
+Transform your WordPress website with **Premium Blocks for Gutenberg** – the ultimate toolkit for the Gutenberg editor. This plugin offers a comprehensive collection of advanced, customizable blocks and features designed to help you build professional, responsive websites with ease.
 
 Premium Blocks for Gutenberg undergoes continual evolution through weekly updates, introducing exciting new features and enhancements, and empowering you with complete control over every aspect of your WordPress website's design through a plethora of customization options.
 
@@ -37,15 +36,16 @@ Save time and streamline your workflow by setting global styles and defaults for
 Elevate your website design in seconds with Free Blocks for Gutenberg's extensive library of pre-designed presets and variations. Forget the hassle of starting from scratch – simply choose a preset that aligns with your vision, and then personalize it further with a variety of built-in variations.
 
 
-
 ### Copy/Paste Style Feature for Gutenberg
 Achieve design consistency effortlessly with the Copy/Paste Style feature. Quickly copy formatting and styles from one Gutenberg block to another, ensuring a cohesive and branded look across your entire WordPress website.
 
 
+### Display Conditions for Gutenberg Blocks
+Free Global Features lets you control the visibility of any block—core, Premium Blocks, or third-party—based on user role, device, location, browser, date, and more. Build dynamic, personalized content with no code. [View Demo](https://premiumblocks.io/gutenberg-global-features/display-conditions/)
+
 
 ### Equal Height Feature for Gutenberg
 Ensure visual harmony across your Gutenberg website with the Equal Height feature. Make columns, blocks, or any elements match each other's height with a single click, creating a clean and polished look.
-
 
 
 ### Entrance Animation Feature for Gutenberg Blocks
@@ -89,7 +89,8 @@ Optimize your WordPress website performance with lightning-fast loading times us
 28. [Gallery](https://premiumblocks.io/gutenberg-blocks/gallery-block/) - Engage your Images in various layout
 29. [Tabs](https://premiumblocks.io/gutenberg-blocks/tabs-block/) - For making advanced tabs with content
 30. [Off Canvas](https://premiumblocks.io/gutenberg-blocks/off-canvas-block/) - Create hidden, slide-in panels for navigation menus, sidebars, or promotional content using multiple triggers; Button, Image, Icon, SVG, and Lottie Animations.
-31. [One Page Scroll](https://premiumblocks.io/gutenberg-blocks/one-page-scroll-block/) - Build engaging full-screen scrolling websites with customizable navigations dots, menu items, arrows and smooth transitions. Ideal for modern landing pages, product showcases, storytelling, portfolios and more.
+31. [One Page Scroll](https://premiumblocks.io/gutenberg-blocks/one-page-scroll/) - Build engaging full-screen scrolling websites with customizable navigations dots, menu items, arrows and smooth transitions. Ideal for modern landing pages, product showcases, storytelling, portfolios and more.
+32. Star Ratings - Display customizable star ratings with adjustable colors and icons—including any SVG—fully editable without any coding required.
 
 == Installation ==
 
@@ -127,6 +128,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.16 =
+- New: Introduced the Star Ratings Gutenberg block.
+- New: Added display conditions options to control visibility for each block—including core Gutenberg blocks, Premium Blocks, and third-party blocks.
+- Fixed: Container alignment issues and added new alignment options.
+- Fixed: Styling issues in Gallery block.
+- Fixed: Styling issues in Bullet List block.
+- Fixed: Default alignment issues in Premium Blocks.
+
 = 2.2.15 =
 - New: Released the One Page Scroll Gutenberg Free Block.
 - New: Added a global positioning option for all Gutenberg blocks.
@@ -178,12 +187,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 - Fixed: Styling issue in the Pricing Table badge.
 - Fixed: Block alignment issues across all blocks.
 
-= 2.2.9 =
-- New: Added a switcher to the Dual Heading block to reverse heading order.
-- Fixed: Post Carousel offset issue.
-- Fixed: Icon block spacing styles.
-- Fixed: Section block alignment issue.
-- Fixed: Dual Heading block layout issue.
+= 2.2.9 =  
+- New: Added a switcher to the Dual Heading block to reverse heading order.  
+- Fixed: Post Carousel offset issue.  
+- Fixed: Icon block spacing styles.  
+- Fixed: Section block alignment issue.  
+- Fixed: Dual Heading block layout issue.  
 - Fixed: Button alignment on various screen sizes.
 
 = 2.2.8 =
@@ -392,7 +401,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.1.23 =
 - Added: Responsive controls for Badge Block.
-- Fixed: Container block issues within classes.
+- Fixed: Container block issues within classes. 
 - Fixed: Styling inconsistencies in the responsive mode for the Post Carousel block.
 - Fixed: Preview console errors in the editor.
 
@@ -451,7 +460,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 - Fixed: Styling problem with Heading Block Style 2.
 
 = 2.1.13 =
-- Added: Link Wrapper option to Container Block and Icon Box block.
+- Added: Link Wrapper option to Container Block and Icon Box block. 
 - Added: Added Alt and Caption options to the image block.
 - Fixed: Bullet List alignment issue.
 - Fixed: The Banner Block Content break when reloading the editor.
@@ -580,7 +589,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.0.20 =
 - Fixed: Responsive Alignment option doesn't work in Premium Icon Block.
-- Fixed: Shape divider of container block doesn't work properly.
+- Fixed: Shape divider of container block doesn't work properly. 
 
 = 2.0.19 =
 - Fixed: Block styles don't work in the header and footer template parts.

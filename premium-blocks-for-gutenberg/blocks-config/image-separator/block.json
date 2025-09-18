@@ -5,7 +5,13 @@
     "name": "premium/image-separator",
     "title": "Image Separator",
     "description": "Separate between your Gutenberg sections using Premium Image Separator Block.",
-    "keywords": [ "image", "seperator", "separator", "image separator", "section separator" ],
+    "keywords": [
+        "image",
+        "seperator",
+        "separator",
+        "image separator",
+        "section separator"
+    ],
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
@@ -27,9 +33,9 @@
         "iconAlign": {
             "type": "object",
             "default": {
-                "Desktop": "center",
-                "Tablet": "center",
-                "Mobile": "center"
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": ""
             },
             "isStyle": true
         },
