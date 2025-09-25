@@ -1,20 +1,18 @@
 === Premium Blocks - Gutenberg Blocks for WordPress ===
 Contributors: leap13
-Tags: gutenberg blocks, gutenberg editor, block editor, gutenberg addons
+Tags: blocks, gutenberg, block editor, gutenberg addons
 Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.16
+Stable tag: 2.2.17
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
 Supercharge your WordPress website with advanced Gutenberg blocks, global settings, and display conditions to create stunning, responsive designs effortlessly.
 
 == Description ==
-Transform your WordPress website with **Premium Blocks for Gutenberg** – the ultimate toolkit for the Gutenberg editor. This plugin offers a comprehensive collection of advanced, customizable blocks and features designed to help you build professional, responsive websites with ease.
-
-Premium Blocks for Gutenberg undergoes continual evolution through weekly updates, introducing exciting new features and enhancements, and empowering you with complete control over every aspect of your WordPress website's design through a plethora of customization options.
+With Premium Blocks for Gutenberg, you get a free, comprehensive collection of advanced blocks and features for the WordPress block editor. Our plugin helps you go beyond the basics to create stunning, responsive websites with ease. With a constant flow of new customization options, it's the ultimate toolkit for designers and developers looking to build and maintain high-performing sites.
 
 
 ### Useful Links
@@ -89,7 +87,7 @@ Optimize your WordPress website performance with lightning-fast loading times us
 28. [Gallery](https://premiumblocks.io/gutenberg-blocks/gallery-block/) - Engage your Images in various layout
 29. [Tabs](https://premiumblocks.io/gutenberg-blocks/tabs-block/) - For making advanced tabs with content
 30. [Off Canvas](https://premiumblocks.io/gutenberg-blocks/off-canvas-block/) - Create hidden, slide-in panels for navigation menus, sidebars, or promotional content using multiple triggers; Button, Image, Icon, SVG, and Lottie Animations.
-31. [One Page Scroll](https://premiumblocks.io/gutenberg-blocks/one-page-scroll/) - Build engaging full-screen scrolling websites with customizable navigations dots, menu items, arrows and smooth transitions. Ideal for modern landing pages, product showcases, storytelling, portfolios and more.
+31. [One Page Scroll](https://premiumblocks.io/gutenberg-blocks/one-page-scroll-block/) - Build engaging full-screen scrolling websites with customizable navigations dots, menu items, arrows and smooth transitions. Ideal for modern landing pages, product showcases, storytelling, portfolios and more.
 32. Star Ratings - Display customizable star ratings with adjustable colors and icons—including any SVG—fully editable without any coding required.
 
 == Installation ==
@@ -128,6 +126,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.17 =
+- New: Added taxonomy-based filtering option to the Premium Post Grid Gutenberg block, allowing users to filter posts by selected taxonomies.
+- Fix: Resolved issue with the styling tab visibility in the Counter block.
+- Tweak: Introduced max-height (px) setting for the Image block to enhance layout control.
+
 = 2.2.16 =
 - New: Introduced the Star Ratings Gutenberg block.
 - New: Added display conditions options to control visibility for each block—including core Gutenberg blocks, Premium Blocks, and third-party blocks.

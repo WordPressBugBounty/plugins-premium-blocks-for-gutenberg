@@ -164,6 +164,10 @@
                 }
             },
             "isStyle": true
+        },
+        "showTitle": {
+            "type": "boolean",
+            "default": true
         }
     },
     "editorScript": "pbg-blocks-js",

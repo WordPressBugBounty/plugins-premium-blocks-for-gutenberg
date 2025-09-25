@@ -106,7 +106,7 @@
                 "search": "",
                 "exclude": [],
                 "sticky": true,
-                "taxQuery": []
+                "taxQuery": {}
             }
         },
         "authorFilterRule": {

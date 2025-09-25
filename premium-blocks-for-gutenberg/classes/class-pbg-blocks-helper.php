@@ -284,6 +284,14 @@ class PBG_Blocks_Helper
 		add_action('wp_ajax_premium_form_submit', array($this, 'premium_form_submit'));
 		add_action('wp_ajax_nopriv_premium_form_submit', array($this, 'premium_form_submit'));
 
+    // Add AJAX handlers for post filtering tabs
+    add_action( 'wp_ajax_pbg_filter_posts', array( $this, 'ajax_filter_posts' ) );
+    add_action( 'wp_ajax_nopriv_pbg_filter_posts', array( $this, 'ajax_filter_posts' ) );
+
+    // Add AJAX handlers for post pagination
+    add_action( 'wp_ajax_pbg_paginate_posts', array( $this, 'ajax_paginate_posts' ) );
+    add_action( 'wp_ajax_nopriv_pbg_paginate_posts', array( $this, 'ajax_paginate_posts' ) );
+
 		// Get mailchimp lists.
 		add_action('wp_ajax_premium_blocks_get_mailchimp_lists', array($this, 'premium_get_mailchimp_lists'));
 
@@ -299,6 +307,77 @@ class PBG_Blocks_Helper
 			add_action('init', array($this, 'init_admin_features'));
 		}
 	}
+
+  /**
+   * AJAX handler for filtering posts
+   */
+  public function ajax_filter_posts() {
+    // Verify nonce for security
+    if ( ! wp_verify_nonce( $_POST['nonce'], 'pbg_filter_posts' ) ) {
+      wp_die( 'Security check failed' );
+    }
+
+    $attributes = json_decode( stripslashes( $_POST['attributes'] ), true );
+    $filter_term = sanitize_text_field( $_POST['filter_term'] );
+    $page = intval( $_POST['page'] ) ?: 1;
+
+    if ( $filter_term && $filter_term !== '*' ) {
+      $filter_taxonomy = $attributes['filterTaxonomy'] ?? '';
+      $filter_query = array(
+        'taxonomy' => $filter_taxonomy,
+        'terms' => array( intval( $filter_term ) ),
+      );
+
+      $attributes['query']['filterQuery'] = $filter_query;
+    } else {
+      if ( isset( $attributes['query']['filterQuery'] ) ) {
+        unset( $attributes['query']['filterQuery'] );
+      }
+    }
+
+    // Get filtered query
+    $query = self::get_query( $attributes, 'grid', $page );
+
+    // Generate HTML
+    ob_start();
+    PBG_POST::get_instance()->posts_articles_markup( $query, $attributes, 'grid' );
+    $posts_html = ob_get_clean();
+    $pagination_html = PBG_POST::get_instance()->render_pagination( $query, $attributes, $page );
+
+    // Return response
+    wp_send_json_success( array(
+      'posts_html' => $posts_html,
+      'pagination_html' => $pagination_html,
+    ) );
+  }
+
+  /**
+   * AJAX handler for filtering posts
+   */
+  public function ajax_paginate_posts() {
+    // Verify nonce for security
+    if ( ! wp_verify_nonce( $_POST['nonce'], 'pbg_paginate_posts' ) ) {
+      wp_die( 'Security check failed' );
+    }
+
+    $attributes = json_decode( stripslashes( $_POST['attributes'] ), true );
+    $page = intval( $_POST['page'] ) ?: 1;
+
+    // Get filtered query
+    $query = self::get_query( $attributes, 'grid', $page );
+
+    // Generate HTML
+    ob_start();
+    PBG_POST::get_instance()->posts_articles_markup( $query, $attributes, 'grid' );
+    $posts_html = ob_get_clean();
+    $pagination_html = PBG_POST::get_instance()->render_pagination( $query, $attributes, $page );
+
+    // Return response
+    wp_send_json_success( array(
+      'posts_html' => $posts_html,
+      'pagination_html' => $pagination_html,
+    ) );
+  }
 
 	/**
 	 * Update post meta
@@ -1226,13 +1305,15 @@ class PBG_Blocks_Helper
 
 			if (! file_exists(PREMIUM_BLOCKS_PATH . "assets/css/minified/{$slug}.min.css")) {
         if ($slug === 'post-grid' || $slug=== 'post-carousel') {
-			$this->add_block_css("assets/css/minified/post.min.css");
+			    $this->add_block_css("assets/css/minified/post.min.css");
         }else{
-			continue;
-		}
+			    continue;
+		    }
 			}
 
-			$this->add_block_css("assets/css/minified/{$slug}.min.css");
+      if ($slug !== 'post-grid' && $slug !== 'post-carousel') {
+			  $this->add_block_css("assets/css/minified/{$slug}.min.css");
+      }
 		}
 	}
 
@@ -2010,7 +2091,9 @@ class PBG_Blocks_Helper
 				}
 
 
-				$generate_css->pbg_add_css("assets/css/minified/{$slug}.min.css");
+        if( $slug !== 'post-grid' && $slug !== 'post-carousel' ){
+          $generate_css->pbg_add_css("assets/css/minified/{$slug}.min.css");
+        }
 			}
 		}
 
@@ -2695,7 +2778,7 @@ class PBG_Blocks_Helper
 
         $terms = get_terms( array(
             'taxonomy' => $tax_slug,
-            'hide_empty' => false,
+            'hide_empty' => true,
         ) );
 
 				$related_tax = array();
@@ -2706,6 +2789,7 @@ class PBG_Blocks_Helper
 							'id'    => $t_obj->term_id,
 							'name'  => $t_obj->name,
 							'child' => get_term_children($t_obj->term_id, $tax_slug),
+              'count' => $t_obj->count,
 						);
 					}
 					$return_array[$post_type]['terms'][$tax_slug] = $related_tax;
@@ -2934,12 +3018,24 @@ class PBG_Blocks_Helper
 			}
 		}
 
+    // Handle filter query
+    if (isset($attributes['query']['filterQuery']) && !empty($attributes['query']['filterQuery'])) {
+      $filter_query = $attributes['query']['filterQuery'];
+      $filter_taxonomy = $filter_query['taxonomy'] ?? '';
+      $filter_terms = $filter_query['terms'] ?? array();
+      if (!empty($filter_terms) && is_array($filter_terms)) {
+        $query_args['tax_query'][] = array(
+          'taxonomy' => $filter_taxonomy,
+          'field'    => 'term_id',
+          'terms'    => $filter_terms,
+          'operator' => 'IN',
+        );
+      }
+		}
+
 		if (isset($attributes['pagination']) && true === $attributes['pagination']) {
-
-			$paged = isset($attributes['paged']) ? $attributes['paged'] : $page;
-
 			$query_args['posts_per_page'] = $attributes['query']['perPage'];
-			$query_args['paged']          = $paged;
+			$query_args['paged']          = $page;
 		}
 
 		$query_args = apply_filters("pbg_post_query_args_{$block_type}", $query_args, $attributes);

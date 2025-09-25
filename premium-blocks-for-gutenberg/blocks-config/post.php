@@ -82,10 +82,89 @@ if ( ! class_exists( 'PBG_Post' ) ) {
       
       $paged = ! empty( $_GET[ $page_key ] ) ? max( 1, (int) $_GET[ $page_key ] ) : 1;
 
+      $show_filter_tabs = $attributes['showFilterTabs'] ?? false;
+      $enable_first_filter = $attributes['enableFirstFilter'] ?? false;
+      $active_filter_tab = $attributes['activeFilterTab'] ?? '';
+      $url_filter_flag = $attributes['urlFilterFlag'] ?? '';
+      $show_pagination = $attributes['pagination'] ?? false;
+      $ajax_pagination = $attributes['ajaxPagination'] ?? false;
+
+      $active_filter = '*';
+      if($active_filter_tab && $show_filter_tabs && !$enable_first_filter) {
+        $active_filter = $active_filter_tab;
+      }
+      
+      if ( $url_filter_flag && isset( $_GET[ $url_filter_flag ] ) && ! empty( $_GET[ $url_filter_flag ] ) ) {
+        $active_filter = sanitize_text_field( wp_unslash( $_GET[ $url_filter_flag ] ) );
+      }
+
+      if ( $active_filter && $active_filter !== '*' ) {
+        $filter_taxonomy = $attributes['filterTaxonomy'] ?? '';
+        $filter_query = array(
+          'taxonomy' => $filter_taxonomy,
+          'terms' => array( intval( $active_filter ) ),
+        );
+
+        $attributes['query']['filterQuery'] = $filter_query;
+      } else {
+        if ( isset( $attributes['query']['filterQuery'] ) ) {
+          unset( $attributes['query']['filterQuery'] );
+        }
+      }
+      
       $query = self::$block_helpers->get_query( $attributes, 'grid', $paged );
 
+      // Enqueue frontend script for filter tabs and ajax pagination
+      if ( ($show_filter_tabs || ($show_pagination && $ajax_pagination)) && self::$block_helpers->it_is_not_amp() ) {
+        wp_enqueue_script(
+          'pbg-post-grid-filter',
+          PREMIUM_BLOCKS_URL . 'assets/js/minified/post.min.js',
+          array(),
+          PREMIUM_BLOCKS_VERSION,
+          true
+        );
+
+        add_filter(
+          'pbg_post_grid_localize_script',
+          function ( $data ) use ( $attributes, $show_filter_tabs, $show_pagination, $ajax_pagination ) {
+            $nonces = array();
+
+            if ( $show_filter_tabs ) {
+              $nonces['filter_nonce'] = wp_create_nonce( 'pbg_filter_posts' );
+            }
+
+            if ( $show_pagination && $ajax_pagination ) {
+              $nonces['pagination_nonce'] = wp_create_nonce( 'pbg_paginate_posts' );
+            }
+
+            $data['blocks'][$attributes['blockId']] = array_merge(
+              array(
+              'attributes' => $attributes,
+              ),
+              $nonces
+            );
+            return $data;
+          }
+        );
+
+        $data = apply_filters(
+          'pbg_post_grid_localize_script', 
+          array(
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+          ), 
+        );
+
+        wp_scripts()->add_data('pbg-post-grid-filter', 'before', array());
+
+        wp_add_inline_script(
+          'pbg-post-grid-filter',
+          'var pbgPostGridAjax = ' . wp_json_encode($data) . ';',
+          'before'
+        );
+      }
+
 			ob_start();
-			$this->get_post_html( $attributes, $query, 'grid' );
+			$this->get_post_html( $attributes, $query, 'grid', $active_filter );
 			return ob_get_clean();
 		}
 
@@ -149,12 +228,13 @@ if ( ! class_exists( 'PBG_Post' ) ) {
      * @param string $type Type of post display (carousel or grid).
      * @since 0.0.1
      */
-		public function get_post_html( $attributes, $query, $type ) {
+		public function get_post_html( $attributes, $query, $type, $active_filter = '') {
 			if ( ! $query->have_posts() ) return;
 
 			$is_carousel = 'carousel' === $type;
 			$show_pagination = $attributes['pagination'] ?? false;
 			$show_arrows = $is_carousel && $attributes['navigationArrow'] ;
+      $show_filter_tabs = $attributes['showFilterTabs'] ?? false;
 
 			$wrap_classes = array(
 				$is_carousel ? 'splide' : '',
@@ -174,6 +254,13 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 
 			?>
 			<div class="<?php echo esc_attr( implode( ' ', $outer_wrap_classes ) ); ?>">
+
+        <?php
+          if ( $show_filter_tabs ) {
+            $this->render_filter_tabs($query, $attributes, $active_filter); 
+          }
+        ?>
+
 				<section class="<?php echo esc_attr( implode( ' ', $wrap_classes ) ); ?>" aria-label="<?php echo esc_attr( 'premium-blog-carousel' ); ?>">
 					<?php if ( $show_arrows ) : ?>
 						<div class="splide__arrows">
@@ -211,6 +298,51 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			</div>
 			<?php
 		}
+
+
+    /**
+     * Render Filter Tabs HTML
+     * @param object $query WP_Query object.
+     * @param array  $attributes Array of block attributes.
+     */
+    public function render_filter_tabs($query, $attributes, $active_filter) {
+      $enable_first_filter = $attributes['enableFirstFilter'] ?? false;
+      $first_filter_label = $attributes['firstFilterLabel'] ?? '';
+      $filter_taxonomy = $attributes['filterTaxonomy'] ?? '';
+      $filter_taxonomy_terms = $attributes['filterTaxonomyTerms'] ?? array();
+      $tax_query = $attributes['query']['taxQuery'] ?? array();
+
+      $all_terms = get_terms( array(
+          'taxonomy' => $filter_taxonomy,
+          'hide_empty' => true,
+          'fields' => 'id=>name'
+      ) );
+
+      if ( is_wp_error( $all_terms ) || empty( $all_terms ) ) {
+        $all_terms = array();
+      }
+
+      $selected_terms = $tax_query[$filter_taxonomy]['terms'] ?? $filter_taxonomy_terms;
+
+      ?>
+        <div class="premium-post-grid-taxonomy-filter">
+          <ul class="premium-post-grid-taxonomy-filter-list">
+            <?php if( $enable_first_filter && $first_filter_label ) : ?>
+                <li class="premium-post-grid-taxonomy-filter-list-item<?php echo esc_attr( $active_filter == '*' ? ' active' : '' ); ?>" data-filter="*"><?php echo esc_html( $first_filter_label ); ?></li>
+            <?php endif; ?>
+            <?php
+              foreach ($selected_terms as $term_id) {
+                if ( isset( $all_terms[$term_id] ) ) {
+                  ?>
+                    <li class="premium-post-grid-taxonomy-filter-list-item<?php echo esc_attr( $active_filter == $term_id ? ' active' : '' ); ?>" data-filter="<?php echo esc_attr( $term_id ); ?>"><?php echo esc_html( $all_terms[$term_id] ); ?></li>
+                  <?php
+                }
+              }
+            ?>
+          </ul>
+        </div>
+      <?php
+    }
 
     /**
      * Render Posts HTML
@@ -433,8 +565,9 @@ if ( ! class_exists( 'PBG_Post' ) ) {
      * 
      * @param object $query WP_Query object.
      * @param array $attributes Array of block attributes.
+     * @param int $current_page Current page number for AJAX requests.
      */
-    public function render_pagination( $query, $attributes ) {
+    public function render_pagination( $query, $attributes, $current_page = null ) {
       if ( empty( $query ) || ! $query->max_num_pages || $query->max_num_pages <= 1 ) {
         return '';
       }
@@ -443,7 +576,8 @@ if ( ! class_exists( 'PBG_Post' ) ) {
         ? 'pbg-query-' . sanitize_key( $attributes['queryId'] ) . '-p' 
         : 'query-page';
       
-      $paged = ! empty( $_GET[ $page_key ] ) ? max( 1, (int) $_GET[ $page_key ] ) : 1;
+      // Use passed current_page for AJAX requests, otherwise get from $_GET
+      $paged = $current_page ?? ( ! empty( $_GET[ $page_key ] ) ? max( 1, (int) $_GET[ $page_key ] ) : 1 );
 
       static $permalink_structure = null;
       if ( null === $permalink_structure ) {
@@ -756,11 +890,15 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 				$tablet_width = $css->pbg_render_range( $value, 'slidesWidth', 'width', 'Tablet' );
 				$mobile_width = $css->pbg_render_range( $value, 'slidesWidth', 'width', 'Mobile' );
 
+        $desktop_cols = intval( $value['columns']['Desktop'] ?? 1 );
+        $tablet_cols = intval( $value['columns']['Tablet'] ?? $desktop_cols );
+        $mobile_cols = intval( $value['columns']['Mobile'] ?? $tablet_cols );
+
 				// Prepare configuration data
 				$carousel_configs[ $key ] = array(
-					'desktop_cols' => intval( $value['columns']['Desktop'] ?? 2 ),
-					'tablet_cols' => intval( $value['columns']['Tablet'] ?? 2 ),
-					'mobile_cols' => intval( $value['columns']['Mobile'] ?? 1 ),
+					'desktop_cols' => $desktop_cols,
+					'tablet_cols' => $tablet_cols,
+					'mobile_cols' => $mobile_cols,
 					'per_page' => intval( $value['query']['perPage'] ?? 1 ),
 					'slide_to_scroll' => intval( $value['slideToScroll'] ?? 1 ),
 					'infinite_loop' => !empty( $value['infiniteLoop'] ),
@@ -797,15 +935,10 @@ if ( ! class_exists( 'PBG_Post' ) ) {
           function initCarousel(blockClass, config) {
             const scope = document.querySelector('.' + blockClass + ' .splide .splide__track .splide__list');
             if (!scope) return;
-
-            let desktopCols = config.desktop_cols;
-            if (desktopCols > scope.children.length) {
-              desktopCols = Math.min(scope.children.length, 1);
-            }
-
+            
             const carouselSettings = {
               type: config.infinite_loop ? 'loop' : 'slide',
-              perPage: desktopCols,
+              perPage: config.desktop_cols,
               perMove: config.slide_to_scroll,
               autoplay: config.autoplay,
               pauseOnHover: config.pause_on_hover,
@@ -817,7 +950,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
               gap: config.gaps.desktop,
               breakpoints: {
                 1024: {
-                  perPage: Math.min(config.tablet_cols, config.per_page, scope.children.length) || 1,
+                  perPage: config.tablet_cols,
                   perMove: 1,
                   focus: 0,
                   omitEnd: true,
@@ -825,7 +958,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
                   ...(config.fixed_width && config.widths.tablet && { fixedWidth: config.widths.tablet }),
                 },
                 767: {
-                  perPage: Math.min(config.mobile_cols, config.per_page, scope.children.length) || 1,
+                  perPage: config.mobile_cols,
                   perMove: 1,
                   focus: 0,
                   omitEnd: true,
@@ -1060,6 +1193,35 @@ if ( ! class_exists( 'PBG_Post' ) ) {
       $css->pbg_render_color($attr, 'paginationActiveColor', 'color');
       $css->pbg_render_color($attr, 'paginationActiveBack', 'background-color');
       $css->pbg_render_border($attr, 'paginationActiveBorder', 'Desktop');
+
+      // Filter Tabs
+      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list');
+      $css->pbg_render_value($attr, 'filtersAlign', 'justify-content', 'Desktop');
+      $css->pbg_render_range($attr, 'filtersSpacingBottom', 'margin-bottom', 'Desktop');
+      $css->pbg_render_range($attr, 'filtersGap', 'gap', 'Desktop');
+
+      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item');
+      $css->pbg_render_color($attr, 'filtersColor', 'color');
+      $css->pbg_render_shadow($attr, 'filtersShadow', 'text-shadow');
+      $css->pbg_render_shadow($attr, 'filtersBoxShadow', 'box-shadow');
+      $css->pbg_render_background($attr, 'filtersBack');
+      $css->pbg_render_typography( $attr, 'filtersTypography', 'Desktop' );
+      $css->pbg_render_border($attr, 'filtersBorder', 'Desktop');
+      $css->pbg_render_spacing($attr, 'filtersPadding', 'padding', 'Desktop');
+
+      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item:hover');
+      $css->pbg_render_color($attr, 'filtersHoverColor', 'color');
+      $css->pbg_render_shadow($attr, 'filtersHoverShadow', 'text-shadow');
+      $css->pbg_render_shadow($attr, 'filtersHoverBoxShadow', 'box-shadow');
+      $css->pbg_render_background($attr, 'filtersHoverBack');
+      $css->pbg_render_border($attr, 'filtersHoverBorder', 'Desktop');
+
+      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item.active');
+      $css->pbg_render_color($attr, 'filtersActiveColor', 'color');
+      $css->pbg_render_shadow($attr, 'filtersActiveShadow', 'text-shadow');
+      $css->pbg_render_shadow($attr, 'filtersActiveBoxShadow', 'box-shadow');
+      $css->pbg_render_background($attr, 'filtersActiveBack');
+      $css->pbg_render_border($attr, 'filtersActiveBorder', 'Desktop');
 			
       // Tablet
 			$css->start_media_query( 'tablet' );
@@ -1161,7 +1323,25 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			// Pagination Active
       $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.page-numbers.current');
       $css->pbg_render_border($attr, 'paginationActiveBorder', 'Tablet');
-			
+
+      // Filter Tabs
+      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list');
+      $css->pbg_render_value($attr, 'filtersAlign', 'align-self', 'Tablet');
+      $css->pbg_render_value($attr, 'filtersAlign', 'justify-content', 'Tablet');
+      $css->pbg_render_range($attr, 'filtersSpacingBottom', 'margin-bottom', 'Tablet');
+      $css->pbg_render_range($attr, 'filtersGap', 'gap', 'Tablet');
+
+      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item');
+      $css->pbg_render_typography( $attr, 'filtersTypography', 'Tablet' );
+      $css->pbg_render_border($attr, 'filtersBorder', 'Tablet');
+      $css->pbg_render_spacing($attr, 'filtersPadding', 'padding', 'Tablet');
+
+      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item:hover');
+      $css->pbg_render_border($attr, 'filtersHoverBorder', 'Tablet');
+
+      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item.active');
+      $css->pbg_render_border($attr, 'filtersActiveBorder', 'Tablet');
+
       // Carousel Styles
       $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
       $css->pbg_render_spacing($attr, 'arrowPadding', 'padding', 'Tablet');
@@ -1276,6 +1456,24 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			// Pagination Active
       $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.page-numbers.current');
       $css->pbg_render_border($attr, 'paginationActiveBorder', 'Mobile');
+
+      // Filter Tabs
+      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list');
+      $css->pbg_render_value($attr, 'filtersAlign', 'align-self', 'Mobile');
+      $css->pbg_render_value($attr, 'filtersAlign', 'justify-content', 'Mobile');
+      $css->pbg_render_range($attr, 'filtersSpacingBottom', 'margin-bottom', 'Mobile');
+      $css->pbg_render_range($attr, 'filtersGap', 'gap', 'Mobile');
+
+      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item');
+      $css->pbg_render_typography( $attr, 'filtersTypography', 'Mobile' );
+      $css->pbg_render_border($attr, 'filtersBorder', 'Mobile');
+      $css->pbg_render_spacing($attr, 'filtersPadding', 'padding', 'Mobile');
+
+      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item:hover');
+      $css->pbg_render_border($attr, 'filtersHoverBorder', 'Mobile');
+
+      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item.active');
+      $css->pbg_render_border($attr, 'filtersActiveBorder', 'Mobile');
 			
       // Carousel Styles
       $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
