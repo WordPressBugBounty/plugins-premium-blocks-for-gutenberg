@@ -759,6 +759,25 @@ function get_premium_modal_css_style($attr, $unique_id)
 }
 
 /**
+ * Get Media Css.
+ *
+ * @return void
+ */
+function get_premium_modal_media_css(){
+  $blocks_helper = pbg_blocks_helper();
+
+  $custom_css = array('desktop' => '', 'tablet' => '', 'mobile' => '');
+  
+  $custom_css['mobile'] .= "
+    .premium-popup__modal_content {
+      overflow: auto;
+    }
+  ";
+
+  $blocks_helper->add_block_media_styles( $custom_css );
+}
+
+/**
  * Renders the `premium/modal` block on server.
  *
  * @param array    $attributes The block attributes.
@@ -872,6 +891,7 @@ function register_block_pbg_modal()
 			'render_callback' => 'render_block_pbg_modal',
 		)
 	);
+  get_premium_modal_media_css();
 }
 
 register_block_pbg_modal();

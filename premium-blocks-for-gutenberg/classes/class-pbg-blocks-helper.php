@@ -212,8 +212,19 @@ class PBG_Blocks_Helper
       ),
     ),
   );
-
-	/**
+  
+/**
+   * Holds collected media styles for blocks.
+   *
+   * @var string
+   */
+  private $collected_media_styles = array(
+    'desktop' => '',
+    'tablet'  => '',
+    'mobile'  => '',
+  );
+  
+  /**
 	 * Constructor for the class
 	 */
 	public function __construct()
@@ -249,6 +260,12 @@ class PBG_Blocks_Helper
 		add_action('init', array($this, 'on_init'), 20);
 		// Enqueue Editor Assets.
 		add_action('enqueue_block_editor_assets', array($this, 'pbg_editor'));
+		// Enqueue Global Responsive Option Styles.
+    add_action('enqueue_block_assets', array($this, 'pbg_enqueue_global_responsive_option_styles'));
+    // Enqueue Blocks Media Styles.
+    add_action('enqueue_block_assets', array($this, 'pbg_enqueue_blocks_media_styles'));
+		// Enqueue Frontend RTL Styles.
+		//add_action('enqueue_block_assets', array($this, 'pbg_frontend_rtl_style'));
 		// Enqueue Frontend Styles.
 		add_action('enqueue_block_assets', array($this, 'pbg_frontend'));
 		// Enqueue Frontend Scripts.
@@ -260,8 +277,6 @@ class PBG_Blocks_Helper
 		add_action('wp_enqueue_scripts', array($this, 'generate_stylesheet'), 20);
 		// Enqueue Generated stylesheet to WP Head.
 		add_action('wp_head', array($this, 'print_stylesheet'), 80);
-
-		add_action('wp_enqueue_scripts', array($this, 'load_dashicons_front_end'));
 
 		add_action('enqueue_block_editor_assets', array($this, 'add_blocks_editor_styles'));
 
@@ -305,6 +320,85 @@ class PBG_Blocks_Helper
 		add_action('save_post', array($this, 'update_post_meta'), 10, 3);
 		if (is_admin()) {
 			add_action('init', array($this, 'init_admin_features'));
+		}
+	}
+
+  /**
+   * Enqueue global responsive option styles.
+   *
+   * @return void
+   */
+  public function pbg_enqueue_global_responsive_option_styles() {
+    $layout_settings = get_option('pbg_global_layout', array());
+    $tablet_bp = $layout_settings['tablet_breakpoint'] ?? 1024;
+    $mobile_bp = $layout_settings['mobile_breakpoint'] ?? 767;
+
+    $custom_css = "
+        @media (min-width: " . ($tablet_bp + 1) . "px) {
+            .premium-desktop-hidden { display: none !important; }
+        }
+        @media (min-width: " . ($mobile_bp + 1) . "px) and (max-width: {$tablet_bp}px) {
+            .premium-tablet-hidden { display: none !important; }
+        }
+        @media (max-width: {$mobile_bp}px) {
+            .premium-mobile-hidden { display: none !important; }
+        }
+    ";
+
+    if (isset($this->blocks_frondend_assets) && method_exists($this->blocks_frondend_assets, 'minify_css')) {
+      $custom_css = $this->blocks_frondend_assets->minify_css($custom_css);
+    }
+
+    wp_register_style('pbg_global_responsive_option_styles', false);
+    wp_enqueue_style('pbg_global_responsive_option_styles');
+    wp_add_inline_style('pbg_global_responsive_option_styles', $custom_css);
+  }
+
+  /**
+   * Add CSS to the collected media styles for blocks.
+   *
+   * @param string $css
+   * @return void
+   */
+  public function add_block_media_styles($css) {
+    if (!empty($css)) {
+      $this->collected_media_styles['desktop'] .= $css['desktop'] . "\n";
+      $this->collected_media_styles['tablet'] .= $css['tablet'] . "\n";
+      $this->collected_media_styles['mobile'] .= $css['mobile'] . "\n";
+    }
+  }
+
+  /**
+   * Enqueue the collected media styles as an inline style.
+   *
+   * @return void
+   */
+  public function pbg_enqueue_blocks_media_styles() {
+    $layout_settings = get_option('pbg_global_layout', array());
+    $tablet_bp = $layout_settings['tablet_breakpoint'] ?? 1024;
+    $mobile_bp = $layout_settings['mobile_breakpoint'] ?? 767;
+
+    $combined_css = '';
+
+		if (! empty($this->collected_media_styles['desktop'])) {
+			$combined_css .= "@media (min-width: " . ($tablet_bp + 1) . "px) {" . $this->collected_media_styles['desktop'] . "}";
+		}
+
+		if (! empty($this->collected_media_styles['tablet'])) {
+			$combined_css .= "@media all and (min-width: " . ($mobile_bp + 1) . "px) and (max-width: {$tablet_bp}px) {" . $this->collected_media_styles['tablet'] . '}';
+		}
+
+		if (! empty($this->collected_media_styles['mobile'])) {
+			$combined_css .= "@media all and (max-width: {$mobile_bp}px) {" . $this->collected_media_styles['mobile'] . '}';
+		}
+
+    if (!empty(trim($combined_css))) {
+      if (isset($this->blocks_frondend_assets) && method_exists($this->blocks_frondend_assets, 'minify_css')) {
+        $combined_css = $this->blocks_frondend_assets->minify_css($combined_css); 
+      }
+      wp_register_style('pbg_blocks_media_styles', false);
+      wp_enqueue_style('pbg_blocks_media_styles');
+      wp_add_inline_style('pbg_blocks_media_styles', $combined_css);
 		}
 	}
 
@@ -2107,16 +2201,6 @@ class PBG_Blocks_Helper
 	}
 
 	/**
-	 * Add blocks frontend style
-	 *
-	 * @return void
-	 */
-	function load_dashicons_front_end()
-	{
-		wp_enqueue_style('dashicons');
-	}
-
-	/**
 	 * Load Json Files
 	 */
 	public function pbg_mime_types($mimes)
@@ -2405,8 +2489,7 @@ class PBG_Blocks_Helper
 			);
 		}
 
-		// Enqueue Google Maps API Script.
-
+		// Localize AJAX settings for frontend blocks
 		wp_localize_script(
 			'pbg-blocks-js',
 			'PremiumSettings',

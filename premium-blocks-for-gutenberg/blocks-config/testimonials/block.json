@@ -16,24 +16,6 @@
             "type": "boolean",
             "default": false
         },
-        "authorImgUrl": {
-            "type": "string"
-        },
-        "author": {
-            "type": "string",
-            "default": "John Doe"
-        },
-        "authorStyles": {
-            "type": "array",
-            "default": [
-                {
-                    "authorTag": "h4",
-                    "authorColor": "",
-                    "authorComTag": "h5"
-                }
-            ],
-            "isStyle": true
-        },
         "padding": {
             "type": "object",
             "default": {
@@ -68,32 +50,12 @@
             "type": "string",
             "default": "Donec id elit non mi porta gravida at eget metus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum. Nullam id dolor id nibh ultricies vehicula ut id elit. Donec id elit non mi porta gravida at eget metus."
         },
-        "authorCom": {
-            "type": "string",
-            "default": "Leap13"
-        },
-        "companyStyles": {
-            "type": "array",
-            "default": [
-                {
-                    "authorComTag": "h4",
-                    "authorComColor": "",
-                    "dashColor": "",
-                    "urlCheck": false,
-                    "urlText": "",
-                    "urlTarget": false
-                }
-            ],
-            "isStyle": true
-        },
         "quoteStyles": {
             "type": "array",
             "default": [
                 {
-                    "quotSize": 2,
                     "quotColor": "",
-                    "quotOpacity": 50,
-                    "quotSizeUnit": "EM"
+                    "quotOpacity": 50
                 }
             ],
             "isStyle": true
@@ -105,7 +67,7 @@
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
-                "position": " "
+                "position": ""
             },
             "isStyle": true
         },
@@ -117,7 +79,7 @@
                 "backgroundImageID": "",
                 "backgroundImageURL": "",
                 "backgroundPosition": {
-                    "Desktop": "",
+                    "Desktop": "center center",
                     "Tablet": "",
                     "Mobile": ""
                 },
@@ -133,44 +95,11 @@
                 },
                 "fixed": false,
                 "gradientLocationOne": "0",
-                "gradientColorTwo": "",
+                "gradientColorTwo": "#777",
                 "gradientLocationTwo": "100",
                 "gradientAngle": "180",
                 "gradientPosition": "center center",
                 "gradientType": "linear"
-            },
-            "isStyle": true
-        },
-        "bodyTypography": {
-            "type": "object",
-            "default": {
-                "fontWeight": "Default",
-                "fontStyle": "",
-                "letterSpacing": {
-                    "Desktop": "",
-                    "Tablet": "",
-                    "Mobile": "",
-                    "unit": "px"
-                },
-                "fontFamily": "Default",
-                "lineHeight": {
-                    "Desktop": "",
-                    "Tablet": "",
-                    "Mobile": "",
-                    "unit": "px"
-                },
-                "textDecoration": "",
-                "textTransform": "",
-                "fontSize": {
-                    "Desktop": "",
-                    "Tablet": "",
-                    "Mobile": "",
-                    "unit": {
-                        "Desktop": "px",
-                        "Tablet": "px",
-                        "Mobile": "px"
-                    }
-                }
             },
             "isStyle": true
         },
@@ -186,7 +115,7 @@
         "quotSize": {
             "type": "object",
             "default": {
-                "Desktop": "2",
+                "Desktop": 2,
                 "Tablet": "",
                 "Mobile": "",
                 "unit": {
@@ -201,10 +130,10 @@
             "type": "object",
             "default": {
                 "Desktop": {
-                    "top": "40",
+                    "top": 40,
                     "right": "",
                     "bottom": "",
-                    "left": "12"
+                    "left": 12
                 },
                 "Tablet": {
                     "top": "",
@@ -223,7 +152,7 @@
                     "Tablet": "px",
                     "Mobile": "px"
                 },
-                "link": true
+                "link": false
             },
             "isStyle": true
         },
@@ -232,8 +161,8 @@
             "default": {
                 "Desktop": {
                     "top": "",
-                    "right": "12",
-                    "bottom": "3",
+                    "right": 12,
+                    "bottom": 40,
                     "left": ""
                 },
                 "Tablet": {
@@ -253,7 +182,7 @@
                     "Tablet": "px",
                     "Mobile": "px"
                 },
-                "link": true
+                "link": false
             },
             "isStyle": true
         }

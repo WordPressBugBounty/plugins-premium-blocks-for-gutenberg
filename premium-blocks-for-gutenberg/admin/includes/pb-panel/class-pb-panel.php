@@ -142,7 +142,6 @@ if (! class_exists('Pb_Panel')) {
 			$default_options = array(
 				'accordion'        => true,
 				'banner'           => true,
-				// 'button'           => true,
 				'count-up'         => true,
 				'dual-heading'     => true,
 				'heading'          => true,

@@ -263,6 +263,43 @@ function get_premium_one_page_scroll_css( $attr, $unique_id ) {
 	return $css->css_output();
 }
 
+/**
+ * Get Media Css.
+ *
+ * @return void
+ */
+function get_premium_one_page_scroll_media_css(){
+  $blocks_helper = pbg_blocks_helper();
+
+  $custom_css = array('desktop' => '', 'tablet' => '', 'mobile' => '');
+
+  $custom_css['desktop'] .= "
+    .dots-hidden-desktop,
+    .menu-hidden-desktop,
+    .arrows-hidden-desktop {
+        display: none !important;
+    }
+  ";
+
+  $custom_css['tablet'] .= "
+    .dots-hidden-tablet,
+    .menu-hidden-tablet,
+    .arrows-hidden-tablet {
+        display: none !important;
+    }
+  ";
+  
+  $custom_css['mobile'] .= "
+    .dots-hidden-mobile,
+    .menu-hidden-mobile,
+    .arrows-hidden-mobile {
+        display: none !important;
+    }
+  ";
+
+  $blocks_helper->add_block_media_styles( $custom_css );
+}
+
  /**
   * Render one page scroll block.
   *
@@ -346,12 +383,15 @@ function register_block_pbg_one_page_scroll() {
 	if ( ! function_exists( 'register_block_type' ) ) {
 		return;
 	}
+
 	register_block_type(
 		PREMIUM_BLOCKS_PATH . 'blocks-config/one-page-scroll',
 		array(
 			'render_callback' => 'render_block_pbg_one_page_scroll',
 		)
 	);
+
+  get_premium_one_page_scroll_media_css();
 }
 
 register_block_pbg_one_page_scroll();

@@ -126,6 +126,25 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
 }
 
 /**
+ * Get Media Css.
+ *
+ * @return void
+ */
+function get_premium_banner_media_css(){
+  $blocks_helper = pbg_blocks_helper();
+
+  $custom_css = array('desktop' => '', 'tablet' => '', 'mobile' => '');
+  
+  $custom_css['mobile'] .= "
+    .premium-banner__responsive_true .premium-banner__desc_wrap {
+      display: none;
+    }
+  ";
+
+  $blocks_helper->add_block_media_styles( $custom_css );
+}
+
+/**
  * Renders the `premium/banner` block on server.
  *
  * @param array    $attributes The block attributes.
@@ -171,9 +190,6 @@ function render_block_pbg_banner( $attributes, $content, $block ) {
   return $image_tag->get_updated_html();
 }
 
-
-
-
 /**
  * Register the banner block.
  *
@@ -190,6 +206,8 @@ function register_block_pbg_banner() {
 			'render_callback' => 'render_block_pbg_banner',
 		)
 	);
+
+  get_premium_banner_media_css();
 }
 
 register_block_pbg_banner();

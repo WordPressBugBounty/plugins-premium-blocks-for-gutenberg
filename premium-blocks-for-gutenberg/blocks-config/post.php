@@ -43,6 +43,27 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 		}
 
     /**
+     * Get Media Css.
+     *
+     * @return void
+     */
+    public function get_premium_post_media_css(){
+      $blocks_helper = pbg_blocks_helper();
+
+      $custom_css = array('desktop' => '', 'tablet' => '', 'mobile' => '');
+      
+      $custom_css['mobile'] .= "
+        .premium-blog-content-wrapper {
+          top: 0;
+          margin: 0;
+          padding: 15px;
+        }
+      ";
+
+      $blocks_helper->add_block_media_styles( $custom_css );
+    }
+
+    /**
      * Registers the block types.
      */
 		public function register_blocks() {
@@ -67,6 +88,8 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 					'editor_script'   => 'pbg-blocks-js',
 				)
 			);
+
+      $this->get_premium_post_media_css();
 		}
 
     /**

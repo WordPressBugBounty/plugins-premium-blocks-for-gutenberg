@@ -18,136 +18,98 @@
 function get_premium_testimonials_css_style( $attr, $unique_id ) {
 	$css = new Premium_Blocks_css();
 
-	// Container Style
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Desktop'], isset( $padding['unit']['Desktop'] ) ? $padding['unit']['Desktop'] : $padding['unit'] ) );
-	}
+  $opacity_value = $css->pbg_get_value( $attr, 'quoteStyles[0].quotOpacity' );
+  $opacity_value =  $opacity_value / 100;
+  
+  $css->set_selector( $unique_id );
+  $css->pbg_render_shadow( $attr, 'boxShadow', 'box-shadow' );
+  $css->pbg_render_background( $attr, 'background', 'Desktop' );
+  $css->pbg_render_value( $attr, 'align', 'text-align', 'Desktop' );
+  $css->pbg_render_spacing( $attr, 'padding', 'padding', 'Desktop' );
 
-	if ( isset( $attr['background'] ) ) {
-		$css->set_selector( $unique_id );
-		$css->render_background( $attr['background'], 'Desktop' );
+  $css->set_selector( $unique_id . ' .premium-text-wrap');
+  $css->pbg_render_value( $attr, 'align', 'text-align', 'Desktop' );
 
-	}
+  $css->set_selector( $unique_id . ' .premium-icon-container' );
+  $css->pbg_render_value( $attr, 'align', 'text-align', 'Desktop' );
 
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-text-wrap');
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
+  $css->set_selector( $unique_id . ' .premium-image-container' );
+  $css->pbg_render_align_self( $attr, 'align', 'justify-content', 'Desktop' );
 
-    $css->set_selector( $unique_id . ' .premium-icon-container' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
+  $css->set_selector( $unique_id . ' .premium-testimonial__upper svg, ' . $unique_id . ' .premium-testimonial__lower svg' );
+  $css->pbg_render_range( $attr, 'quotSize', 'width', 'Desktop' );
+  $css->pbg_render_color( $attr, 'quoteStyles[0].quotColor', 'fill' );
+  $css->add_property( 'opacity', $opacity_value );
+  
+  $css->set_selector( $unique_id . ' .premium-testimonial__container .premium-testimonial__upper' );
+  $css->pbg_render_spacing( $attr, 'topPosition', 'top', 'Desktop', null, null, 'top');
+  $css->pbg_render_spacing( $attr, 'topPosition', 'left', 'Desktop', null, null, 'left');
 
-		$css->set_selector( $unique_id . ' .premium-image-container' );
-		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Desktop' ) );
-	}
-
-	if ( isset( $attr['quotSize'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-testimonial__container svg' );
-		$css->add_property( 'width', $css->render_range( $attr['quotSize'], 'Desktop' ) );
-	}
-
-	if ( isset( $attr['topPosition'] ) ) {
-		$top_position = $attr['topPosition'];
-		$css->set_selector( $unique_id . ' .premium-testimonial__container .premium-testimonial__upper' );
-		$css->add_property( 'top', $css->render_string( $top_position['Desktop']['top'], isset( $top_position['unit']['Desktop'] ) ? $top_position['unit']['Desktop'] : $top_position['unit'] ) );
-		$css->add_property( 'left', $css->render_string( $top_position['Desktop']['left'], isset( $top_position['unit']['Desktop'] ) ? $top_position['unit']['Desktop'] : $top_position['unit'] ) );
-	}
-
-	if ( isset( $attr['bottomPosition'] ) ) {
-		$bottom_position = $attr['bottomPosition'];
-		$css->set_selector( $unique_id . ' .premium-testimonial__container .premium-testimonial__lower' );
-		$css->add_property( 'right', $css->render_string( $bottom_position['Desktop']['right'], isset( $bottom_position['unit']['Desktop'] ) ? $bottom_position['unit']['Desktop'] : $bottom_position['unit'] ) );
-		$css->add_property( 'bottom', $css->render_string( $bottom_position['Desktop']['bottom'], isset( $bottom_position['unit']['Desktop'] ) ? $bottom_position['unit']['Desktop'] : $bottom_position['unit'] ) );
-	}
+  $css->set_selector( $unique_id . ' .premium-testimonial__container .premium-testimonial__lower' );
+  $css->pbg_render_spacing( $attr, 'bottomPosition', 'bottom', 'Desktop', null, null, 'bottom');
+  $css->pbg_render_spacing( $attr, 'bottomPosition', 'right', 'Desktop', null, null, 'right');
 
 	$css->start_media_query( 'tablet' );
 
-	// Container Style
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Tablet'], isset( $padding['unit']['Tablet'] ) ? $padding['unit']['Tablet'] : $padding['unit'] ) );
-	}
-	if ( isset( $attr['background'] ) ) {
-		$css->set_selector( $unique_id );
-		$css->render_background( $attr['background'], 'Tablet' );
-	}
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-text-wrap');
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
+	$css->set_selector( $unique_id );
+  $css->pbg_render_background( $attr, 'background', 'Tablet' );
+  $css->pbg_render_value( $attr, 'align', 'text-align', 'Tablet' );
+  $css->pbg_render_spacing( $attr, 'padding', 'padding', 'Tablet' );
 
-    $css->set_selector( $unique_id . ' .premium-icon-container' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
+  $css->set_selector( $unique_id . ' .premium-text-wrap');
+  $css->pbg_render_value( $attr, 'align', 'text-align', 'Tablet' );
 
-		$css->set_selector( $unique_id . ' .premium-image-container' );
-		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Tablet' ) );
-	}
+  $css->set_selector( $unique_id . ' .premium-icon-container' );
+  $css->pbg_render_value( $attr, 'align', 'text-align', 'Tablet' );
 
-	if ( isset( $attr['quotSize'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-testimonial__container svg' );
-		$css->add_property( 'width', $css->render_range( $attr['quotSize'], 'Tablet' ) );
-	}
-	if ( isset( $attr['topPosition'] ) ) {
-		$top_position = $attr['topPosition'];
-		$css->set_selector( $unique_id . ' .premium-testimonial__container .premium-testimonial__upper' );
-		$css->add_property( 'top', $css->render_string( $top_position['Tablet']['top'], isset( $top_position['unit']['Tablet'] ) ? $top_position['unit']['Tablet'] : $top_position['unit'] ) );
-		$css->add_property( 'left', $css->render_string( $top_position['Tablet']['left'], isset( $top_position['unit']['Tablet'] ) ? $top_position['unit']['Tablet'] : $top_position['unit'] ) );
-	}
-	if ( isset( $attr['bottomPosition'] ) ) {
-		$bottom_position = $attr['bottomPosition'];
-		$css->set_selector( $unique_id . ' .premium-testimonial__container .premium-testimonial__lower' );
-		$css->add_property( 'right', $css->render_string( $bottom_position['Tablet']['right'], isset( $bottom_position['unit']['Tablet'] ) ? $bottom_position['unit']['Tablet'] : $bottom_position['unit'] ) );
-		$css->add_property( 'bottom', $css->render_string( $bottom_position['Tablet']['bottom'], isset( $bottom_position['unit']['Tablet'] ) ? $bottom_position['unit']['Tablet'] : $bottom_position['unit'] ) );
-	}
+  $css->set_selector( $unique_id . ' .premium-image-container' );
+  $css->pbg_render_align_self( $attr, 'align', 'justify-content', 'Tablet' );
+
+  $css->set_selector( $unique_id . ' .premium-testimonial__upper svg, ' . $unique_id . ' .premium-testimonial__lower svg' );
+  $css->pbg_render_range( $attr, 'quotSize', 'width', 'Tablet' );
+  
+  $css->set_selector( $unique_id . ' .premium-testimonial__container .premium-testimonial__upper' );
+  $css->pbg_render_spacing( $attr, 'topPosition', 'top', 'Tablet', null, null, 'top');
+  $css->pbg_render_spacing( $attr, 'topPosition', 'left', 'Tablet', null, null, 'left');
+
+  $css->set_selector( $unique_id . ' .premium-testimonial__container .premium-testimonial__lower' );
+  $css->pbg_render_spacing( $attr, 'bottomPosition', 'bottom', 'Tablet', null, null, 'bottom');
+  $css->pbg_render_spacing( $attr, 'bottomPosition', 'right', 'Tablet', null, null, 'right');
 
 	$css->stop_media_query();
 	$css->start_media_query( 'mobile' );
 
-	// Container Style
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Mobile'], isset( $padding['unit']['Mobile'] ) ? $padding['unit']['Mobile'] : $padding['unit'] ) );
-	}
-	if ( isset( $attr['background'] ) ) {
-		$css->set_selector( $unique_id );
-		$css->render_background( $attr['background'], 'Mobile' );
-	}
-	if ( isset( $attr['align'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-text-wrap');
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
+	$css->set_selector( $unique_id );
+  $css->pbg_render_background( $attr, 'background', 'Mobile' );
+  $css->pbg_render_value( $attr, 'align', 'text-align', 'Mobile' );
+  $css->pbg_render_spacing( $attr, 'padding', 'padding', 'Mobile' );
 
-    $css->set_selector( $unique_id . ' .premium-icon-container' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
+  $css->set_selector( $unique_id . ' .premium-text-wrap');
+  $css->pbg_render_value( $attr, 'align', 'text-align', 'Mobile' );
 
-		$css->set_selector( $unique_id . ' .premium-image-container' );
-		$css->add_property( 'justify-content', $css->get_responsive_css( $attr['align'], 'Mobile' ) );
-	}
+  $css->set_selector( $unique_id . ' .premium-icon-container' );
+  $css->pbg_render_value( $attr, 'align', 'text-align', 'Mobile' );
 
-	if ( isset( $attr['quotSize'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-testimonial__container svg' );
-		$css->add_property( 'width', $css->render_range( $attr['quotSize'], 'Mobile' ) );
-	}
-	if ( isset( $attr['topPosition'] ) ) {
-		$top_position = $attr['topPosition'];
-		$css->set_selector( $unique_id . ' .premium-testimonial__container .premium-testimonial__upper' );
-		$css->add_property( 'top', $css->render_string( $top_position['Mobile']['top'], isset( $top_position['unit']['Mobile'] ) ? $top_position['unit']['Mobile'] : $top_position['unit'] ) );
-		$css->add_property( 'left', $css->render_string( $top_position['Mobile']['left'], isset( $top_position['unit']['Mobile'] ) ? $top_position['unit']['Mobile'] : $top_position['unit'] ) );
-	}
-	if ( isset( $attr['bottomPosition'] ) ) {
-		$bottom_position = $attr['bottomPosition'];
-		$css->set_selector( $unique_id . ' .premium-testimonial__container .premium-testimonial__lower' );
-		$css->add_property( 'right', $css->render_string( $bottom_position['Mobile']['right'], isset( $bottom_position['unit']['Mobile'] ) ? $bottom_position['unit']['Mobile'] : $bottom_position['unit'] ) );
-		$css->add_property( 'bottom', $css->render_string( $bottom_position['Mobile']['bottom'], isset( $bottom_position['unit']['Mobile'] ) ? $bottom_position['unit']['Mobile'] : $bottom_position['unit'] ) );
-	}
+  $css->set_selector( $unique_id . ' .premium-image-container' );
+  $css->pbg_render_align_self( $attr, 'align', 'justify-content', 'Mobile' );
+
+  $css->set_selector( $unique_id . ' .premium-testimonial__upper svg, ' . $unique_id . ' .premium-testimonial__lower svg' );
+  $css->pbg_render_range( $attr, 'quotSize', 'width', 'Mobile' );
+  
+  $css->set_selector( $unique_id . ' .premium-testimonial__container .premium-testimonial__upper' );
+  $css->pbg_render_spacing( $attr, 'topPosition', 'top', 'Mobile', null, null, 'top');
+  $css->pbg_render_spacing( $attr, 'topPosition', 'left', 'Mobile', null, null, 'left');
+
+  $css->set_selector( $unique_id . ' .premium-testimonial__container .premium-testimonial__lower' );
+  $css->pbg_render_spacing( $attr, 'bottomPosition', 'bottom', 'Mobile', null, null, 'bottom');
+  $css->pbg_render_spacing( $attr, 'bottomPosition', 'right', 'Mobile', null, null, 'right');
 
 	$css->stop_media_query();
 	return $css->css_output();
 }
 
 /**
- * Renders the `premium/testimonials` block on server.
+ * Renders the `premium/testimonial` block on server.
  *
  * @param array    $attributes The block attributes.
  * @param string   $content    The saved content.

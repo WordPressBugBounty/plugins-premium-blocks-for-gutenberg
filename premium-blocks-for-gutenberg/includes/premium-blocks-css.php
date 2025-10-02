@@ -231,7 +231,7 @@ class Premium_Blocks_css {
 	 */
 	public function add_rule( $property, $value, $prefix = null ) {
 		$format = is_null( $prefix ) ? '%1$s:%2$s;' : '%3$s%1$s:%2$s;';
-		if ( $value && ! empty( $value ) ) {
+		if ( ! empty( $value ) || is_numeric( $value ) ) {
 			$this->_css .= sprintf( $format, $property, $value, $prefix );
 		}
 		return $this;
@@ -935,7 +935,7 @@ class Premium_Blocks_css {
                 ? $device_values[$single_side] 
                 : '0';
             
-            $this->add_property($property . '-' . $single_side, $prefix . $single_value . $unit . $postfix);
+            $this->add_property($property, $prefix . $single_value . $unit . $postfix);
             return;
         }
     }

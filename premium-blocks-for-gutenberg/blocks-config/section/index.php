@@ -36,8 +36,8 @@ function get_premium_section_css_style( $attr, $unique_id ) {
   $css->pbg_render_spacing($attr, 'margin', 'margin', 'Desktop');  
 
   $css->set_selector( "body .entry-content {$unique_id}.alignfull" );
-  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Desktop', null, null, 'top');  
-  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Desktop', null, null, 'bottom');  
+  $css->pbg_render_spacing($attr, 'margin', 'margin-top', 'Desktop', null, null, 'top');  
+  $css->pbg_render_spacing($attr, 'margin', 'margin-bottom', 'Desktop', null, null, 'bottom');  
 
   $css->set_selector( $unique_id  . ' .premium-section__content_wrap');
   if($min_height_type === 'min'){
@@ -74,8 +74,8 @@ function get_premium_section_css_style( $attr, $unique_id ) {
   $css->pbg_render_spacing($attr, 'margin', 'margin', 'Tablet');  
 
   $css->set_selector( "body .entry-content {$unique_id}.alignfull" );
-  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Tablet', null, null, 'top');  
-  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Tablet', null, null, 'bottom');  
+  $css->pbg_render_spacing($attr, 'margin', 'margin-top', 'Tablet', null, null, 'top');  
+  $css->pbg_render_spacing($attr, 'margin', 'margin-bottom', 'Tablet', null, null, 'bottom');  
 
   $css->set_selector( $unique_id  . ' .premium-section__content_wrap');
   if($min_height_type === 'min'){
@@ -101,8 +101,8 @@ function get_premium_section_css_style( $attr, $unique_id ) {
   $css->pbg_render_spacing($attr, 'margin', 'margin', 'Mobile');  
 
   $css->set_selector( "body .entry-content {$unique_id}.alignfull" );
-  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Mobile', null, null, 'top');  
-  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Mobile', null, null, 'bottom');  
+  $css->pbg_render_spacing($attr, 'margin', 'margin-top', 'Mobile', null, null, 'top');  
+  $css->pbg_render_spacing($attr, 'margin', 'margin-bottom', 'Mobile', null, null, 'bottom');  
 
   $css->set_selector( $unique_id  . ' .premium-section__content_wrap');
   if($min_height_type === 'min'){

@@ -62,6 +62,13 @@ class PBG_Display_Conditions {
 			return $block_content;
 		}
 
+		// Check if any condition value is empty
+		foreach ( $display_conditions['conditions'] as $condition ) {
+			if ( empty( $condition['value'] ) ) {
+				return $block_content;
+			}
+		}
+
 		$operator           = $display_conditions['operator'] ?? 'and';
 		$display_conditions = $this->get_conditions_result( $display_conditions['conditions'], $operator, 'show' );
 

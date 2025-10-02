@@ -520,6 +520,88 @@ function get_premium_tabs_css_style( $attr, $unique_id ) {
 }
 
 /**
+ * Get Media Css.
+ *
+ * @return void
+ */
+function get_premium_tabs_media_css(){
+  $blocks_helper = pbg_blocks_helper();
+
+  $custom_css = array('desktop' => '', 'tablet' => '', 'mobile' => '');
+
+  $custom_css['tablet'] .= "
+    .premium-tabs.premium-accordion-tabs-tablet .premium-tabs-nav-list {
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+    }
+    .premium-tabs.premium-accordion-tabs-tablet .premium-accordion-tab-content.inactive {
+      display: none;
+    }
+    .premium-tabs.premium-accordion-tabs-tablet .premium-tabs-content-section.inactive {
+      display: none;
+      margin: 0 auto;
+    }
+    .premium-tabs.premium-accordion-tabs-tablet .premium-tabs-content-section.active {
+      display: block !important;
+    }
+    .premium-tabs.premium-accordion-tabs-tablet .premium-accordion-tab-content.active {
+      display: block !important;
+    }
+  ";
+  
+  $custom_css['mobile'] .= "
+    .premium-tabs.premium-tabs-vertical {
+      display: block;
+      float: none;
+    }
+    .premium-tabs.premium-tabs-vertical .premium-tabs-nav {
+      width: 100% !important;
+    }
+    .premium-tabs.premium-tabs-vertical .premium-content-wrap {
+      width: 100% !important;
+    }
+    .premium-tabs .premium-tabs-nav-list {
+      flex-direction: column;
+    }
+    .premium-tabs-style-style3 .premium-tabs-nav-list.premium-tabs-horizontal li.premium-tabs-nav-list-item:not(:last-child):after {
+      position: absolute;
+      content: '';
+      left: 20%;
+      bottom: 0;
+      top: 100%;
+      z-index: 1;
+      height: 1px;
+      width: 60%;
+      content: '';
+    }
+    .premium-tabs .premium-content-wrap.premium-tabs-vertical {
+      max-width: 100%;
+    }
+    .premium-tabs.premium-accordion-tabs-mobile .premium-tabs-nav-list {
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+    }
+    .premium-tabs.premium-accordion-tabs-mobile .premium-accordion-tab-content.inactive {
+      display: none;
+    }
+    .premium-tabs.premium-accordion-tabs-mobile .premium-tabs-content-section.inactive {
+      display: none;
+      margin: 0 auto;
+    }
+    .premium-tabs.premium-accordion-tabs-mobile .premium-tabs-content-section.active {
+      display: block !important;
+    }
+    .premium-tabs.premium-accordion-tabs-mobile .premium-accordion-tab-content.active {
+      display: block !important;
+    }
+  ";
+
+  $blocks_helper->add_block_media_styles( $custom_css );
+}
+
+/**
  * Renders the `premium/tabs` block on server.
  *
  * @param array    $attributes The block attributes.
@@ -631,6 +713,7 @@ function register_block_pbg_tabs() {
 			
 		)
 	);
+  get_premium_tabs_media_css();
 }
 
 register_block_pbg_tabs();

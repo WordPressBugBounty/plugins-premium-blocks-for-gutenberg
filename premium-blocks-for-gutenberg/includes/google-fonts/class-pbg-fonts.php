@@ -123,6 +123,12 @@ final class PBG_Fonts {
 		$google_font_url = self::google_fonts_url( $google_fonts, $font_subset );
 
 		$load_fonts = self::$performance['premium-load-fonts-locally'] ?? false;
+		
+		// Add preconnect links for Google Fonts when not loading locally
+		if ( $google_font_url && ! $load_fonts ) {
+			self::add_preconnect();
+		}
+		
 		if ( $google_font_url ) {
 			if ( $load_fonts && ! is_customize_preview() && ! is_admin() ) {
 				$preload_fonts = self::$performance['premium-preload-local-fonts'] ?? false;
@@ -251,5 +257,47 @@ public static function add_loaded_font($font_url) {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Add preconnect for Google Fonts
+	 *
+	 * @access public
+	 * @since 1.1.0
+	 * @return void
+	 */
+	public static function add_preconnect() {
+		if ( ! self::using_google_fonts() ) {
+			return;
+		}
+
+		$html = "<link rel='preconnect' href='https://fonts.googleapis.com'>\n";
+		$html .= "<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>\n";
+		
+		echo wp_kses(
+			$html,
+			array(
+				'link' => array(
+					'rel' => array(),
+					'href' => array(),
+					'crossorigin' => array(),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Check if using Google Fonts
+	 *
+	 * @access private
+	 * @since 1.1.0
+	 * @return boolean
+	 */
+	private static function using_google_fonts() {
+		$performance = apply_filters( 'pb_performance_options', get_option( 'pbg_performance_options', array() ) );
+		$load_fonts = $performance['premium-load-fonts-locally'] ?? false;
+		
+		// If loading fonts locally, we don't need preconnect
+		return ! $load_fonts;
 	}
 }

@@ -207,6 +207,9 @@ if ( ! class_exists( 'PBG_WebFont_Loader' ) ) {
 				$this->remote_styles
 			);
 
+			// Ensure font-display: swap is added to all @font-face declarations
+			$this->css = $this->add_font_display_swap( $this->css );
+
 			$this->write_stylesheet();
 
 			return $this->css;
@@ -662,6 +665,46 @@ if ( ! class_exists( 'PBG_WebFont_Loader' ) ) {
 				WP_Filesystem();
 			}
 			return $wp_filesystem;
+		}
+
+		/**
+		 * Add font-display: swap to all @font-face declarations in CSS
+		 *
+		 * @access protected
+		 * @since 1.1.0
+		 * @param string $css The CSS content.
+		 * @return string Modified CSS with font-display: swap.
+		 */
+		protected function add_font_display_swap( $css ) {
+			// Early return if CSS is empty
+			if ( empty( $css ) ) {
+				return $css;
+			}
+
+			// More precise check for existing font-display property
+			if ( preg_match( '/font-display:\s*[a-z]+/i', $css ) ) {
+				return $css;
+			}
+
+			try {
+				// Add font-display: swap with improved regex pattern
+				$modified_css = preg_replace(
+					'/@font-face\s*\{([^}]*?)\}/s',
+					'@font-face{$1font-display: swap;}',
+					$css
+				);
+
+				// Check if regex replacement failed
+				if ( null === $modified_css ) {
+					error_log( 'Premium Blocks: Font display swap regex failed' );
+					return $css;
+				}
+
+				return $modified_css;
+			} catch ( Exception $e ) {
+				error_log( 'Premium Blocks: Font display swap error - ' . $e->getMessage() );
+				return $css;
+			}
 		}
 	}
 }

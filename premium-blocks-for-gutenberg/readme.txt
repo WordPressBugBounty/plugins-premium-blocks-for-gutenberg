@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.17
+Stable tag: 2.2.18
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -126,6 +126,17 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.18 =
+- New: Added font-display: swap property to Google Fonts for improved loading performance.
+- Performance: Removed unnecessary dashicons loading on frontend for better performance.
+- Performance: Fixed rewrite rules to only flush on plugin activation/deactivation instead of every page load.
+- Fix: Enhanced compatibility with WordPress 6.8.3 for improved admin panel stability.
+- Fix: Container block enforced min-height issue fixed.
+- Fix: Gallery block height option issue for even layout resolved.
+- Fix: Display Conditions now properly handle empty values to prevent display condition errors.
+- Tweak: Enhanced media queries styles according to global layout breakpoints.
+- Tweak: Performance improvements and enhanced Gutenberg compatibility for Testimonials Gutenberg Block.
+
 = 2.2.17 =
 - New: Added taxonomy-based filtering option to the Premium Post Grid Gutenberg block, allowing users to filter posts by selected taxonomies.
 - Fix: Resolved issue with the styling tab visibility in the Counter block.

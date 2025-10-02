@@ -5,7 +5,7 @@
  * Plugin URI: https://premiumblocks.io/
  * Author: Leap13
  * Author URI: https://leap13.com/
- * Version: 2.2.17
+ * Version: 2.2.18
  * Text Domain: premium-blocks-for-gutenberg
  * Domain Path: /languages
  * License: GNU General Public License v3.0
@@ -20,14 +20,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants
-define( 'PREMIUM_BLOCKS_VERSION', '2.2.17' );
+define( 'PREMIUM_BLOCKS_VERSION', '2.2.18' );
 define( 'PREMIUM_BLOCKS_URL', plugins_url( '/', __FILE__ ) );
 define( 'PREMIUM_BLOCKS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PREMIUM_BLOCKS_FILE', __FILE__ );
 define( 'PREMIUM_BLOCKS_BASENAME', plugin_basename( __FILE__ ) );
-define( 'PREMIUM_BLOCKS_STABLE_VERSION', '2.2.16' );
+define( 'PREMIUM_BLOCKS_STABLE_VERSION', '2.2.17' );
 define( 'PBG_TABLET_BREAKPOINT', '976' );
 define( 'PBG_MOBILE_BREAKPOINT', '767' );
 
 require_once PREMIUM_BLOCKS_PATH . 'includes/plugin.php';
-flush_rewrite_rules();
