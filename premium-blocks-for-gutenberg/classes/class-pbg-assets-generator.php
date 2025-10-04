@@ -128,9 +128,6 @@ if (! class_exists('Pbg_Assets_Generator')) {
 		 */
 		public function get_css_url()
 		{
-			// Ensure post ID is valid
-
-
 			// Get the CSS content
 			$merged_style = $this->get_inline_css();
 
@@ -168,29 +165,54 @@ if (! class_exists('Pbg_Assets_Generator')) {
 				}
 			}
 
-			// Check for existing file name in post meta
-			$file_name = get_post_meta($this->post_id, '_premium_css_file_name', true);
-			$file_path = '';
-			$file_url = '';
-			$need_update = false;
+			// Generate content hash for efficient comparison
+			$content_hash = md5($merged_style);
+			
+			if ($this->prefix === 'editor') {
+				// ✅ Editor CSS: Use static filename and option-based hash storage
+				$file_name = "premium-editor-style.css";
+				$stored_hash = get_option('pbg_editor_css_hash', '');
+				$file_path = $dir . $file_name;
+				$file_url = $wp_upload_url . $file_name;
+				$need_update = false;
+				
+				// Quick hash comparison first (avoids file I/O)
+				if ($stored_hash === $content_hash && $wp_filesystem->exists($file_path)) {
+					return $file_url; // Content unchanged and file exists
+				} else {
+					$need_update = true;
+				}
+			} else {
+				// Frontend CSS: Use post meta for hash storage
+				$stored_hash = get_post_meta($this->post_id, '_premium_css_content_hash', true);
+				
+				// Check for existing file name in post meta
+				$file_name = get_post_meta($this->post_id, '_premium_css_file_name', true);
+				$file_path = '';
+				$file_url = '';
+				$need_update = false;
+				
+				// Quick hash comparison first (avoids file I/O)
+				if ($stored_hash === $content_hash && !empty($file_name)) {
+					$file_path = $dir . $file_name;
+					$file_url = $wp_upload_url . $file_name;
+					
+					// Verify file still exists
+					if ($wp_filesystem->exists($file_path)) {
+						return $file_url; // Content unchanged and file exists
+					}
+				}
+			}
+			
 			if (!empty($file_name)) {
 				// We have an existing file, check if it needs updating
 				$file_path = $dir . $file_name;
 				$file_url = $wp_upload_url . $file_name;
 
 				if ($wp_filesystem->exists($file_path)) {
-					// Get existing file content
-					$existing_content = $wp_filesystem->get_contents($file_path);
-
-					// Compare with new content
-					if ($existing_content !== $merged_style) {
-						// Content is different, need to update
-						$need_update = true;
-						$wp_filesystem->delete($file_path);
-					} else {
-						// Content is the same, no need to update
-						return $file_url;
-					}
+					// Content hash changed, need to update
+					$need_update = true;
+					$wp_filesystem->delete($file_path);
 				} else {
 					// File doesn't exist but we have a record, need to recreate
 					$need_update = true;
@@ -202,9 +224,16 @@ if (! class_exists('Pbg_Assets_Generator')) {
 
 			// Generate new file if needed
 			if ($need_update) {
-				// Create timestamp-based unique filename
-				$css_version = time();
-				$file_name = $this->post_id ? "premium-style-{$this->post_id}-{$css_version}.css" : "editor-style.css";
+				// Create filename based on context
+				if ($this->prefix === 'editor') {
+					// ✅ Editor CSS: Static filename without version number
+					$file_name = "premium-editor-style.css";
+					$css_version = PREMIUM_BLOCKS_VERSION; // Use plugin version instead of timestamp
+				} else {
+					// Frontend CSS: Use timestamp-based unique filename
+					$css_version = time();
+					$file_name = $this->post_id ? "premium-style-{$this->post_id}-{$css_version}.css" : "premium-style.css";
+				}
 				$file_path = $dir . $file_name;
 				$file_url = $wp_upload_url . $file_name;
 
@@ -216,12 +245,18 @@ if (! class_exists('Pbg_Assets_Generator')) {
 				);
 
 				if ($result) {
-					// Update post meta with new file info
-					update_post_meta($this->post_id, '_premium_css_file_name', $file_name);
-					update_post_meta($this->post_id, '_premium_css_version', $css_version);
+					if ($this->prefix === 'editor') {
+						// ✅ Editor CSS: Store hash in options table
+						update_option('pbg_editor_css_hash', $content_hash);
+					} else {
+						// Frontend CSS: Store in post meta
+						update_post_meta($this->post_id, '_premium_css_file_name', $file_name);
+						update_post_meta($this->post_id, '_premium_css_version', $css_version);
+						update_post_meta($this->post_id, '_premium_css_content_hash', $content_hash);
 
-					// Clean up old CSS files for this post
-					$this->clean_old_css_files($file_name);
+						// Clean up old CSS files for this post
+						$this->clean_old_css_files($file_name);
+					}
 
 					return $file_url;
 				} else {

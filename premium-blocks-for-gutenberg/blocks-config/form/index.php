@@ -43,10 +43,10 @@ function get_premium_form_css_style($attr, $unique_id)
 
 	if (isset($attr['labelsColors'])) {
 		$css->set_selector(".{$unique_id} .premium-form-input-label");
-		$css->add_property('color', $attr['labelsColors']['text']);
+		$css->add_property('color', $attr['labelsColors']['text'] ?? '');
 		// Hover.
 		$css->set_selector(".{$unique_id} .premium-form-input-label:hover");
-		$css->add_property('color', $attr['labelsColors']['textHover']);
+		$css->add_property('color', $attr['labelsColors']['textHover'] ?? '');
 	}
 
 	// Inputs.
@@ -55,34 +55,31 @@ function get_premium_form_css_style($attr, $unique_id)
 	
 	if (isset($attr['inputsColors'])) {
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input");
-		$css->add_property('color', $attr['inputsColors']['text']);
-		$css->add_property('background-color', $attr['inputsColors']['background']);
+		$css->add_property('color', $attr['inputsColors']['text'] ?? '');
+		$css->add_property('background-color', $attr['inputsColors']['background'] ?? '');
 		// Placeholder.
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input::placeholder");
-		$css->add_property('color', $attr['inputsColors']['placeholder']);
+		$css->add_property('color', $attr['inputsColors']['placeholder'] ?? '');
 		// Hover.
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input:hover");
-		$css->add_property('color', $attr['inputsColors']['textHover']);
-		$css->add_property('background-color', $attr['inputsColors']['hoverBackground']);
-		$css->add_property('border-color', $attr['inputsColors']['borderHover']);
+		$css->add_property('color', $attr['inputsColors']['textHover'] ?? '');
+		$css->add_property('background-color', $attr['inputsColors']['hoverBackground'] ?? '');
+		$css->add_property('border-color', $attr['inputsColors']['borderHover'] ?? '');
 		// Placeholder.
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input:hover::placeholder");
 		$css->add_property('color', $attr['inputsColors']['placeholderHover']);
 		// Focus.
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input:focus");
-		$css->add_property('color', $attr['inputsColors']['textFocus']);
-		$css->add_property('background-color', $attr['inputsColors']['focusBackground']);
-		$css->add_property('border-color', $attr['inputsColors']['borderFocus']);
+		$css->add_property('color', $attr['inputsColors']['textFocus'] ?? '');
+		$css->add_property('background-color', $attr['inputsColors']['focusBackground'] ?? '');
+		$css->add_property('border-color', $attr['inputsColors']['borderFocus'] ?? '');
 		// Placeholder.
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input:focus::placeholder");
-		$css->add_property('color', $attr['inputsColors']['placeholderFocus']);
+		$css->add_property('color', $attr['inputsColors']['placeholderFocus'] ?? '');
 	}
 
 	if (isset($attr['inputsBorder'])) {
 		$inputs_border        = $attr['inputsBorder'];
-		$inputs_border_width  = $inputs_border['borderWidth'];
-		$inputs_border_radius = $inputs_border['borderRadius'];
-
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input");
 		$css->render_border($inputs_border, 'Desktop');
 	}
@@ -127,23 +124,22 @@ function get_premium_form_css_style($attr, $unique_id)
 	if (isset($attr['checkboxColors'])) {
 		$checkbox_colors = $attr['checkboxColors'];
 		$css->set_selector(".{$unique_id}.premium-form .premium-checkbox-item .premium-checkbox-item-input-wrap .premium-checkbox-item-input-checkmark");
-		$css->add_property('background-color', $checkbox_colors['background']);
+		$css->add_property('background-color', $checkbox_colors['background'] ?? '');
 		// Element color.
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-checkbox-item .premium-checkbox-item-input-wrap .premium-checkbox-item-input-checkmark:after");
-		$css->add_property('border-color', $checkbox_colors['element']);
+		$css->add_property('border-color', $checkbox_colors['element'] ?? '');
 		// Focus.
 		$css->set_selector(".{$unique_id}.premium-form .premium-checkbox-item .premium-checkbox-item-input-wrap input:checked ~ .premium-checkbox-item-input-checkmark");
-		$css->add_property('background-color', $checkbox_colors['focusBackground']);
+		$css->add_property('background-color', $checkbox_colors['focusBackground'] ?? '');
 		// Element color.
 		$css->set_selector(".{$unique_id}.premium-form .premium-checkbox-item .premium-checkbox-item-input-wrap input:checked ~ .premium-checkbox-item-input-checkmark:after");
-		$css->add_property('border-color', $checkbox_colors['elementFocus']);
+		$css->add_property('border-color', $checkbox_colors['elementFocus'] ?? '');
 	}
 
 	// checkboxBorder.
 	if (isset($attr['checkboxBorder'])) {
 		$checkbox_border = $attr['checkboxBorder'];
 		$css->set_selector(".{$unique_id} .premium-checkbox-item .premium-checkbox-item-input-wrap .premium-checkbox-item-input-checkmark");
-
 		$css->render_border($checkbox_border, 'Desktop');
 	}
 
@@ -162,11 +158,11 @@ function get_premium_form_css_style($attr, $unique_id)
 	if (isset($attr['buttonColors'])) {
 		$button_colors = $attr['buttonColors'];
 		$css->set_selector(".{$unique_id} .wp-block-button__link.premium-form-submit");
-		$css->add_property('color', $button_colors['text']);
+		$css->add_property('color', $button_colors['text'] ?? '');
 		// Hover.
 		$css->set_selector(".{$unique_id} .wp-block-button__link.premium-form-submit:hover");
-		$css->add_property('color', $button_colors['textHover']);
-		$css->add_property('border-color', $button_colors['borderHover']);
+		$css->add_property('color', $button_colors['textHover'] ?? '');
+		$css->add_property('border-color', $button_colors['borderHover'] ?? '');
 		$css->add_property('background-color', isset($button_colors['backgroundHover']) && $button_colors['backgroundHover'] ? $button_colors['backgroundHover'] . ' !important' : '');
 	}
 
@@ -241,8 +237,6 @@ function get_premium_form_css_style($attr, $unique_id)
 	}
 	if (isset($attr['iconBorder'])) {
 		$icon_border        = $attr['iconBorder'];
-		$icon_border_width  = $icon_border['borderWidth'];
-		$icon_border_radius = $icon_border['borderRadius'];
 		$css->set_selector(".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg");
 		$css->render_border($icon_border, 'Desktop');
 	}
@@ -339,12 +333,8 @@ function get_premium_form_css_style($attr, $unique_id)
 
 	if (isset($attr['inputsBorder'])) {
 		$inputs_border        = $attr['inputsBorder'];
-		$inputs_border_width  = $inputs_border['borderWidth'];
-		$inputs_border_radius = $inputs_border['borderRadius'];
-
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input");
-		$css->add_property('border-width', $css->render_spacing($inputs_border_width['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($inputs_border_radius['Tablet'], 'px'));
+    $css->render_border($inputs_border, 'Tablet');
 	}
 
 	if (isset($attr['inputsPadding'])) {
@@ -363,21 +353,19 @@ function get_premium_form_css_style($attr, $unique_id)
 	if (isset($attr['radioBorder'])) {
 		$radio_border = $attr['radioBorder'];
 		$css->set_selector(".{$unique_id} .premium-radio-item .premium-radio-item-input-wrap .premium-radio-item-input-checkmark");
-		$css->add_property('border-width', $css->render_spacing($radio_border['borderWidth']['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($radio_border['borderRadius']['Tablet'], 'px'));
+		$css->render_border($radio_border, 'Tablet');
 	}
 
 	// checkboxBorder.
 	if (isset($attr['checkboxBorder'])) {
 		$checkbox_border = $attr['checkboxBorder'];
 		$css->set_selector(".{$unique_id} .premium-checkbox-item .premium-checkbox-item-input-wrap .premium-checkbox-item-input-checkmark");
-		$css->add_property('border-width', $css->render_spacing($checkbox_border['borderWidth']['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($checkbox_border['borderRadius']['Tablet'], 'px'));
+		$css->render_border($checkbox_border, 'Tablet');
 	}
 
 	// Button buttonAlign.
 	if (isset($attr['buttonAlign'])) {
-		$button_align = $css->get_responsive_css($attr['buttonAlign'], 'Desktop');
+		$button_align = $css->get_responsive_css($attr['buttonAlign'], 'Tablet');
 		$css->set_selector(".{$unique_id} .premium-form-submit-wrap, .{$unique_id} .premium-form-submit-wrap .wp-block-button__link");
 		$css->add_property('justify-content', "{$button_align} !important");
 	}
@@ -397,8 +385,7 @@ function get_premium_form_css_style($attr, $unique_id)
 	if (isset($attr['buttonBorder'])) {
 		$button_border = $attr['buttonBorder'];
 		$css->set_selector(".{$unique_id} .wp-block-button__link.premium-form-submit");
-		$css->add_property('border-width', $css->render_spacing($button_border['borderWidth']['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($button_border['borderRadius']['Tablet'], 'px'));
+		$css->render_border($button_border, 'Tablet');
 	}
 
 	// buttonPadding.
@@ -458,11 +445,8 @@ function get_premium_form_css_style($attr, $unique_id)
 	}
 	if (isset($attr['iconBorder'])) {
 		$icon_border        = $attr['iconBorder'];
-		$icon_border_width  = $icon_border['borderWidth'];
-		$icon_border_radius = $icon_border['borderRadius'];
 		$css->set_selector(".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg");
-		$css->add_property('border-width', $css->render_spacing($icon_border_width['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($icon_border_radius['Tablet'], 'px'));
+		$css->render_border($icon_border, 'Tablet');
 	}
 
 	if (isset($attr['iconBG'])) {
@@ -513,12 +497,8 @@ function get_premium_form_css_style($attr, $unique_id)
 
 	if (isset($attr['inputsBorder'])) {
 		$inputs_border        = $attr['inputsBorder'];
-		$inputs_border_width  = $inputs_border['borderWidth'];
-		$inputs_border_radius = $inputs_border['borderRadius'];
-
 		$css->set_selector(".{$unique_id}.premium-form .premium-form-input");
-		$css->add_property('border-width', $css->render_spacing($inputs_border_width['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($inputs_border_radius['Mobile'], 'px'));
+		$css->render_border($inputs_border, 'Mobile');
 	}
 
 	if (isset($attr['inputsPadding'])) {
@@ -537,21 +517,19 @@ function get_premium_form_css_style($attr, $unique_id)
 	if (isset($attr['radioBorder'])) {
 		$radio_border = $attr['radioBorder'];
 		$css->set_selector(".{$unique_id} .premium-radio-item .premium-radio-item-input-wrap .premium-radio-item-input-checkmark");
-		$css->add_property('border-width', $css->render_spacing($radio_border['borderWidth']['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($radio_border['borderRadius']['Mobile'], 'px'));
+		$css->render_border($radio_border, 'Mobile');
 	}
 
 	// checkboxBorder.
 	if (isset($attr['checkboxBorder'])) {
 		$checkbox_border = $attr['checkboxBorder'];
 		$css->set_selector(".{$unique_id} .premium-checkbox-item .premium-checkbox-item-input-wrap .premium-checkbox-item-input-checkmark");
-		$css->add_property('border-width', $css->render_spacing($checkbox_border['borderWidth']['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($checkbox_border['borderRadius']['Mobile'], 'px'));
+		$css->render_border($checkbox_border, 'Mobile');
 	}
 
 	// Button buttonAlign.
 	if (isset($attr['buttonAlign'])) {
-		$button_align = $css->get_responsive_css($attr['buttonAlign'], 'Desktop');
+		$button_align = $css->get_responsive_css($attr['buttonAlign'], 'Mobile');
 		$css->set_selector(".{$unique_id} .premium-form-submit-wrap, .{$unique_id} .premium-form-submit-wrap .wp-block-button__link");
 		$css->add_property('justify-content', "{$button_align} !important");
 	}
@@ -571,8 +549,7 @@ function get_premium_form_css_style($attr, $unique_id)
 	if (isset($attr['buttonBorder'])) {
 		$button_border = $attr['buttonBorder'];
 		$css->set_selector(".{$unique_id} .wp-block-button__link.premium-form-submit");
-		$css->add_property('border-width', $css->render_spacing($button_border['borderWidth']['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($button_border['borderRadius']['Mobile'], 'px'));
+		$css->render_border($button_border, 'Mobile');
 	}
 
 	// buttonPadding.
@@ -632,11 +609,8 @@ function get_premium_form_css_style($attr, $unique_id)
 	}
 	if (isset($attr['iconBorder'])) {
 		$icon_border        = $attr['iconBorder'];
-		$icon_border_width  = $icon_border['borderWidth'];
-		$icon_border_radius = $icon_border['borderRadius'];
 		$css->set_selector(".{$unique_id} .premium-form-input__content-icon .premium-form-input-icon, .{$unique_id} .premium-form-input__icon-wrap img, .{$unique_id} .premium-form-input__icon-wrap .premium-form-input-svg-class svg, .{$unique_id} .premium-form-input__icon-wrap .premium-lottie-animation svg");
-		$css->add_property('border-width', $css->render_spacing($icon_border_width['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($icon_border_radius['Mobile'], 'px'));
+		$css->render_border($icon_border, 'Mobile');
 	}
 
 	if (isset($attr['iconBG'])) {

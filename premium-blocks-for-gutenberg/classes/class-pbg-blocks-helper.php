@@ -1346,12 +1346,56 @@ class PBG_Blocks_Helper
 	public function regenerate_assets_files()
 	{
 		$global_settings = apply_filters('pb_settings', get_option('pbg_blocks_settings', array()));
-		return $global_settings['premium-regenrate-assets'] ?? true;
+		
+		// If user explicitly enabled regeneration, respect that setting
+		if (isset($global_settings['premium-regenrate-assets']) && $global_settings['premium-regenrate-assets']) {
+			return true;
+		}
+		
+		// Smart regeneration: only when needed
+		return $this->should_regenerate_css_files();
+	}
+	
+	/**
+	 * Determine if CSS files should be regenerated based on content changes
+	 *
+	 * @return bool
+	 */
+	private function should_regenerate_css_files()
+	{
+		$post_id = get_the_ID();
+		if (!$post_id) {
+			return false;
+		}
+		
+		// Check if post was recently modified
+		$post_modified = get_post_modified_time('U', false, $post_id);
+		$css_generated = get_post_meta($post_id, '_premium_css_generated_time', true);
+		
+		// If no CSS generation time recorded, or post modified after CSS generation
+		if (!$css_generated || $post_modified > $css_generated) {
+			// Update the generation timestamp
+			update_post_meta($post_id, '_premium_css_generated_time', time());
+			return true;
+		}
+		
+		// Check if CSS file actually exists
+		$css_file_name = get_post_meta($post_id, '_premium_css_file_name', true);
+		if ($css_file_name) {
+			$upload_dir = wp_upload_dir();
+			$css_file_path = trailingslashit($upload_dir['basedir']) . 'premium-blocks-for-gutenberg/' . $css_file_name;
+			
+			if (!file_exists($css_file_path)) {
+				return true; // File missing, need to regenerate
+			}
+		}
+		
+		return false; // No regeneration needed
 	}
 
 	/**
 	 * Add block css file to the frontend assets.
-	 *
+	 * 
 	 * @param string $src The css file url.
 	 */
 	public function add_block_css($src, $dependencies = array())

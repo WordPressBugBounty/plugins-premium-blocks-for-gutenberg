@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.2.18
+Stable tag: 2.2.19
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -126,6 +126,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.2.19 =
+- Fix: Resolved warning issues in the Contact Form block.
+- Fix: Fixed admin control styles not loading properly in the WordPress admin.
+
 = 2.2.18 =
 - New: Added font-display: swap property to Google Fonts for improved loading performance.
 - Performance: Removed unnecessary dashicons loading on frontend for better performance.
