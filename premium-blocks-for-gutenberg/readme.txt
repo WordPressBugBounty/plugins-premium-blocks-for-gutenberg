@@ -1,15 +1,15 @@
-=== Premium Blocks - Gutenberg Blocks for WordPress ===
+=== Premium Blocks - Gutenberg Blocks, Patterns & Templates ===
 Contributors: leap13
 Tags: blocks, gutenberg, block editor, gutenberg addons
 Donate link: https://leap13.com
 Requires at least: 5.0
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 2.2.19
+Stable tag: 2.3.7
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
-Supercharge your WordPress website with advanced Gutenberg blocks, global settings, and display conditions to create stunning, responsive designs effortlessly.
+Premium Blocks for Gutenberg: Free Gutenberg blocks packed with performance-optimized tools, global styling options, responsive controls, pre-built templates, display conditions, entrance animations, gallery and SVG Draw feature — helping you design modern, and fast websites with ease.
 
 == Description ==
 With Premium Blocks for Gutenberg, you get a free, comprehensive collection of advanced blocks and features for the WordPress block editor. Our plugin helps you go beyond the basics to create stunning, responsive websites with ease. With a constant flow of new customization options, it's the ultimate toolkit for designers and developers looking to build and maintain high-performing sites.
@@ -19,9 +19,30 @@ With Premium Blocks for Gutenberg, you get a free, comprehensive collection of a
 [Support](https://my.leap13.com/contact-support/) | [Docs](https://premiumblocks.io/documentation/) | [Website](https://premiumblocks.io/)
 
 
+## KEY FEATURES
+- Fast & Optimized – Smooth Gutenberg editor performance.
+- 33+ Free Gutenberg Blocks.
+- Ready-Made Patterns – Pre-designed sections for pages, posts, and FSE.
+- Global Settings – Manage styles across the site
+- Responsive Controls – Customize desktop, tablet, and mobile.
+- Display Conditions – Show or hide blocks by user, device, or date.
+- Entrance Animations - Animate blocks on load.
+- Equal Height Feature.
+- Copy/Paste Styles – Transfer styling between blocks.
+- Advanced Gallery – Multiple image layouts.
+- Lottie Animations.
+- SVG Draw Effects.
+- Post Grid & Carousel – Showcase posts and custom types.
+- One-Page Scroll.
+- Translation Ready – Fully WPML compatible.
 
 ### Flexbox Container Gutenberg Block
 Effortlessly create complex, responsive layouts using the power of Flexbox. Arrange elements side-by-side, stack them vertically, or even distribute them evenly with ultimate control and flexibility inside your Gutenberg editor.
+
+
+
+### Gutenberg Templates
+Speed up your workflow by inserting pre-designed patterns directly into any page, post, or FSE template with a single click. [Learn More](https://premiumblocks.io/gutenberg-templates/)
 
 
 
@@ -126,6 +147,111 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.7 =
+- Fixed: Dual Heading Block styling issue.
+
+= 2.3.6 =
+- Added: Compatibility With Custom Font feature for gutenberg editor.
+- Fixed: Header block save button functionality.
+
+= 2.3.5 =
+- Added: Background control to tab content in Tabs block.
+- Added: Active and inactive labels color in Content Switcher block.
+- Tweak: Allowed Gutenberg separator to be added in Testimonials block.
+- Fixed: Min height for Banner block on editor.
+- Fixed: An issue with animated text Block dependencies in the editor.
+- Fixed: Instagram block conflict with Image Optimization service by Optimole plugin.
+
+= 2.3.4 =
+- Fixed: Reset text color for the Accordion block.
+- Fixed: Digit count number issue in Count Up block inside Tabs when accordion is enabled.
+- Fixed: Line height conflict with global settings in Dual Heading block.
+- Fixed: Clipped animation issue in Heading and Dual Heading blocks when background is gradient.
+- Fixed: Global settings issue when the user role is editor.
+- Fixed: Rollback issue with number of versions.
+- Tweak: Updated blur and gray hover effects in multiple blocks.
+
+= 2.3.3 =
+- Added: Left and right toggle icons to the Content Switcher block.
+- Added: Button switch type to the Content Switcher block.
+- Added: Highlight animation options to the Animated Text block.
+- Added: HTML tag option to the Animated Text block.
+- Added: Two-color noise effect to Dual Heading and Heading blocks.
+- Added: Animated gradient options to Dual Heading and Heading blocks.
+- Fixed: Broken alignment styles in the Tabs block.
+- Fixed: Sepia effect issue in Image and Person blocks.
+- Fixed: Block parsing to include widget blocks in CSS generation.
+
+= 2.3.2 =
+- Fixed: Modal box styling issues including padding and mobile device compatibility.
+- Fixed: Font family loading issues in frontend rendering.
+- Fixed: Counter block styling and functionality issues.
+- Added: Border option to Heading block (Style 3) for enhanced customization.
+
+= 2.3.1 =
+- Fixed: Image block style issue.
+- Fixed: loding in templates.
+- Tweak: Improved compatibility with WordPress 6.9.
+
+= 2.3.0 =
+- New: Added Gutenberg Templates feature - Insert pre-designed patterns directly into any page, post, or FSE template with a single click. [Learn More](https://premiumblocks.io/just-released-free-gutenberg-templates/)
+- New: Added Star Ratings block with alignment options and integration with Icon Box block.
+- New: Added Heading block rotation option for creative text positioning.
+- Performance: Improved compatibility with WordPress 6.9.
+- Fixed: Global settings registration conflict with wp-editor for classic themes widgets pages.
+- Fixed: Resolved mixed content error for images served between HTTP and HTTPS.
+- Fixed: Icon block animation issue in FSE templates.
+- Fixed: Image mask issue resolved.
+- Fixed: Button block warning resolved.
+- Fixed: Icon block flex issue with Lottie animation type.
+- Tweak: Maps block completely refactored with new API, improved UI in editor, enhanced inspector controls, and server-side rendering.
+- Tweak: Gallery block with optimized Isotope logic and improved fslightbox functionality.
+- Tweak: Equal Height functionality with optimized batch processing for better performance.
+- Tweak: Updated branding with new logo, colors, and dashboard styles.
+- Tweak: Dependencies updated for improved security and better compatibility.
+
+= 2.2.24 =
+- Fixed: Global settings registration conflict issue with wp-editor for classic themes widgets pages.
+- Fixed: Image block mask issue.
+- Tweak: Maps block - refactored to server-side rendering for better performance.
+- Tweak: Instagram Feed block updated with improvements.
+- Tweak: Google Map block updated with improvements.
+
+= 2.2.23 =
+- Fixed: compatibility style issues with the GeneratePress theme in the editor.
+- Fixed: mask functionality issue in the Dual Heading Block.
+- Added: Introduced a clipped mask feature for the Heading block.
+- Added: Updated variations for the Icon Box block.
+
+= 2.2.22 =
+- New: Enhanced Tabs block editor with selection sync between headers and content items.
+- Fix: Resolved PluginSidebar deprecation warnings by updating imports for modern WordPress compatibility.
+- Fix: Off-Canvas block - removed styles causing compatibility issues with other plugins.
+- Fix: Enhanced Regenerate Assets to prevent serving old cached files.
+- Tweak: Counter block updated with improvements.
+- Tweak: Modal Box block updated with improvements.
+- Tweak: Banner block updated with improvements.
+
+= 2.2.21 =
+- New: Added plain preset option to Button block for more styling flexibility.
+- New: Added border styling option to Testimonials block.
+- Fix: Optimized RTL style enqueueing by checking for premium blocks presence, improving performance.
+- Fix: Refactored min-height style for Container block to resolve enforced min-height issues.
+- Fix: Resolved spacing issue between title and description in various blocks.
+- Fix: Fixed italic font issue and the first letter cut-off problem.
+- Fix: Fixed loading of styling CSS for patterns in classic themes and cleaned unused code.
+- Fix: Resolved Asset File Generation option issues and improved functionality.
+- Fix: Fixed styling issue for default padding in Testimonials block.
+- Tweak: Testimonials, Content Switcher and Image-Separator blocks aligned with new improvements and updated quotes positions options.
+- Tweak: Tabs block updated styles for description.
+- Tweak: Handled media queries styles according to global layout breakpoints values.
+- Tweak: Global Settings handled global responsive options according to global layout responsive breakpoints.
+
+= 2.2.20 =
+- Fix: Resolved tabs styling issue for improved frontend consistency.
+- Fix: Addressed compatibility issue with the Yoast SEO plugin.
+- Tweak: Performance enhancements and improved Gutenberg compatibility for Accordion, Lottie, and Video Box blocks.
+
 = 2.2.19 =
 - Fix: Resolved warning issues in the Contact Form block.
 - Fix: Fixed admin control styles not loading properly in the WordPress admin.

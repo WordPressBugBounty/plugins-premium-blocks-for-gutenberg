@@ -53,7 +53,6 @@
             "type": "array",
             "default": [
                 {
-                    "descAlign": "left",
                     "descColor": "",
                     "descBack": ""
                 }
@@ -73,13 +72,10 @@
             "type": "string",
             "default": "text"
         },
-        "titleEditBorder": {
-            "type": "boolean"
-        },
         "titleMargin": {
             "type": "object",
             "default": {
-                "Desktop": "10",
+                "Desktop": 10,
                 "Tablet": "",
                 "Mobile": "",
                 "unit": {
@@ -123,10 +119,10 @@
             "type": "object",
             "default": {
                 "Desktop": {
-                    "top": "15",
-                    "right": "15",
-                    "bottom": "15",
-                    "left": "15"
+                    "top": 15,
+                    "right": 15,
+                    "bottom": 15,
+                    "left": 15
                 },
                 "Tablet": {
                     "top": "",
@@ -152,7 +148,7 @@
         "titleBorder": {
             "type": "object",
             "default": {
-                "borderType": "none",
+                "borderType": "",
                 "borderColor": "",
                 "borderWidth": {
                     "Desktop": {
@@ -202,7 +198,7 @@
         "descBorder": {
             "type": "object",
             "default": {
-                "borderType": "none",
+                "borderType": "",
                 "borderColor": "",
                 "borderWidth": {
                     "Desktop": {

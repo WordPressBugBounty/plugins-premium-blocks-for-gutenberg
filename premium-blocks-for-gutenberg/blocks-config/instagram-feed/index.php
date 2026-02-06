@@ -5,19 +5,23 @@
  * @package WordPress
  */
 
- /**
-  * Render instagram feed block.
-  *
-  * @param array  $attributes The block attributes.
-  * @param string $content The block content.
-  * @return string
-  */
+/**
+ * Renders the Instagram Feed block on the frontend.
+ *
+ * @param array  $attributes Block attributes.
+ * @param string $content    Block content.
+ * @return string Rendered block HTML.
+ */
 function render_block_pbg_instagram_feed( $attributes, $content ) {
+	$has_error = apply_filters( 'pbg_instagram_feed_has_error', false );
+
+	if ( $has_error ) return '';
+
 	return $content;
 }
 
 /**
- * Register the Instagram Feed block.
+ * Registers the Instagram Feed block.
  *
  * @uses render_block_pbg_instagram_feed()
  * @throws WP_Error An WP_Error exception parsing the block definition.

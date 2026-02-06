@@ -28,8 +28,10 @@ function get_premium_container_css_style($attr, $unique_id)
     $current_direction = explode( '-', $css->pbg_get_value($attr, 'direction', 'Desktop') ?? '' )[0];
     $childsWidthValue = $css->pbg_get_value($attr, 'childsWidth', 'Desktop');
 
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap');
+    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-block-' . $unique_id );
     $css->pbg_render_range($attr, 'minHeight', 'min-height', 'Desktop');
+
+    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap');
     $css->pbg_render_value($attr, 'direction', 'flex-direction', 'Desktop');
     $css->pbg_render_value($attr, 'alignItems', 'align-items', 'Desktop');
     $css->pbg_render_value($attr, 'justifyItems', 'justify-content', 'Desktop');
@@ -118,8 +120,10 @@ function get_premium_container_css_style($attr, $unique_id)
     $current_direction = explode( '-', $css->pbg_get_value($attr, 'direction', 'Tablet') ?? '' )[0];
     $childsWidthValue = $css->pbg_get_value($attr, 'childsWidth', 'Tablet');
 
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap');
+    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-block-' . $unique_id );
     $css->pbg_render_range($attr, 'minHeight', 'min-height', 'Tablet');
+    
+    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap');
     $css->pbg_render_value($attr, 'direction', 'flex-direction', 'Tablet');
     $css->pbg_render_value($attr, 'alignItems', 'align-items', 'Tablet');
     $css->pbg_render_value($attr, 'justifyItems', 'justify-content', 'Tablet');
@@ -186,8 +190,11 @@ function get_premium_container_css_style($attr, $unique_id)
     $current_direction = explode( '-', $css->pbg_get_value($attr, 'direction', 'Mobile') ?? '' )[0];
     $childsWidthValue = $css->pbg_get_value($attr, 'childsWidth', 'Mobile');
 
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap');
+    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-block-' . $unique_id );
     $css->pbg_render_range($attr, 'minHeight', 'min-height', 'Mobile');
+    
+
+    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap');
     $css->pbg_render_value($attr, 'direction', 'flex-direction', 'Mobile');
     $css->pbg_render_value($attr, 'alignItems', 'align-items', 'Mobile');
     $css->pbg_render_value($attr, 'justifyItems', 'justify-content', 'Mobile');

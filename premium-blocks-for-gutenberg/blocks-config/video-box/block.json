@@ -11,13 +11,6 @@
         "blockId": {
             "type": "string"
         },
-        "borderBoxUpdated": {
-            "type": "boolean",
-            "default": false
-        },
-        "videoBoxId": {
-            "type": "string"
-        },
         "videoType": {
             "type": "string",
             "default": "youtube"
@@ -52,16 +45,9 @@
             "type": "boolean",
             "default": false
         },
-        "videoDesc": {
-            "type": "boolean"
-        },
         "playIcon": {
             "type": "boolean",
             "default": true
-        },
-        "playLeft": {
-            "type": "number",
-            "isStyle": true
         },
         "classMigrate": {
             "type": "boolean",
@@ -86,11 +72,10 @@
             "type": "array",
             "default": [
                 {
-                    "playTop": "",
-                    "playSize": "",
+                    "playTop": 50,
+                    "playSize": 20,
                     "playColor": "",
                     "playBack": "",
-                    "playOpacity": 1,
                     "playHoverColor": "",
                     "playHoverBackColor": ""
                 }
@@ -101,13 +86,8 @@
             "type": "array",
             "default": [
                 {
-                    "videoDescText": "",
-                    "videoDescBorderRadius": "",
-                    "descLeft": "",
-                    "descTop": "",
                     "videoDescColor": "",
-                    "videoDescBack": "",
-                    "videoDescOpacity": 1
+                    "videoDescBack": ""
                 }
             ],
             "isStyle": true
@@ -149,25 +129,25 @@
             "type": "object",
             "default": {
                 "borderColor": "",
-                "borderType": "none",
+                "borderType": "",
                 "borderRadius": {
                     "Desktop": {
-                        "top": "100",
-                        "right": "100",
-                        "bottom": "100",
-                        "left": "100"
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
                     },
                     "Tablet": {
-                        "top": "100",
-                        "right": "100",
-                        "bottom": "100",
-                        "left": "100"
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
                     },
                     "Mobile": {
-                        "top": "100",
-                        "right": "100",
-                        "bottom": "100",
-                        "left": "100"
+                        "top": "",
+                        "right": "",
+                        "bottom": "",
+                        "left": ""
                     },
                     "link": true
                 },
@@ -199,7 +179,7 @@
             "type": "object",
             "default": {
                 "borderColor": "",
-                "borderType": "none",
+                "borderType": "",
                 "borderRadius": {
                     "Desktop": {
                         "top": "",
@@ -309,7 +289,7 @@
             "type": "object",
             "default": {
                 "color": "transparent",
-                "blur": 10,
+                "blur": "10",
                 "horizontal": "0",
                 "vertical": "0"
             },
@@ -319,17 +299,17 @@
             "type": "object",
             "default": {
                 "color": "transparent",
-                "blur": 10,
+                "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
-                "position": " "
+                "position": ""
             },
             "isStyle": true
         },
         "overlayFilter": {
             "type": "object",
             "default": {
-                "contrast": "",
+                "contrast": "100",
                 "blur": "0",
                 "bright": "100",
                 "saturation": "100",
@@ -340,13 +320,13 @@
         "verticalPos": {
             "type": "object",
             "default": {
-                "Desktop": "65",
+                "Desktop": 65,
                 "Tablet": "",
                 "Mobile": "",
                 "unit": {
-                    "Desktop": "px",
-                    "Tablet": "px",
-                    "Mobile": "px"
+                    "Desktop": "%",
+                    "Tablet": "%",
+                    "Mobile": "%"
                 }
             },
             "isStyle": true
@@ -397,7 +377,7 @@
             "type": "object",
             "default": {
                 "color": "transparent",
-                "blur": 10,
+                "blur": "10",
                 "horizontal": "0",
                 "vertical": "0"
             },

@@ -6,12 +6,7 @@
     "title": "SVG Draw",
     "description": "Draw SVG with animation",
     "textdomain": "premium-blocks-for-gutenberg",
-    "keywords": [
-        "Icon",
-        "Font Awesome",
-        "SVG",
-        "SVG Draw"
-    ],
+    "keywords": ["Icon", "Font Awesome", "SVG", "SVG Draw"],
     "category": "premium-blocks",
     "attributes": {
         "blockId": {
@@ -24,10 +19,6 @@
         "iconType": {
             "type": "string",
             "default": "dash"
-        },
-        "iconTypeFile": {
-            "type": "string",
-            "default": "icon"
         },
         "icons": {
             "type": "array",
@@ -51,27 +42,6 @@
                 "Tablet": "",
                 "Mobile": ""
             },
-            "isStyle": true
-        },
-        "hoverEffect": {
-            "type": "string",
-            "default": "none",
-            "isStyle": true
-        },
-        "hoversEffect": {
-            "type": "string",
-            "isStyle": true
-        },
-        "iconStyles": {
-            "type": "array",
-            "default": [
-                {
-                    "iconColor": "",
-                    "iconBack": "",
-                    "iconHoverColor": "",
-                    "iconHoverBack": ""
-                }
-            ],
             "isStyle": true
         },
         "urlCheck": {
@@ -265,7 +235,7 @@
             "type": "object",
             "default": {
                 "borderColor": "",
-                "borderType": "none",
+                "borderType": "",
                 "borderRadius": {
                     "Desktop": {
                         "top": "",
@@ -317,7 +287,7 @@
                 "backgroundImageID": "",
                 "backgroundImageURL": "",
                 "backgroundPosition": {
-                    "Desktop": "",
+                    "Desktop": "center center",
                     "Tablet": "",
                     "Mobile": ""
                 },
@@ -333,7 +303,7 @@
                 },
                 "fixed": false,
                 "gradientLocationOne": "0",
-                "gradientColorTwo": "",
+                "gradientColorTwo": "#777",
                 "gradientLocationTwo": "100",
                 "gradientAngle": "180",
                 "gradientPosition": "center center",
@@ -361,10 +331,6 @@
             "type": "string",
             "default": ""
         },
-        "classes": {
-            "type": "string",
-            "default": ""
-        },
         "iconTypeSelect": {
             "type": "string",
             "default": "icon"
@@ -385,7 +351,7 @@
                 "backgroundSize": "",
                 "fixed": false,
                 "gradientLocationOne": "0",
-                "gradientColorTwo": "",
+                "gradientColorTwo": "#777",
                 "gradientLocationTwo": "100",
                 "gradientAngle": "180",
                 "gradientPosition": "center center",
@@ -435,13 +401,14 @@
                 "action": "viewport",
                 "startPoint": 0,
                 "endPoint": 0,
-                "speed": 5,
+                "speed": 3,
                 "loop": false,
                 "yoyoEffect": false,
+                "loopDelay": 1,
                 "drawAllTogether": false,
                 "fillAfterDraw": false,
                 "restart": false,
-                "restartDelay": 0.1,
+                "restartDelay": 0.3,
                 "startPosition": "center",
                 "strokeWidth": {
                     "Desktop": 0.1,
@@ -460,9 +427,6 @@
             "default": false
         }
     },
-    "usesContext": [
-        "hoversEffect"
-    ],
     "editorScript": "pbg-blocks-js",
     "editorStyle": "premium-blocks-editor-css"
 }

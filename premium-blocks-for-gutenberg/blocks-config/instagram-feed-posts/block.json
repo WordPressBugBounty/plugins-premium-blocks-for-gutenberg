@@ -8,7 +8,6 @@
     "keywords": ["instagram-feed-posts"],
     "parent": ["premium/instagram-feed"],
     "textdomain": "premium-blocks-for-gutenberg",
-
     "attributes": {
         "blockId": {
             "type": "string"
@@ -22,14 +21,28 @@
             "type": "object",
             "default": {
                 "Desktop": 3,
-                "Tablet": 3,
-                "Mobile": 3
+                "Tablet": "",
+                "Mobile": ""
             },
             "isStyle": true
         },
         "imageEffect": {
             "type": "string",
             "default": "zoomin",
+            "isStyle": true
+        },
+        "postsGap": {
+            "type": "object",
+            "default": {
+                "Desktop": 10,
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
             "isStyle": true
         },
         "columnHeight": {
@@ -63,12 +76,12 @@
         },
         "autoPlay": {
             "type": "boolean",
-            "default": false,
+            "default": true,
             "isStyle": true
         },
         "autoPlayTime": {
             "type": "number",
-            "default": 5000,
+            "default": 2000,
             "isStyle": true
         },
         "arrowsPosition": {
@@ -77,32 +90,14 @@
                 "Desktop": "",
                 "Tablet": "",
                 "Mobile": "",
-                "unit": {
-                    "Desktop": "px",
-                    "Tablet": "px",
-                    "Mobile": "px"
-                }
-            },
-            "isStyle": true
-        },
-        "arrowsVerticalPosition": {
-            "type": "object",
-            "default": {
-                "Desktop": "",
-                "Tablet": "",
-                "Mobile": "",
-                "unit": {
-                    "Desktop": "%",
-                    "Tablet": "%",
-                    "Mobile": "%"
-                }
+                "unit": "px"
             },
             "isStyle": true
         },
         "photoBorder": {
             "type": "object",
             "default": {
-                "borderType": "none",
+                "borderType": "",
                 "borderColor": "",
                 "borderWidth": {
                     "Desktop": {
@@ -337,12 +332,9 @@
             },
             "isStyle": true
         },
-        "photoBackgroundColor": {
+        "captionStyle": {
             "type": "string",
-            "isStyle": true
-        },
-        "photoHoverBackgroundColor": {
-            "type": "string",
+            "default": "none",
             "isStyle": true
         },
         "captionTypography": {
@@ -366,9 +358,9 @@
                 "textDecoration": "",
                 "textTransform": "",
                 "fontSize": {
-                    "Desktop": "14",
-                    "Tablet": "14",
-                    "Mobile": "14",
+                    "Desktop": 14,
+                    "Tablet": "",
+                    "Mobile": "",
                     "unit": {
                         "Desktop": "px",
                         "Tablet": "px",
@@ -424,7 +416,7 @@
                 "backgroundImageID": "",
                 "backgroundImageURL": "",
                 "backgroundPosition": {
-                    "Desktop": "",
+                    "Desktop": "center center",
                     "Tablet": "",
                     "Mobile": ""
                 },
@@ -434,22 +426,18 @@
                     "Mobile": ""
                 },
                 "backgroundSize": {
-                    "Desktop": "",
+                    "Desktop": "cover",
                     "Tablet": "",
                     "Mobile": ""
                 },
                 "fixed": false,
                 "gradientLocationOne": "0",
-                "gradientColorTwo": "",
+                "gradientColorTwo": "#777",
                 "gradientLocationTwo": "100",
                 "gradientAngle": "180",
                 "gradientPosition": "center center",
                 "gradientType": "linear"
             },
-            "isStyle": true
-        },
-        "containerColor": {
-            "type": "string",
             "isStyle": true
         },
         "containerShadow": {
@@ -526,7 +514,7 @@
         "containerBorder": {
             "type": "object",
             "default": {
-                "borderType": "none",
+                "borderType": "",
                 "borderColor": "",
                 "borderWidth": {
                     "Desktop": {
@@ -589,6 +577,7 @@
         },
         "arrowsColor": {
             "type": "string",
+            "default": "#000000b3",
             "isStyle": true
         },
         "arrowsBackground": {
@@ -599,7 +588,7 @@
                 "backgroundImageID": "",
                 "backgroundImageURL": "",
                 "backgroundPosition": {
-                    "Desktop": "",
+                    "Desktop": "center center",
                     "Tablet": "",
                     "Mobile": ""
                 },
@@ -609,13 +598,13 @@
                     "Mobile": ""
                 },
                 "backgroundSize": {
-                    "Desktop": "",
+                    "Desktop": "cover",
                     "Tablet": "",
                     "Mobile": ""
                 },
                 "fixed": false,
                 "gradientLocationOne": "0",
-                "gradientColorTwo": "",
+                "gradientColorTwo": "#777",
                 "gradientLocationTwo": "100",
                 "gradientAngle": "180",
                 "gradientPosition": "center center",
@@ -625,6 +614,7 @@
         },
         "arrowsHoverColor": {
             "type": "string",
+            "default": "#000000e6",
             "isStyle": true
         },
         "arrowsHoverBackground": {
@@ -635,7 +625,7 @@
                 "backgroundImageID": "",
                 "backgroundImageURL": "",
                 "backgroundPosition": {
-                    "Desktop": "",
+                    "Desktop": "center center",
                     "Tablet": "",
                     "Mobile": ""
                 },
@@ -645,13 +635,13 @@
                     "Mobile": ""
                 },
                 "backgroundSize": {
-                    "Desktop": "",
+                    "Desktop": "cover",
                     "Tablet": "",
                     "Mobile": ""
                 },
                 "fixed": false,
                 "gradientLocationOne": "0",
-                "gradientColorTwo": "",
+                "gradientColorTwo": "#777",
                 "gradientLocationTwo": "100",
                 "gradientAngle": "180",
                 "gradientPosition": "center center",
@@ -706,11 +696,6 @@
         "clickAction": {
             "type": "string",
             "default": "none"
-        },
-        "captionStyle": {
-            "type": "string",
-            "default": "none",
-            "isStyle": true
         },
         "layoutStyle": {
             "type": "string",
@@ -781,39 +766,7 @@
                 "backgroundImageID": "",
                 "backgroundImageURL": "",
                 "backgroundPosition": {
-                    "Desktop": "",
-                    "Tablet": "",
-                    "Mobile": ""
-                },
-                "backgroundRepeat": {
-                    "Desktop": "no-repeat",
-                    "Tablet": "",
-                    "Mobile": ""
-                },
-                "backgroundSize": {
-                    "Desktop": "",
-                    "Tablet": "",
-                    "Mobile": ""
-                },
-                "fixed": false,
-                "gradientLocationOne": "0",
-                "gradientColorTwo": "",
-                "gradientLocationTwo": "100",
-                "gradientAngle": "180",
-                "gradientPosition": "center center",
-                "gradientType": "linear"
-            },
-            "isStyle": true
-        },
-        "lightBoxArrowsHoverBackground": {
-            "type": "object",
-            "default": {
-                "backgroundType": "",
-                "backgroundColor": "",
-                "backgroundImageID": "",
-                "backgroundImageURL": "",
-                "backgroundPosition": {
-                    "Desktop": "",
+                    "Desktop": "center center",
                     "Tablet": "",
                     "Mobile": ""
                 },
@@ -829,7 +782,39 @@
                 },
                 "fixed": false,
                 "gradientLocationOne": "0",
-                "gradientColorTwo": "",
+                "gradientColorTwo": "#777",
+                "gradientLocationTwo": "100",
+                "gradientAngle": "180",
+                "gradientPosition": "center center",
+                "gradientType": "linear"
+            },
+            "isStyle": true
+        },
+        "lightBoxArrowsHoverBackground": {
+            "type": "object",
+            "default": {
+                "backgroundType": "",
+                "backgroundColor": "",
+                "backgroundImageID": "",
+                "backgroundImageURL": "",
+                "backgroundPosition": {
+                    "Desktop": "center center",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundRepeat": {
+                    "Desktop": "no-repeat",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundSize": {
+                    "Desktop": "cover",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "fixed": false,
+                "gradientLocationOne": "0",
+                "gradientColorTwo": "#777",
                 "gradientLocationTwo": "100",
                 "gradientAngle": "180",
                 "gradientPosition": "center center",
@@ -852,5 +837,5 @@
             "isStyle": true
         }
     },
-    "usesContext": ["accessToken", "cacheTime", "posts"]
+    "usesContext": ["accessToken", "posts"]
 }

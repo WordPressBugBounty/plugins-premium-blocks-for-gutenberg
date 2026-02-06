@@ -32,53 +32,6 @@ class PBG_Blocks_Helper
 	public static $config;
 
 	/**
-	 * Stylesheet
-	 *
-	 * @since 1.13.4
-	 *
-	 * @var stylesheet
-	 */
-	public static $stylesheet;
-
-
-
-	/**
-	 * Page Blocks Variable
-	 *
-	 * @since 1.6.0
-	 *
-	 * @var instance
-	 */
-	public static $page_blocks;
-
-	/**
-	 * Member Variable
-	 *
-	 * @since 0.0.1
-	 *
-	 * @var instance
-	 */
-	public static $block_atts;
-
-	/**
-	 * PBG Block Flag
-	 *
-	 * @since 1.8.2
-	 *
-	 * @var premium_flag
-	 */
-	public static $premium_flag = false;
-
-	/**
-	 * Current Block List
-	 *
-	 * @since 1.8.2
-	 *
-	 * @var current_block_list
-	 */
-	public static $current_block_list = array();
-
-	/**
 	 * Global features
 	 *
 	 * @since 1.8.2
@@ -103,7 +56,7 @@ class PBG_Blocks_Helper
 	 *
 	 * @var Pbg_Assets_Generator
 	 */
-	public $blocks_frondend_assets;
+	public $blocks_frontend_assets;
 
 	/**
 	 * Blocks Frontend CSS Deps
@@ -122,15 +75,6 @@ class PBG_Blocks_Helper
 	 * @var array
 	 */
 	public $loaded_blocks = array();
-
-	/**
-	 * Svg draw blocks
-	 *
-	 * @since 2.0.26
-	 *
-	 * @var array
-	 */
-	public $svg_draw_blocks = array();
 
 	/**
 	 * Entrance animation blocks
@@ -155,6 +99,11 @@ class PBG_Blocks_Helper
 	 */
 	public $support_links_blocks = array();
 
+  /**
+   * Content has premium blocks
+   */
+  public $has_premium_blocks = false;
+
 	/**
 	 * Integrations Settings
 	 *
@@ -163,7 +112,6 @@ class PBG_Blocks_Helper
 	public $integrations_settings;
 
 	public $is_post_revision = false;
-
 
 	public $preview = false;
 	public $file_generation = false;
@@ -213,30 +161,25 @@ class PBG_Blocks_Helper
     ),
   );
   
-/**
-   * Holds collected media styles for blocks.
-   *
-   * @var string
-   */
-  private $collected_media_styles = array(
-    'desktop' => '',
-    'tablet'  => '',
-    'mobile'  => '',
-  );
-  
   /**
 	 * Constructor for the class
 	 */
 	public function __construct()
 	{
 		// Blocks Frontend Assets.
-		$this->blocks_frondend_assets = new Pbg_Assets_Generator('frontend');
+		$this->blocks_frontend_assets = new Pbg_Assets_Generator('frontend');
 		// Global Features.
 		$this->global_features = apply_filters('pb_global_features', get_option('pbg_global_features', array()));
 		// Performance Settings.
 		$this->performance_settings = apply_filters('pb_performance_options', get_option('pbg_performance_options', array()));
 		// Gets Active Blocks.
 		self::$blocks = apply_filters('pb_options', get_option('pb_options', array()));
+
+		// Conditionally disable templates block based on global features
+		$templates_button = $this->global_features['premium-templates-button'] ?? true;
+		if (! $templates_button) {
+			self::$blocks['templates'] = false;
+		}
 
 		$this->preview = isset($_GET['preview']); //phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verification not required.
 		if (wp_is_post_revision(get_the_ID())) {
@@ -260,10 +203,6 @@ class PBG_Blocks_Helper
 		add_action('init', array($this, 'on_init'), 20);
 		// Enqueue Editor Assets.
 		add_action('enqueue_block_editor_assets', array($this, 'pbg_editor'));
-		// Enqueue Global Responsive Option Styles.
-    add_action('enqueue_block_assets', array($this, 'pbg_enqueue_global_responsive_option_styles'));
-    // Enqueue Blocks Media Styles.
-    add_action('enqueue_block_assets', array($this, 'pbg_enqueue_blocks_media_styles'));
 		// Enqueue Frontend RTL Styles.
 		//add_action('enqueue_block_assets', array($this, 'pbg_frontend_rtl_style'));
 		// Enqueue Frontend Styles.
@@ -272,14 +211,8 @@ class PBG_Blocks_Helper
 		add_action('wp_enqueue_scripts', array($this, 'add_blocks_frontend_assets'), 10);
 		// Register Premium Blocks category.
 		add_filter('block_categories_all', array($this, 'register_premium_category'), 9999991, 2);
-		// Generate Blocks Stylesheet.
-		// add_action( 'wp', array( $this, 'generate_stylesheet' ), 99 );
-		add_action('wp_enqueue_scripts', array($this, 'generate_stylesheet'), 20);
-		// Enqueue Generated stylesheet to WP Head.
-		add_action('wp_head', array($this, 'print_stylesheet'), 80);
 
 		add_action('enqueue_block_editor_assets', array($this, 'add_blocks_editor_styles'));
-
 
 		add_action('wp_head', array($this, 'add_blocks_frontend_inline_styles'), 80);
 
@@ -289,11 +222,8 @@ class PBG_Blocks_Helper
 		add_filter('Premium_BLocks_tablet_media_query', array($this, 'tablet_breakpoint'), 1);
 		add_filter('Premium_BLocks_desktop_media_query', array($this, 'desktop_breakpoint'), 1);
 
-		add_filter('render_block_premium/instagram-feed-posts', array($this, 'instagram_front_script'), 1, 2);
-
 		// Add block in template parts in FSE theme styles.
 		add_filter('render_block', array($this, 'add_block_style_in_template_parts'), 9, 2);
-
 
 		// Submit form with ajax.
 		add_action('wp_ajax_premium_form_submit', array($this, 'premium_form_submit'));
@@ -321,86 +251,301 @@ class PBG_Blocks_Helper
 		if (is_admin()) {
 			add_action('init', array($this, 'init_admin_features'));
 		}
+
+    // Check and enqueue global responsive option CSS
+    add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_global_responsive_option_css' ), 999 );
+
+    // Enqueues styles that ensure compatibility with other plugins or themes.
+    add_action( 'enqueue_block_assets', array( $this, 'enqueue_compatibility_styles' ) );
+
+    // Enqueue assets for the editor content.
+    add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_content_assets' ));
 	}
 
+  public function enqueue_editor_content_assets() {
+    if ( ! is_admin() ) return;
+
+    wp_enqueue_script(
+      'pbg-isotope-editor',
+      PREMIUM_BLOCKS_URL . 'assets/js/lib/isotope.pkgd.min.js',
+      array(),
+      PREMIUM_BLOCKS_VERSION,
+      true
+    );
+  }
+
   /**
-   * Enqueue global responsive option styles.
+   * Enqueues styles that ensure compatibility with other plugins or themes
    *
+   * @since 2.0.0
+   * @access public
    * @return void
    */
-  public function pbg_enqueue_global_responsive_option_styles() {
+  public function enqueue_compatibility_styles() {
+    if( ! is_admin() ) {
+      return;
+    }
+
+    $themes_to_check = array( 'Kadence', 'GeneratePress' );
+    $compatibility_css = '';
+    
+    // We adding compatibility styles only in admin area for editor to handle compatibility with GeneratePress Theme.
+    if ( in_array( wp_get_theme()->get('Name'), $themes_to_check ) || in_array( get_template(), $themes_to_check ) || in_array( get_stylesheet(), $themes_to_check ) ) {
+      $compatibility_css .= "
+        html :where(.wp-block[class*='premium-']) {
+          margin-top: unset;
+          margin-bottom: unset;
+        }
+
+        .wp-block[class*='premium-']
+        :where( .pbg-content-wrap .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block ) {
+          margin-left: unset;
+          margin-right: unset;
+        }
+
+        .wp-block[class*='premium-'] :where( .block-editor-block-list__layout .wp-block ){
+          max-width: inherit;
+        }
+        
+        .premium-is-root-container.alignfull {
+          max-width: none;
+        }
+      ";
+    }
+
+    // Minify CSS if css is not empty and the minify method is available.
+    if ( ! empty( $compatibility_css ) && isset( $this->blocks_frontend_assets ) && method_exists( $this->blocks_frontend_assets, 'minify_css' ) ) {
+      $compatibility_css = $this->blocks_frontend_assets->minify_css( $compatibility_css );
+    }
+    
+    // If we have compatibility CSS, add it inline
+    if ( ! empty( $compatibility_css ) ) {
+      wp_register_style( 'pbg-compatibility', false );
+      wp_enqueue_style( 'pbg-compatibility' );
+      wp_add_inline_style( 'pbg-compatibility', $compatibility_css );
+    }
+  }
+
+  /**
+   * Enqueue global responsive option CSS if premium blocks are present
+   */
+  public function enqueue_global_responsive_option_css() {
+    if ($this->has_premium_blocks || $this->content_has_premium_blocks()) {
+      add_action('wp_head', array($this, 'inject_responsive_css'), 100);
+    }
+  }
+  
+  /**
+   * Check if the current page/post contains premium blocks
+   *
+   * @return bool True if premium blocks are found, false otherwise.
+   */
+  private function content_has_premium_blocks() {
+    global $post;
+      
+    // Handle singular posts/pages
+    if (is_singular() && $post && has_blocks($post->post_content)) {
+      if ($this->parse_blocks_for_premium($post->post_content)) {
+        $this->has_premium_blocks = true;
+        return true;
+      }
+    }
+      
+    // Note: Query loop posts are always excluded (archive/home/search pages)
+    // This prevents checking individual posts in blog archives
+    
+    // Check FSE templates (home, single, archive, etc.)
+    if (function_exists('get_block_template')) {
+      $template = null;
+      
+      // Get the appropriate template based on context
+      if (is_front_page() || is_home()) {
+        $template = get_block_template(get_stylesheet() . '//home');
+        if (!$template) {
+          $template = get_block_template(get_stylesheet() . '//index');
+        }
+      } elseif (is_singular()) {
+        $template_slug = get_page_template_slug();
+        if ($template_slug) {
+          $template = get_block_template(get_stylesheet() . '//' . str_replace('.html', '', $template_slug));
+        } else {
+          $post_type = get_post_type();
+          $template = get_block_template(get_stylesheet() . '//single-' . $post_type);
+          if (!$template) {
+            $template = get_block_template(get_stylesheet() . '//singular');
+          }
+        }
+      } elseif (is_archive()) {
+        $template = get_block_template(get_stylesheet() . '//archive');
+      }
+      
+      // Fallback to index template
+      if (!$template) {
+        $template = get_block_template(get_stylesheet() . '//index');
+      }
+      
+      if ($template && !empty($template->content) && $this->parse_blocks_for_premium($template->content)) {
+        $this->has_premium_blocks = true;
+        return true;
+      }
+    }
+
+    $this->has_premium_blocks = false;
+    return false;
+  }
+  
+  /**
+   * Parse content to detect premium blocks
+   *
+   * @param string $content The content to parse.
+   * @return bool True if premium blocks are found, false otherwise.
+   */
+  private function parse_blocks_for_premium($content) {
+    if (empty($content)) {
+      return false;
+    }
+      
+    $blocks = parse_blocks($content);
+    return $this->has_premium_block_recursive($blocks);
+  }
+  
+  /**
+   * Generic recursive block processor that handles reusable blocks and inner blocks.
+	 * Executes a callback function on each block.
+	 *
+	 * @param array    $blocks   The blocks to traverse.
+	 * @param callable $callback Function to execute on each block. Receives ($block) as parameter.
+	 *                           Should return true to stop traversal (for search operations).
+	 * @param mixed    $context  Optional context to pass to callback (e.g., block_name for searching).
+	 *
+	 * @return mixed Returns true if callback returns true (for early termination), otherwise void.
+	 */
+	private function process_blocks_recursive($blocks, $callback, $context = null)
+	{
+		foreach ($blocks as $block) {
+			// Execute callback on current block
+			$result = call_user_func($callback, $block, $context);
+			
+			// early return if callback indicates to stop traversal.
+			if ($result === true) {
+				return true;
+			}
+
+			// Handle reusable blocks/patterns (core/block)
+			if ($block['blockName'] === 'core/block' && !empty($block['attrs']['ref'])) {
+				$reusable_content = get_post_field('post_content', $block['attrs']['ref']);
+				if (!empty($reusable_content)) {
+					$reusable_blocks = parse_blocks($reusable_content);
+					$result = $this->process_blocks_recursive($reusable_blocks, $callback, $context);
+					if ($result === true) {
+						return true;
+					}
+				}
+			}
+
+			// Handle template parts (core/template-part)
+			if ($block['blockName'] === 'core/template-part') {
+				$theme = $block['attrs']['theme'] ?? get_stylesheet();
+				$slug = $block['attrs']['slug'] ?? '';
+				
+				if (!empty($slug)) {
+					$template_part = get_block_template($theme . '//' . $slug, 'wp_template_part');
+					
+					if ($template_part && !empty($template_part->content)) {
+						$template_blocks = parse_blocks($template_part->content);
+						$result = $this->process_blocks_recursive($template_blocks, $callback, $context);
+						if ($result === true) {
+							return true;
+						}
+					}
+				}
+			}
+
+			// Process inner blocks recursively
+			if (!empty($block['innerBlocks'])) {
+				$result = $this->process_blocks_recursive($block['innerBlocks'], $callback, $context);
+				if ($result === true) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+   * Recursively check for premium blocks (handles nested blocks and reusable blocks)
+   *
+   * @param array $blocks The blocks to check.
+   * @return bool True if premium blocks are found, false otherwise.
+   */
+  private function has_premium_block_recursive($blocks)
+  {
+    return $this->process_blocks_recursive($blocks, function($block) {
+      // Check if block is a premium block
+      if (!empty($block['blockName']) && $this->is_premium_block($block['blockName'])) {
+        return true;
+      }
+      return false;
+    });
+  }
+  
+  /**
+   * Check if a specific block exists in the blocks array.
+   *
+   * @param string $block_name The block name to search for.
+   * @param array  $blocks     The blocks to search in.
+   *
+   * @return bool True if block is found, false otherwise.
+   */
+  private function pbg_has_block($block_name, $blocks)
+  {
+    return $this->process_blocks_recursive($blocks, function($block) use ($block_name) {
+      if ($block['blockName'] === $block_name) {
+        return true;
+      }
+      return false;
+    });
+  }
+
+	/**
+   * Inject the responsive CSS
+   */
+  public function inject_responsive_css() {
+    // Prevent duplicate injection
+    static $injected = false;
+
+    if ($injected) {
+      return;
+    }
+
+    $injected = true;
+    
     $layout_settings = get_option('pbg_global_layout', array());
     $tablet_bp = $layout_settings['tablet_breakpoint'] ?? 1024;
     $mobile_bp = $layout_settings['mobile_breakpoint'] ?? 767;
-
+    
     $custom_css = "
-        @media (min-width: " . ($tablet_bp + 1) . "px) {
-            .premium-desktop-hidden { display: none !important; }
-        }
-        @media (min-width: " . ($mobile_bp + 1) . "px) and (max-width: {$tablet_bp}px) {
-            .premium-tablet-hidden { display: none !important; }
-        }
-        @media (max-width: {$mobile_bp}px) {
-            .premium-mobile-hidden { display: none !important; }
-        }
+    @media (min-width: " . ($tablet_bp + 1) . "px) {
+        .premium-desktop-hidden { display: none !important; }
+    }
+    @media (min-width: " . ($mobile_bp + 1) . "px) and (max-width: {$tablet_bp}px) {
+        .premium-tablet-hidden { display: none !important; }
+    }
+    @media (max-width: {$mobile_bp}px) {
+        .premium-mobile-hidden { display: none !important; }
+    }
     ";
 
-    if (isset($this->blocks_frondend_assets) && method_exists($this->blocks_frondend_assets, 'minify_css')) {
-      $custom_css = $this->blocks_frondend_assets->minify_css($custom_css);
-    }
+    // Minify CSS if the minify method is available.
+		if ( isset( $this->blocks_frontend_assets ) && method_exists( $this->blocks_frontend_assets, 'minify_css' ) ) {
+			$custom_css = $this->blocks_frontend_assets->minify_css( $custom_css );
+		}
 
-    wp_register_style('pbg_global_responsive_option_styles', false);
-    wp_enqueue_style('pbg_global_responsive_option_styles');
-    wp_add_inline_style('pbg_global_responsive_option_styles', $custom_css);
+		?>
+		<style id="pbg-global-responsive-option-css"><?php echo $custom_css; ?></style>
+		<?php
   }
-
-  /**
-   * Add CSS to the collected media styles for blocks.
-   *
-   * @param string $css
-   * @return void
-   */
-  public function add_block_media_styles($css) {
-    if (!empty($css)) {
-      $this->collected_media_styles['desktop'] .= $css['desktop'] . "\n";
-      $this->collected_media_styles['tablet'] .= $css['tablet'] . "\n";
-      $this->collected_media_styles['mobile'] .= $css['mobile'] . "\n";
-    }
-  }
-
-  /**
-   * Enqueue the collected media styles as an inline style.
-   *
-   * @return void
-   */
-  public function pbg_enqueue_blocks_media_styles() {
-    $layout_settings = get_option('pbg_global_layout', array());
-    $tablet_bp = $layout_settings['tablet_breakpoint'] ?? 1024;
-    $mobile_bp = $layout_settings['mobile_breakpoint'] ?? 767;
-
-    $combined_css = '';
-
-		if (! empty($this->collected_media_styles['desktop'])) {
-			$combined_css .= "@media (min-width: " . ($tablet_bp + 1) . "px) {" . $this->collected_media_styles['desktop'] . "}";
-		}
-
-		if (! empty($this->collected_media_styles['tablet'])) {
-			$combined_css .= "@media all and (min-width: " . ($mobile_bp + 1) . "px) and (max-width: {$tablet_bp}px) {" . $this->collected_media_styles['tablet'] . '}';
-		}
-
-		if (! empty($this->collected_media_styles['mobile'])) {
-			$combined_css .= "@media all and (max-width: {$mobile_bp}px) {" . $this->collected_media_styles['mobile'] . '}';
-		}
-
-    if (!empty(trim($combined_css))) {
-      if (isset($this->blocks_frondend_assets) && method_exists($this->blocks_frondend_assets, 'minify_css')) {
-        $combined_css = $this->blocks_frondend_assets->minify_css($combined_css); 
-      }
-      wp_register_style('pbg_blocks_media_styles', false);
-      wp_enqueue_style('pbg_blocks_media_styles');
-      wp_add_inline_style('pbg_blocks_media_styles', $combined_css);
-		}
-	}
 
   /**
    * AJAX handler for filtering posts
@@ -432,11 +577,17 @@ class PBG_Blocks_Helper
     // Get filtered query
     $query = self::get_query( $attributes, 'grid', $page );
 
+    // Check if PBG_Post class exists (block might be deactivated)
+    if ( ! class_exists( 'PBG_Post' ) ) {
+      wp_send_json_error( array( 'message' => esc_html__( 'Post block is not available.', 'premium-blocks-for-gutenberg' ) ) );
+      return;
+    }
+
     // Generate HTML
     ob_start();
-    PBG_POST::get_instance()->posts_articles_markup( $query, $attributes, 'grid' );
+    PBG_Post::get_instance()->posts_articles_markup( $query, $attributes, 'grid' );
     $posts_html = ob_get_clean();
-    $pagination_html = PBG_POST::get_instance()->render_pagination( $query, $attributes, $page );
+    $pagination_html = PBG_Post::get_instance()->render_pagination( $query, $attributes, $page );
 
     // Return response
     wp_send_json_success( array(
@@ -460,11 +611,17 @@ class PBG_Blocks_Helper
     // Get filtered query
     $query = self::get_query( $attributes, 'grid', $page );
 
+    // Check if PBG_Post class exists (block might be deactivated)
+    if ( ! class_exists( 'PBG_Post' ) ) {
+      wp_send_json_error( array( 'message' => esc_html__( 'Post block is not available.', 'premium-blocks-for-gutenberg' ) ) );
+      return;
+    }
+
     // Generate HTML
     ob_start();
-    PBG_POST::get_instance()->posts_articles_markup( $query, $attributes, 'grid' );
+    PBG_Post::get_instance()->posts_articles_markup( $query, $attributes, 'grid' );
     $posts_html = ob_get_clean();
-    $pagination_html = PBG_POST::get_instance()->render_pagination( $query, $attributes, $page );
+    $pagination_html = PBG_Post::get_instance()->render_pagination( $query, $attributes, $page );
 
     // Return response
     wp_send_json_success( array(
@@ -950,19 +1107,16 @@ class PBG_Blocks_Helper
 		);
 
 		$form_blocks = array();
-		foreach ($inner_blocks as $inner_block) {
-			if (isset($inner_block['innerBlocks']) && ! empty($inner_block['innerBlocks'])) {
-				$form_blocks = array_merge($form_blocks, $this->get_form_inner_blocks($inner_block['innerBlocks']));
+		
+		$this->process_blocks_recursive($inner_blocks, function($block) use ($form_fields_blocks, &$form_blocks) {
+			// Check if block is form field block
+			if (in_array($block['blockName'], $form_fields_blocks, true)) {
+				$form_blocks[$block['attrs']['blockId']] = array(
+					'blockName' => $block['blockName'],
+					'attrs'     => $this->get_block_attributes($block),
+				);
 			}
-			// Check if block is form field block.
-			if (! in_array($inner_block['blockName'], $form_fields_blocks, true)) {
-				continue;
-			}
-			$form_blocks[$inner_block['attrs']['blockId']] = array(
-				'blockName' => $inner_block['blockName'],
-				'attrs'     => $this->get_block_attributes($inner_block),
-			);
-		}
+		});
 
 		return $form_blocks;
 	}
@@ -984,64 +1138,6 @@ class PBG_Blocks_Helper
 	}
 
 	/**
-	 * PBG Frontend
-	 *
-	 * Enqueue Frontend Assets for Premium Blocks.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @access public
-	 *
-	 * @return void
-	 */
-	public function instagram_front_script($content, $block)
-	{
-		if (apply_filters('pbg_disable_instagram_script', false)) {
-			return $content;
-		}
-		$media_query            = array();
-		$media_query['mobile']  = apply_filters('Premium_BLocks_mobile_media_query', '(max-width: 767px)');
-		$media_query['tablet']  = apply_filters('Premium_BLocks_tablet_media_query', '(max-width: 1024px)');
-		$media_query['desktop'] = apply_filters('Premium_BLocks_desktop_media_query', '(min-width: 1025px)');
-
-		if (isset($block['attrs']['clickAction']) && 'lightBox' === $block['attrs']['clickAction']) {
-			$images_lightbox_js = PREMIUM_BLOCKS_URL . 'assets/js/lib/fslightbox.js';
-
-			wp_enqueue_script(
-				'image-gallery-fslightbox-js',
-				$images_lightbox_js,
-				array('jquery'),
-				PREMIUM_BLOCKS_VERSION,
-				true
-			);
-		}
-
-		// View file after move it to "assets/js".
-		wp_enqueue_script(
-			'premium-instagram-feed-view',
-			PREMIUM_BLOCKS_URL . 'assets/js/build/instagram-feed/index.js',
-			array('jquery'),
-			PREMIUM_BLOCKS_VERSION,
-			true
-		);
-
-		wp_localize_script(
-			'premium-instagram-feed-view',
-			'PBGPRO_InstaFeed',
-			apply_filters(
-				'premium_instagram_feed_localize_script',
-				array(
-					'ajaxurl'     => esc_url(admin_url('admin-ajax.php')),
-					'breakPoints' => $media_query,
-					'pluginURL'   => PREMIUM_BLOCKS_URL,
-				)
-			)
-		);
-		return $content;
-	}
-
-
-	/**
 	 * Get Premium Blocks Names
 	 *
 	 * @return array
@@ -1060,6 +1156,7 @@ class PBG_Blocks_Helper
 			'premium/banner'                => array(
 				'name'       => 'banner',
 				'style_func' => 'get_premium_banner_css_style',
+        'media_style_func' => 'get_premium_banner_media_css',
 			),
 			'premium/bullet-list'           => array(
 				'name'       => 'bullet-list',
@@ -1124,6 +1221,7 @@ class PBG_Blocks_Helper
 			'premium/modal'                 => array(
 				'name'       => 'Modal',
 				'style_func' => 'get_premium_modal_css_style',
+        'media_style_func' => 'get_premium_modal_media_css',
 			),
 			'premium/image-separator'       => array(
 				'name'       => 'image-separator',
@@ -1189,10 +1287,12 @@ class PBG_Blocks_Helper
 			'premium/post-carousel'         => array(
 				'name'       => 'post-carousel',
 				'style_func' => array('PBG_Post', 'get_premium_post_css_style'),
+        'media_style_func' => array('PBG_Post', 'get_premium_post_media_css'),
 			),
 			'premium/post-grid'             => array(
 				'name'       => 'post-grid',
 				'style_func' => array('PBG_Post', 'get_premium_post_css_style'),
+        'media_style_func' => array('PBG_Post', 'get_premium_post_media_css'),
 			),
 		
 			'premium/svg-draw'              => array(
@@ -1258,6 +1358,7 @@ class PBG_Blocks_Helper
 			'premium/tabs'           => array(
 				'name'       => 'tabs',
 				'style_func' => 'get_premium_tabs_css_style',
+        'media_style_func' => 'get_premium_tabs_media_css',
 			),
 			'premium/tab-item'           => array(
 				'name'       => 'tab-item',
@@ -1270,6 +1371,7 @@ class PBG_Blocks_Helper
       'premium/one-page-scroll'        => array(
 				'name'       => 'one-page-scroll',
 				'style_func' => 'get_premium_one_page_scroll_css',
+        'media_style_func' => 'get_premium_one_page_scroll_media_css',
 			),
 			'premium/one-page-scroll-item'   => array(
 				'name'       => 'one-page-scroll-item',
@@ -1278,6 +1380,10 @@ class PBG_Blocks_Helper
 			'premium/star-ratings'        => array(
 				'name'       => 'star-ratings',
 				'style_func' => 'get_premium_star_ratings_css',
+			),
+			'premium/templates'        => array(
+				'name'       => 'templates',
+				'style_func' => '',
 			),
 		);
 
@@ -1347,50 +1453,9 @@ class PBG_Blocks_Helper
 	{
 		$global_settings = apply_filters('pb_settings', get_option('pbg_blocks_settings', array()));
 		
-		// If user explicitly enabled regeneration, respect that setting
-		if (isset($global_settings['premium-regenrate-assets']) && $global_settings['premium-regenrate-assets']) {
-			return true;
-		}
-		
-		// Smart regeneration: only when needed
-		return $this->should_regenerate_css_files();
-	}
-	
-	/**
-	 * Determine if CSS files should be regenerated based on content changes
-	 *
-	 * @return bool
-	 */
-	private function should_regenerate_css_files()
-	{
-		$post_id = get_the_ID();
-		if (!$post_id) {
-			return false;
-		}
-		
-		// Check if post was recently modified
-		$post_modified = get_post_modified_time('U', false, $post_id);
-		$css_generated = get_post_meta($post_id, '_premium_css_generated_time', true);
-		
-		// If no CSS generation time recorded, or post modified after CSS generation
-		if (!$css_generated || $post_modified > $css_generated) {
-			// Update the generation timestamp
-			update_post_meta($post_id, '_premium_css_generated_time', time());
-			return true;
-		}
-		
-		// Check if CSS file actually exists
-		$css_file_name = get_post_meta($post_id, '_premium_css_file_name', true);
-		if ($css_file_name) {
-			$upload_dir = wp_upload_dir();
-			$css_file_path = trailingslashit($upload_dir['basedir']) . 'premium-blocks-for-gutenberg/' . $css_file_name;
-			
-			if (!file_exists($css_file_path)) {
-				return true; // File missing, need to regenerate
-			}
-		}
-		
-		return false; // No regeneration needed
+		// Only force regeneration if user clicked "Regenerate Assets" button
+		// Otherwise, get_css_url() handles everything with smart hash comparison
+		return isset($global_settings['premium-regenrate-assets']) && $global_settings['premium-regenrate-assets'];
 	}
 
 	/**
@@ -1400,7 +1465,7 @@ class PBG_Blocks_Helper
 	 */
 	public function add_block_css($src, $dependencies = array())
 	{
-		$this->blocks_frondend_assets->pbg_add_css($src);
+		$this->blocks_frontend_assets->pbg_add_css($src);
 		if (! empty($dependencies)) {
 			$this->blocks_frontend_css_deps = array_merge($this->blocks_frontend_css_deps, $dependencies);
 		}
@@ -1417,8 +1482,8 @@ class PBG_Blocks_Helper
 		}
 
 		$this->add_blocks_assets();
-		$this->blocks_frondend_assets->add_inline_css($this->get_custom_block_css());
-		$inline_css = $this->blocks_frondend_assets->get_inline_css();
+		$this->blocks_frontend_assets->add_inline_css($this->get_custom_block_css());
+		$inline_css = $this->blocks_frontend_assets->get_inline_css();
 		if (! empty($inline_css)) {
 			echo '<style id="pbg-blocks-frontend-inline-css">' . $inline_css . '</style>';
 		}
@@ -1437,7 +1502,7 @@ class PBG_Blocks_Helper
 		$blocks_names = $this->get_premium_blocks_names();
 		foreach ($blocks_names as $name => $block) {
 			$slug = $block['name'];
-			if (! $this->has_block($name, $blocks)) {
+			if (! $this->pbg_has_block($name, $blocks)) {
 				continue;
 			}
 
@@ -1464,9 +1529,9 @@ class PBG_Blocks_Helper
 	 */
 	private function register_animation_blocks($blocks)
 	{
-		foreach ($blocks as $block) {
+		$this->process_blocks_recursive($blocks, function($block) {
 			$this->register_block_data($block);
-		}
+		});
 	}
 
 	/**
@@ -1478,20 +1543,38 @@ class PBG_Blocks_Helper
 			return;
 		}
 		$this->add_blocks_assets();
-		$this->blocks_frondend_assets->set_post_id(get_the_ID());
-		$this->blocks_frondend_assets->add_inline_css($this->get_custom_block_css());
-		$css_url = $this->blocks_frondend_assets->get_css_url();
+		$this->blocks_frontend_assets->set_post_id(get_the_ID());
+		$this->blocks_frontend_assets->add_inline_css($this->get_custom_block_css());
+		
+		// Check if assets need to be regenerated (user clicked button or smart detection)
+		if ($this->regenerate_assets_files()) {
+			// Force regeneration (either by user request or smart detection)
+			$css_url = $this->blocks_frontend_assets->force_rewrite_css_file();
+			
+			// Reset the regeneration flag if it was set by user clicking "Regenerate Assets" button
+			$global_settings = apply_filters('pb_settings', get_option('pbg_blocks_settings', array()));
+			if (isset($global_settings['premium-regenrate-assets']) && $global_settings['premium-regenrate-assets']) {
+				// Reset the flag after regeneration so it doesn't run on every page load
+				static $flag_reset = false;
+				if (!$flag_reset) {
+					$global_settings['premium-regenrate-assets'] = false;
+					update_option('pbg_blocks_settings', $global_settings);
+					$flag_reset = true;
+				}
+			}
+		} else {
+			// Normal operation - use smart hash-based regeneration
+			$css_url = $this->blocks_frontend_assets->get_css_url();
+		}
+		
 		if (! empty($css_url)) {
 			$version = get_post_meta(get_the_ID(), '_premium_css_version', true);
 
 			if (! $version) {
 				$version = PREMIUM_BLOCKS_VERSION;
 			}
-			if ($this->regenerate_assets_files()) {
-				$css_url =	$this->blocks_frondend_assets->force_rewrite_css_file();
-			}
 
-			wp_enqueue_style('pbg-blocks-frontend-css', $css_url, array_values($this->blocks_frontend_css_deps), $version);
+			wp_enqueue_style('pbg-blocks-frontend-assets', $css_url, array_values($this->blocks_frontend_css_deps), $version);
 		}
 	}
 
@@ -1506,12 +1589,60 @@ class PBG_Blocks_Helper
 	{
 		if (empty($blocks)) {
 			$post_id = get_the_ID();
-			$blocks  = parse_blocks(get_post_field('post_content', $post_id));
+			$post_content = get_post_field('post_content', $post_id);
+			$blocks = parse_blocks($post_content);
+
+			// Include Widget Blocks for CSS generation (only active sidebars)
+			$widget_blocks = $this->get_widget_blocks();
+			if (!empty($widget_blocks)) {
+				$blocks = array_merge($blocks, $widget_blocks);
+			}
 		}
 		$this->add_css($blocks);
 		$this->add_blocks_dynamic_css($blocks);
 		$this->register_animation_blocks($blocks);
 		$this->enqueue_features_script();
+	}
+
+	/**
+	 * Get blocks from active widgets.
+	 * 
+	 * Only processes widgets that are assigned to active sidebars,
+	 * excluding inactive widgets to improve performance.
+	 *
+	 * @return array Array of parsed blocks from active widgets.
+	 */
+	private function get_widget_blocks()
+	{
+		$active_blocks = array();
+		$sidebars_widgets = get_option('sidebars_widgets');
+		$widget_block_instances = get_option('widget_block');
+
+		if (!is_array($sidebars_widgets) || !is_array($widget_block_instances)) {
+			return $active_blocks;
+		}
+
+		foreach ($sidebars_widgets as $sidebar => $widgets) {
+			// Skip inactive widgets, empty sidebars, and array_version key
+			if ($sidebar === 'wp_inactive_widgets' || $sidebar === 'array_version' || empty($widgets) || !is_array($widgets)) {
+				continue;
+			}
+			
+			foreach ($widgets as $widget_id) {
+				// Check if this is a block widget
+				if (strpos($widget_id, 'block-') === 0) {
+					$id = str_replace('block-', '', $widget_id);
+					if (isset($widget_block_instances[$id]['content'])) {
+						$parsed = parse_blocks($widget_block_instances[$id]['content']);
+						if (!empty($parsed)) {
+							$active_blocks = array_merge($active_blocks, $parsed);
+						}
+					}
+				}
+			}
+		}
+		
+		return $active_blocks;
 	}
 
 	/**
@@ -1640,6 +1771,17 @@ class PBG_Blocks_Helper
     }
     if( $should_use_custom_width ){
       $css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Desktop', null, '!important');
+      $align = $css->pbg_get_value($attrs, 'align', 'Desktop');
+      if ( $align === 'center' ) {
+          $css->add_property('margin-left', 'auto !important');
+          $css->add_property('margin-right', 'auto !important');
+      } elseif ( $align === 'right' ) {
+          $css->add_property('margin-left', 'auto !important');
+          $css->add_property('margin-right', '0 !important');
+      } elseif ( $align === 'left' ) {
+          $css->add_property('margin-left', '0 !important');
+          $css->add_property('margin-right', 'auto !important');
+      }
     }
     $css->pbg_render_value($attrs, 'pbgPosition', 'position', 'Desktop', null, '!important');
     if( $pbg_position === 'absolute' || $pbg_position === 'fixed' ){
@@ -1670,6 +1812,17 @@ class PBG_Blocks_Helper
     }
     if( $should_use_custom_width ){
       $css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Tablet', null, '!important');
+      $align = $css->pbg_get_value($attrs, 'align', 'Tablet', true);
+      if ( $align === 'center' ) {
+          $css->add_property('margin-left', 'auto !important');
+          $css->add_property('margin-right', 'auto !important');
+      } elseif ( $align === 'right' ) {
+          $css->add_property('margin-left', 'auto !important');
+          $css->add_property('margin-right', '0 !important');
+      } elseif ( $align === 'left' ) {
+          $css->add_property('margin-left', '0 !important');
+          $css->add_property('margin-right', 'auto !important');
+      }
     }
     $css->pbg_render_value($attrs, 'pbgPosition', 'position', 'Tablet', null, '!important');
     if( $pbg_position === 'absolute' || $pbg_position === 'fixed' ){
@@ -1712,6 +1865,17 @@ class PBG_Blocks_Helper
     }
     if( $should_use_custom_width ){
       $css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Mobile', null, '!important');
+      $align = $css->pbg_get_value($attrs, 'align', 'Mobile', true);
+      if ( $align === 'center' ) {
+          $css->add_property('margin-left', 'auto !important');
+          $css->add_property('margin-right', 'auto !important');
+      } elseif ( $align === 'right' ) {
+          $css->add_property('margin-left', 'auto !important');
+          $css->add_property('margin-right', '0 !important');
+      } elseif ( $align === 'left' ) {
+          $css->add_property('margin-left', '0 !important');
+          $css->add_property('margin-right', 'auto !important');
+      }
     }
     $css->pbg_render_value($attrs, 'pbgPosition', 'position', 'Mobile', null, '!important');
     if( $pbg_position === 'absolute' || $pbg_position === 'fixed' ){
@@ -1734,40 +1898,6 @@ class PBG_Blocks_Helper
 		$css->pbg_render_spacing($attrs, 'blockMargin', 'margin', 'Mobile');
 
 		$css->stop_media_query();
-		return $css->css_output();
-	}
-
-	/**
-	 * Get svg draw css.
-	 *
-	 * @param string $block_id The block id.
-	 * @param string $block_name The block name.
-	 * @param array  $attrs The block attributes.
-	 *
-	 * @return array
-	 */
-	public function get_svg_draw_css($block_id, $block_name, $attrs)
-	{
-		$css = new Premium_Blocks_css();
-
-		if ('premium/svg-draw' === $block_name && isset($attrs['svgDraw']) && $attrs['svgDraw']['enabled']) {
-			if ('.' === substr($block_id, 0, 1)) {
-				$block_id = substr($block_id, 1);
-			}
-			$svg_draw = $attrs['svgDraw'];
-			$css->set_selector(".{$block_id} svg *");
-			$css->add_property('stroke', "{$svg_draw['strokeColor']} !important");
-			$css->add_property('stroke-width', $css->get_responsive_css($svg_draw['strokeWidth'], 'Desktop'));
-
-			// Tablet.
-			$css->start_media_query('tablet');
-			$css->add_property('stroke-width', $css->get_responsive_css($svg_draw['strokeWidth'], 'Tablet'));
-
-			// Mobile.
-			$css->start_media_query('mobile');
-			$css->add_property('stroke-width', $css->get_responsive_css($svg_draw['strokeWidth'], 'Mobile'));
-		}
-
 		return $css->css_output();
 	}
 
@@ -1797,13 +1927,18 @@ class PBG_Blocks_Helper
 		}
 		$block_data = $blocks_names[$block_name];
 		$style_func = $block_data['style_func'];
+    $media_style_func = $block_data['media_style_func'] ?? null;
 
 		$attr       = $this->get_block_attributes($block);
     
 		if (! empty($style_func)) {
 			$unique_id = $this->get_block_unique_id($block_name, $attr);
 			if (is_array($style_func)) {
-				$class      = $style_func[0];
+				$class = $style_func[0];
+				// Check if class exists before trying to instantiate (block might be deactivated)
+				if (! is_string($class) || ! class_exists($class)) {
+					return;
+				}
 				$instance   = $class::get_instance();
 				$style_func = array($instance, $style_func[1]);
 			}
@@ -1821,14 +1956,29 @@ class PBG_Blocks_Helper
 			}
 		}
 
+    if( ! empty($media_style_func) ){
+      // Handle class-based callbacks (e.g., array('PBG_Post', 'method'))
+      if (is_array($media_style_func)) {
+        $class = $media_style_func[0];
+        // Check if class exists before trying to use it (block might be deactivated)
+        if (! is_string($class) || ! class_exists($class)) {
+          return;
+        }
+        $instance = $class::get_instance();
+        $media_style_func = array($instance, $media_style_func[1]);
+      }
+      
+      if( is_callable($media_style_func) ){
+        $media_css = call_user_func( $media_style_func );
+        if( ! empty( $media_css ) ){
+          $this->add_custom_block_css( $media_css );
+        }
+      }
+    }
+
 		$extra_options_css = $this->get_extra_options_css($unique_id, $block_name, $attr);
 		if (! empty($extra_options_css)) {
 			$this->add_custom_block_css($extra_options_css);
-		}
-
-		$svg_draw_css = $this->get_svg_draw_css($unique_id, $block_name, $attr);
-		if (! empty($svg_draw_css)) {
-			$this->add_custom_block_css($svg_draw_css);
 		}
 	}
 
@@ -1841,97 +1991,14 @@ class PBG_Blocks_Helper
 	 */
 	public function add_blocks_dynamic_css($blocks)
 	{
-		foreach ($blocks ?? array() as $block) {
+		$this->process_blocks_recursive($blocks ?? array(), function($block) {
 			// Check if premium block by block name.
 			$block_name = $block['blockName'];
 
-			if (! empty($block['innerBlocks'])) {
-				$this->add_inner_blocks_dynamic_css($block['innerBlocks']);
+			if ($this->is_premium_block($block_name)) {
+				$this->add_block_dynamic_css($block, $block_name);
 			}
-
-			if (! $this->is_premium_block($block_name)) {
-				continue;
-			}
-
-			$this->add_block_dynamic_css($block, $block_name);
-		}
-	}
-
-	/**
-	 * Add inner blocks dynamic css.
-	 *
-	 * @param array $inner_blocks
-	 *
-	 * @return void
-	 */
-	public function add_inner_blocks_dynamic_css($inner_blocks)
-	{
-		foreach ($inner_blocks as $block) {
-			// Check if premium block by block name.
-			$block_name = $block['blockName'];
-
-			if (! empty($block['innerBlocks'])) {
-				$this->add_inner_blocks_dynamic_css($block['innerBlocks']);
-			}
-
-			if (! $this->is_premium_block($block_name)) {
-				continue;
-			}
-
-			$this->add_block_dynamic_css($block, $block_name);
-		}
-	}
-
-	/**
-	 * Check if the page has a specific block.
-	 *
-	 * @param string $block_name The block name.
-	 * @param array  $blocks The blocks data.
-	 *
-	 * @return bool
-	 */
-	function has_block($block_name, $blocks)
-	{
-		foreach ($blocks ?? array() as $block) {
-			if ($block['blockName'] === $block_name) {
-				return true;
-			}
-
-			if (! empty($block['innerBlocks'])) {
-				$has_block = $this->check_inner_blocks($block['innerBlocks'], $block_name);
-				if ($has_block) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Check inner blocks.
-	 *
-	 * @param array  $inner_blocks
-	 * @param string $block_name
-	 *
-	 * @return bool
-	 */
-	function check_inner_blocks($inner_blocks, $block_name)
-	{
-		foreach ($inner_blocks as $inner_block) {
-			if ($inner_block['blockName'] === $block_name) {
-				return true;
-			}
-
-			if (! empty($inner_block['innerBlocks'])) {
-				$has_block = $this->check_inner_blocks($inner_block['innerBlocks'], $block_name);
-				if ($has_block) {
-					return true;
-				}
-			}
-		}
-
-		return false;
+		});
 	}
 
 	/**
@@ -2009,18 +2076,12 @@ class PBG_Blocks_Helper
 		if ($this->is_premium_block($block['blockName'])) {
 			$attrs = $this->get_block_attributes($block);
 		}
-		if ('premium/svg-draw' === $block['blockName'] && isset($attrs['svgDraw'])) {
-			$svg_draw = $attrs['svgDraw'];
-			if ($svg_draw['enabled']) {
-				$this->svg_draw_blocks[$attrs['blockId']] = $attrs['svgDraw'];
-			}
-		}
 
 		if (! $this->global_features['premium-entrance-animation-all-blocks'] && ! $this->is_premium_block($block['blockName'])) {
 			return;
 		}
 
-		if ($this->global_features['premium-entrance-animation'] && isset($attrs['entranceAnimation']) && $this->check_if_any_value_not_empty($attrs['entranceAnimation']['animation'])) {
+    if ($this->global_features['premium-entrance-animation'] && isset($attrs['entranceAnimation']) && isset($attrs['entranceAnimation']['animation']) && $this->check_if_any_value_not_empty($attrs['entranceAnimation']['animation'])) {
 			$this->entrance_animation_blocks[$attrs['entranceAnimation']['clientId']] = $attrs['entranceAnimation'];
 		}
 
@@ -2125,24 +2186,6 @@ class PBG_Blocks_Helper
 			);
 		}
 
-		if (! empty($this->svg_draw_blocks)) {
-			wp_enqueue_script(
-				'premium-svg-draw-view',
-				PREMIUM_BLOCKS_URL . 'assets/js/build/svg-draw/index.js',
-				array(),
-				PREMIUM_BLOCKS_VERSION,
-				true
-			);
-			wp_scripts()->add_data('premium-svg-draw-view', 'after', array());
-
-
-			wp_add_inline_script(
-				'premium-svg-draw-view',
-				'var PBG_SvgDraw = ' . wp_json_encode($this->svg_draw_blocks) . ';',
-				'after'
-			);
-		}
-
 		if (! empty($this->extra_options_blocks)) {
 
 			wp_localize_script(
@@ -2172,6 +2215,7 @@ class PBG_Blocks_Helper
 		$generate_css->pbg_add_css('assets/js/build/entrance-animation/editor/index.css');
 		$generate_css->pbg_add_css('assets/css/minified/blockseditor.min.css');
 		$generate_css->pbg_add_css('assets/css/minified/editorpanel.min.css');
+		$generate_css->pbg_add_css( 'assets/css/minified/template.min.css' );
 		$is_rtl = is_rtl() ? true : false;
 		$is_rtl ? $generate_css->pbg_add_css('assets/css/minified/style-blocks-rtl.min.css') : '';
 
@@ -2183,7 +2227,7 @@ class PBG_Blocks_Helper
 				}
 
 				if ('buttons' === $slug) {
-					$this->blocks_frondend_assets->pbg_add_css('assets/css/minified/button.min.css');
+					$this->blocks_frontend_assets->pbg_add_css('assets/css/minified/button.min.css');
 				}
 
 				if ('pricing-table' === $slug) {
@@ -2228,7 +2272,7 @@ class PBG_Blocks_Helper
 					$generate_css->pbg_add_css('assets/css/minified/form-select.min.css');
 				}
 
-
+        
         if( $slug !== 'post-grid' && $slug !== 'post-carousel' ){
           $generate_css->pbg_add_css("assets/css/minified/{$slug}.min.css");
         }
@@ -2361,7 +2405,6 @@ class PBG_Blocks_Helper
 	{
 		$allow_json           = isset(self::$config['premium-upload-json']) ? self::$config['premium-upload-json'] : true;
 		$is_fa_enabled        = isset(self::$config['premium-fa-css']) ? self::$config['premium-fa-css'] : true;
-		$plugin_dependencies  = array('wp-blocks', 'react', 'react-dom', 'wp-components', 'wp-compose', 'wp-data', 'wp-edit-post', 'wp-element', 'wp-hooks', 'wp-i18n', 'wp-plugins', 'wp-polyfill', 'wp-primitives', 'wp-api', 'wp-widgets', 'lodash');
 		$mailchimp_api_key    = $this->integrations_settings['premium-mailchimp-api-key'];
 		$mailerlite_api_token = $this->integrations_settings['premium-mailerlite-api-token'];
 
@@ -2408,6 +2451,17 @@ class PBG_Blocks_Helper
 			'JsonUploadEnabled' => $allow_json,
 		);
 
+    $is_maps_enabled = self::$blocks['maps'];
+		$api_key         = isset(self::$config['premium-map-key']) ? self::$config['premium-map-key'] : '';
+		$use_js_api      = isset(self::$config['premium-map-api']) ? self::$config['premium-map-api'] : true;
+
+		if ($is_maps_enabled ) {
+			$settings_data['googleMaps'] = array(
+        'apiKey'    => $api_key,
+        'useJsApi'  => $use_js_api,
+      );
+		}
+
 		// PBG.
 		$pbg_asset_file   = PREMIUM_BLOCKS_PATH . 'assets/js/build/pbg/index.asset.php';
 		$pbg_dependencies = file_exists($pbg_asset_file) ? include $pbg_asset_file : array();
@@ -2421,8 +2475,8 @@ class PBG_Blocks_Helper
 		$entrance_animation_dependencies = file_exists($entrance_animation_asset_file) ? include $entrance_animation_asset_file : array();
 		$entrance_animation_dependencies = $entrance_animation_dependencies['dependencies'] ?? array();
 		// PBG deps.
-		array_push($blocks_dependencies, 'wp-edit-post', 'pbg-settings-js');
-		array_push($entrance_animation_dependencies, 'wp-edit-post', 'pbg-settings-js');
+		array_push($blocks_dependencies, 'pbg-settings-js');
+		array_push($entrance_animation_dependencies, 'pbg-settings-js');
 
 		wp_register_script(
 			'pbg-settings-js',
@@ -2472,37 +2526,6 @@ class PBG_Blocks_Helper
 				true
 			);
 		}
-
-		if (self::$blocks['svg-draw'] ?? true) {
-			$svgdraw_asset_file   = PREMIUM_BLOCKS_PATH . 'assets/js/build/icon-content/index.asset.php';
-			$svgdraw_dependencies = file_exists($svgdraw_asset_file) ? include $svgdraw_asset_file : array();
-			$svgdraw_dependencies = $svgdraw_dependencies['dependencies'] ?? array();
-
-			array_push($svgdraw_dependencies, 'pbg-settings-js');
-			wp_enqueue_script(
-				'pbg-icon-content',
-				PREMIUM_BLOCKS_URL . 'assets/js/build/icon-content/index.js',
-				$svgdraw_dependencies,
-				PREMIUM_BLOCKS_VERSION,
-				true
-			);
-		}
-
-		$is_maps_enabled = self::$blocks['maps'];
-		$is_enabled      = isset(self::$config['premium-map-api']) ? self::$config['premium-map-api'] : true;
-		$api_key         = isset(self::$config['premium-map-key']) ? self::$config['premium-map-key'] : '';
-
-		if ($is_maps_enabled && $is_enabled) {
-			if (! empty($api_key) && '1' != $api_key) {
-				wp_enqueue_script(
-					'premium-map-block',
-					'https://maps.googleapis.com/maps/api/js?key=' . $api_key,
-					array(),
-					PREMIUM_BLOCKS_VERSION,
-					false
-				);
-			}
-		}
 	}
 
 
@@ -2523,7 +2546,7 @@ class PBG_Blocks_Helper
 
 		$is_rtl = is_rtl() ? true : false;
 
-		if ($is_rtl) {
+		if ($is_rtl && ( $this->has_premium_blocks || $this->content_has_premium_blocks() )) {
 			wp_enqueue_style(
 				'pbg-style',
 				PREMIUM_BLOCKS_URL . 'assets/css/minified/style-blocks-rtl.min.css',
@@ -2532,16 +2555,6 @@ class PBG_Blocks_Helper
 				'all'
 			);
 		}
-
-		// Localize AJAX settings for frontend blocks
-		wp_localize_script(
-			'pbg-blocks-js',
-			'PremiumSettings',
-			array(
-				'ajaxurl' => esc_url(admin_url('admin-ajax.php')),
-				'nonce'   => wp_create_nonce('pa-blog-block-nonce'),
-			)
-		);
 	}
 
 	/**
@@ -2583,7 +2596,7 @@ class PBG_Blocks_Helper
 			} elseif ($slug === 'content-switcher') {
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/switcher-child.php';
 			} elseif ($slug === 'count-up') {
-				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/counter.php';
+				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/counter/index.php';
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/icon/index.php';
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/text/index.php';
 			} elseif ($slug === 'testimonials') {
@@ -2642,66 +2655,6 @@ class PBG_Blocks_Helper
 		);
 	}
 
-
-	/**
-	 *
-	 * Generates stylesheet and appends in head tag.
-	 *
-	 * @since 1.8.2
-	 */
-	public function generate_stylesheet()
-	{
-		$this_post = array();
-		if (class_exists('WooCommerce')) {
-
-			if (is_cart()) {
-
-				$id        = get_option('woocommerce_cart_page_id');
-				$this_post = get_post($id);
-			} elseif (is_account_page()) {
-
-				$id        = get_option('woocommerce_myaccount_page_id');
-				$this_post = get_post($id);
-			} elseif (is_checkout()) {
-
-				$id        = get_option('woocommerce_checkout_page_id');
-				$this_post = get_post($id);
-			} elseif (is_checkout_pay_page()) {
-
-				$id        = get_option('woocommerce_pay_page_id');
-				$this_post = get_post($id);
-			} elseif (is_shop()) {
-
-				$id        = get_option('woocommerce_shop_page_id');
-				$this_post = get_post($id);
-			}
-
-			if (is_object($this_post)) {
-				$this->generate_post_stylesheet($this_post);
-				return;
-			}
-		}
-
-		if (is_single() || is_page() || is_404()) {
-
-			global $post;
-			$this_post = $post;
-
-			if (! is_object($this_post)) {
-				return;
-			}
-
-			$this->generate_post_stylesheet($this_post);
-		} elseif (is_archive() || is_home() || is_search()) {
-
-			global $wp_query;
-
-			foreach ($wp_query as $post) {
-				$this->generate_post_stylesheet($post);
-			}
-		}
-	}
-
 	/**
 	 * Render Boolean is amp or Not
 	 */
@@ -2712,140 +2665,6 @@ class PBG_Blocks_Helper
 			$not_amp = false;
 		}
 		return $not_amp;
-	}
-
-	/**
-	 * Generates stylesheet in loop.
-	 *
-	 * @param object $this_post Current Post Object.
-	 *
-	 * @since 1.8.2
-	 */
-	public function generate_post_stylesheet($this_post)
-	{
-		if (! is_object($this_post)) {
-			return;
-		}
-		if (! isset($this_post->ID)) {
-			return;
-		}
-		if (has_blocks($this_post->ID)) {
-
-			if (isset($this_post->post_content)) {
-
-				$blocks            = $this->parse($this_post->post_content);
-				self::$page_blocks = $blocks;
-
-				if (! is_array($blocks) || empty($blocks)) {
-					return;
-				}
-
-				self::$stylesheet .= $this->get_stylesheet($blocks);
-			}
-		}
-	}
-
-	/**
-	 * Parse Guten Block.
-	 *
-	 * @param string $content the content string.
-	 *
-	 * @since 1.1.0
-	 */
-	public function parse($content)
-	{
-		global $wp_version;
-
-		return (version_compare($wp_version, '5', '>=')) ? parse_blocks($content) : gutenberg_parse_blocks($content);
-	}
-
-	/**
-	 * Print the Stylesheet in header.
-	 *
-	 * @since 1.8.2
-	 *
-	 * @access public
-	 */
-	public function print_stylesheet()
-	{
-		global $content_width;
-		if (is_null(self::$stylesheet) || '' === self::$stylesheet) {
-			return;
-		}
-		self::$stylesheet = str_replace('#CONTENT_WIDTH#', $content_width . 'px', self::$stylesheet);
-		ob_start();
-?>
-		<style type="text/css" media="all" id="premium-style-frontend">
-			<?php echo self::$stylesheet; ?>
-		</style>
-<?php
-		ob_end_flush();
-	}
-
-	/**
-	 * Generates CSS recurrsively.
-	 *
-	 * @since 1.8.2
-	 *
-	 * @access public
-	 *
-	 * @param object $block The block object.
-	 */
-	public function get_block_css($block)
-	{
-		$block    = (array) $block;
-		$name     = $block['blockName'];
-		$css      = array();
-		$block_id = '';
-
-		if (! isset($name)) {
-			return;
-		}
-
-		if (isset($block['attrs']) && is_array($block['attrs'])) {
-			$blockattr = $block['attrs'];
-			if (isset($blockattr['block_id'])) {
-				$block_id = $blockattr['block_id'];
-			}
-		}
-
-		self::$current_block_list[] = $name;
-
-		if (strpos($name, 'premium/') !== false) {
-			self::$premium_flag = true;
-		}
-
-		if (isset($block['innerBlocks'])) {
-			foreach ($block['innerBlocks'] as $j => $inner_block) {
-				if ('core/block' === $inner_block['blockName']) {
-					$id = (isset($inner_block['attrs']['ref'])) ? $inner_block['attrs']['ref'] : 0;
-
-					if ($id) {
-						$content = get_post_field('post_content', $id);
-
-						$reusable_blocks = $this->parse($content);
-
-						self::$stylesheet .= $this->get_stylesheet($reusable_blocks);
-					}
-				} else {
-					// Get CSS for the Block.
-					$inner_block_css = $this->get_block_css($inner_block);
-
-					$css_desktop = (isset($css['desktop']) ? $css['desktop'] : '');
-					$css_tablet  = (isset($css['tablet']) ? $css['tablet'] : '');
-					$css_mobile  = (isset($css['mobile']) ? $css['mobile'] : '');
-
-					if (isset($inner_block_css['desktop'])) {
-						$css['desktop'] = $css_desktop . $inner_block_css['desktop'];
-						$css['tablet']  = $css_tablet . $inner_block_css['tablet'];
-						$css['mobile']  = $css_mobile . $inner_block_css['mobile'];
-					}
-				}
-			}
-		}
-
-		self::$current_block_list = array_unique(self::$current_block_list);
-		return $css;
 	}
 
 	/**
@@ -2881,7 +2700,6 @@ class PBG_Blocks_Helper
 
 		return apply_filters('pbg_loop_post_types', $options);
 	}
-
 
 	public function get_all_taxonomy()
 	{
@@ -2976,34 +2794,6 @@ class PBG_Blocks_Helper
 		return $image_sizes;
 	}
 
-
-
-	public static function get_paged($query)
-	{
-
-		global $paged;
-
-		// Check the 'paged' query var.
-		$paged_qv = $query->get('paged');
-
-		if (is_numeric($paged_qv)) {
-			return $paged_qv;
-		}
-
-		// Check the 'page' query var.
-		$page_qv = $query->get('page');
-
-		if (is_numeric($page_qv)) {
-			return $page_qv;
-		}
-
-		// Check the $paged global?
-		if (is_numeric($paged)) {
-			return $paged;
-		}
-
-		return 0;
-	}
 	/**
 	 * Builds the base url.
 	 *
@@ -3045,31 +2835,6 @@ class PBG_Blocks_Helper
 		}
 
 		return $base;
-	}
-	/**
-	 * Returns the Paged Format.
-	 *
-	 * @param string $permalink_structure Premalink Structure.
-	 * @param string $base Base.
-	 * @since 1.14.9
-	 */
-	public static function paged_format($permalink_structure, $base)
-	{
-
-		$page_prefix = empty($permalink_structure) ? 'paged' : 'page';
-
-		if (! empty($permalink_structure)) {
-			$format  = substr($base, -1) !== '/' ? '/' : '';
-			$format .= $page_prefix . '/';
-			$format .= '%#%';
-			$format .= substr($permalink_structure, -1) === '/' ? '/' : '';
-		} elseif (empty($permalink_structure) || is_search()) {
-			$parse_url = wp_parse_url($base, PHP_URL_QUERY);
-			$format    = empty($parse_url) ? '?' : '&';
-			$format   .= $page_prefix . '=%#%';
-		}
-
-		return $format;
 	}
 
 	/**
@@ -3168,36 +2933,6 @@ class PBG_Blocks_Helper
 		$query_args = apply_filters("pbg_post_query_args_{$block_type}", $query_args, $attributes);
 		return new WP_Query($query_args);
 	}
-	/**
-	 * Render Inline CSS helper function
-	 *
-	 * @param array  $css the css for each block.
-	 * @param string $style_id the unique id for the rendered style.
-	 * @param bool   $in_content the bool for whether or not it should run in content.
-	 */
-	public function render_inline_css($css, $block_name = '')
-	{
-		if (! is_admin()) {
-			$this->add_custom_block_css($css);
-			if ($block_name) {
-				$this->add_block_css("assets/css/minified/{$block_name}.min.css");
-			}
-		}
-	}
-
-	/**
-	 * Check if block should render inline.
-	 *
-	 * @param string $name the blocks name.
-	 * @param string $unique_id the blocks block_id.
-	 */
-	public function should_render_inline($name, $unique_id)
-	{
-		if (doing_filter('the_content') || apply_filters('premium_blocks_force_render_inline_css_in_content', false, $name, $unique_id) || is_customize_preview()) {
-			return true;
-		}
-		return false;
-	}
 
 	public function add_custom_block_css($css)
 	{
@@ -3256,145 +2991,6 @@ class PBG_Blocks_Helper
 
 		// Output the combined CSS code in a single style tag
 		return $combined_css;
-	}
-
-
-	/**
-	 * Generates stylesheet for reusable blocks.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param array $blocks blocks array.
-	 */
-	public function get_stylesheet($blocks)
-	{
-		$desktop         = '';
-		$tablet          = '';
-		$mobile          = '';
-		$tab_styling_css = '';
-		$mob_styling_css = '';
-
-		foreach ($blocks as $i => $block) {
-			if (is_array($block)) {
-				if ('' === $block['blockName']) {
-					continue;
-				}
-				if ('core/block' === $block['blockName']) {
-					$id = (isset($block['attrs']['ref'])) ? $block['attrs']['ref'] : 0;
-
-					if ($id) {
-						$content = get_post_field('post_content', $id);
-
-						$reusable_blocks = $this->parse($content);
-
-						self::$stylesheet .= $this->get_stylesheet($reusable_blocks);
-					}
-				} else {
-					// Get CSS for the Block.
-					$css = $this->get_block_css($block);
-
-					if (isset($css['desktop'])) {
-						$desktop .= $css['desktop'];
-						$tablet  .= $css['tablet'];
-						$mobile  .= $css['mobile'];
-					}
-				}
-			}
-		}
-		if (! empty($tablet)) {
-			$tab_styling_css .= '@media only screen and (max-width: ' . PBG_TABLET_BREAKPOINT . 'px) {';
-			$tab_styling_css .= $tablet;
-			$tab_styling_css .= '}';
-		}
-		if (! empty($mobile)) {
-			$mob_styling_css .= '@media only screen and (max-width: ' . PBG_MOBILE_BREAKPOINT . 'px) {';
-			$mob_styling_css .= $mobile;
-			$mob_styling_css .= '}';
-		}
-		return $desktop . $tab_styling_css . $mob_styling_css;
-	}
-
-	/**
-	 * Get Vimeo Video Data
-	 *
-	 * Get video data using Vimeo API
-	 *
-	 * @since 3.11.4
-	 * @access public
-	 *
-	 * @param string $video_id video ID.
-	 */
-	public static function get_vimeo_video_data($video_id)
-	{
-
-		$vimeo_data = wp_remote_get('http://www.vimeo.com/api/v2/video/' . intval($video_id) . '.php');
-
-		if (is_wp_error($vimeo_data)) {
-			return false;
-		}
-
-		if (isset($vimeo_data['response']['code'])) {
-
-			if (200 === $vimeo_data['response']['code']) {
-
-				$response  = maybe_unserialize($vimeo_data['body']);
-				$thumbnail = isset($response[0]['thumbnail_large']) ? $response[0]['thumbnail_large'] : false;
-
-				$data = array(
-					'src'      => $thumbnail,
-					'url'      => $response[0]['user_url'],
-					'portrait' => $response[0]['user_portrait_huge'],
-					'title'    => $response[0]['title'],
-					'user'     => $response[0]['user_name'],
-				);
-
-				return $data;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Get Video Thumbnail
-	 *
-	 * Get thumbnail URL for embed or self hosted
-	 *
-	 * @since 3.7.0
-	 * @access public
-	 *
-	 * @param string $video_id video ID.
-	 * @param string $type embed type.
-	 * @param string $size youtube thumbnail size.
-	 */
-	public static function get_video_thumbnail($video_id, $type, $size = '')
-	{
-
-		$thumbnail_src = 'transparent';
-
-		if ('youtube' === $type) {
-			if ('' === $size) {
-				$size = 'maxresdefault';
-			}
-			$thumbnail_src = sprintf('https://i.ytimg.com/vi/%s/%s.jpg', $video_id, $size);
-		} elseif ('vimeo' === $type) {
-
-			$vimeo = self::get_vimeo_video_data($video_id);
-
-			$thumbnail_src = is_array($vimeo) ? $vimeo['src'] : '';
-		} elseif ('dailymotion' === $type) {
-			$video_data = rplg_urlopen('https://api.dailymotion.com/video/' . $video_id . '?fields=thumbnail_url');
-
-			if (isset($video_data['code'])) {
-				if (404 === $video_data['code']) {
-					return $thumbnail_src;
-				}
-			}
-
-			$thumbnail_src = rplg_json_decode($video_data['data'])->thumbnail_url;
-		}
-
-		return $thumbnail_src;
 	}
 
 	/**

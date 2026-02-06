@@ -1,98 +1,44 @@
 <?php
-// Move this file to "blocks-config" folder with name "instagram-feed-header.php".
-
 /**
  * Server-side rendering of the `premium/instagram-feed-header` block.
  *
  * @package WordPress
  */
 
-function get_premium_instagram_feed_header_css($attributes, $unique_id)
-{
+/**
+ * Get CSS styles for Instagram Feed Header block.
+ *
+ * @param array  $attributes Block attributes.
+ * @param string $unique_id  Unique block ID.
+ * @return string Generated CSS.
+ */
+function get_premium_instagram_feed_header_css( $attributes, $unique_id ) {
 	$css = new Premium_Blocks_css();
 
-	// Desktop Styles.
-	if (isset($attributes['border'])) {
-		$border        = $attributes['border'];
-		$border_width  = $attributes['border']['borderWidth'];
-		$border_radius = $attributes['border']['borderRadius'];
+	// Desktop styles.
+	$css->set_selector( '.' . $unique_id );
+	$css->pbg_render_background( $attributes, 'background', 'Desktop' );
+	$css->pbg_render_border( $attributes, 'border', 'Desktop' );
+	$css->pbg_render_spacing( $attributes, 'padding', 'padding', 'Desktop' );
+	$css->pbg_render_spacing( $attributes, 'margin', 'margin', 'Desktop' );
+	$css->pbg_render_shadow( $attributes, 'boxShadow', 'box-shadow' );
 
-		$css->set_selector('.' . $unique_id);
-		$css->render_border($border, 'Desktop');
-	}
-
-	if (isset($attributes['padding'])) {
-		$padding = $attributes['padding'];
-
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('padding', $css->render_spacing($padding['Desktop'], isset($padding['unit']['Desktop']) ? $padding['unit']['Desktop'] : $padding['unit']));
-	}
-
-	if (isset($attributes['margin'])) {
-		$margin = $attributes['margin'];
-
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('margin', $css->render_spacing($margin['Desktop'], isset($margin['unit']['Desktop']) ? $margin['unit']['Desktop'] : $margin['unit']));
-	}
-
-	if (isset($attributes['background'])) {
-		$css->set_selector('.' . $unique_id);
-		$css->render_background($attributes['background'], 'Desktop');
-	}
-
-	$css->start_media_query('tablet');
-	// Tablet Styles.
-	if (isset($attributes['border'])) {
-		$border        = $attributes['border'];
-		$border_width  = $attributes['border']['borderWidth'];
-		$border_radius = $attributes['border']['borderRadius'];
-
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('border-width', $css->render_spacing($border_width['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($border_radius['Tablet'], 'px'));
-	}
-
-	if (isset($attributes['padding'])) {
-		$padding = $attributes['padding'];
-
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('padding', $css->render_spacing($padding['Tablet'], isset($padding['unit']['Tablet']) ? $padding['unit']['Tablet'] : $padding['unit']));
-	}
-
-	if (isset($attributes['margin'])) {
-		$margin = $attributes['margin'];
-
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('margin', $css->render_spacing($margin['Tablet'], isset($margin['unit']['Tablet']) ? $margin['unit']['Tablet'] : $margin['unit']));
-	}
-
+	// Tablet responsive styles.
+	$css->start_media_query( 'tablet' );
+	$css->set_selector( '.' . $unique_id );
+	$css->pbg_render_background( $attributes, 'background', 'Tablet' );
+	$css->pbg_render_border( $attributes, 'border', 'Tablet' );
+	$css->pbg_render_spacing( $attributes, 'padding', 'padding', 'Tablet' );
+	$css->pbg_render_spacing( $attributes, 'margin', 'margin', 'Tablet' );
 	$css->stop_media_query();
-	$css->start_media_query('mobile');
-	// Mobile Styles.
-	if (isset($attributes['border'])) {
-		$border        = $attributes['border'];
-		$border_width  = $attributes['border']['borderWidth'];
-		$border_radius = $attributes['border']['borderRadius'];
 
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('border-width', $css->render_spacing($border_width['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($border_radius['Mobile'], 'px'));
-	}
-
-	if (isset($attributes['padding'])) {
-		$padding = $attributes['padding'];
-
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('padding', $css->render_spacing($padding['Mobile'], isset($padding['unit']['Mobile']) ? $padding['unit']['Mobile'] : $padding['unit']));
-	}
-
-	if (isset($attributes['margin'])) {
-		$margin = $attributes['margin'];
-
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('margin', $css->render_spacing($margin['Mobile'], isset($margin['unit']['Mobile']) ? $margin['unit']['Mobile'] : $margin['unit']));
-	}
-
+	// Mobile responsive styles.
+	$css->start_media_query( 'mobile' );
+	$css->set_selector( '.' . $unique_id );
+	$css->pbg_render_background( $attributes, 'background', 'Mobile' );
+	$css->pbg_render_border( $attributes, 'border', 'Mobile' );
+	$css->pbg_render_spacing( $attributes, 'padding', 'padding', 'Mobile' );
+	$css->pbg_render_spacing( $attributes, 'margin', 'margin', 'Mobile' );
 	$css->stop_media_query();
 
 	return $css->css_output();
@@ -107,9 +53,7 @@ function get_premium_instagram_feed_header_css($attributes, $unique_id)
  *
  * @return string Returns the post content with the legacy widget added.
  */
-function render_block_pbg_instagram_feed_header($attributes, $content, $block)
-{
-
+function render_block_pbg_instagram_feed_header( $attributes, $content, $block ) {
 	return $content;
 }
 
@@ -120,8 +64,7 @@ function render_block_pbg_instagram_feed_header($attributes, $content, $block)
  * @uses render_block_pbg_instagram_feed_header()
  * @throws WP_Error An WP_Error exception parsing the block definition.
  */
-function register_block_pbg_instagram_feed_header()
-{
+function register_block_pbg_instagram_feed_header() {
 	register_block_type(
 		PREMIUM_BLOCKS_PATH . 'blocks-config/instagram-feed-header',
 		array(

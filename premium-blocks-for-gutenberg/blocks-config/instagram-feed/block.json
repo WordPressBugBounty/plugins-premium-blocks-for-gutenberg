@@ -26,15 +26,9 @@
         "headerBlockData": {
             "type": "array",
             "default": []
-        },
-        "cacheTime": {
-            "type": "string",
-            "default": "hour"
         }
     },
     "providesContext": {
-        "accessToken": "accessToken",
-        "cacheTime": "cacheTime",
-        "posts": "posts"
+        "accessToken": "accessToken"
     }
 }

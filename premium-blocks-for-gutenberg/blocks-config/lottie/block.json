@@ -9,18 +9,12 @@
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
-        "lottieId": {
-            "type": "string"
-        },
         "blockId": {
             "type": "string"
         },
         "lottieURl": {
             "type": "string",
             "default": ""
-        },
-        "lottieJson": {
-            "type": "object"
         },
         "loop": {
             "type": "boolean",
@@ -33,7 +27,7 @@
         },
         "speed": {
             "type": "number",
-            "default": "1",
+            "default": 1,
             "isStyle": true
         },
         "trigger": {
@@ -42,17 +36,17 @@
         },
         "bottom": {
             "type": "number",
-            "default": "0",
+            "default": 0,
             "isStyle": true
         },
         "top": {
             "type": "number",
-            "default": "100",
+            "default": 100,
             "isStyle": true
         },
         "scrollSpeed": {
             "type": "number",
-            "default": "4",
+            "default": 4,
             "isStyle": true
         },
         "rotate": {
@@ -89,9 +83,7 @@
             "default": [
                 {
                     "backColor": "",
-                    "backOpacity": 1,
-                    "backHColor": "",
-                    "backHOpacity": 1
+                    "backHColor": ""
                 }
             ],
             "isStyle": true
@@ -159,7 +151,7 @@
         "border": {
             "type": "object",
             "default": {
-                "borderType": "none",
+                "borderType": "",
                 "borderColor": "",
                 "borderWidth": {
                     "Desktop": {
@@ -231,7 +223,7 @@
         "size": {
             "type": "object",
             "default": {
-                "Desktop": "200",
+                "Desktop": 200,
                 "Tablet": "",
                 "Mobile": "",
                 "unit": {

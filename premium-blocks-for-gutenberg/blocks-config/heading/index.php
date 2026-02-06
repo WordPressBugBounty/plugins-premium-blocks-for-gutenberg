@@ -57,11 +57,12 @@ function get_premium_heading_css_style($attr, $unique_id)
 	// Align.
   $css->set_selector($unique_id);
   $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
+  $css->pbg_render_range($attr, 'rotateHeading', 'transform', 'Desktop', 'rotate(', ')');
 
   $css->set_selector($unique_id . ' .premium-title-container');
   $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Desktop');
 
-  $css->set_selector($unique_id . ' .premium-title-header');
+  $css->set_selector($unique_id . ' .premium-title-container .premium-title-header');
   $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Desktop');
   $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Desktop');
 
@@ -79,7 +80,7 @@ function get_premium_heading_css_style($attr, $unique_id)
   $css->pbg_render_border($attr, 'titleBorder', 'Desktop');
   $css->add_property('border-left-style', $title_border_type === 'none' ? 'solid' : $title_border_type);
 
-  $css->set_selector($unique_id . ' .style2, ' . $unique_id . ' .style4, ' . $unique_id . ' .style5, ' . $unique_id . ' .style6');
+  $css->set_selector($unique_id . ' .style2, ' . $unique_id . ' .style3, ' . $unique_id . ' .style4, ' . $unique_id . ' .style5, ' . $unique_id . ' .style6');
   $css->pbg_render_border($attr, 'titleBorder', 'Desktop');
   $css->add_property('border-bottom-style', $title_border_type === 'none' ? 'solid' : $title_border_type);
 
@@ -170,11 +171,25 @@ function get_premium_heading_css_style($attr, $unique_id)
   $css->pbg_render_range($attr, 'strokeFull', '-webkit-text-stroke-width', 'Desktop');
   $css->pbg_render_typography($attr, 'textTypography', 'Desktop');
 
+  $css->set_selector($unique_id . ' .premium-title-container .premium-title-header .premium-headingc-true.premium-headings-true' );
+  $css->pbg_render_color($attr, 'titleStyles[0].strokeColor', '-webkit-text-stroke-color');
+  $css->pbg_render_color($attr, 'titleStyles[0].strokeFill', '-webkit-text-fill-color');
+
+  $css->set_selector($unique_id . ' .premium-title-container:not(.style8) .premium-title-header .premium-title-text-title:not(.premium-headinga-true)' );
+  $css->pbg_render_background($attr, 'clipBackground', 'Desktop');
+
+  $css->set_selector($unique_id . ' .premium-title-container-noise-true .premium-title-text-title:before' );
+  $css->pbg_render_range($attr, 'noiseColor1', 'text-shadow', null, '1px 0');
+
+  $css->set_selector($unique_id . ' .premium-title-container-noise-true .premium-title-text-title:after' );
+  $css->pbg_render_range($attr, 'noiseColor2', 'text-shadow', null, '-1px 0');
+
 	$css->start_media_query('tablet');
 
 	// Align.
 	$css->set_selector($unique_id);
   $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
+  $css->pbg_render_range($attr, 'rotateHeading', 'transform', 'Tablet', 'rotate(', ')');
 
   $css->set_selector($unique_id . ' .premium-title-container');
   $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Tablet');
@@ -195,7 +210,7 @@ function get_premium_heading_css_style($attr, $unique_id)
   $css->set_selector($unique_id . ' .style1 .premium-title-header');
   $css->pbg_render_border($attr, 'titleBorder', 'Tablet');
 
-  $css->set_selector($unique_id . ' .style2, ' . $unique_id . ' .style4, ' . $unique_id . ' .style5, ' . $unique_id . ' .style6');
+  $css->set_selector($unique_id . ' .style2, ' . $unique_id . ' .style3, ' . $unique_id . ' .style4, ' . $unique_id . ' .style5, ' . $unique_id . ' .style6');
   $css->pbg_render_border($attr, 'titleBorder', 'Tablet');
 
 	// Style for icon.
@@ -259,6 +274,9 @@ function get_premium_heading_css_style($attr, $unique_id)
   $css->pbg_render_range($attr, 'strokeFull', '-webkit-text-stroke-width', 'Tablet');
   $css->pbg_render_typography($attr, 'textTypography', 'Tablet');
 
+  $css->set_selector($unique_id . ' .premium-title-container:not(.style8) .premium-title-header .premium-title-text-title:not(.premium-headinga-true)' );
+  $css->pbg_render_background($attr, 'clipBackground', 'Tablet');
+
 	$css->stop_media_query();
 
 	$css->start_media_query('mobile');
@@ -266,6 +284,7 @@ function get_premium_heading_css_style($attr, $unique_id)
 	// Align.
 	$css->set_selector($unique_id);
   $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
+  $css->pbg_render_range($attr, 'rotateHeading', 'transform', 'Mobile', 'rotate(', ')');
 
   $css->set_selector($unique_id . ' .premium-title-container');
   $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Mobile');
@@ -286,7 +305,7 @@ function get_premium_heading_css_style($attr, $unique_id)
   $css->set_selector($unique_id . ' .style1 .premium-title-header');
   $css->pbg_render_border($attr, 'titleBorder', 'Mobile');
 
-  $css->set_selector($unique_id . ' .style2, ' . $unique_id . ' .style4, ' . $unique_id . ' .style5, ' . $unique_id . ' .style6');
+  $css->set_selector($unique_id . ' .style2, ' . $unique_id . ' .style3, ' . $unique_id . ' .style4, ' . $unique_id . ' .style5, ' . $unique_id . ' .style6');
   $css->pbg_render_border($attr, 'titleBorder', 'Mobile');
 
 	// Style for icon.
@@ -349,6 +368,9 @@ function get_premium_heading_css_style($attr, $unique_id)
   $css->pbg_render_range($attr, 'rotateText', 'transform', 'Mobile', 'rotate(', ')!important');
   $css->pbg_render_range($attr, 'strokeFull', '-webkit-text-stroke-width', 'Mobile');
   $css->pbg_render_typography($attr, 'textTypography', 'Mobile');
+
+  $css->set_selector($unique_id . ' .premium-title-container:not(.style8) .premium-title-header .premium-title-text-title:not(.premium-headinga-true)' );
+  $css->pbg_render_background($attr, 'clipBackground', 'Mobile');
 
 	$css->stop_media_query();
 	return $css->css_output();

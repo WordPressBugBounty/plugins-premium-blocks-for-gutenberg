@@ -26,6 +26,7 @@ function get_premium_testimonials_css_style( $attr, $unique_id ) {
   $css->pbg_render_background( $attr, 'background', 'Desktop' );
   $css->pbg_render_value( $attr, 'align', 'text-align', 'Desktop' );
   $css->pbg_render_spacing( $attr, 'padding', 'padding', 'Desktop' );
+  $css->pbg_render_border($attr, 'containerBorder', 'Desktop');
 
   $css->set_selector( $unique_id . ' .premium-text-wrap');
   $css->pbg_render_value( $attr, 'align', 'text-align', 'Desktop' );
@@ -55,6 +56,7 @@ function get_premium_testimonials_css_style( $attr, $unique_id ) {
   $css->pbg_render_background( $attr, 'background', 'Tablet' );
   $css->pbg_render_value( $attr, 'align', 'text-align', 'Tablet' );
   $css->pbg_render_spacing( $attr, 'padding', 'padding', 'Tablet' );
+  $css->pbg_render_border($attr, 'containerBorder', 'Tablet');
 
   $css->set_selector( $unique_id . ' .premium-text-wrap');
   $css->pbg_render_value( $attr, 'align', 'text-align', 'Tablet' );
@@ -83,6 +85,7 @@ function get_premium_testimonials_css_style( $attr, $unique_id ) {
   $css->pbg_render_background( $attr, 'background', 'Mobile' );
   $css->pbg_render_value( $attr, 'align', 'text-align', 'Mobile' );
   $css->pbg_render_spacing( $attr, 'padding', 'padding', 'Mobile' );
+  $css->pbg_render_border($attr, 'containerBorder', 'Mobile');
 
   $css->set_selector( $unique_id . ' .premium-text-wrap');
   $css->pbg_render_value( $attr, 'align', 'text-align', 'Mobile' );

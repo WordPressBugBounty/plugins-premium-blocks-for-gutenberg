@@ -48,11 +48,9 @@ if ( ! class_exists( 'PBG_Post' ) ) {
      * @return void
      */
     public function get_premium_post_media_css(){
-      $blocks_helper = pbg_blocks_helper();
+      $media_css = array('desktop' => '', 'tablet' => '', 'mobile' => '');
 
-      $custom_css = array('desktop' => '', 'tablet' => '', 'mobile' => '');
-      
-      $custom_css['mobile'] .= "
+      $media_css['mobile'] .= "
         .premium-blog-content-wrapper {
           top: 0;
           margin: 0;
@@ -60,7 +58,7 @@ if ( ! class_exists( 'PBG_Post' ) ) {
         }
       ";
 
-      $blocks_helper->add_block_media_styles( $custom_css );
+      return $media_css;
     }
 
     /**
@@ -88,8 +86,6 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 					'editor_script'   => 'pbg-blocks-js',
 				)
 			);
-
-      $this->get_premium_post_media_css();
 		}
 
     /**

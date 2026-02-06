@@ -16,7 +16,7 @@ function register_block_pbg_gallery()
             'render_callback' => function ($attributes, $content) {
 
                 wp_register_script(
-                  'image-gallery-isotope-js',
+                  'pbg-isotope',
                   PREMIUM_BLOCKS_URL . 'assets/js/lib/isotope.pkgd.min.js',
                   array(),
                   PREMIUM_BLOCKS_VERSION,
@@ -24,7 +24,7 @@ function register_block_pbg_gallery()
                 );
 
                 wp_register_script(
-                  'image-gallery-images-loaded-js',
+                  'pbg-images-loaded',
                   PREMIUM_BLOCKS_URL . 'assets/js/lib/imageLoaded.min.js',
                   array('jquery'),
                   PREMIUM_BLOCKS_VERSION,
@@ -33,7 +33,7 @@ function register_block_pbg_gallery()
 
                 if(isset($attributes['enableLightbox']) && $attributes['enableLightbox']){
                     wp_register_script(
-                      'image-gallery-fslightbox-js',
+                      'pbg-fslightbox',
                       PREMIUM_BLOCKS_URL . 'assets/js/lib/fslightbox.js',
                       array('jquery'),
                       PREMIUM_BLOCKS_VERSION,
@@ -41,7 +41,7 @@ function register_block_pbg_gallery()
                     );
                 }else{
                     wp_register_script(
-                      'image-gallery-fslightbox-js',
+                      'pbg-fslightbox',
                       false,
                     );
                 }
@@ -49,7 +49,7 @@ function register_block_pbg_gallery()
                 wp_enqueue_script(
                   'premium-gallery-view',
                   PREMIUM_BLOCKS_URL . 'assets/js/build/gallery/index.js',
-                  array('wp-element', 'wp-i18n', 'image-gallery-images-loaded-js', 'image-gallery-isotope-js', 'image-gallery-fslightbox-js'),
+                  array('wp-element', 'wp-i18n', 'pbg-images-loaded', 'pbg-isotope', 'pbg-fslightbox'),
                   PREMIUM_BLOCKS_VERSION,
                   true
                 );
@@ -85,7 +85,7 @@ function register_block_pbg_gallery()
 
                 wp_add_inline_script(
                     'premium-gallery-view',
-                    'var PBGPRO_Gallery = ' . wp_json_encode($data) . ';',
+                    'var PBG_GALLERY = ' . wp_json_encode($data) . ';',
                     'before'
                 );
 

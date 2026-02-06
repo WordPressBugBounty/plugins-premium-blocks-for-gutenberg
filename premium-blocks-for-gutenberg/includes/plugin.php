@@ -158,11 +158,11 @@ if ( ! class_exists( 'PBG_Plugin' ) ) {
 		public function init_files() {
 			require_once PREMIUM_BLOCKS_PATH . 'classes/class-pbg-assets-generator.php';
 
-			if ( is_admin() ) {
-				require_once PREMIUM_BLOCKS_PATH . 'admin/includes/rollback.php';
-				require_once PREMIUM_BLOCKS_PATH . 'admin/includes/feedback.php';
-				
-			}
+		if ( is_admin() ) {
+			require_once PREMIUM_BLOCKS_PATH . 'admin/includes/rollback.php';
+			require_once PREMIUM_BLOCKS_PATH . 'admin/includes/feedback.php';
+			require_once PREMIUM_BLOCKS_PATH . 'includes/wp-db-pointer.php';
+		}
 			
 			require_once PREMIUM_BLOCKS_PATH . 'admin/includes/pb-panel/class-pb-panel.php';
 
@@ -187,6 +187,16 @@ if ( ! class_exists( 'PBG_Plugin' ) ) {
  				require_once PREMIUM_BLOCKS_PATH . 'includes/urlopen.php';
  				require_once PREMIUM_BLOCKS_PATH . 'classes/class-pbg-display-conditions.php';
  			}
+
+ 			$entrance_animation = $features['premium-entrance-animation'] ?? true;
+ 			if ( $entrance_animation && $features['premium-entrance-animation-all-blocks'] ) {
+ 				require_once PREMIUM_BLOCKS_PATH . 'classes/class-pbg-entrance-animation.php';
+ 			}
+
+			$templates_button = $features['premium-templates-button'] ?? true;
+			if( $templates_button ) {
+				require_once PREMIUM_BLOCKS_PATH . 'includes/premium-gutenberg-templates.php';
+			}
 		}
 
 		/**

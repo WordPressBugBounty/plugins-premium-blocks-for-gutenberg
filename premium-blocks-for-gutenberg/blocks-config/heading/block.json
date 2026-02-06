@@ -5,7 +5,12 @@
     "name": "premium/heading",
     "title": "Heading",
     "description": "Grab your website visitors’ attention with stylish headings using Premium Heading Block.asw",
-    "keywords": ["title", "Heading", "heading block", "heading styles"],
+    "keywords": [
+        "title",
+        "Heading",
+        "heading block",
+        "heading styles"
+    ],
     "textdomain": "premium-blocks-for-gutenberg",
     "category": "premium-blocks",
     "attributes": {
@@ -80,6 +85,7 @@
         },
         "textWidth": {
             "type": "string",
+            "default": "100%",
             "isStyle": true
         },
         "url": {
@@ -113,7 +119,12 @@
                     "stripeColor": "var(--pbg-global-color1,#0085BA)",
                     "blurShadow": "120",
                     "animateDelay": "2",
-                    "animateduration": "1"
+                    "animateduration": "1",
+                    "clip": false,
+                    "anim": false,
+                    "stroke": false,
+                    "strokeColor": "",
+                    "strokeFill": ""
                 }
             ],
             "isStyle": true
@@ -419,7 +430,7 @@
         "rotateText": {
             "type": "object",
             "default": {
-                "Desktop": 1,
+                "Desktop": 0,
                 "Tablet": "",
                 "Mobile": "",
                 "unit": "deg"
@@ -726,6 +737,66 @@
         "follow": {
             "type": "boolean",
             "default": false
+        },
+        "clipBackground": {
+            "type": "object",
+            "default": {
+                "backgroundType": "",
+                "backgroundColor": "",
+                "backgroundImageID": "",
+                "backgroundImageURL": "",
+                "backgroundPosition": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundRepeat": {
+                    "Desktop": "no-repeat",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundSize": {
+                    "Desktop": "cover",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "fixed": false,
+                "gradientLocationOne": "0",
+                "gradientColorTwo": "",
+                "gradientLocationTwo": "100",
+                "gradientType": "linear",
+                "gradientAngle": "180",
+                "gradientPosition": "center center",
+                "videoSource": "local",
+                "bgExternalVideo": "",
+                "videoURL": "",
+                "videoID": "",
+                "bgVideoFallbackID": "",
+                "bgVideoFallbackURL": ""
+            },
+            "isStyle": true
+        },
+        "rotateHeading": {
+            "type": "object",
+            "default": {
+                "Desktop": 0,
+                "Tablet": "",
+                "Mobile": "",
+                "unit": "deg"
+            }
+        },
+        "noiseColor1": {
+            "type": "string",
+            "default": "#00f"
+        },
+        "noiseColor2": {
+            "type": "string",
+            "default": "#ff0000"
+        },
+        "textColorType": {
+            "type": "string",
+            "default": "solid",
+            "isStyle": true
         }
     },
     "editorScript": "pbg-blocks-js",

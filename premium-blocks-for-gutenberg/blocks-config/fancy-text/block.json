@@ -275,6 +275,51 @@
                 "link": true
             },
             "isStyle": true
+        },
+        "fancyTag": {
+            "type": "string",
+            "default": "h4"
+        },
+        "animationStyles": {
+            "type": "string",
+            "default": "text"
+        },
+        "highlightedText": {
+            "type": "string",
+            "default": "Animated"
+        },
+        "highlightedEffect": {
+            "type": "string",
+            "default": "circle"
+        },
+        "highlightedAnimationSpeed": {
+            "type": "number",
+            "default": 3,
+            "isStyle": true
+        },
+        "highlightedAnimationDelay": {
+            "type": "number",
+            "default": 1,
+            "isStyle": true
+        },
+        "highlightedShapeColor": {
+            "type": "string",
+            "default": "",
+            "isStyle": true
+        },
+        "highlightedShapeWidth": {
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
         }
     },
     "editorScript": "pbg-blocks-js",

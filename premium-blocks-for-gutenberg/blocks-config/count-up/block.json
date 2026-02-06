@@ -36,10 +36,10 @@
             "type": "object",
             "default": {
                 "Desktop": {
-                    "top": "20",
-                    "right": "20",
-                    "bottom": "20",
-                    "left": "20"
+                    "top": 20,
+                    "right": 20,
+                    "bottom": 20,
+                    "left": 20
                 },
                 "Tablet": {
                     "top": "",
@@ -69,14 +69,14 @@
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
-                "position": " "
+                "position": ""
             },
             "isStyle": true
         },
         "border": {
             "type": "object",
             "default": {
-                "borderType": "none",
+                "borderType": "",
                 "borderColor": "",
                 "borderWidth": {
                     "Desktop": {
@@ -131,7 +131,7 @@
                 "backgroundImageID": "",
                 "backgroundImageURL": "",
                 "backgroundPosition": {
-                    "Desktop": "",
+                    "Desktop": "center center",
                     "Tablet": "",
                     "Mobile": ""
                 },
@@ -147,7 +147,7 @@
                 },
                 "fixed": false,
                 "gradientLocationOne": "0",
-                "gradientColorTwo": "",
+                "gradientColorTwo": "#777",
                 "gradientLocationTwo": "100",
                 "gradientAngle": "180",
                 "gradientPosition": "center center",

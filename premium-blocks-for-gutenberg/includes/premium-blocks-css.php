@@ -121,7 +121,7 @@ class Premium_Blocks_css {
 			return;
 		}
 		// Load Google Fonts.
-		PBG_Fonts::set_fonts( $print_google_fonts );
+		PBG_Fonts::set_fonts( self::$footer_gfonts );
 		PBG_Fonts::render_fonts();
 	}
 
@@ -1119,35 +1119,113 @@ class Premium_Blocks_css {
 			return false;
 		}
     
+    // Render basic typography properties
     $this->pbg_render_range($font, 'fontSize', 'font-size', $device , null, $postfix);
     $this->pbg_render_range($font, 'lineHeight', 'line-height', $device, null, $postfix);
     $this->pbg_render_range($font, 'letterSpacing', 'letter-spacing', $device, null, $postfix);
 		
-		if ( isset( $font['textDecoration'] ) && ! empty( $font['textDecoration'] ) ) {
-			$this->add_property( 'text-decoration', $font['textDecoration'] . $postfix );
+		// Cache font properties to avoid repeated isset/empty checks
+		$text_decoration = $font['textDecoration'] ?? '';
+		$text_transform = $font['textTransform'] ?? '';
+		$font_weight = $font['fontWeight'] ?? '';
+		$font_style = $font['fontStyle'] ?? 'normal';
+		$font_family = $font['fontFamily'] ?? '';
+		
+		// Render text decoration and transform
+		if ( ! empty( $text_decoration ) ) {
+			$this->add_property( 'text-decoration', $text_decoration . $postfix );
 		}
-		if ( isset( $font['textTransform'] ) && ! empty( $font['textTransform'] ) ) {
-			$this->add_property( 'text-transform', $font['textTransform'] . $postfix );
+		if ( ! empty( $text_transform ) ) {
+			$this->add_property( 'text-transform', $text_transform . $postfix );
 		}
-		if ( isset( $font['fontWeight'] ) && ! empty( $font['fontWeight'] ) && 'Default' !== $font['fontWeight'] ) {
-			$this->add_property( 'font-weight', $font['fontWeight'] . $postfix );
+		if ( ! empty( $font_weight ) && 'Default' !== $font_weight ) {
+			$this->add_property( 'font-weight', $font_weight . $postfix );
 		}
-		if ( isset( $font['fontStyle'] ) && ! empty( $font['fontStyle'] ) ) {
-			$this->add_property( 'font-style', $font['fontStyle'] . $postfix);
+		if ( ! empty( $font_style ) ) {
+			$this->add_property( 'font-style', $font_style . $postfix);
 		}
-		$family = ( isset( $font['fontFamily'] ) && ! empty( $font['fontFamily'] ) && 'Default' !== $font['fontFamily'] ? $font['fontFamily'] : '' );
-		if ( ! empty( $family ) ) {
-			$font_style  = ( $font['fontStyle'] ?? 'normal' ) === 'italic' ? 'i' : 'n';
-			$font_weight = ( $font['fontWeight'] ?? '400' ) !== 'Default' ? intval( $font['fontWeight'] ) / 100 : '4';
+		
+		// Process font family if present
+		if ( empty( $font_family ) || 'Default' === $font_family ) {
+			return; // Early return if no font family
+		}
+		
+		// Prepare font variant for Google Fonts API (cached for reuse)
+		$font_style_code = ( $font_style === 'italic' ) ? 'i' : 'n';
+		$font_weight_code = ( $font_weight !== 'Default' && ! empty( $font_weight ) ) ? intval( $font_weight ) / 100 : '4';
+		
+		// Parse font family: split on comma (max 2 parts: primary font, fallback)
+		// Use strpos instead of preg_split for better performance on simple comma-separated strings
+		$comma_pos = strpos( $font_family, ',' );
+		if ( false !== $comma_pos ) {
+			$primary_font_name = trim( substr( $font_family, 0, $comma_pos ) );
+			$fallback_fonts = trim( substr( $font_family, $comma_pos + 1 ) );
+		} else {
+			$primary_font_name = trim( $font_family );
+			$fallback_fonts = '';
+		}
+		
+		// Remove quotes from primary font name (they'll be added back)
+		$primary_font_name_len = strlen( $primary_font_name );
+		if ( $primary_font_name_len >= 2 ) {
+			$first_char = $primary_font_name[0];
+			$last_char = substr( $primary_font_name, -1 );
+			if ( ( $first_char === '"' && $last_char === '"' ) || ( $first_char === "'" && $last_char === "'" ) ) {
+				$primary_font_name = substr( $primary_font_name, 1, -1 );
+			}
+		}
+		
+		// Determine generic fallback using single optimized regex check
+		// Check font name once and determine type (case-insensitive)
+		$font_name_lower = strtolower( $primary_font_name );
+		
+		// Determine correct generic fallback (order matters: check most specific first)
+		if ( strpos( $font_name_lower, 'mono' ) !== false ) {
+			$correct_fallback = 'monospace';
+		} elseif ( strpos( $font_name_lower, 'script' ) !== false 
+			|| strpos( $font_name_lower, 'handwriting' ) !== false 
+			|| strpos( $font_name_lower, 'cursive' ) !== false ) {
+			$correct_fallback = 'cursive';
+		} elseif ( strpos( $font_name_lower, 'serif' ) !== false ) {
+			$correct_fallback = 'serif';
+		} else {
+			$correct_fallback = 'sans-serif';
+		}
+		
+		// Normalize fallback fonts
+		if ( ! empty( $fallback_fonts ) ) {
+			$fallback_lower = strtolower( trim( $fallback_fonts ) );
+			
+			if ( in_array( $fallback_lower, array( 'sans-serif', 'serif', 'monospace', 'cursive', 'fantasy' ), true ) ) {
+				$fallback_fonts = $correct_fallback;
+			}
+			
+		} else {
+			
+			$fallback_fonts = $correct_fallback;
+		}
+		
+		
+		$system_fonts = array( 'sans-serif', 'serif', 'monospace', 'serif-alt', 'default' );
+		$is_web_font = ! in_array( $font_name_lower, $system_fonts, true );
+		
+		
+		if ( $is_web_font ) {
 			$this->add_gfont(
 				array(
-					'fontFamily'  => $family,
-					'fontVariant' => $font_style . $font_weight,
+					'fontFamily'  => $primary_font_name,
+					'fontVariant' => $font_style_code . $font_weight_code,
 				)
 			);
-			$this->add_property( 'font-family', $font['fontFamily'] . $postfix );
-
 		}
+		
+		
+		$font_family_value = '"' . $primary_font_name . '"';
+		if ( ! empty( $fallback_fonts ) ) {
+			$font_family_value .= ', ' . $fallback_fonts;
+		}
+		
+		$this->add_property( 'font-family', $font_family_value . $postfix );
 	}
 
   public function pbg_render_shadow( $attributes, $name, $property, $prefix = '', $postfix = '') {

@@ -17,11 +17,6 @@
             "type": "string",
             "default": ""
         },
-        "borderBanner": {
-            "type": "boolean",
-            "default": false,
-            "isStyle": true
-        },
         "imageID": {
             "type": "number"
         },
@@ -48,7 +43,7 @@
             "default": [
                 {
                     "titleColor": "",
-                    "titleBack": ""
+                    "titleBack": "#f2f2f2"
                 }
             ],
             "isStyle": true
@@ -60,6 +55,36 @@
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0"
+            },
+            "isStyle": true
+        },
+        "titleMargin": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                },
+                "link": true
             },
             "isStyle": true
         },
@@ -78,18 +103,38 @@
                 "color": "transparent",
                 "blur": "10",
                 "horizontal": "0",
-                "vertical": "0",
-                "position": " "
+                "vertical": "0"
             },
             "isStyle": true
         },
-        "containerStyles": {
-            "type": "array",
-            "default": [
-                {
-                    "paddingU": "px"
-                }
-            ],
+        "descMargin": {
+            "type": "object",
+            "default": {
+                "Desktop": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Tablet": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "Mobile": {
+                    "top": "",
+                    "right": "",
+                    "bottom": "",
+                    "left": ""
+                },
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                },
+                "link": true
+            },
             "isStyle": true
         },
         "containerShadow": {
@@ -99,7 +144,7 @@
                 "blur": "10",
                 "horizontal": "0",
                 "vertical": "0",
-                "position": " "
+                "position": ""
             },
             "isStyle": true
         },
@@ -143,13 +188,18 @@
             "default": "default",
             "isStyle": true
         },
-        "minHeight": {
-            "type": "number",
-            "isStyle": true
-        },
-        "verAlign": {
-            "type": "string",
-            "default": "flex-start",
+        "customHeight": {
+            "type": "object",
+            "default": {
+                "Desktop": "",
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
             "isStyle": true
         },
         "hovered": {
@@ -181,8 +231,14 @@
             "attribute": "href",
             "selector": ".premium-banner__link"
         },
+        "sepSize": {
+            "type": "number",
+            "default": 1,
+            "isStyle": true
+        },
         "sepColor": {
             "type": "string",
+            "default": "#e1e1e1",
             "isStyle": true
         },
         "filter": {
@@ -233,7 +289,7 @@
         "border": {
             "type": "object",
             "default": {
-                "borderType": "none",
+                "borderType": "",
                 "borderColor": "",
                 "borderWidth": {
                     "Desktop": {

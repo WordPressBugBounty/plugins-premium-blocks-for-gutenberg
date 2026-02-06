@@ -1,1 +1,1 @@
-.premium-counter{display:flex;justify-content:center;align-items:center;margin:0!important}.premium-counter p{align-self:center}.premium-counter p:nth-child(-n+3){line-height:1em}
+.premium-counter{display:flex;justify-content:center;align-items:center;margin:0!important}.premium-counter p{align-self:center}.premium-counter p:nth-child(-n+3){line-height:1em}.premium-counter .premium-countup__increment-wrapper{position:relative;display:inline-block;margin:0;padding:0}.premium-counter .premium-countup__increment{cursor:text}

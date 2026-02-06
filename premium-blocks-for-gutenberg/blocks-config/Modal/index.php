@@ -13,747 +13,401 @@
  *
  * @access public
  *
- * @param string $attr option attribute.
- * @param string $unique_id option For block ID.
+ * @param array  $attr      Block attributes.
+ * @param string $unique_id Block ID.
  */
 function get_premium_modal_css_style($attr, $unique_id)
 {
 	$css = new Premium_Blocks_css();
 
-	$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap');
-	$css->add_property('padding', "0 !important");
-	$css->add_property('margin', "0 !important");
+	// Trigger Container Alignment
+	$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container');
+	$css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
 
-	if (isset($attr['align']['Desktop'])) {
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-btn');
+  $css->pbg_render_color( $attr, 'triggerStyles[0].color', 'color' );
+  $css->pbg_render_color( $attr, 'triggerStyles[0].triggerBack', 'background-color' );
+  $css->pbg_render_shadow( $attr, 'triggerShadow', 'box-shadow' );
+  $css->pbg_render_border( $attr, 'triggerBorder', 'Desktop' );
+  $css->pbg_render_spacing( $attr, 'triggerPadding', 'padding', "Desktop" );
+  $css->pbg_render_typography( $attr, 'triggerTypography', 'Desktop' );
 
-		$content_align      = $css->get_responsive_css($attr['align'], 'Desktop');
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-btn:hover');
+  $css->pbg_render_color( $attr, 'triggerStyles[0].hoverColor', 'color', '', '!important' ); // important to override inline style -- backward compatibility
+  $css->pbg_render_color( $attr, 'triggerStyles[0].triggerHoverBack', 'background-color', '', '!important' ); // important to override inline style -- backward compatibility
+  $css->pbg_render_border( $attr, 'triggerBorderH', 'Desktop' );
 
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container');
-		$css->add_property('text-align', $css->render_string($content_align, '!important'));
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('align-self', $css->render_string($css->render_align_self($content_align), '!important'));
-	}
+  // icon Styles
+  $css->set_selector(
+    ".{$unique_id} > .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon svg, " .
+    ".{$unique_id} > .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg"
+  );
+  $css->pbg_render_range($attr, 'iconSize', 'width', 'Desktop', null, '!important');
+  $css->pbg_render_range($attr, 'iconSize', 'height', 'Desktop', null, '!important');
 
-	// svg Style
-	if (isset($attr['iconSize'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container' . ' .premium-modal-trigger-btn .premium-modal-box-icon');
-		$css->add_property('font-size', $css->render_string($css->render_range($attr['iconSize'], 'Desktop'), '!important'));
+	// common icon type style
+  $css->set_selector(
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn img, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-lottie-animation svg"
+  );
+  $css->pbg_render_border($attr, 'iconBorder', 'Desktop');
+  $css->pbg_render_spacing($attr, 'iconPadding', 'padding', "Desktop");
+  $css->pbg_render_spacing($attr, 'iconMargin', 'margin', 'Desktop');
 
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container' . ' .premium-modal-trigger-btn .premium-modal-box-icon svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconSize'], 'Desktop'), '!important'));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconSize'], 'Desktop'), '!important'));
-
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconSize'], 'Desktop'), '!important'));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconSize'], 'Desktop'), '!important'));
-	}
 	// image style
-	if (isset($attr['imgWidth'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container' . ' .premium-modal-trigger-btn' . ' > img');
-		$css->add_property('width', $css->render_range($attr['imgWidth'], 'Desktop'));
+  $css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn img');
+  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Desktop', null, '!important');
 
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['imgWidth'], 'Desktop'), '!important'));
-		$css->add_property('height', $css->render_string($css->render_range($attr['imgWidth'], 'Desktop'), '!important'));
-	}
-	if (isset($attr['iconColor'])) {
-		$icon_color = $attr['iconColor'];
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon');
-		$css->add_property('fill', $css->render_color($icon_color));
-		$css->add_property('color', $css->render_color($icon_color));
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon:not(.icon-type-fe) svg');
-		$css->add_property('fill', $css->render_color($icon_color));
-		$css->add_property('color', $css->render_color($icon_color));
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-btn #premium-modal-svg-' . $unique_id . ' > svg ');
-		$css->add_property('fill', $css->render_color($icon_color));
-		$css->add_property('color', $css->render_color($icon_color));
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon:not(.icon-type-fe) svg *');
-		$css->add_property('fill', $css->render_color($icon_color));
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-btn #premium-modal-svg-' . $unique_id . ' > svg *');
-		$css->add_property('fill', $css->render_color($icon_color));
-	}
-	if (isset($attr['triggerStyles'][0]['hoverColor'])) {
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-btn:hover , .' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-btn:hover span , .' . $unique_id . '  .premium-modal-trigger-container:hover .premium-modal-trigger-text');
-		$css->add_property('color', $css->render_string($css->render_color($attr['triggerStyles'][0]['hoverColor']), '!important'));
-	}
-	if (isset($attr['triggerStyles'][0]['triggerHoverBack'])) {
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-btn:hover');
-		$css->add_property('background-color', $css->render_string($css->render_color($attr['triggerStyles'][0]['triggerHoverBack']), '!important'));
-	}
-	if (isset($attr['triggerBorderH'])) {
-		$trigger_border_width  = $attr['triggerBorderH']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorderH']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-btn:hover');
-		$css->render_border($attr['triggerBorderH'], 'Desktop');
-	}
-	if (isset($attr['iconBorder'])) {
-		$icon_border        = $attr['iconBorder'];
-		$icon_border_width  = $icon_border['borderWidth'];
-		$icon_border_radius = $icon_border['borderRadius'];
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn img, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->add_property('border-width', $css->render_spacing($icon_border_width['Desktop'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($icon_border_radius['Desktop'], 'px'));
-		$css->add_property('border-style', $css->render_string($icon_border['borderType']), '!important');
-		if (isset($icon_border['borderColor'])) {
-			$css->add_property('border-color', $css->render_color($icon_border['borderColor']));
-		}
-	}
+  $css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn .premium-lottie-animation svg');
+  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Desktop', null, '!important');
+  $css->pbg_render_range($attr, 'imgWidth', 'height', 'Desktop', null, '!important');
 
-	if (isset($attr['iconMargin'])) {
-		$icon_margin = $attr['iconMargin'];
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn img, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->add_property('margin', $css->render_string($css->render_spacing($icon_margin['Desktop'], isset($icon_margin['unit']['Desktop']) ? $icon_margin['unit']['Desktop'] : $icon_margin['unit']), '!important'));
-	}
-	if (isset($attr['iconPadding'])) {
-		$icon_padding = $attr['iconPadding'];
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn img, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->add_property('padding', $css->render_spacing($icon_padding['Desktop'], isset($icon_padding['unit']['Desktop']) ? $icon_padding['unit']['Desktop'] : $icon_padding['unit']));
-	}
+	// svg styles
+  $css->set_selector( 
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon:not(.icon-type-fe) svg, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon:not(.icon-type-fe) svg *, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg *"
+  );
+  $css->pbg_render_color($attr, 'iconColor', 'color');
+  $css->pbg_render_color($attr, 'iconColor', 'fill');
 
-	if (isset($attr['iconBG'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon');
-		$css->render_background($attr['iconBG'], 'Desktop');
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg');
-		$css->render_background($attr['iconBG'], 'Desktop');
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->render_background($attr['iconBG'], 'Desktop');
-	}
+  $css->set_selector(
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-lottie-animation svg"
+  );
+  $css->pbg_render_background($attr, 'iconBG', 'Desktop');
 
-	if (isset($attr['iconHoverBG'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-modal-box-icon');
-		$css->render_background($attr['iconHoverBG'], 'Desktop');
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-modal-svg-class svg');
-		$css->render_background($attr['iconHoverBG'], 'Desktop');
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-lottie-animation svg');
-		$css->render_background($attr['iconHoverBG'], 'Desktop');
-	}
+  $css->set_selector( 
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn:hover .premium-modal-box-icon, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn:hover .premium-modal-box-icon:not(.icon-type-fe) svg *, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn:hover .premium-modal-svg-class svg, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn:hover .premium-modal-svg-class svg *"
+  );
+  $css->pbg_render_color($attr, 'iconHoverColor', 'color');
+  $css->pbg_render_color($attr, 'iconHoverColor', 'fill');
 
-	if (isset($attr['iconHoverColor'])) {
-		$icon_HoverColor = $attr['iconHoverColor'];
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-modal-box-icon');
-		$css->add_property('fill', $css->render_string($css->render_color($icon_HoverColor), '!important'));
-		$css->add_property('color', $css->render_color($icon_HoverColor));
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-modal-svg-class svg');
-		$css->add_property('fill', $css->render_string($css->render_color($icon_HoverColor), '!important'));
-		$css->add_property('color', $css->render_string($css->render_color($icon_HoverColor), '!important'));
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-modal-box-icon:not(.icon-type-fe) svg *');
-		$css->add_property('fill', $css->render_string($css->render_color($icon_HoverColor), '!important'));
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-modal-svg-class svg *');
-		$css->add_property('fill', $css->render_string($css->render_color($icon_HoverColor), '!important'));
-	}
+  $css->set_selector(
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn:hover .premium-modal-box-icon, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn:hover .premium-modal-svg-class svg, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn:hover .premium-lottie-animation svg"
+  );
+  $css->pbg_render_color($attr, 'borderHoverColor', 'border-color');
+  $css->pbg_render_background($attr, 'iconHoverBG', 'Desktop');
 
-	if (isset($attr['triggerSettings']) && isset($attr['triggerSettings'][0])) {
-		$icon_styles = $attr['triggerSettings'][0];
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon');
-		$css->add_property('margin-right', $css->render_string($icon_styles['iconSpacing'], 'px'));
+  // Icon Spacing
+  $css->set_selector(
+    ".{$unique_id} .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon, " .
+    ".{$unique_id} .premium-modal-trigger-container button.premium-modal-trigger-btn img, " .
+    ".{$unique_id} .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg, " .
+    ".{$unique_id} .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg"
+  );
+  $icon_position = $css->pbg_get_value($attr, 'triggerSettings[0].iconPosition');
+  $css->pbg_render_range($attr, 'triggerSettings[0].iconSpacing', $icon_position === "before" ? 'margin-right' : 'margin-left', '', '', 'px');
 
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn img');
-		$css->add_property('margin-right', $css->render_string($icon_styles['iconSpacing'], 'px'));
+  // Trigger Image
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-img');
+  $css->pbg_render_shadow($attr, 'triggerShadow', 'box-shadow');
+  $css->pbg_render_range($attr, 'imageWidth', 'width', 'Desktop');
+  $css->pbg_render_border($attr, 'triggerBorder', 'Desktop');
 
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg');
-		$css->add_property('margin-right', $css->render_string($icon_styles['iconSpacing'], 'px'));
-
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->add_property('margin-right', $css->render_string($icon_styles['iconSpacing'], 'px'));
-	}
-
-	if (isset($attr['borderHoverColor'])) {
-		$hover_border = $attr['borderHoverColor'];
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-modal-box-icon');
-		$css->add_property('border-color', $css->render_string($css->render_color($hover_border), '!important'));
-
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-modal-svg-class svg');
-		$css->add_property('border-color', $css->render_string($css->render_color($hover_border), '!important'));
-
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-lottie-animation svg');
-		$css->add_property('border-color', $css->render_string($css->render_color($hover_border), '!important'));
-	}
-
-	// Trigger Style for Image/Lottie
-	if (isset($attr['imageWidth']['Desktop'])) {
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container img');
-		$css->add_property('width', $css->render_range($attr['imageWidth'], 'Desktop'));
-
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container ' . '> .premium-lottie-animation');
-		$css->add_property('width', $css->render_range($attr['imageWidth'], 'Desktop'));
-	}
-	if (isset($attr['triggerFilter'])) {
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container ' . '> .premium-lottie-animation');
-		$css->add_property(
-			'filter',
-			'brightness(' . $attr['triggerFilter']['bright'] . '%)' . 'contrast(' . $attr['triggerFilter']['contrast'] . '%) ' . 'saturate(' . $attr['triggerFilter']['saturation'] . '%) ' . 'blur(' . $attr['triggerFilter']['blur'] . 'px) ' . 'hue-rotate(' . $attr['triggerFilter']['hue'] . 'deg)'
-		);
-	}
-	if (isset($attr['triggerHoverFilter'])) {
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container:hover ' . '> .premium-lottie-animation');
-		$css->add_property(
-			'filter',
-			'brightness(' . $attr['triggerHoverFilter']['bright'] . '%)' . 'contrast(' . $attr['triggerHoverFilter']['contrast'] . '%) ' . 'saturate(' . $attr['triggerHoverFilter']['saturation'] . '%) ' . 'blur(' . $attr['triggerHoverFilter']['blur'] . 'px) ' . 'hue-rotate(' . $attr['triggerHoverFilter']['hue'] . 'deg)'
-		);
-	}
-	// Style For Button Trigger
-  $css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button' . ' > span');
+  // Trigger Image Hover
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-img:hover');
+  $css->pbg_render_border($attr, 'triggerBorderH', 'Desktop');
+  
+  // Trigger Text
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-text');
+  $css->pbg_render_border($attr, 'triggerBorder', 'Desktop');
+  $css->pbg_render_spacing($attr, 'triggerPadding', 'padding', 'Desktop');
   $css->pbg_render_typography($attr, 'triggerTypography', 'Desktop');
-	
-	if (isset($attr['triggerPadding'])) {
-		$trigger_padding = $attr['triggerPadding'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button');
-		$css->add_property('padding', $css->render_spacing($trigger_padding['Desktop'], isset($trigger_padding['unit']['Desktop']) ? $trigger_padding['unit']['Desktop'] : $trigger_padding['unit']));
-	}
-	if (isset($attr['triggerBorder'])) {
-		$trigger_border_width  = $attr['triggerBorder']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Desktop'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Desktop'], 'px'));
-	}
-	// border Image
-	if (isset($attr['triggerBorder'])) {
-		$trigger_border_width  = $attr['triggerBorder']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorder']['borderRadius'];
+  $css->pbg_render_color($attr, 'triggerStyles[0].color', 'color');
+  $css->pbg_render_shadow($attr, 'triggerTextShadow', 'text-shadow');
 
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > img');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Desktop'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Desktop'], 'px'));
-	}
-	// border text
-	if (isset($attr['triggerBorder'])) {
-		$trigger_border_width  = $attr['triggerBorder']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Desktop'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Desktop'], 'px'));
-	}
+  // Trigger Text Hover
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-text:hover');
+  $css->pbg_render_border($attr, 'triggerBorderH', 'Desktop');
+  $css->pbg_render_color($attr, 'triggerStyles[0].hoverColor', 'color', '', '!important'); // important to override inline style -- backward compatibility
 
-  $css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
-  $css->pbg_render_typography($attr, 'triggerTypography', 'Desktop');
-	
-	if (isset($attr['triggerPadding'])) {
-		$trigger_padding = $attr['triggerPadding'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
-		$css->add_property('padding', $css->render_spacing($trigger_padding['Desktop'], isset($trigger_padding['unit']['Desktop']) ? $trigger_padding['unit']['Desktop'] : $trigger_padding['unit']));
-	}
-	// hover border
-	if (isset($attr['triggerBorderH'])) {
-		$trigger_border_width  = $attr['triggerBorderH']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorderH']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > img:hover');
-		$css->render_border($attr['triggerBorderH'], 'Desktop');
-	}
-	// hover border text
-	if (isset($attr['triggerBorderH'])) {
-		$trigger_border_width  = $attr['triggerBorderH']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorderH']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container:hover' . ' > .premium-modal-trigger-text');
-		$css->render_border($attr['triggerBorderH'], 'Desktop');
-	}
+  // Trigger Lottie
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container > .premium-lottie-animation svg');
+  $css->pbg_render_range($attr, 'imageWidth', 'width', 'Desktop');
+  $css->pbg_render_range($attr, 'imageWidth', 'height', 'Desktop');
 
-	// style for header
-	// style for upper close button
-	if (isset($attr['upperPadding'])) {
-		$upper_padding = $attr['upperPadding'];
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' .  '> .premium-modal-box-close-button-container');
-		$css->add_property('padding', $css->render_spacing($upper_padding['Desktop'], isset($upper_padding['unit']['Desktop']) ? $upper_padding['unit']['Desktop'] : $upper_padding['unit']));
-	}
-	if (isset($attr['upperBorder'])) {
-		$upper_border_width  = $attr['upperBorder']['borderWidth'];
-		$upper_border_radius = $attr['upperBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' .  '> .premium-modal-box-close-button-container');
-		$css->add_property('border-width', $css->render_spacing($upper_border_width['Desktop'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($upper_border_radius['Desktop'], 'px'));
-	}
-	if (isset($attr['upperStyles'][0]['hoverBackColor'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-modal-box-close-button-container:hover');
-		$css->add_property('background-color', $css->render_string($css->render_color($attr['upperStyles'][0]['hoverBackColor']), '!important'));
-	}
-	if (isset($attr['upperStyles'][0]['hoverColor'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-modal-box-close-button-container .premium-modal-box-modal-close');
-		$css->add_property('color', $css->render_color($attr['upperStyles'][0]['color']));
-	}
-	if (isset($attr['upperStyles'][0]['hoverColor'])) {
-		$css->set_selector('.' . $unique_id . '  .premium-modal-box-close-button-container:hover .premium-modal-box-modal-close');
-		$css->add_property('color', $css->render_color($attr['upperStyles'][0]['hoverColor']));
-	}
+  // Trigger Lottie Filter
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container > .premium-lottie-animation');
+  $css->pbg_render_filters($attr, 'triggerFilter');
 
-	if (isset($attr['upperIconWidth'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' .  '> .premium-modal-box-close-button-container button');
-		$css->add_property('font-size', $css->render_range($attr['upperIconWidth'], 'Desktop'));
-	}
+  // Trigger Lottie Filter
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container > .premium-lottie-animation:hover');
+  $css->pbg_render_filters($attr, 'triggerHoverFilter');
 
-	if (isset($attr['closePosition'])) {
+  // Close Button
+  $css->set_selector('.' . $unique_id . ' .premium-modal-box-close-button-container .premium-modal-box-modal-close');
+  $css->pbg_render_color($attr, 'upperStyles[0].color', 'color');
+  $css->pbg_render_color($attr, 'upperStyles[0].color', 'fill');
+  $css->pbg_render_color($attr, 'upperStyles[0].backColor', 'background-color');
+  $css->pbg_render_border($attr, 'upperBorder', 'Desktop');
+  $css->pbg_render_spacing($attr, 'upperPadding', 'padding', 'Desktop');
 
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' . '> .premium-modal-box-close-button-container ');
-		if ($attr['closePosition'] == "top-left") {
-			$css->add_property('top', '-' . $css->render_range($attr['upperIconWidth'], 'Desktop'));
-			$css->add_property('left', '-' . $css->render_range($attr['upperIconWidth'], 'Desktop'));
-			$css->add_property('right', "unset");
-		}
-		if ($attr['closePosition'] == "top-right") {
-			$css->add_property('top', '-' . $css->render_range($attr['upperIconWidth'], 'Desktop'));
-			$css->add_property('right', '-' . $css->render_range($attr['upperIconWidth'], 'Desktop'));
-			$css->add_property('left', "unset");
-		}
-	}
+  $css->set_selector('.' . $unique_id . ' .premium-modal-box-close-button-container .premium-modal-box-modal-close svg');
+  $css->pbg_render_range($attr, 'upperIconWidth', 'width', 'Desktop');
+  $css->pbg_render_range($attr, 'upperIconWidth', 'height', 'Desktop');
 
-	// Width & Height for Modal
-	if (isset($attr['modalWidth'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content');
-		$css->add_property('width', $css->render_string($css->render_range($attr['modalWidth'], 'Desktop'), '!important'));
-	}
+  $css->set_selector('.' . $unique_id . ' .premium-modal-box-close-button-container:hover .premium-modal-box-modal-close');
+  $css->pbg_render_color($attr, 'upperStyles[0].hoverColor', 'color', '', '!important'); // important to override inline style -- backward compatibility
+  $css->pbg_render_color($attr, 'upperStyles[0].hoverColor', 'fill', '', '!important'); // important to override inline style -- backward compatibility
+  $css->pbg_render_color($attr, 'upperStyles[0].hoverBackColor', 'background-color', '', '!important'); // important to override inline style -- backward compatibility
 
-	if (isset($attr['modalBorder'])) {
-		$modal_border_width  = $attr['modalBorder']['borderWidth'];
-		$modal_border_radius = $attr['modalBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content');
-		$css->add_property('border-width', $css->render_spacing($modal_border_width['Desktop'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($modal_border_radius['Desktop'], 'px'));
-	}
-	if (isset($attr['modalBackground'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_wrap_overlay');
-		$css->render_background($attr['modalBackground'], 'Desktop');
-	}
-	if (isset($attr['modalPadding'])) {
-		$modal_padding = $attr['modalPadding'];
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' . '> .premium-modal-box-modal-body' . '> .premium-modal-box-modal-body-content');
-		$css->add_property('padding', $css->render_spacing($modal_padding['Desktop'], isset($modal_padding['unit']['Desktop']) ? $modal_padding['unit']['Desktop'] : $modal_padding['unit']));
-	}
-	if (isset($attr['modalHeight'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content');
-		$css->add_property('max-height', $css->render_string($css->render_range($attr['modalHeight'], 'Desktop'), '!important'));
-	}
-	if (isset($attr['containerBackground'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' . '> .premium-modal-box-modal-body');
-		$css->render_background($attr['containerBackground'], 'Desktop');
-	}
+  // Modal Wrapper
+  $css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap .premium-popup__modal_content');
+  $css->pbg_render_border($attr, 'modalBorder', 'Desktop');
+  $css->pbg_render_range($attr, 'modalWidth', 'width', 'Desktop');
+  $css->pbg_render_range($attr, 'modalHeight', 'max-height', 'Desktop');
+  $css->pbg_render_shadow($attr, 'modalShadow', 'box-shadow');
+  $css->pbg_render_background($attr, 'containerBackground', 'Desktop');
+
+  // Modal Body
+  // $css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap .premium-modal-box-modal-body');
+  // $css->pbg_render_background($attr, 'containerBackground', 'Desktop');
+
+  // Modal Body Padding
+  $css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap .premium-modal-box-modal-body .premium-modal-box-modal-body-content');
+  $css->pbg_render_spacing($attr, 'modalPadding', 'padding', 'Desktop');
+
+  // Modal Overlay
+  $css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap .premium-popup__modal_wrap_overlay');
+  $css->pbg_render_background($attr, 'modalBackground', 'Desktop');
+
+  // Close Button Position
+  $close_button_position = $css->pbg_get_value($attr, 'closePosition');
+  $css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap .premium-popup__modal_content .premium-modal-box-close-button-container');
+  if ($close_button_position === 'top-right'){
+    $css->add_property( 'left', '100%');
+  } elseif ($close_button_position === 'top-left'){
+    $css->add_property( 'right', '100%');
+  }
 
 	$css->start_media_query('tablet');
 
-	if (isset($attr['align']['Tablet'])) {
-		$content_align      = $css->get_responsive_css($attr['align'], 'Tablet');
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
+  // Trigger Container Alignment
+	$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container');
+	$css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
 
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container');
-		$css->add_property('text-align', $css->render_string($content_align, '!important'));
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('align-self', $css->render_string($css->render_align_self($content_align), '!important'));
-	}
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-btn');
+  $css->pbg_render_border( $attr, 'triggerBorder', 'Tablet' );
+  $css->pbg_render_spacing( $attr, 'triggerPadding', 'padding', "Tablet" );
+  $css->pbg_render_typography( $attr, 'triggerTypography', 'Tablet' );
 
-	if (isset($attr['iconSize'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container' . ' .premium-modal-trigger-btn .premium-modal-box-icon');
-		$css->add_property('font-size', $css->render_string($css->render_range($attr['iconSize'], 'Tablet'), '!important'));
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-btn:hover');
+  $css->pbg_render_border( $attr, 'triggerBorderH', 'Tablet' );
 
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container' . ' .premium-modal-trigger-btn .premium-modal-box-icon svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconSize'], 'Tablet'), '!important'));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconSize'], 'Tablet'), '!important'));
+  // icon Styles
+  $css->set_selector(
+    ".{$unique_id} > .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon svg, " .
+    ".{$unique_id} > .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg"
+  );
+  $css->pbg_render_range($attr, 'iconSize', 'width', 'Tablet', null, '!important');
+  $css->pbg_render_range($attr, 'iconSize', 'height', 'Tablet', null, '!important');
 
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconSize'], 'Tablet'), '!important'));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconSize'], 'Tablet'), '!important'));
-	}
+	// common icon type style
+  $css->set_selector(
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn img, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-lottie-animation svg"
+  );
+  $css->pbg_render_border($attr, 'iconBorder', 'Tablet');
+  $css->pbg_render_spacing($attr, 'iconPadding', 'padding', "Tablet");
+  $css->pbg_render_spacing($attr, 'iconMargin', 'margin', 'Tablet');
+
 	// image style
-	if (isset($attr['imgWidth'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container' . ' .premium-modal-trigger-btn' . ' > img');
-		$css->add_property('width', $css->render_range($attr['imgWidth'], 'Tablet'));
+  $css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn img');
+  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Tablet', null, '!important');
 
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['imgWidth'], 'Tablet'), '!important'));
-		$css->add_property('height', $css->render_string($css->render_range($attr['imgWidth'], 'Tablet'), '!important'));
-	}
+  $css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn .premium-lottie-animation svg');
+  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Tablet', null, '!important');
+  $css->pbg_render_range($attr, 'imgWidth', 'height', 'Tablet', null, '!important');
 
-	if (isset($attr['iconBorder'])) {
-		$icon_border        = $attr['iconBorder'];
-		$icon_border_width  = $icon_border['borderWidth'];
-		$icon_border_radius = $icon_border['borderRadius'];
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn img, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->add_property('border-width', $css->render_spacing($icon_border_width['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($icon_border_radius['Tablet'], 'px'));
-	}
+	// svg styles
+  $css->set_selector(
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-lottie-animation svg"
+  );
+  $css->pbg_render_background($attr, 'iconBG', 'Tablet');
 
-	if (isset($attr['iconMargin'])) {
-		$icon_margin = $attr['iconMargin'];
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn img, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->add_property('margin', $css->render_string($css->render_spacing($icon_margin['Tablet'], isset($icon_margin['unit']['Tablet']) ? $icon_margin['unit']['Tablet'] : $icon_margin['unit']), '!important'));
-	}
-	if (isset($attr['iconPadding'])) {
-		$icon_padding = $attr['iconPadding'];
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn img, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->add_property('padding', $css->render_spacing($icon_padding['Tablet'], isset($icon_padding['unit']['Tablet']) ? $icon_padding['unit']['Tablet'] : $icon_padding['unit']));
-	}
+  $css->set_selector(
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn:hover .premium-modal-box-icon, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn:hover .premium-modal-svg-class svg, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn:hover .premium-lottie-animation svg"
+  );
+  $css->pbg_render_background($attr, 'iconHoverBG', 'Tablet');
 
-	if (isset($attr['iconBG'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon');
-		$css->render_background($attr['iconBG'], 'Tablet');
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg');
-		$css->render_background($attr['iconBG'], 'Tablet');
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->render_background($attr['iconBG'], 'Tablet');
-	}
+  // Trigger Image
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-img');
+  $css->pbg_render_range($attr, 'imageWidth', 'width', 'Tablet');
+  $css->pbg_render_border($attr, 'triggerBorder', 'Tablet');
 
-	if (isset($attr['iconHoverBG'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-modal-box-icon');
-		$css->render_background($attr['iconHoverBG'], 'Tablet');
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-modal-svg-class svg');
-		$css->render_background($attr['iconHoverBG'], 'Tablet');
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-lottie-animation svg');
-		$css->render_background($attr['iconHoverBG'], 'Tablet');
-	}
+  // Trigger Image Hover
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-img:hover');
+  $css->pbg_render_border($attr, 'triggerBorderH', 'Tablet');
 
-	if (isset($attr['triggerBorderH'])) {
-		$trigger_border_width  = $attr['triggerBorderH']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorderH']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-btn:hover');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Tablet'], 'px'));
-	}
-
-	// Trigger Style for Image/Lottie
-	if (isset($attr['imageWidth']['Tablet'])) {
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container img');
-		$css->add_property('width', $css->render_range($attr['imageWidth'], 'Tablet'));
-
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container ' . '> .premium-lottie-animation');
-		$css->add_property('width', $css->render_range($attr['imageWidth'], 'Tablet'));
-	}
-
-	// Style For Button Trigger
-	$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button' . ' > span');
+  // Trigger Text
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-text');
+  $css->pbg_render_border($attr, 'triggerBorder', 'Tablet');
+  $css->pbg_render_spacing($attr, 'triggerPadding', 'padding', 'Tablet');
   $css->pbg_render_typography($attr, 'triggerTypography', 'Tablet');
 
-	if (isset($attr['triggerPadding'])) {
-		$trigger_padding = $attr['triggerPadding'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button');
-		$css->add_property('padding', $css->render_spacing($trigger_padding['Tablet'], isset($trigger_padding['unit']['Tablet']) ? $trigger_padding['unit']['Tablet'] : $trigger_padding['unit']));
-	}
-	if (isset($attr['triggerBorder'])) {
-		$trigger_border_width  = $attr['triggerBorder']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Tablet'], 'px'));
-	}
-	// border Image
-	if (isset($attr['triggerBorder'])) {
-		$trigger_border_width  = $attr['triggerBorder']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > img');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Tablet'], 'px'));
-	}
-	// border text
-	if (isset($attr['triggerBorder'])) {
-		$trigger_border_width  = $attr['triggerBorder']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Tablet'], 'px'));
-	}
+  // Trigger Text Hover
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-text:hover');
+  $css->pbg_render_border($attr, 'triggerBorderH', 'Tablet');
 
-	$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
-  $css->pbg_render_typography($attr, 'triggerTypography', 'Tablet');
+  // Trigger Lottie
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container > .premium-lottie-animation svg');
+  $css->pbg_render_range($attr, 'imageWidth', 'width', 'Tablet');
+  $css->pbg_render_range($attr, 'imageWidth', 'height', 'Tablet');
 
-	if (isset($attr['triggerPadding'])) {
-		$trigger_padding = $attr['triggerPadding'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
-		$css->add_property('padding', $css->render_spacing($trigger_padding['Tablet'], isset($trigger_padding['unit']['Tablet']) ? $trigger_padding['unit']['Tablet'] : $trigger_padding['unit']));
-	}
-	// hover border
-	if (isset($attr['triggerBorderH'])) {
-		$trigger_border_width  = $attr['triggerBorderH']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorderH']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > img:hover');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Tablet'], 'px'));
-	}
-	// hover border text
-	if (isset($attr['triggerBorderH'])) {
-		$trigger_border_width  = $attr['triggerBorderH']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorderH']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container:hover' . ' > .premium-modal-trigger-text');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Tablet'], 'px'));
-	}
+  // Close Button
+  $css->set_selector('.' . $unique_id . ' .premium-modal-box-close-button-container .premium-modal-box-modal-close');
+  $css->pbg_render_border($attr, 'upperBorder', 'Tablet');
+  $css->pbg_render_spacing($attr, 'upperPadding', 'padding', 'Tablet');
 
-	// style for upper close button
-	if (isset($attr['upperPadding'])) {
-		$upper_padding = $attr['upperPadding'];
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' .  '> .premium-modal-box-close-button-container');
-		$css->add_property('padding', $css->render_spacing($upper_padding['Tablet'], isset($upper_padding['unit']['Tablet']) ? $upper_padding['unit']['Tablet'] : $upper_padding['unit']));
-	}
-	if (isset($attr['upperBorder'])) {
-		$upper_border_width  = $attr['upperBorder']['borderWidth'];
-		$upper_border_radius = $attr['upperBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' .  '> .premium-modal-box-close-button-container');
-		$css->add_property('border-width', $css->render_spacing($upper_border_width['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($upper_border_radius['Tablet'], 'px'));
-	}
+  $css->set_selector('.' . $unique_id . ' .premium-modal-box-close-button-container .premium-modal-box-modal-close svg');
+  $css->pbg_render_range($attr, 'upperIconWidth', 'width', 'Tablet');
+  $css->pbg_render_range($attr, 'upperIconWidth', 'height', 'Tablet');
 
-	if (isset($attr['upperIconWidth'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' .  '> .premium-modal-box-close-button-container button');
-		$css->add_property('font-size', $css->render_range($attr['upperIconWidth'], 'Tablet'));
-	}
+  // Modal Wrapper
+  $css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap .premium-popup__modal_content');
+  $css->pbg_render_border($attr, 'modalBorder', 'Tablet');
+  $css->pbg_render_range($attr, 'modalWidth', 'width', 'Tablet');
+  $css->pbg_render_range($attr, 'modalHeight', 'max-height', 'Tablet');
+  $css->pbg_render_background($attr, 'containerBackground', 'Tablet');
 
-	if (isset($attr['closePosition'])) {
+  // Modal Body
+  // $css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap .premium-modal-box-modal-body');
+  // $css->pbg_render_background($attr, 'containerBackground', 'Tablet');
 
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' . '> .premium-modal-box-close-button-container ');
-		if ($attr['closePosition'] == "top-left") {
-			$css->add_property('top', '-' . $css->render_range($attr['upperIconWidth'], 'Tablet'));
-			$css->add_property('left', '-' . $css->render_range($attr['upperIconWidth'], 'Tablet'));
-			$css->add_property('right', "unset");
-		}
-		if ($attr['closePosition'] == "top-right") {
-			$css->add_property('top', '-' . $css->render_range($attr['upperIconWidth'], 'Tablet'));
-			$css->add_property('right', '-' . $css->render_range($attr['upperIconWidth'], 'Tablet'));
-			$css->add_property('left', "unset");
-		}
-	}
+  // Modal Body Padding
+  $css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap .premium-modal-box-modal-body .premium-modal-box-modal-body-content');
+  $css->pbg_render_spacing($attr, 'modalPadding', 'padding', 'Tablet');
 
-	// Width & Height for Modal
-	if (isset($attr['modalWidth'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content');
-		$css->add_property('width', $css->render_string($css->render_range($attr['modalWidth'], 'Tablet'), '!important'));
-	}
-	if (isset($attr['modalBackground'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_wrap_overlay');
-		$css->render_background($attr['modalBackground'], 'Tablet');
-	}
-	if (isset($attr['modalBorder'])) {
-		$modal_border_width  = $attr['modalBorder']['borderWidth'];
-		$modal_border_radius = $attr['modalBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content');
-		$css->add_property('border-width', $css->render_spacing($modal_border_width['Tablet'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($modal_border_radius['Tablet'], 'px'));
-	}
+  // Modal Overlay
+  $css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap .premium-popup__modal_wrap_overlay');
+  $css->pbg_render_background($attr, 'modalBackground', 'Tablet');
 
-	if (isset($attr['modalPadding'])) {
-		$modal_padding = $attr['modalPadding'];
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' . '> .premium-modal-box-modal-body' . '> .premium-modal-box-modal-body-content');
-		$css->add_property('padding', $css->render_spacing($modal_padding['Tablet'], isset($modal_padding['unit']['Tablet']) ? $modal_padding['unit']['Tablet'] : $modal_padding['unit']));
-	}
-	if (isset($attr['modalHeight'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content');
-		$css->add_property('max-height', $css->render_string($css->render_range($attr['modalHeight'], 'Tablet'), '!important'));
-	}
-	if (isset($attr['containerBackground'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' . '> .premium-modal-box-modal-body');
-		$css->render_background($attr['containerBackground'], 'Tablet');
-	}
 	$css->stop_media_query();
 	$css->start_media_query('mobile');
 
-	if (isset($attr['align']['Mobile'])) {
-		$content_align      = $css->get_responsive_css($attr['align'], 'Desktop');
-		$content_flex_align = 'left' === $content_align ? 'flex-start' : 'center';
-		$content_flex_align = 'right' === $content_align ? 'flex-end' : $content_flex_align;
+  // Trigger Container Alignment
+	$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container');
+	$css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
 
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container');
-		$css->add_property('text-align', $css->render_string($content_align, '!important'));
-		$css->set_selector('.' . $unique_id);
-		$css->add_property('align-self', $css->render_string($css->render_align_self($content_align), '!important'));
-	}
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-btn');
+  $css->pbg_render_border( $attr, 'triggerBorder', 'Mobile' );
+  $css->pbg_render_spacing( $attr, 'triggerPadding', 'padding', "Mobile" );
+  $css->pbg_render_typography( $attr, 'triggerTypography', 'Mobile' );
 
-	if (isset($attr['iconSize'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container' . ' .premium-modal-trigger-btn .premium-modal-box-icon');
-		$css->add_property('font-size', $css->render_string($css->render_range($attr['iconSize'], 'Mobile'), '!important'));
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-btn:hover');
+  $css->pbg_render_border( $attr, 'triggerBorderH', 'Mobile' );
 
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container' . ' .premium-modal-trigger-btn .premium-modal-box-icon svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconSize'], 'Mobile'), '!important'));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconSize'], 'Mobile'), '!important'));
+  // icon Styles
+  $css->set_selector(
+    ".{$unique_id} > .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon svg, " .
+    ".{$unique_id} > .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg"
+  );
+  $css->pbg_render_range($attr, 'iconSize', 'width', 'Mobile', null, '!important');
+  $css->pbg_render_range($attr, 'iconSize', 'height', 'Mobile', null, '!important');
 
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['iconSize'], 'Mobile'), '!important'));
-		$css->add_property('height', $css->render_string($css->render_range($attr['iconSize'], 'Mobile'), '!important'));
-	}
+	// common icon type style
+  $css->set_selector(
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn img, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-lottie-animation svg"
+  );
+  $css->pbg_render_border($attr, 'iconBorder', 'Mobile');
+  $css->pbg_render_spacing($attr, 'iconPadding', 'padding', "Mobile");
+  $css->pbg_render_spacing($attr, 'iconMargin', 'margin', 'Mobile');
+
 	// image style
-	if (isset($attr['imgWidth'])) {
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container' . ' .premium-modal-trigger-btn' . ' > img');
-		$css->add_property('width', $css->render_range($attr['imgWidth'], 'Mobile'));
+  $css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn img');
+  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Mobile', null, '!important');
 
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->add_property('width', $css->render_string($css->render_range($attr['imgWidth'], 'Mobile'), '!important'));
-		$css->add_property('height', $css->render_string($css->render_range($attr['imgWidth'], 'Mobile'), '!important'));
-	}
+  $css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container .premium-modal-trigger-btn .premium-lottie-animation svg');
+  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Mobile', null, '!important');
+  $css->pbg_render_range($attr, 'imgWidth', 'height', 'Mobile', null, '!important');
 
-	if (isset($attr['iconBorder'])) {
-		$icon_border        = $attr['iconBorder'];
-		$icon_border_width  = $icon_border['borderWidth'];
-		$icon_border_radius = $icon_border['borderRadius'];
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn img, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->add_property('border-width', $css->render_spacing($icon_border_width['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($icon_border_radius['Mobile'], 'px'));
-	}
+	// svg styles
+  $css->set_selector(
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-box-icon, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-modal-svg-class svg, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn .premium-lottie-animation svg"
+  );
+  $css->pbg_render_background($attr, 'iconBG', 'Mobile');
 
-	if (isset($attr['iconMargin'])) {
-		$icon_margin = $attr['iconMargin'];
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn img, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->add_property('margin', $css->render_string($css->render_spacing($icon_margin['Mobile'], isset($icon_margin['unit']['Mobile']) ? $icon_margin['unit']['Mobile'] : $icon_margin['unit']), '!important'));
-	}
-	if (isset($attr['iconPadding'])) {
-		$icon_padding = $attr['iconPadding'];
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn img, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg, ' . '.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->add_property('padding', $css->render_spacing($icon_padding['Mobile'], isset($icon_padding['unit']['Mobile']) ? $icon_padding['unit']['Mobile'] : $icon_padding['unit']));
-	}
+  $css->set_selector(
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn:hover .premium-modal-box-icon, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn:hover .premium-modal-svg-class svg, " .
+    ".{$unique_id} .premium-modal-trigger-container .premium-modal-trigger-btn:hover .premium-lottie-animation svg"
+  );
+  $css->pbg_render_background($attr, 'iconHoverBG', 'Mobile');
 
-	if (isset($attr['iconBG'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-box-icon');
-		$css->render_background($attr['iconBG'], 'Mobile');
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-modal-svg-class svg');
-		$css->render_background($attr['iconBG'], 'Mobile');
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn .premium-lottie-animation svg');
-		$css->render_background($attr['iconBG'], 'Mobile');
-	}
+  // Trigger Image
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-img');
+  $css->pbg_render_range($attr, 'imageWidth', 'width', 'Mobile');
+  $css->pbg_render_border($attr, 'triggerBorder', 'Mobile');
 
-	if (isset($attr['iconHoverBG'])) {
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-modal-box-icon');
-		$css->render_background($attr['iconHoverBG'], 'Mobile');
-		$css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-modal-svg-class svg');
-		$css->render_background($attr['iconHoverBG'], 'Mobile');
-		$css->set_selector('.' . $unique_id . ' .premium-modal-trigger-container button.premium-modal-trigger-btn:hover .premium-lottie-animation svg');
-		$css->render_background($attr['iconHoverBG'], 'Mobile');
-	}
+  // Trigger Image Hover
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-img:hover');
+  $css->pbg_render_border($attr, 'triggerBorderH', 'Mobile');
 
-	if (isset($attr['triggerBorderH'])) {
-		$trigger_border_width  = $attr['triggerBorderH']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorderH']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-btn:hover');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Mobile'], 'px'));
-	}
-
-	// Trigger Style for Image/Lottie
-	if (isset($attr['imageWidth']['Mobile'])) {
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container img');
-		$css->add_property('width', $css->render_range($attr['imageWidth'], 'Mobile'));
-
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container ' . '> .premium-lottie-animation');
-		$css->add_property('width', $css->render_range($attr['imageWidth'], 'Mobile'));
-	}
-
-	// Style For Button Trigger
-	$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button' . ' > span');
+  // Trigger Text
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-text');
+  $css->pbg_render_border($attr, 'triggerBorder', 'Mobile');
+  $css->pbg_render_spacing($attr, 'triggerPadding', 'padding', 'Mobile');
   $css->pbg_render_typography($attr, 'triggerTypography', 'Mobile');
 
-	if (isset($attr['triggerPadding'])) {
-		$trigger_padding = $attr['triggerPadding'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button');
-		$css->add_property('padding', $css->render_spacing($trigger_padding['Mobile'], isset($trigger_padding['unit']['Mobile']) ? $trigger_padding['unit']['Mobile'] : $trigger_padding['unit']));
-	}
-	if (isset($attr['triggerBorder'])) {
-		$trigger_border_width  = $attr['triggerBorder']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > button');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Mobile'], 'px'));
-	}
-	// border Image
-	if (isset($attr['triggerBorder'])) {
-		$trigger_border_width  = $attr['triggerBorder']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > img');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Mobile'], 'px'));
-	}
-	// border text
-	if (isset($attr['triggerBorder'])) {
-		$trigger_border_width  = $attr['triggerBorder']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Mobile'], 'px'));
-	}
+  // Trigger Text Hover
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container .premium-modal-trigger-text:hover');
+  $css->pbg_render_border($attr, 'triggerBorderH', 'Mobile');
 
-	$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
-  $css->pbg_render_typography($attr, 'triggerTypography', 'Mobile');
+  // Trigger Lottie
+  $css->set_selector('.' . $unique_id . ' > .premium-modal-trigger-container > .premium-lottie-animation svg');
+  $css->pbg_render_range($attr, 'imageWidth', 'width', 'Mobile');
+  $css->pbg_render_range($attr, 'imageWidth', 'height', 'Mobile');
 
-	if (isset($attr['triggerPadding'])) {
-		$trigger_padding = $attr['triggerPadding'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > .premium-modal-trigger-text');
-		$css->add_property('padding', $css->render_spacing($trigger_padding['Mobile'], isset($trigger_padding['unit']['Mobile']) ? $trigger_padding['unit']['Mobile'] : $trigger_padding['unit']));
-	}
-	// hover border
-	if (isset($attr['triggerBorderH'])) {
-		$trigger_border_width  = $attr['triggerBorderH']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorderH']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container' . ' > img:hover');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Mobile'], 'px'));
-	}
-	// hover border text
-	if (isset($attr['triggerBorderH'])) {
-		$trigger_border_width  = $attr['triggerBorderH']['borderWidth'];
-		$trigger_border_radius = $attr['triggerBorderH']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '> .premium-modal-trigger-container:hover' . ' > .premium-modal-trigger-text');
-		$css->add_property('border-width', $css->render_spacing($trigger_border_width['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($trigger_border_radius['Mobile'], 'px'));
-	}
+  // Close Button
+  $css->set_selector('.' . $unique_id . ' .premium-modal-box-close-button-container .premium-modal-box-modal-close');
+  $css->pbg_render_border($attr, 'upperBorder', 'Mobile');
+  $css->pbg_render_spacing($attr, 'upperPadding', 'padding', 'Mobile');
 
-	// style for upper close button
-	if (isset($attr['upperPadding'])) {
-		$upper_padding = $attr['upperPadding'];
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' .  '> .premium-modal-box-close-button-container');
-		$css->add_property('padding', $css->render_spacing($upper_padding['Mobile'], isset($upper_padding['unit']['Mobile']) ? $upper_padding['unit']['Mobile'] : $upper_padding['unit']));
-	}
-	if (isset($attr['upperBorder'])) {
-		$upper_border_width  = $attr['upperBorder']['borderWidth'];
-		$upper_border_radius = $attr['upperBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' .  '> .premium-modal-box-close-button-container');
-		$css->add_property('border-width', $css->render_spacing($upper_border_width['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($upper_border_radius['Mobile'], 'px'));
-	}
+  $css->set_selector('.' . $unique_id . ' .premium-modal-box-close-button-container .premium-modal-box-modal-close svg');
+  $css->pbg_render_range($attr, 'upperIconWidth', 'width', 'Mobile');
+  $css->pbg_render_range($attr, 'upperIconWidth', 'height', 'Mobile');
 
-	if (isset($attr['upperIconWidth'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' .  '> .premium-modal-box-close-button-container button');
-		$css->add_property('font-size', $css->render_range($attr['upperIconWidth'], 'Mobile'));
-	}
+  // Modal Wrapper
+  $css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap .premium-popup__modal_content');
+  $css->pbg_render_border($attr, 'modalBorder', 'Mobile');
+  $css->pbg_render_range($attr, 'modalWidth', 'width', 'Mobile');
+  $css->pbg_render_range($attr, 'modalHeight', 'max-height', 'Mobile');
+  $css->pbg_render_background($attr, 'containerBackground', 'Mobile');
 
-	if (isset($attr['closePosition'])) {
+  // Modal Body
+  // $css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap .premium-modal-box-modal-body');
+  // $css->pbg_render_background($attr, 'containerBackground', 'Mobile');
 
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' . '> .premium-modal-box-close-button-container ');
-		if ($attr['closePosition'] == "top-left") {
-			$css->add_property('top', '-' . $css->render_range($attr['upperIconWidth'], 'Mobile'));
-			$css->add_property('left', '-' . $css->render_range($attr['upperIconWidth'], 'Mobile'));
-			$css->add_property('right', "unset");
-		}
-		if ($attr['closePosition'] == "top-right") {
-			$css->add_property('top', '-' . $css->render_range($attr['upperIconWidth'], 'Mobile'));
-			$css->add_property('right', '-' . $css->render_range($attr['upperIconWidth'], 'Mobile'));
-			$css->add_property('left', "unset");
-		}
-	}
+  // Modal Body Padding
+  $css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap .premium-modal-box-modal-body .premium-modal-box-modal-body-content');
+  $css->pbg_render_spacing($attr, 'modalPadding', 'padding', 'Mobile');
 
-	// Width & Height for Modal
-	if (isset($attr['modalWidth'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content');
-		$css->add_property('width', $css->render_string($css->render_range($attr['modalWidth'], 'Mobile'), '!important'));
-	}
+  // Modal Overlay
+  $css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap .premium-popup__modal_wrap_overlay');
+  $css->pbg_render_background($attr, 'modalBackground', 'Mobile');
 
-	if (isset($attr['modalBackground'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_wrap_overlay');
-		$css->render_background($attr['modalBackground'], 'Mobile');
-	}
-	if (isset($attr['modalBorder'])) {
-		$modal_border_width  = $attr['modalBorder']['borderWidth'];
-		$modal_border_radius = $attr['modalBorder']['borderRadius'];
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content');
-		$css->add_property('border-width', $css->render_spacing($modal_border_width['Mobile'], 'px'));
-		$css->add_property('border-radius', $css->render_spacing($modal_border_radius['Mobile'], 'px'));
-	}
-
-	if (isset($attr['modalPadding'])) {
-		$modal_padding = $attr['modalPadding'];
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' . '> .premium-modal-box-modal-body' . '> .premium-modal-box-modal-body-content');
-		$css->add_property('padding', $css->render_spacing($modal_padding['Mobile'], isset($modal_padding['unit']['Mobile']) ? $modal_padding['unit']['Mobile'] : $modal_padding['unit']));
-	}
-	if (isset($attr['modalHeight'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content');
-		$css->add_property('max-height', $css->render_string($css->render_range($attr['modalHeight'], 'Mobile'), '!important'));
-	}
-	if (isset($attr['containerBackground'])) {
-		$css->set_selector('.' . $unique_id . '.premium-popup__modal_wrap' . ' > .premium-popup__modal_content' . '> .premium-modal-box-modal-body');
-		$css->render_background($attr['containerBackground'], 'Mobile');
-	}
 	$css->stop_media_query();
 	return $css->css_output();
 }
@@ -764,17 +418,15 @@ function get_premium_modal_css_style($attr, $unique_id)
  * @return void
  */
 function get_premium_modal_media_css(){
-  $blocks_helper = pbg_blocks_helper();
+  $media_css = array('desktop' => '', 'tablet' => '', 'mobile' => '');
 
-  $custom_css = array('desktop' => '', 'tablet' => '', 'mobile' => '');
-  
-  $custom_css['mobile'] .= "
+  $media_css['mobile'] .= "
     .premium-popup__modal_content {
       overflow: auto;
     }
   ";
 
-  $blocks_helper->add_block_media_styles( $custom_css );
+  return $media_css;
 }
 
 /**
@@ -891,7 +543,6 @@ function register_block_pbg_modal()
 			'render_callback' => 'render_block_pbg_modal',
 		)
 	);
-  get_premium_modal_media_css();
 }
 
 register_block_pbg_modal();

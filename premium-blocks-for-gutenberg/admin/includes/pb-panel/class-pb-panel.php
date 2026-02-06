@@ -85,7 +85,6 @@ if (! class_exists('Pb_Panel')) {
 		// Enqueue icon for plugin in dashboard
 		public function pb_admin_page_scripts()
 		{
-			wp_enqueue_style('pbg-icon', PREMIUM_BLOCKS_URL . 'admin/assets/pbg-font/css/pbg-font.css');
 			wp_enqueue_style('pb-dashboard-css', PREMIUM_BLOCKS_URL . 'admin/assets/dashboard.css');
 			wp_enqueue_script(
 				'pb-dashboard-js', // Unique handle for the script
@@ -173,6 +172,7 @@ if (! class_exists('Pb_Panel')) {
 				'off-canvas'       => true,
         		"one-page-scroll"   => true,
 				'star-ratings'       => true,
+				'templates'       => true,
 			);
 
 			return array_merge($default_options, $options);
@@ -182,13 +182,14 @@ if (! class_exists('Pb_Panel')) {
 		{
 			$default_options = array(
 				'premium-map-key'            => '',
-				'premium-map-api'            => true,
+				'premium-map-api'            => false,
+        		'premium-load-map-api'       => true,
 				'premium-fa-css'             => true,
 				'premium-upload-json'        => false,
 				'enable-post-editor-sidebar' => true,
 				'enable-site-editor-sidebar' => false,
 				'generate-assets-files'      => false,
-				'premium-regenrate-assets'     => false,
+				'premium-regenrate-assets'   => false,
 
 			);
 
@@ -208,7 +209,8 @@ if (! class_exists('Pb_Panel')) {
 				'premium-entrance-animation'            => true,
 				'premium-entrance-animation-all-blocks' => false,
 				'premium-copy-paste-styles'             => true,
-				'premium-display-conditions'            => true
+				'premium-display-conditions'            => true,
+				'premium-templates-button'              => true
 			);
 
 			return array_merge($default_options, $options);
@@ -309,36 +311,97 @@ if (! class_exists('Pb_Panel')) {
 			wp_send_json_error();
 		}
 
-		public function update_settings()
-		{
-			check_ajax_referer('pb-panel', 'nonce');
+    public function update_settings()
+    {
+      check_ajax_referer('pb-panel', 'nonce');
 
-			$value    = isset($_POST['value']) ? json_decode(stripslashes($_POST['value']), true) : array();
-			$Settings = apply_filters('pb_settings', get_option('pbg_blocks_settings', array()));
-			// $options = get_option( 'pb_options' );
-			$Settings = ! is_array($Settings) ? array() : $Settings;
+      $value    = isset($_POST['value']) ? json_decode(stripslashes($_POST['value']), true) : array();
+      $Settings = apply_filters('pb_settings', get_option('pbg_blocks_settings', array()));
+      $Settings = ! is_array($Settings) ? array() : $Settings;
 
-			if ($value) {
-				$Settings = $value;
-				update_option('pbg_blocks_settings', $Settings);
+      if ($value) {
+        $Settings = $value;
+        update_option('pbg_blocks_settings', $Settings);
 
-				wp_send_json_success(
-					array(
-						'success' => true,
-						'setting' => $Settings,
-					)
-				);
-			}
+        // Clear all caches when "Regenerate Assets" button is clicked
+        if (isset($Settings['premium-regenrate-assets']) && $Settings['premium-regenrate-assets'] === true) {
+          $this->clear_all_caches();
+        }
 
-			wp_send_json_error();
-		}
+        wp_send_json_success(
+          array(
+            'success' => true,
+            'setting' => $Settings,
+          )
+        );
+      }
 
-		/**
-		 * Update Performance Options with ajax.
-		 *
-		 * @return void
-		 */
-		public function update_performance_options()
+      wp_send_json_error();
+    }
+
+    /**
+     * Clear all caches from popular caching plugins
+     * Called when "Regenerate Assets" button is clicked
+     *
+     * @return void
+     */
+    protected function clear_all_caches()
+    {
+      error_log('🔥 PBG: Regenerate Assets - Starting cache clear');
+
+      // Clear Breeze cache
+      if (class_exists('Breeze_PurgeCache')) {
+        error_log('🔥 PBG: Clearing Breeze cache');
+        do_action('breeze_clear_all_cache');
+        error_log('🔥 PBG: Clearing Breeze Varnish cache');
+        do_action('breeze_clear_varnish');
+      }
+
+      // Clear WP Rocket cache
+      if (function_exists('rocket_clean_domain')) {
+        error_log('🔥 PBG: Clearing WP Rocket cache');
+        rocket_clean_domain();
+      }
+      if (function_exists('rocket_clean_minify')) {
+        error_log('🔥 PBG: Clearing WP Rocket minify cache');
+        rocket_clean_minify();
+      }
+
+      // Clear W3 Total Cache
+      if (function_exists('w3tc_flush_all')) {
+        error_log('🔥 PBG: Clearing W3 Total Cache');
+        w3tc_flush_all();
+      }
+
+      // Clear WP Super Cache
+      if (function_exists('wp_cache_clear_cache')) {
+        error_log('🔥 PBG: Clearing WP Super Cache');
+        wp_cache_clear_cache();
+      }
+
+      // Clear LiteSpeed Cache
+      if (class_exists('LiteSpeed_Cache_API') && method_exists('LiteSpeed_Cache_API', 'purge_all')) {
+        error_log('🔥 PBG: Clearing LiteSpeed Cache');
+        LiteSpeed_Cache_API::purge_all();
+      }
+      if (function_exists('litespeed_purge_all')) {
+        error_log('🔥 PBG: Clearing LiteSpeed Cache');
+        litespeed_purge_all();
+      }
+
+      // Clear WP Fastest Cache
+      if (isset($GLOBALS['wp_fastest_cache']) && method_exists($GLOBALS['wp_fastest_cache'], 'deleteCache')) {
+        error_log('🔥 PBG: Clearing WP Fastest Cache');
+        $GLOBALS['wp_fastest_cache']->deleteCache(true);
+      }
+    }
+
+    /**
+     * Update Performance Options with ajax.
+     *
+     * @return void
+     */
+    public function update_performance_options()
 		{
 			check_ajax_referer('pb-panel', 'nonce');
 
@@ -396,13 +459,14 @@ if (! class_exists('Pb_Panel')) {
 		 */
 		public function register_custom_menu_page()
 		{
+			$icon_url = "data:image/svg+xml;base64," . base64_encode( file_get_contents( PREMIUM_BLOCKS_PATH . 'admin/images/wordpress-dashboard-icon-pb.svg' ) );
 			$page = add_menu_page(
 				__('Premium Blocks', 'premium-blocks-for-gutenberg'),
 				__('Premium Blocks', 'premium-blocks-for-gutenberg'),
 				'manage_options',
 				'pb_panel',
 				array($this, 'render'),
-				null
+				$icon_url
 			);
 			if (! defined('PREMIUM_ADMIN_PAGE')) {
 				define('PREMIUM_ADMIN_PAGE', $page);
@@ -453,11 +517,13 @@ if (! class_exists('Pb_Panel')) {
 				'rollback_url_new'     => str_replace(array('&#038;', '&amp;'), '&', esc_url(add_query_arg('version', 'VERSION', wp_nonce_url(admin_url('admin-post.php?action=premium_gutenberg_rollback'), 'premium_gutenberg_rollback')))),
 			);
 			if (function_exists('ini_get')) {
-				$info['php_memory_limit']   = esc_html(size_format(wp_convert_hr_to_bytes(ini_get('memory_limit'))));
-				$info['post_max_size']      = esc_html(size_format(wp_convert_hr_to_bytes(ini_get('post_max_size'))));
-				$info['max_execution_time'] = ini_get('max_execution_time');
-				$info['max_input_vars']     = esc_html(ini_get('max_input_vars'));
-				$info['suhosin']            = extension_loaded('suhosin');
+				$php_memory_limit_bytes = wp_convert_hr_to_bytes(ini_get('memory_limit'));
+				$info['php_memory_limit']      = esc_html(size_format($php_memory_limit_bytes));
+				$info['php_memory_limit_bytes'] = $php_memory_limit_bytes;
+				$info['post_max_size']         = esc_html(size_format(wp_convert_hr_to_bytes(ini_get('post_max_size'))));
+				$info['max_execution_time']     = ini_get('max_execution_time');
+				$info['max_input_vars']         = esc_html(ini_get('max_input_vars'));
+				$info['suhosin']                = extension_loaded('suhosin');
 			}
 
 			$active_plugins = (array) get_option('active_plugins', array());
@@ -812,6 +878,15 @@ if (! class_exists('Pb_Panel')) {
 						'creative',
 					),
 				),
+				'templates'       => array(
+					'type'     => 'pb-button',
+					'label'    => __('Templates', 'premium-blocks-for-gutenberg'),
+					'icon'     => 'templates',
+					'category' => array(
+						'all',
+						'content',
+					),
+				),
 			);
 			return apply_filters('pb_panel_options', $options);
 		}
@@ -914,7 +989,8 @@ if (! class_exists('Pb_Panel')) {
 					return array();
 				}
 
-				krsort($plugin_information->versions);
+				uksort($plugin_information->versions, 'version_compare');
+				$plugin_information->versions = array_reverse($plugin_information->versions, true);
 
 				$rollback_versions = array();
 

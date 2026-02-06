@@ -18,104 +18,59 @@
 function get_premium_count_up_css_style( $attr, $unique_id ) {
 	$css = new Premium_Blocks_css();
 
-  $icon_position = $css->pbg_get_value($attr, 'iconPosition');
+	$icon_position = $css->pbg_get_value( $attr, 'iconPosition' );
 
-	// Container Style
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Desktop'], isset( $padding['unit']['Desktop'])?$padding['unit']['Desktop']:$padding['unit'] ) );
-	}
-	// Border.
-	if ( isset( $attr['border'] ) ) {
-		$border        = $attr['border'];
-		$border_width  = $border['borderWidth'];
-		$border_radius = $border['borderRadius'];
+	// Desktop Styles
+	$css->set_selector( $unique_id );
+	$css->pbg_render_spacing( $attr, 'padding', 'padding', 'Desktop' );
+	$css->pbg_render_border( $attr, 'border', 'Desktop' );
+	$css->pbg_render_background( $attr, 'background', 'Desktop' );
+  $css->pbg_render_shadow( $attr, 'boxShadow', 'box-shadow' );
 
-		$css->set_selector( $unique_id );
-		$css->add_property( 'border-width', $css->render_spacing( $border_width['Desktop'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Desktop'], 'px' ) );
-	}
-	if ( isset( $attr['background'] ) ) {
-		$css->set_selector( $unique_id );
-		$css->render_background( $attr['background'], 'Desktop' );
+	if ( $icon_position !== 'top' ) {
+		$css->set_selector( $unique_id . ' .premium-countup-content-wrapper' );
+		$css->pbg_render_value( $attr, 'contentAlign', 'justify-content', 'Desktop' );
 
+		$css->set_selector( $unique_id . ' .premium-countup-content-wrapper .wp-block-premium-icon' );
+		$css->pbg_render_value( $attr, 'iconVerticalAlign', 'align-self', 'Desktop' );
 	}
 
-  if($icon_position !== 'top'){
-    $css->set_selector( $unique_id . ' .premium-countup-content-wrapper' );
-    $css->pbg_render_value( $attr, 'contentAlign', 'justify-content', 'Desktop' );
-
-    $css->set_selector( $unique_id . ' .premium-countup-content-wrapper .wp-block-premium-icon' );
-    $css->pbg_render_value( $attr, 'iconVerticalAlign', 'align-self', 'Desktop' );
-  }
-
+	// Tablet Styles
 	$css->start_media_query( 'tablet' );
 
-	// Container Style
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Tablet'],isset( $padding['unit']['Tablet'] )?$padding['unit']['Tablet']:$padding['unit']) );
+	$css->set_selector( $unique_id );
+	$css->pbg_render_spacing( $attr, 'padding', 'padding', 'Tablet' );
+	$css->pbg_render_border( $attr, 'border', 'Tablet' );
+	$css->pbg_render_background( $attr, 'background', 'Tablet' );
+
+	if ( $icon_position !== 'top' ) {
+		$css->set_selector( $unique_id . ' .premium-countup-content-wrapper' );
+		$css->pbg_render_value( $attr, 'contentAlign', 'justify-content', 'Tablet' );
+
+		$css->set_selector( $unique_id . ' .premium-countup-content-wrapper .wp-block-premium-icon' );
+		$css->pbg_render_value( $attr, 'iconVerticalAlign', 'align-self', 'Tablet' );
 	}
-	// Border.
-	if ( isset( $attr['border'] ) ) {
-		$border        = $attr['border'];
-		$border_width  = $border['borderWidth'];
-		$border_radius = $border['borderRadius'];
-
-		$css->set_selector( $unique_id );
-		$css->add_property( 'border-width', $css->render_spacing( $border_width['Tablet'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
-	}
-	if ( isset( $attr['background'] ) ) {
-		$css->set_selector( $unique_id );
-		$css->render_background( $attr['background'], 'Tablet' );
-
-	}
-
-  if($icon_position !== 'top'){
-    $css->set_selector( $unique_id . ' .premium-countup-content-wrapper' );
-    $css->pbg_render_value( $attr, 'contentAlign', 'justify-content', 'Tablet' );
-
-    $css->set_selector( $unique_id . ' .premium-countup-content-wrapper .wp-block-premium-icon' );
-    $css->pbg_render_value( $attr, 'iconVerticalAlign', 'align-self', 'Tablet' );
-  }
 
 	$css->stop_media_query();
+
+	// Mobile Styles
 	$css->start_media_query( 'mobile' );
 
-	// Container Style
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Mobile'], isset( $padding['unit']['Mobile'] )?$padding['unit']['Mobile']:$padding['unit']) );
+	$css->set_selector( $unique_id );
+	$css->pbg_render_spacing( $attr, 'padding', 'padding', 'Mobile' );
+	$css->pbg_render_border( $attr, 'border', 'Mobile' );
+	$css->pbg_render_background( $attr, 'background', 'Mobile' );
+
+	if ( $icon_position !== 'top' ) {
+		$css->set_selector( $unique_id . ' .premium-countup-content-wrapper' );
+		$css->pbg_render_value( $attr, 'contentAlign', 'justify-content', 'Mobile' );
+
+		$css->set_selector( $unique_id . ' .premium-countup-content-wrapper .wp-block-premium-icon' );
+		$css->pbg_render_value( $attr, 'iconVerticalAlign', 'align-self', 'Mobile' );
 	}
-	// Border.
-	if ( isset( $attr['border'] ) ) {
-		$border        = $attr['border'];
-		$border_width  = $border['borderWidth'];
-		$border_radius = $border['borderRadius'];
-
-		$css->set_selector( $unique_id );
-		$css->add_property( 'border-width', $css->render_spacing( $border_width['Mobile'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
-	}
-	if ( isset( $attr['background'] ) ) {
-		$css->set_selector( $unique_id );
-		$css->render_background( $attr['background'], 'Mobile' );
-
-	}
-
-  if($icon_position !== 'top'){
-    $css->set_selector( $unique_id . ' .premium-countup-content-wrapper' );
-    $css->pbg_render_value( $attr, 'contentAlign', 'justify-content', 'Mobile' );
-
-    $css->set_selector( $unique_id . ' .premium-countup-content-wrapper .wp-block-premium-icon' );
-    $css->pbg_render_value( $attr, 'iconVerticalAlign', 'align-self', 'Mobile' );
-  }
 
 	$css->stop_media_query();
+
 	return $css->css_output();
 }
 

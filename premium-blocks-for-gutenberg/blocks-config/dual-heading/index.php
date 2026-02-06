@@ -37,36 +37,51 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
   $css->set_selector( $unique_id . ' .premium-mask-span' );
   $css->pbg_render_spacing($attr, 'mask_padding', 'padding', 'Desktop');
 
-  // Handling conflict with the global settings style for line-height.
-  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title');
-  $line_height_value = $css->pbg_get_value($attr, 'firstTypography.lineHeight', 'Desktop') ?? $css->pbg_get_value($attr, 'secondTypography.lineHeight', 'Desktop');
-  if($line_height_value){
-    $css->add_property( 'line-height', 'unset');
-  }
-
 	// First Style FontSize.
   $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
   $css->pbg_render_typography( $attr, 'firstTypography', 'Desktop');
   $css->pbg_render_border($attr, 'firstBorder', 'Desktop');
-  $css->pbg_render_background($attr, 'firstBackgroundOptions', 'Desktop');
   $css->pbg_render_spacing($attr, 'firstPadding', 'padding', 'Desktop');
   $css->pbg_render_spacing($attr, 'firstMargin', 'margin', 'Desktop');
+
+  $css->set_selector( $unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__first:not(.premium-headinga-true)' );
+  $css->pbg_render_background($attr, 'firstBackgroundOptions', 'Desktop');
 
   $css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headings-true.premium-dheading-block__first' );
   $css->pbg_render_color($attr, 'firstStrokeColor', '-webkit-text-stroke-color');
   $css->pbg_render_color($attr, 'firstStrokeFill', '-webkit-text-fill-color');
 
+  $css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headinga-true.premium-dheading-block__first' );
+  $css->pbg_render_range($attr, 'firstStyles[0].firstAnimGradientSpeed', 'animation-duration', null, null, 's');
+
+  $css->set_selector( $unique_id . ' .premium-dheading-first-noise-true.premium-dheading-block__first:before' );
+  $css->pbg_render_range($attr, 'firstNoiseColor1', 'text-shadow', null, '1px 0');
+
+  $css->set_selector( $unique_id . ' .premium-dheading-first-noise-true.premium-dheading-block__first:after' );
+  $css->pbg_render_range($attr, 'firstNoiseColor2', 'text-shadow', null, '-1px 0');
+
 	// Second Style FontSize.
   $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
   $css->pbg_render_typography($attr, 'secondTypography', 'Desktop');
   $css->pbg_render_border($attr, 'secondBorder', 'Desktop');
-  $css->pbg_render_background($attr, 'secondBackgroundOptions', 'Desktop');
   $css->pbg_render_spacing($attr, 'secondPadding', 'padding', 'Desktop');
   $css->pbg_render_spacing($attr, 'secondMargin', 'margin', 'Desktop');
+
+  $css->set_selector( $unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__second:not(.premium-headinga-true)' );
+  $css->pbg_render_background($attr, 'secondBackgroundOptions', 'Desktop');
 
   $css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headings-true.premium-dheading-block__second' );
   $css->pbg_render_color($attr, 'secondStrokeColor', '-webkit-text-stroke-color');
   $css->pbg_render_color($attr, 'secondStrokeFill', '-webkit-text-fill-color');
+
+   $css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headinga-true.premium-dheading-block__second' );
+  $css->pbg_render_range($attr, 'secondStyles[0].secondAnimGradientSpeed', 'animation-duration', null, null, 's');
+
+  $css->set_selector( $unique_id . ' .premium-dheading-second-noise-true.premium-dheading-block__second:before' );
+  $css->pbg_render_range($attr, 'secondNoiseColor1', 'text-shadow', null, '1px 0');
+
+  $css->set_selector( $unique_id . ' .premium-dheading-second-noise-true.premium-dheading-block__second:after' );
+  $css->pbg_render_range($attr, 'secondNoiseColor2', 'text-shadow', null, '-1px 0');
 
 	$css->start_media_query( 'tablet' );
 
@@ -83,28 +98,25 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
 	$css->set_selector( $unique_id . ' .premium-mask-span' );
   $css->pbg_render_spacing($attr, 'mask_padding', 'padding', 'Tablet');
 
-  // Handling conflict with the global settings style for line-height.
-  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title');
-  $line_height_value = $css->pbg_get_value($attr, 'firstTypography.lineHeight', 'Tablet') ?? $css->pbg_get_value($attr, 'secondTypography.lineHeight', 'Tablet');
-  if($line_height_value){
-    $css->add_property( 'line-height', 'unset');
-  }
-
 	// First Style FontSize.
   $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
   $css->pbg_render_typography( $attr, 'firstTypography', 'Tablet');
   $css->pbg_render_border($attr, 'firstBorder', 'Tablet');
-  $css->pbg_render_background($attr, 'firstBackgroundOptions', 'Tablet');
   $css->pbg_render_spacing($attr, 'firstPadding', 'padding', 'Tablet');
   $css->pbg_render_spacing($attr, 'firstMargin', 'margin', 'Tablet');
+
+  $css->set_selector( $unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__first:not(.premium-headinga-true)' );
+  $css->pbg_render_background($attr, 'firstBackgroundOptions', 'Tablet');
 
 	// Second Style FontSizeTablet.
 	$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
   $css->pbg_render_typography($attr, 'secondTypography', 'Tablet');
   $css->pbg_render_border($attr, 'secondBorder', 'Tablet');
-  $css->pbg_render_background($attr, 'secondBackgroundOptions', 'Tablet');
   $css->pbg_render_spacing($attr, 'secondPadding', 'padding', 'Tablet');
   $css->pbg_render_spacing($attr, 'secondMargin', 'margin', 'Tablet');
+
+  $css->set_selector( $unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__second:not(.premium-headinga-true)' );
+  $css->pbg_render_background($attr, 'secondBackgroundOptions', 'Tablet');
 
 	$css->stop_media_query();
 	$css->start_media_query( 'mobile' );
@@ -122,28 +134,25 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
   $css->set_selector( $unique_id . ' .premium-mask-span' );
   $css->pbg_render_spacing($attr, 'mask_padding', 'padding', 'Mobile');
 
-  // Handling conflict with the global settings style for line-height.
-  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title');
-  $line_height_value = $css->pbg_get_value($attr, 'firstTypography.lineHeight', 'Mobile') ?? $css->pbg_get_value($attr, 'secondTypography.lineHeight', 'Mobile');
-  if($line_height_value){
-    $css->add_property( 'line-height', 'unset');
-  }
-
 	// First Style FontSize.
   $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
   $css->pbg_render_typography( $attr, 'firstTypography', 'Mobile');
   $css->pbg_render_border($attr, 'firstBorder', 'Mobile');
-  $css->pbg_render_background($attr, 'firstBackgroundOptions', 'Mobile');
   $css->pbg_render_spacing($attr, 'firstPadding', 'padding', 'Mobile');
   $css->pbg_render_spacing($attr, 'firstMargin', 'margin', 'Mobile');
+
+  $css->set_selector( $unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__first:not(.premium-headinga-true)' );
+  $css->pbg_render_background($attr, 'firstBackgroundOptions', 'Mobile');
 
 	// Second Style FontSizeMobil.
 	$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
   $css->pbg_render_typography($attr, 'secondTypography', 'Mobile');
   $css->pbg_render_border($attr, 'secondBorder', 'Mobile');
-  $css->pbg_render_background($attr, 'secondBackgroundOptions', 'Mobile');
   $css->pbg_render_spacing($attr, 'secondPadding', 'padding', 'Mobile');
   $css->pbg_render_spacing($attr, 'secondMargin', 'margin', 'Mobile');
+
+  $css->set_selector( $unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__second:not(.premium-headinga-true)' );
+  $css->pbg_render_background($attr, 'secondBackgroundOptions', 'Mobile');
 
 	$css->stop_media_query();
 	return $css->css_output();

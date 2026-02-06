@@ -5,7 +5,13 @@
     "name": "premium/dheading-block",
     "title": "Dual Heading",
     "description": "Use Premium Dual Heading Block to create one heading with two different styles.",
-    "keywords": ["title", "heading", "text", "dual heading", "heading block"],
+    "keywords": [
+        "title",
+        "heading",
+        "text",
+        "dual heading",
+        "heading block"
+    ],
     "category": "premium-blocks",
     "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
@@ -708,6 +714,32 @@
         "follow": {
             "type": "boolean",
             "default": false
+        },
+        "firstNoiseColor1": {
+            "type": "string",
+            "default": "#00f"
+        },
+        "firstNoiseColor2": {
+            "type": "string",
+            "default": "#ff0000"
+        },
+        "secondNoiseColor1": {
+            "type": "string",
+            "default": "#00f"
+        },
+        "secondNoiseColor2": {
+            "type": "string",
+            "default": "#ff0000"
+        },
+        "textColorType": {
+            "type": "string",
+            "default": "solid",
+            "isStyle": true
+        },
+        "textColorTypeSecond": {
+            "type": "string",
+            "default": "solid",
+            "isStyle": true
         }
     },
     "editorScript": "pbg-blocks-js",

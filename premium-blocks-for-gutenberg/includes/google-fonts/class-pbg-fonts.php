@@ -34,6 +34,13 @@ final class PBG_Fonts {
 	private static $performance = array();
 
 	/**
+	 * Track if preconnect links have been output.
+	 *
+	 * @var bool $preconnect_outputted
+	 */
+	private static $preconnect_outputted = false;
+
+	/**
 	 * Adds data to the $fonts array for a font to be rendered.
 	 *
 	 * @param string $name The name key of the font to add.
@@ -42,7 +49,10 @@ final class PBG_Fonts {
 	 */
 	public static function add_font( $name, $variants = array() ) {
 
-		if ( 'Default' == $name ) {
+		// Trim and validate font name
+		$name = trim( $name );
+		
+		if ( empty( $name ) || 'Default' == $name ) {
 			return;
 		}
 
@@ -63,7 +73,7 @@ final class PBG_Fonts {
 		if ( isset( self::$fonts[ $name ] ) ) {
 			foreach ( (array) $variants as $variant ) {
 				if ( ! in_array( $variant, self::$fonts[ $name ]['variants'] ) ) {
-					self::$fonts[ $name ]['variants'] = $variant;
+					self::$fonts[ $name ]['variants'][] = $variant;
 				}
 			}
 		} else {
@@ -81,7 +91,14 @@ final class PBG_Fonts {
 	 */
 	public static function set_fonts( $fonts ) {
 		foreach ( $fonts as $name => $font ) {
-			self::add_font( $name, array( 'n1', 'i1', 'n2', 'i2', 'n3', 'i3', 'n4', 'i4', 'n5', 'i5', 'n6', 'i6', 'n7', 'i7', 'n8', 'i8', 'n9', 'i9' ) );
+			
+			$variants = array( 'n1', 'i1', 'n2', 'i2', 'n3', 'i3', 'n4', 'i4', 'n5', 'i5', 'n6', 'i6', 'n7', 'i7', 'n8', 'i8', 'n9', 'i9' );
+			if ( is_array( $font ) && isset( $font['fontvariants'] ) && ! empty( $font['fontvariants'] ) ) {
+				$variants = $font['fontvariants'];
+			}
+			
+			$font_name = ( is_array( $font ) && isset( $font['fontfamily'] ) && ! empty( $font['fontfamily'] ) ) ? $font['fontfamily'] : $name;
+			self::add_font( $font_name, $variants );
 		}
 	}
 
@@ -107,7 +124,10 @@ final class PBG_Fonts {
 		$font_subset  = array();
 
 		foreach ( $font_list as $name => $font ) {
-			if ( ! empty( $name ) ) {
+			// Trim font name to ensure proper handling of names with numbers
+			$name = trim( $name );
+			
+			if ( ! empty( $name ) && isset( $font['variants'] ) ) {
 
 				// Add font variants.
 				$google_fonts[ $name ] = $font['variants'];
@@ -209,44 +229,59 @@ public static function add_loaded_font($font_url) {
 		/* Format Each Font Family in Array */
 		foreach ( $fonts as $font_name => $font_weight ) {
 			$family      = '';
-			$font_name   = str_replace( ' ', '+', $font_name );
+			// Properly encode font name for Google Fonts API (spaces to +, preserve numbers and other characters)
+			$font_name   = str_replace( ' ', '+', trim( $font_name ) );
 			$family      = 'family=' . $font_name;
 			$weight_text = 'wght@';
 			$wghts       = array();
-			if ( ! empty( $font_weight ) && ( count( $font_weight ) > 1 || ( count( $font_weight ) === 1 && $font_weight[0] != 400 ) ) ) {
-				foreach ( $font_weight as  $weight ) {
-					$weight_val = (int) $weight[1] * 100;
-					if ( 'i' === $weight[0] ) {
-						$weights['italic'][] = $weight_val;
-					} else {
-						$weights['normal'][] = $weight_val;
+			$weights     = array(
+				'italic' => array(),
+				'normal' => array(),
+			);
+			
+			// Process font weights if available
+			if ( ! empty( $font_weight ) && is_array( $font_weight ) ) {
+				foreach ( $font_weight as $weight ) {
+					
+					if ( is_string( $weight ) && strlen( $weight ) >= 2 ) {
+						$weight_val = (int) $weight[1] * 100;
+						if ( 'i' === $weight[0] ) {
+							$weights['italic'][] = $weight_val;
+						} else {
+							$weights['normal'][] = $weight_val;
+						}
 					}
 				}
-				sort( $weights['italic'] );
-				sort( $weights['normal'] );
-
-				if ( ! empty( $weights['normal'] ) ) {
-					$weights['normal'] = array_unique( $weights['normal'] );
-					foreach ( $weights['normal'] as $wght ) {
-						$wghts[] = ! empty( $weights['italic'] ) ? '0,' . $wght : $wght;
-					}
-				}
-
-				if ( ! empty( $weights['italic'] ) ) {
-					$family           .= ':ital,';
-					$weights['italic'] = array_unique( $weights['italic'] );
-					foreach ( $weights['italic'] as $wght ) {
-						$wghts[] = '1,' . $wght;
-					}
-				} else {
-					$weight_text = ':wght@';
-				}
-
-				$weight_text .= implode( ';', $wghts );
-				$families[]   = $family . $weight_text;
-			} else {
-				$families[] = $family;
 			}
+			
+			// If no weights specified, use default weight 400
+			if ( empty( $weights['normal'] ) && empty( $weights['italic'] ) ) {
+				$weights['normal'][] = 400;
+			}
+			
+			// Build weight string
+			sort( $weights['italic'] );
+			sort( $weights['normal'] );
+
+			if ( ! empty( $weights['normal'] ) ) {
+				$weights['normal'] = array_unique( $weights['normal'] );
+				foreach ( $weights['normal'] as $wght ) {
+					$wghts[] = ! empty( $weights['italic'] ) ? '0,' . $wght : $wght;
+				}
+			}
+
+			if ( ! empty( $weights['italic'] ) ) {
+				$family           .= ':ital,';
+				$weights['italic'] = array_unique( $weights['italic'] );
+				foreach ( $weights['italic'] as $wght ) {
+					$wghts[] = '1,' . $wght;
+				}
+			} else {
+				$weight_text = ':wght@';
+			}
+
+			$weight_text .= implode( ';', $wghts );
+			$families[]   = $family . $weight_text;
 		}
 
 		if ( ! empty( $families ) ) {
@@ -267,6 +302,11 @@ public static function add_loaded_font($font_url) {
 	 * @return void
 	 */
 	public static function add_preconnect() {
+		// Prevent duplicate output
+		if ( self::$preconnect_outputted ) {
+			return;
+		}
+
 		if ( ! self::using_google_fonts() ) {
 			return;
 		}
@@ -284,6 +324,9 @@ public static function add_loaded_font($font_url) {
 				),
 			)
 		);
+
+		// Mark as outputted to prevent duplicates
+		self::$preconnect_outputted = true;
 	}
 
 	/**

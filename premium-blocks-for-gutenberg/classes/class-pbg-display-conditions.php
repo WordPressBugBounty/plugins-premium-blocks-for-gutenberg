@@ -44,7 +44,15 @@ class PBG_Display_Conditions {
 		add_action( 'enqueue_block_editor_assets', array( $this, 'pbg_editor' ) );
 
 		// Block Render Callback.
-		add_filter( 'render_block', array( $this, 'pbg_render_block' ), 10, 2 );
+		if ( ! is_admin() ) {
+			add_filter( 'render_block', array( $this, 'pbg_render_block' ), 10, 2 );
+		}
+
+		// Register block support.
+		add_action( 'init', array( $this, 'register_block_support' ) );
+
+		// Add support to all blocks.
+		add_filter( 'register_block_type_args', array( $this, 'add_display_conditions_support' ), 999, 2 );
 	}
 
 	/**
@@ -58,7 +66,7 @@ class PBG_Display_Conditions {
 	public function pbg_render_block( $block_content, $block ) {
 		$display_conditions = $block['attrs']['displayConditions'] ?? array();
 
-		if ( empty( $display_conditions ) || empty( $display_conditions['conditions'] ?? array() ) ||  !$display_conditions['enabled']) {
+		if ( empty( $display_conditions ) || empty( $display_conditions['conditions'] ?? array() ) ||  !$display_conditions['enabled'] || (defined( 'REST_REQUEST' ) && REST_REQUEST && isset( $_REQUEST['context'] ) && $_REQUEST['context'] === 'edit')) {
 			return $block_content;
 		}
 
@@ -79,10 +87,6 @@ class PBG_Display_Conditions {
 		return $block_content;
 	}
 
-	function is_plugin_pro_active( $plugin ) {
-		return in_array( $plugin, (array) get_option( 'active_plugins', array() ), true );
-	}
-
 	/**
 	 * Get Conditions Result
 	 *
@@ -93,7 +97,6 @@ class PBG_Display_Conditions {
 	 * @return array
 	 */
 	public function get_conditions_result( $display_conditions, $operator = 'and', $action = 'show' ) {
-		$is_pbg_pro_installed = $this->is_plugin_pro_active( 'premium-blocks-for-gutenberg-pro/premium-blocks-for-gutenberg-pro.php' );
 		
 		$display_conditions = array_filter( $display_conditions );
 		$result             = array();
@@ -183,12 +186,7 @@ class PBG_Display_Conditions {
 					break;
 			}
 		}
-		// if($is_pbg_pro_installed) {
-		// 	$result = array_filter(apply_filters( 'pb_display_conditions_options', $type, $condition_operator, $condition_value, $result, $itemNumber, $category ));
-		// }
-		// else {
 			$result = array_filter( $result );
-		// }
 
 		if ( 'and' === $operator ) {
 			$final_result = count( $result ) === count( $display_conditions );
@@ -423,6 +421,7 @@ class PBG_Display_Conditions {
 		$value = strtotime( $value );
 
 		$today            = 'local' === $tz ? strtotime( self::get_local_time( 'd-m-Y' ) ) : strtotime( self::get_site_server_time( 'd-m-Y' ) );
+		
 		$condition_result = ! empty( $value ) && $today === $value ? true : false;
 
 		return self::get_final_result( $condition_result, $operator );
@@ -762,6 +761,7 @@ class PBG_Display_Conditions {
 	 * @return string
 	 */
 	public function get_date( $date ) {
+		
 		list($month, $day, $year) = explode( '/', $date );
 		$value                    = "{$day}-{$month}-{$year}";
 
@@ -857,6 +857,66 @@ class PBG_Display_Conditions {
 		}
 
 		return $options;
+	}
+
+	/**
+	 * Register block support for display conditions.
+	 */
+	public function register_block_support() {
+		WP_Block_Supports::get_instance()->register(
+			'displayConditions',
+			array(
+				'register_attribute' => array( $this, 'register_display_conditions_attribute' ),
+			)
+		);
+	}
+
+	/**
+	 * Register the displayConditions attribute for blocks that support it.
+	 *
+	 * @param WP_Block_Type $block_type Block type.
+	 */
+	public function register_display_conditions_attribute( $block_type ) {
+		if ( ! $block_type->attributes ) {
+			$block_type->attributes = array();
+		}
+
+		$block_type->attributes['displayConditions'] = array(
+			'type'    => 'object',
+			'default' => array(
+				'enabled'   => false,
+				'operator'  => 'and',
+				'conditions' => array(),
+			),
+		);
+	}
+
+	/**
+	 * Add displayConditions support to all block types.
+	 *
+	 * @param array  $args       Array of arguments for registering a block type.
+	 * @param string $block_type Block type name.
+	 *
+	 * @return array
+	 */
+	public function add_display_conditions_support( $args, $block_type ) {
+		// Allow filtering which blocks should be excluded from display conditions
+		$excluded_blocks = apply_filters( 'pbg_display_conditions_excluded_blocks', array() );
+
+		// Check if this block type should be excluded
+		foreach ( $excluded_blocks as $excluded ) {
+			if ( strpos( $block_type, $excluded ) === 0 ) {
+				return $args;
+			}
+		}
+
+		if ( ! isset( $args['supports'] ) ) {
+			$args['supports'] = array();
+		}
+
+		$args['supports']['displayConditions'] = true;
+
+		return $args;
 	}
 }
 

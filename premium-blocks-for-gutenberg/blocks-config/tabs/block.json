@@ -5,7 +5,12 @@
     "title": "Tabs",
     "category": "premium-blocks",
     "description": "For making advanced tabs with content",
-    "keywords": ["tabs", "tab", "content", "accordion"],
+    "keywords": [
+        "tabs",
+        "tab",
+        "content",
+        "accordion"
+    ],
     "textdomain": "default",
     "attributes": {
         "blockId": {
@@ -1565,6 +1570,38 @@
         "delayTime": {
             "type": "number",
             "default": 2
+        },
+        "tabContentBackground": {
+            "type": "object",
+            "default": {
+                "backgroundType": "",
+                "backgroundColor": "",
+                "backgroundImageID": "",
+                "backgroundImageURL": "",
+                "backgroundPosition": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundRepeat": {
+                    "Desktop": "no-repeat",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "backgroundSize": {
+                    "Desktop": "",
+                    "Tablet": "",
+                    "Mobile": ""
+                },
+                "fixed": false,
+                "gradientLocationOne": "0",
+                "gradientColorTwo": "",
+                "gradientLocationTwo": "100",
+                "gradientAngle": "180",
+                "gradientPosition": "center center",
+                "gradientType": "linear"
+            },
+            "isStyle": true
         }
     }
 }

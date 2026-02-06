@@ -18,7 +18,7 @@ function get_premium_image_css($attr, $unique_id)
 		if ($mask_shape === "custom") {
 			$image_path = $css->pbg_get_value($attr, 'maskCustomShape.url') ?? '';
 		}
-		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap  img , ' . '.' . $unique_id . ' > .premium-image-container' . ' .premium-image-overlay');
+		$css->set_selector('.' . $unique_id . ' > .premium-image-container' . ' > .premium-image-wrap');
 		$css->add_property('mask-image', 'url(' . $image_path . ')');
 		$css->add_property('-webkit-mask-image', 'url(' . $image_path . ')');
 		$css->add_property('mask-size', $attr['maskSize'] ?? "contain");

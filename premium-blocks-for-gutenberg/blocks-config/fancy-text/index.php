@@ -26,7 +26,7 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
   $css->pbg_render_value($attr, 'fancyContentAlign', 'text-align', 'Desktop');
 
 	// FancyText Style
-  $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide li, .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
+  $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide li, .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type, .' . $unique_id . ' .premium-fancy-text .premium-fancy-text-title-highlighted' );
   $css->pbg_render_typography($attr, 'fancyTextTypography', 'Desktop');
 
   $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .typed-cursor' );
@@ -51,6 +51,10 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
   $css->pbg_render_color($attr, 'PreStyles[0].textColor', 'color', null, '!important');
   $css->pbg_render_color($attr, 'PreStyles[0].textBGColor', 'background-color', null, '!important');
 
+  $css->set_selector( '.' . $unique_id . ' .premium-fancy-text-highlighted .premium-fancy-text-title-highlighted svg path' );
+  $css->pbg_render_color($attr, 'highlightedShapeColor', 'stroke', null, '!important');
+  $css->pbg_render_range($attr, 'highlightedShapeWidth', 'stroke-width', 'Desktop', null, '!important');
+
 	$css->start_media_query( 'tablet' );
 
   $css->set_selector( ":root:has(.{$unique_id}) .{$unique_id}.wp-block-premium-fancy-text");
@@ -61,7 +65,7 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
   $css->pbg_render_value($attr, 'fancyContentAlign', 'text-align', 'Tablet');
 
   // FancyText Style
-  $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide li, .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
+  $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide li, .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type, .' . $unique_id . ' .premium-fancy-text .premium-fancy-text-title-highlighted' );
   $css->pbg_render_typography($attr, 'fancyTextTypography', 'Tablet');
 
   $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .typed-cursor' );
@@ -76,6 +80,9 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
   $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide' );
   $css->pbg_render_value($attr, 'fancyTextAlign', 'text-align', 'Tablet');
 
+  $css->set_selector( '.' . $unique_id . ' .premium-fancy-text-highlighted .premium-fancy-text-title-highlighted svg path' );
+  $css->pbg_render_range($attr, 'highlightedShapeWidth', 'stroke-width', 'Tablet', null, '!important');
+
 	$css->stop_media_query();
 	$css->start_media_query( 'mobile' );
 
@@ -87,7 +94,7 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
   $css->pbg_render_value($attr, 'fancyContentAlign', 'text-align', 'Mobile');
 
   // FancyText Style
-	$css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide li, .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type' );
+  $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide li, .'. $unique_id . ' > .premium-fancy-text  > .premium-fancy-text-title-type, .' . $unique_id . ' .premium-fancy-text .premium-fancy-text-title-highlighted' );
   $css->pbg_render_typography($attr, 'fancyTextTypography', 'Mobile');
 
   $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .typed-cursor' );
@@ -101,6 +108,9 @@ function get_premium_fancy_text_css_style( $attr, $unique_id ) {
 
   $css->set_selector( '.' . $unique_id . '> .premium-fancy-text' . '> .premium-fancy-text-title-slide' );
   $css->pbg_render_value($attr, 'fancyTextAlign', 'text-align', 'Mobile');
+
+  $css->set_selector( '.' . $unique_id . ' .premium-fancy-text-highlighted .premium-fancy-text-title-highlighted svg path' );
+  $css->pbg_render_range($attr, 'highlightedShapeWidth', 'stroke-width', 'Mobile', null, '!important');
 
 	$css->stop_media_query();
 	return $css->css_output();

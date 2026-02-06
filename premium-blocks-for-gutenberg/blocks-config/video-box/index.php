@@ -18,196 +18,131 @@
 function get_premium_video_box_css_style( $attr, $unique_id ) {
 	$css = new Premium_Blocks_css();
 
-	// Container style
-	if ( isset( $attr['boxBorder'] ) ) {
-		$box_border        = $attr['boxBorder'];
-		$box_border_width  = $box_border['borderWidth'];
-		$box_border_radius = $box_border['borderRadius'];
+	// Desktop Styles
 
-		$css->set_selector( '.' . $unique_id );
-		$css->add_property( 'border-width', $css->render_spacing( $box_border_width['Desktop'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $box_border_radius['Desktop'], 'px' ) );
+	// Video Box Container
+	$css->set_selector( '.' . $unique_id );
+	$css->pbg_render_border( $attr, 'boxBorder', 'Desktop' );
+	$css->pbg_render_shadow( $attr, 'boxShadow', 'box-shadow' );
+
+	// Play Icon Container
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__play' );
+	$css->pbg_render_border( $attr, 'playBorder', 'Desktop' );
+	$css->pbg_render_spacing( $attr, 'playPadding', 'padding', 'Desktop' );
+	$css->pbg_render_range( $attr, 'playStyles[0].playTop', 'top', '', '', '%' );
+	$css->pbg_render_color( $attr, 'playStyles[0].playBack', 'background-color' );
+
+	// Play Icon SVG
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__play svg' );
+	$css->pbg_render_range( $attr, 'playStyles[0].playSize', 'width', '', '', 'px' );
+	$css->pbg_render_range( $attr, 'playStyles[0].playSize', 'height', '', '', 'px' );
+	$css->pbg_render_color( $attr, 'playStyles[0].playColor', 'color' );
+	$css->pbg_render_color( $attr, 'playStyles[0].playColor', 'fill' );
+
+	// Play Icon Hover
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__play:hover' );
+	$css->pbg_render_color( $attr, 'playStyles[0].playHoverBackColor', 'background-color' );
+
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__play:hover svg' );
+	$css->pbg_render_color( $attr, 'playStyles[0].playHoverColor', 'color' );
+	$css->pbg_render_color( $attr, 'playStyles[0].playHoverColor', 'fill' );
+
+	// Overlay
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__overlay, .' . $unique_id . ' .premium-video-box-image-container-block' );
+	$css->pbg_render_filters( $attr, 'overlayFilter' );
+
+	// Overlay with custom image
+	$overlay_img_url = $css->pbg_get_value( $attr, 'overlayStyles[0].overlayImgURL' );
+	if ( $overlay_img_url ) {
+		$css->set_selector( '.' . $unique_id . ' .premium-video-box__overlay:not(.premium-video-box__overlay-image)' );
+		$css->add_property( 'background-image', 'url(' . $overlay_img_url . ')' );
 	}
 
-	if (isset($attr['overlayFilter'])) {
-        $css->set_selector( '.' . $unique_id . ' .premium-video-box-image-container-block' );
-        $css->add_property(
-            'filter',
-            'brightness(' . $attr['overlayFilter']['bright'] . '%)' . 'contrast(' . $attr['overlayFilter']['contrast'] . '%) ' . 'saturate(' . $attr['overlayFilter']['saturation'] . '%) ' . 'blur(' . $attr['overlayFilter']['blur'] . 'px) ' . 'hue-rotate(' . $attr['overlayFilter']['hue'] . 'deg)'
-        );
-    }
-
-	// icon Style
-	if ( isset( $attr['playBorder'] ) ) {
-		$play_border        = $attr['playBorder'];
-		$play_border_width  = $play_border['borderWidth'];
-		$play_border_radius = $play_border['borderRadius'];
-
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__play' );
-		$css->add_property( 'border-width', $css->render_spacing( $play_border_width['Desktop'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $play_border_radius['Desktop'], 'px' ) );
-	}
-	if ( isset( $attr['playPadding'] ) ) {
-		$desc_padding = $attr['playPadding'];
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__play' );
-		$css->add_property( 'padding', $css->render_spacing( $desc_padding['Desktop'], isset( $desc_padding['unit']['Desktop'] ) ? $desc_padding['unit']['Desktop'] : $desc_padding['unit'] ) );
-	}
-	if ( isset( $attr['playStyles'][0]['playHoverColor'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__play:hover svg' );
-		$css->add_property( 'fill', $css->render_string( $css->render_color( $attr['playStyles'][0]['playHoverColor'] ), ' !important' ) );
-
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__play:hover svg*' );
-		$css->add_property( 'fill', $css->render_string( $css->render_color( $attr['playStyles'][0]['playHoverColor'] ), ' !important' ) );
-	}
-	if ( isset( $attr['playStyles'][0]['playHoverBackColor'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__play:hover' );
-		$css->add_property( 'background-color', $css->render_string( $css->render_color( $attr['playStyles'][0]['playHoverBackColor'] ), ' !important' ) );
-	}
-	if (isset( $attr['playStyles'][0]['playSize'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__play svg' );
-		$css->add_property( 'width', $css->render_string( $attr['playStyles'][0]['playSize'], 'px' ) );
-		$css->add_property( 'height', $css->render_string( $attr['playStyles'][0]['playSize'], 'px' ) );
-	}
-	if ( isset( $attr['playStyles'][0]['playColor'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__play svg' );
-		$css->add_property( 'fill', $css->render_string( $css->render_color( $attr['playStyles'][0]['playColor'] ), ' !important' ) );
-
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__play svg*' );
-		$css->add_property( 'fill', $css->render_string( $css->render_color( $attr['playStyles'][0]['playColor'] ), ' !important' ) );
-	}
-	// Style Description.
-	$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' . '> .premium-video-box__desc_text' );
-  $css->pbg_render_typography($attr, 'videoDescTypography', 'Desktop');
-	
-	if ( isset( $attr['descPadding'] ) ) {
-		$desc_padding = $attr['descPadding'];
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' );
-		$css->add_property( 'padding', $css->render_spacing( $desc_padding['Desktop'], isset( $desc_padding['unit']['Desktop'] ) ? $desc_padding['unit']['Desktop'] : $desc_padding['unit'] ) );
+	// Overlay with thumbnail (fallback)
+	$thumbnail_src = $css->pbg_get_value( $attr, 'thumbnailSrc' );
+	if ( $thumbnail_src ) {
+		$css->set_selector( '.' . $unique_id . ' .premium-video-box__overlay-image' );
+		$css->add_property( 'background-image', 'url(' . $thumbnail_src . ')' );
 	}
 
-	if ( isset( $attr['verticalPos'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' );
-		$css->add_property( 'top', $css->render_range( $attr['verticalPos'], 'Desktop' ) );
-	}
+	// Video Description Container
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' );
+	$css->pbg_render_color( $attr, 'descStyles[0].videoDescBack', 'background-color' );
+  $css->pbg_render_range( $attr, 'verticalPos', 'top', 'Desktop' );
+	$css->pbg_render_spacing( $attr, 'descPadding', 'padding', 'Desktop' );
 
-	// Style Caption.
-  $css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' . '> .premium-video-box__caption_text' );
-  $css->pbg_render_typography($attr, 'videoCaptionTypography', 'Desktop');
+	// Video Description Text
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc .premium-video-box__desc_text' );
+	$css->pbg_render_typography( $attr, 'videoDescTypography', 'Desktop' );
+	$css->pbg_render_color( $attr, 'descStyles[0].videoDescColor', 'color' );
+	$css->pbg_render_shadow( $attr, 'descShadow', 'text-shadow' );
 
-	if ( isset( $attr['captionPadding'] ) ) {
-		$caption_padding = $attr['captionPadding'];
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' );
-		$css->add_property( 'padding', $css->render_spacing( $caption_padding['Desktop'], isset( $caption_padding['unit']['Desktop'] ) ? $caption_padding['unit']['Desktop'] : $caption_padding['unit'] ) );
-	}
+	// Video Caption Container
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' );
+	$css->pbg_render_spacing( $attr, 'captionPadding', 'padding', 'Desktop' );
+	$css->pbg_render_color( $attr, 'captionBackColor', 'background-color' );
 
+	// Video Caption Text
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption .premium-video-box__caption_text' );
+	$css->pbg_render_typography( $attr, 'videoCaptionTypography', 'Desktop' );
+	$css->pbg_render_color( $attr, 'captionColor', 'color' );
+	$css->pbg_render_shadow( $attr, 'captionShadow', 'text-shadow' );
+
+	// Tablet Styles
 	$css->start_media_query( 'tablet' );
 
-	// Container style
-	if ( isset( $attr['boxBorder'] ) ) {
-		$box_border        = $attr['boxBorder'];
-		$box_border_width  = $box_border['borderWidth'];
-		$box_border_radius = $box_border['borderRadius'];
+	// Video Box Container
+	$css->set_selector( '.' . $unique_id );
+	$css->pbg_render_border( $attr, 'boxBorder', 'Tablet' );
 
-		$css->set_selector( '.' . $unique_id );
-		$css->add_property( 'border-width', $css->render_spacing( $box_border_width['Tablet'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $box_border_radius['Tablet'], 'px' ) );
-	}
+	// Play Icon
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__play' );
+	$css->pbg_render_border( $attr, 'playBorder', 'Tablet' );
+	$css->pbg_render_spacing( $attr, 'playPadding', 'padding', 'Tablet' );
 
-	// icon Style
-	if ( isset( $attr['playBorder'] ) ) {
-		$play_border        = $attr['playBorder'];
-		$play_border_width  = $play_border['borderWidth'];
-		$play_border_radius = $play_border['borderRadius'];
+	// Video Description
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' );
+  $css->pbg_render_range( $attr, 'verticalPos', 'top', 'Tablet' );
+	$css->pbg_render_spacing( $attr, 'descPadding', 'padding', 'Tablet' );
 
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__play' );
-		$css->add_property( 'border-width', $css->render_spacing( $play_border_width['Tablet'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $play_border_radius['Tablet'], 'px' ) );
-	}
-	if ( isset( $attr['playPadding'] ) ) {
-		$desc_padding = $attr['playPadding'];
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__play' );
-		$css->add_property( 'padding', $css->render_spacing( $desc_padding['Tablet'], isset( $desc_padding['unit']['Tablet'] ) ? $desc_padding['unit']['Tablet'] : $desc_padding['unit'] ) );
-	}
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc .premium-video-box__desc_text' );
+	$css->pbg_render_typography( $attr, 'videoDescTypography', 'Tablet' );
 
-	// Style Description.
-	$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' . '> .premium-video-box__desc_text' );
-  $css->pbg_render_typography($attr, 'videoDescTypography', 'Tablet');
+	// Video Caption
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' );
+	$css->pbg_render_spacing( $attr, 'captionPadding', 'padding', 'Tablet' );
 
-	if ( isset( $attr['descPadding'] ) ) {
-		$desc_padding = $attr['descPadding'];
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' );
-		$css->add_property( 'padding', $css->render_spacing( $desc_padding['Tablet'], isset( $desc_padding['unit']['Tablet'] ) ? $desc_padding['unit']['Tablet'] : $desc_padding['unit'] ) );
-	}
-
-	if ( isset( $attr['verticalPos'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' );
-		$css->add_property( 'top', $css->render_range( $attr['verticalPos'], 'Tablet' ) );
-	}
-
-	// Style Caption.
-  $css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' . '> .premium-video-box__caption_text' );
-  $css->pbg_render_typography($attr, 'videoCaptionTypography', 'Tablet');
-	
-	if ( isset( $attr['captionPadding'] ) ) {
-		$caption_padding = $attr['captionPadding'];
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' );
-		$css->add_property( 'padding', $css->render_spacing( $caption_padding['Tablet'], isset( $caption_padding['unit']['Tablet'] ) ? $caption_padding['unit']['Tablet'] : $caption_padding['unit'] ) );
-	}
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption .premium-video-box__caption_text' );
+	$css->pbg_render_typography( $attr, 'videoCaptionTypography', 'Tablet' );
 
 	$css->stop_media_query();
+
+	// Mobile Styles
 	$css->start_media_query( 'mobile' );
 
-	// Container style
-	if ( isset( $attr['boxBorder'] ) ) {
-		$box_border        = $attr['boxBorder'];
-		$box_border_width  = $box_border['borderWidth'];
-		$box_border_radius = $box_border['borderRadius'];
+	// Video Box Container
+	$css->set_selector( '.' . $unique_id );
+	$css->pbg_render_border( $attr, 'boxBorder', 'Mobile' );
 
-		$css->set_selector( '.' . $unique_id );
-		$css->add_property( 'border-width', $css->render_spacing( $box_border_width['Mobile'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $box_border_radius['Mobile'], 'px' ) );
-	}
+	// Play Icon
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__play' );
+	$css->pbg_render_border( $attr, 'playBorder', 'Mobile' );
+	$css->pbg_render_spacing( $attr, 'playPadding', 'padding', 'Mobile' );
 
-	// icon Style
-	if ( isset( $attr['playBorder'] ) ) {
-		$play_border        = $attr['playBorder'];
-		$play_border_width  = $play_border['borderWidth'];
-		$play_border_radius = $play_border['borderRadius'];
+	// Video Description
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' );
+  $css->pbg_render_range( $attr, 'verticalPos', 'top', 'Mobile' );
+	$css->pbg_render_spacing( $attr, 'descPadding', 'padding', 'Mobile' );
 
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__play' );
-		$css->add_property( 'border-width', $css->render_spacing( $play_border_width['Mobile'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $play_border_radius['Mobile'], 'px' ) );
-	}
-	if ( isset( $attr['playPadding'] ) ) {
-		$desc_padding = $attr['playPadding'];
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__play' );
-		$css->add_property( 'padding', $css->render_spacing( $desc_padding['Mobile'], isset( $desc_padding['unit']['Mobile'] ) ? $desc_padding['unit']['Mobile'] : $desc_padding['unit'] ) );
-	}
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc .premium-video-box__desc_text' );
+	$css->pbg_render_typography( $attr, 'videoDescTypography', 'Mobile' );
 
-	// Style Description.
-	$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' . '> .premium-video-box__desc_text' );
-  $css->pbg_render_typography($attr, 'videoDescTypography', 'Mobile');
+	// Video Caption
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' );
+	$css->pbg_render_spacing( $attr, 'captionPadding', 'padding', 'Mobile' );
 
-	if ( isset( $attr['descPadding'] ) ) {
-		$desc_padding = $attr['descPadding'];
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' );
-		$css->add_property( 'padding', $css->render_spacing( $desc_padding['Mobile'], isset( $desc_padding['unit']['Mobile'] ) ? $desc_padding['unit']['Mobile'] : $desc_padding['unit'] ) );
-	}
-
-	if ( isset( $attr['verticalPos'] ) ) {
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__desc' );
-		$css->add_property( 'top', $css->render_range( $attr['verticalPos'], 'Mobile' ) );
-	}
-
-	// Style Caption.
-	$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' . '> .premium-video-box__caption_text' );
-  $css->pbg_render_typography($attr, 'videoCaptionTypography', 'Mobile');
-
-	if ( isset( $attr['captionPadding'] ) ) {
-		$caption_padding = $attr['captionPadding'];
-		$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption' );
-		$css->add_property( 'padding', $css->render_spacing( $caption_padding['Mobile'], isset( $caption_padding['unit']['Mobile'] ) ? $caption_padding['unit']['Mobile'] : $caption_padding['unit'] ) );
-	}
+	$css->set_selector( '.' . $unique_id . ' .premium-video-box__caption .premium-video-box__caption_text' );
+	$css->pbg_render_typography( $attr, 'videoCaptionTypography', 'Mobile' );
 
 	$css->stop_media_query();
 	return $css->css_output();
@@ -225,7 +160,6 @@ function get_premium_video_box_css_style( $attr, $unique_id ) {
 function render_block_pbg_video_box( $attributes, $content, $block ) {
 	$block_helpers = pbg_blocks_helper();
 
-	// Enqueue frontend and editor JS/CSS.
 	if ( $block_helpers->it_is_not_amp() ) {
 		wp_enqueue_script(
 			'pbg-video-box',

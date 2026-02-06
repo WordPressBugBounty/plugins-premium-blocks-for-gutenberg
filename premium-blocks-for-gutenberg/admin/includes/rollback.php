@@ -124,7 +124,7 @@ if ( ! class_exists( 'PBG_Rollback' ) ) {
 		protected function upgrade() {
 			require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 
-			$logo_url = PREMIUM_BLOCKS_URL . 'admin/images/premium-blocks-logo-dashboard.png';
+			$logo_url = PREMIUM_BLOCKS_URL . 'admin/images/premium-blocks-logo-dark-scheme.png';
 
 			$upgrader_args = array(
 				'url'    => 'update.php?action=upgrade-plugin&plugin=' . rawurlencode( $this->plugin_name ),

@@ -18,110 +18,138 @@
 function get_premium_banner_css_style( $attr, $unique_id ) {
 	$css = new Premium_Blocks_css();
 
-	if ( isset( $attr['sepColor'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-banner__effect3 .premium-banner__title_wrap::after' );
-		$css->add_property( 'background-color', $css->render_color( $attr['sepColor'] ) );
-	}
+  $effect = $css->pbg_get_value($attr, 'effect');
 
-	if ( isset( $attr['hoverBackground'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-banner__inner:hover .premium-banner__bg-overlay' );
-		$css->add_property( 'background-color', $css->render_color( $attr['hoverBackground'] ) );
-	}
-	// Style.
-	if ( isset( $attr['contentAlign'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Desktop' ) );
-		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Desktop' ) );
-	}
+  $css->set_selector( $unique_id );
+  $css->pbg_render_color( $attr, 'sepColor', '--pbg-banner-sep-color' );
+  $css->pbg_render_range( $attr, 'sepSize', '--pbg-banner-sep-size', '', '', 'px' );
 
-  $css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
-  $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
-	// Desc Style
-  $css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
-  $css->pbg_render_typography($attr, 'descTypography', 'Desktop');
-	// Container Style
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id . ' .premium-banner' );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Desktop'],isset( $padding['unit']['Desktop'])?$padding['unit']['Desktop']:$padding['unit'] ) );
-	}
+	// Separator color for effect3
+	$css->set_selector( $unique_id . ' .premium-banner__effect3 .premium-banner__title_wrap::after' );
+	$css->pbg_render_color( $attr, 'sepColor', 'background-color' );
 
-	if ( isset( $attr['border'] ) ) {
-		$border        = $attr['border'];
-		$border_width  = $border['borderWidth'];
-		$border_radius = $border['borderRadius'];
+	// Background overlay
+	$css->set_selector( $unique_id . ' .premium-banner__inner .premium-banner__bg-overlay' );
+	$css->pbg_render_color( $attr, 'background', 'background-color' );
 
-		$css->set_selector( $unique_id . '  .premium-banner__inner' );
-		$css->add_property( 'border-width', $css->render_spacing( $border_width['Desktop'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Desktop'], 'px' ) );
-	}
+	// Hover background overlay
+	$css->set_selector( $unique_id . ' .premium-banner__inner:hover .premium-banner__bg-overlay' );
+	$css->pbg_render_color( $attr, 'hoverBackground', 'background-color');
 
+	// Banner wrapper - Padding
+	$css->set_selector( $unique_id . ' .premium-banner' );
+	$css->pbg_render_spacing( $attr, 'padding', 'padding', 'Desktop' );
+
+	// Banner inner container 
+	$css->set_selector( $unique_id . ' .premium-banner__inner' );
+	$css->pbg_render_border( $attr, 'border', 'Desktop' );
+	$css->pbg_render_shadow( $attr, 'containerShadow', 'box-shadow' );
+
+	// Image
+	$css->set_selector( $unique_id . ' .premium-banner__img_wrap .premium-banner__img' );
+  $css->pbg_render_range( $attr, 'customHeight', 'height', 'Desktop' );
+	$css->pbg_render_filters( $attr, 'filter' );
+
+	// Content background
+	$css->set_selector( $unique_id . ' .premium-banner__inner .premium-banner__content' );
+  if ( $effect === 'effect2' ){
+    $css->pbg_render_color( $attr, 'titleStyles[0].titleBack', 'background-color', '', '!important' );
+  } else { 
+    $css->add_property( 'background-color', 'transparent !important' );
+  }
+	
+	// Title wrapper - Text align
+	$css->set_selector( $unique_id . ' .premium-banner__title_wrap' );
+	$css->pbg_render_text_align( $attr, 'contentAlign', 'text-align', 'Desktop' );
+
+	// Title - Typography, color, and shadow
+	$css->set_selector( $unique_id . ' .premium-banner__title_wrap .premium-banner__title' );
+	$css->pbg_render_typography( $attr, 'titleTypography', 'Desktop' );
+	$css->pbg_render_color( $attr, 'titleStyles[0].titleColor', 'color' );
+	$css->pbg_render_shadow( $attr, 'titleTextShadow', 'text-shadow' );
+  $css->pbg_render_spacing( $attr, 'titleMargin', 'margin', 'Desktop' );
+
+	// Description wrapper - Text align
+	$css->set_selector( $unique_id . ' .premium-banner__desc_wrap' );
+	$css->pbg_render_text_align( $attr, 'contentAlign', 'text-align', 'Desktop' );
+
+	// Description - Typography, color, and shadow
+	$css->set_selector( $unique_id . ' .premium-banner__desc_wrap .premium-banner__desc' );
+	$css->pbg_render_typography( $attr, 'descTypography', 'Desktop' );
+	$css->pbg_render_color( $attr, 'descStyles[0].descColor', 'color' );
+	$css->pbg_render_shadow( $attr, 'descTextShadow', 'text-shadow' );
+  $css->pbg_render_spacing( $attr, 'descMargin', 'margin', 'Desktop' );
+
+	// Tablet Styles
 	$css->start_media_query( 'tablet' );
 
-	if ( isset( $attr['contentAlign'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Tablet' ) );
-		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Tablet' ) );
-	}
+	// Banner wrapper - Padding
+	$css->set_selector( $unique_id . ' .premium-banner' );
+	$css->pbg_render_spacing( $attr, 'padding', 'padding', 'Tablet' );
 
-	$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
-  $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
-	// Desc Style
-	$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
-  $css->pbg_render_typography($attr, 'descTypography', 'Tablet');
-	// Container Style
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Tablet'], isset($padding['unit']['Tablet'])?$padding['unit']['Tablet']:$padding['unit'] ) );
-	}
+	// Banner inner container
+	$css->set_selector( $unique_id . ' .premium-banner__inner' );
+	$css->pbg_render_border( $attr, 'border', 'Tablet' );
 
-	if ( isset( $attr['border'] ) ) {
-		$border        = $attr['border'];
-		$border_width  = $border['borderWidth'];
-		$border_radius = $border['borderRadius'];
+  // Image
+	$css->set_selector( $unique_id . ' .premium-banner__img_wrap .premium-banner__img' );
+  $css->pbg_render_range( $attr, 'customHeight', 'height', 'Tablet' );
 
-		$css->set_selector( $unique_id . ' .premium-banner__inner' );
-		$css->add_property( 'border-width', $css->render_spacing( $border_width['Tablet'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Tablet'], 'px' ) );
-	}
+	// Title wrapper - Text align
+	$css->set_selector( $unique_id . ' .premium-banner__title_wrap' );
+	$css->pbg_render_text_align( $attr, 'contentAlign', 'text-align', 'Tablet' );
+
+	// Title - Typography
+	$css->set_selector( $unique_id . ' .premium-banner__title_wrap .premium-banner__title' );
+	$css->pbg_render_typography( $attr, 'titleTypography', 'Tablet' );
+  $css->pbg_render_spacing( $attr, 'titleMargin', 'margin', 'Tablet' );
+
+	// Description wrapper - Text align
+	$css->set_selector( $unique_id . ' .premium-banner__desc_wrap' );
+	$css->pbg_render_text_align( $attr, 'contentAlign', 'text-align', 'Tablet' );
+
+	// Description - Typography
+	$css->set_selector( $unique_id . ' .premium-banner__desc_wrap .premium-banner__desc' );
+	$css->pbg_render_typography( $attr, 'descTypography', 'Tablet' );
+  $css->pbg_render_spacing( $attr, 'descMargin', 'margin', 'Tablet' );
 
 	$css->stop_media_query();
 
+	// Mobile Styles
 	$css->start_media_query( 'mobile' );
 
-	if ( isset( $attr['contentAlign'] ) ) {
-		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Mobile' ) );
-		$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' );
-		$css->add_property( 'text-align', $css->get_responsive_css( $attr['contentAlign'], 'Mobile' ) );
-	}
+	// Banner wrapper - Padding
+	$css->set_selector( $unique_id . ' .premium-banner' );
+	$css->pbg_render_spacing( $attr, 'padding', 'padding', 'Mobile' );
 
-	$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__title_wrap' . ' > .premium-banner__title' );
-  $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');
-	// Desc Style
-	$css->set_selector( $unique_id . ' .premium-banner__inner' . ' > .premium-banner__content' . ' > .premium-banner__desc_wrap' . ' > .premium-banner__desc' );
-  $css->pbg_render_typography($attr, 'descTypography', 'Mobile');
-	// Container Style
-	if ( isset( $attr['padding'] ) ) {
-		$padding = $attr['padding'];
-		$css->set_selector( $unique_id );
-		$css->add_property( 'padding', $css->render_spacing( $padding['Mobile'], isset($padding['unit']['Mobile'])?$padding['unit']['Mobile']:$padding['unit'] ) );
-	}
+	// Banner inner container
+	$css->set_selector( $unique_id . ' .premium-banner__inner' );
+	$css->pbg_render_border( $attr, 'border', 'Mobile' );
 
-	if ( isset( $attr['border'] ) ) {
-		$border        = $attr['border'];
-		$border_width  = $border['borderWidth'];
-		$border_radius = $border['borderRadius'];
+  // Image
+	$css->set_selector( $unique_id . ' .premium-banner__img_wrap .premium-banner__img' );
+  $css->pbg_render_range( $attr, 'customHeight', 'height', 'Mobile' );
 
-		$css->set_selector( $unique_id . ' .premium-banner__inner' );
-		$css->add_property( 'border-width', $css->render_spacing( $border_width['Mobile'], 'px' ) );
-		$css->add_property( 'border-radius', $css->render_spacing( $border_radius['Mobile'], 'px' ) );
-	}
+	// Title wrapper - Text align
+	$css->set_selector( $unique_id . ' .premium-banner__title_wrap' );
+	$css->pbg_render_text_align( $attr, 'contentAlign', 'text-align', 'Mobile' );
+
+	// Title - Typography
+	$css->set_selector( $unique_id . ' .premium-banner__title_wrap .premium-banner__title' );
+	$css->pbg_render_typography( $attr, 'titleTypography', 'Mobile' );
+  $css->pbg_render_spacing( $attr, 'titleMargin', 'margin', 'Mobile' );
+
+	// Description wrapper - Text align
+	$css->set_selector( $unique_id . ' .premium-banner__desc_wrap' );
+	$css->pbg_render_text_align( $attr, 'contentAlign', 'text-align', 'Mobile' );
+
+	// Description - Typography
+	$css->set_selector( $unique_id . ' .premium-banner__desc_wrap .premium-banner__desc' );
+	$css->pbg_render_typography( $attr, 'descTypography', 'Mobile' );
+  $css->pbg_render_spacing( $attr, 'descMargin', 'margin', 'Mobile' );
 
 	$css->stop_media_query();
+
 	return $css->css_output();
 }
 
@@ -131,17 +159,15 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
  * @return void
  */
 function get_premium_banner_media_css(){
-  $blocks_helper = pbg_blocks_helper();
-
-  $custom_css = array('desktop' => '', 'tablet' => '', 'mobile' => '');
+  $media_css = array('desktop' => '', 'tablet' => '', 'mobile' => '');
   
-  $custom_css['mobile'] .= "
+  $media_css['mobile'] .= "
     .premium-banner__responsive_true .premium-banner__desc_wrap {
       display: none;
     }
   ";
 
-  $blocks_helper->add_block_media_styles( $custom_css );
+  return $media_css;
 }
 
 /**
@@ -206,8 +232,6 @@ function register_block_pbg_banner() {
 			'render_callback' => 'render_block_pbg_banner',
 		)
 	);
-
-  get_premium_banner_media_css();
 }
 
 register_block_pbg_banner();

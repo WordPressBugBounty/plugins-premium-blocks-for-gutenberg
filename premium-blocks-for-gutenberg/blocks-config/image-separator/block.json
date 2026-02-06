@@ -54,7 +54,8 @@
             "default": ""
         },
         "link": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": false
         },
         "url": {
             "type": "string"
@@ -78,11 +79,11 @@
         "imgFilterHover": {
             "type": "object",
             "default": {
-                "contrast": "",
-                "blur": "",
-                "bright": "",
-                "saturation": "",
-                "hue": ""
+                "contrast": "100",
+                "blur": "0",
+                "bright": "100",
+                "saturation": "100",
+                "hue": "0"
             },
             "isStyle": true
         },
@@ -129,34 +130,6 @@
                     "imgHeightType": "px"
                 }
             ],
-            "isStyle": true
-        },
-        "icons": {
-            "type": "array",
-            "default": [
-                {
-                    "iconn": "dashicons admin-site",
-                    "link": "",
-                    "target": "_self",
-                    "size": "200",
-                    "width": "2",
-                    "title": "",
-                    "style": "default"
-                }
-            ]
-        },
-        "iconSize": {
-            "type": "object",
-            "default": {
-                "Desktop": "200",
-                "Tablet": "",
-                "Mobile": "",
-                "unit": {
-                    "Desktop": "px",
-                    "Tablet": "px",
-                    "Mobile": "px"
-                }
-            },
             "isStyle": true
         },
         "imgHeight": {
@@ -280,7 +253,7 @@
                 "backgroundImageID": "",
                 "backgroundImageURL": "",
                 "backgroundPosition": {
-                    "Desktop": "",
+                    "Desktop": "center center",
                     "Tablet": "",
                     "Mobile": ""
                 },
@@ -290,13 +263,13 @@
                     "Mobile": ""
                 },
                 "backgroundSize": {
-                    "Desktop": "",
+                    "Desktop": "cover",
                     "Tablet": "",
                     "Mobile": ""
                 },
                 "fixed": false,
                 "gradientLocationOne": "0",
-                "gradientColorTwo": "",
+                "gradientColorTwo": "#777",
                 "gradientLocationTwo": "100",
                 "gradientAngle": "180",
                 "gradientPosition": "center center",
@@ -353,7 +326,7 @@
         "imgWidth": {
             "type": "object",
             "default": {
-                "Desktop": "200",
+                "Desktop": 200,
                 "Tablet": "",
                 "Mobile": "",
                 "unit": {

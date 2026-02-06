@@ -12,6 +12,10 @@
         "blockId": {
             "type": "string"
         },
+        "mapId": {
+            "type": "string",
+            "default": ""
+        },
         "mapStyle": {
             "type": "string",
             "default": "",
@@ -63,7 +67,6 @@
             "type": "boolean",
             "default": false
         },
-
         "markerTitle": {
             "type": "string",
             "default": "Awesome Title"
@@ -380,7 +383,7 @@
         "mapBorder": {
             "type": "object",
             "default": {
-                "borderType": "none",
+                "borderType": "",
                 "borderColor": "",
                 "borderWidth": {
                     "Desktop": {

@@ -115,7 +115,7 @@ class Feedback {
 					<div class="body">
 						<section class="title-wrap">
 							<div class="pb-img-wrap">
-								<img src="<?php echo esc_url( PREMIUM_BLOCKS_URL . 'admin/images/premium-blocks-logo-dashboard.png' ); ?>">
+								<img src="<?php echo esc_url( PREMIUM_BLOCKS_URL . 'admin/images/premium-blocks-logo-dark-scheme.png' ); ?>">							
 							</div>
 							<p>
                                 <?php echo __( 'Sorry to see you go', 'premium-blocks-for-gutenberg' ); ?>

@@ -8,7 +8,6 @@
     "keywords": ["instagram-feed-header"],
     "parent": ["premium/instagram-feed"],
     "textdomain": "premium-blocks-for-gutenberg",
-
     "attributes": {
         "blockId": {
             "type": "string"
@@ -21,23 +20,23 @@
                 "backgroundImageID": "",
                 "backgroundImageURL": "",
                 "backgroundPosition": {
-                    "Desktop": "",
+                    "Desktop": "center center",
                     "Tablet": "",
                     "Mobile": ""
                 },
                 "backgroundRepeat": {
-                    "Desktop": "repeat",
+                    "Desktop": "no-repeat",
                     "Tablet": "",
                     "Mobile": ""
                 },
                 "backgroundSize": {
-                    "Desktop": "auto",
+                    "Desktop": "cover",
                     "Tablet": "",
                     "Mobile": ""
                 },
                 "fixed": false,
                 "gradientLocationOne": "0",
-                "gradientColorTwo": "",
+                "gradientColorTwo": "#777",
                 "gradientLocationTwo": "100",
                 "gradientAngle": "180",
                 "gradientPosition": "center center",
@@ -109,7 +108,7 @@
             "type": "object",
             "default": {
                 "borderColor": "",
-                "borderType": "none",
+                "borderType": "",
                 "borderRadius": {
                     "Desktop": {
                         "top": "",
@@ -165,9 +164,6 @@
                 "position": ""
             },
             "isStyle": true
-        },
-        "username": {
-            "type": "string"
         }
     },
     "usesContext": ["posts"]
