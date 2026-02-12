@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 2.3.7
+Stable tag: 2.3.8
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -147,6 +147,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.8 =
+- Fixed: HTML validation issue in Star Rating block.
+- Tweak: Updated editor dependencies and refined button block styles in the editor.
+
 = 2.3.7 =
 - Fixed: Dual Heading Block styling issue.
 
