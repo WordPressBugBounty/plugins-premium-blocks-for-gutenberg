@@ -90,7 +90,7 @@ if ( ! class_exists( 'PBG_Pattern' ) ) {
 
 			add_action( 'rest_api_init', array( $this, 'register_templates_routes' ) );
 
-			add_action( 'enqueue_block_editor_assets', array( $this, 'script_enqueue' ) );
+			add_action( 'enqueue_block_assets', array( $this, 'script_enqueue' ) );
 
 			// Clean up orphaned image meta once per day
 			if ( is_admin() && ! get_transient( 'pbg_cleanup_done' ) ) {
@@ -1250,6 +1250,10 @@ if ( ! class_exists( 'PBG_Pattern' ) ) {
 		 * Enqueue Script for Meta options
 		 */
 		public function script_enqueue() {
+
+			if ( ! is_admin() ) {
+				return;
+			}
 
 			$asset_file   = PREMIUM_BLOCKS_PATH . "templates/build/templates/index.asset.php";
 			$dependencies = file_exists( $asset_file ) ? include $asset_file : array();

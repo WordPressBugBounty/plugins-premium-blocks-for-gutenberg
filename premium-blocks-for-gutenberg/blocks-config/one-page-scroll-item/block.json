@@ -5,9 +5,13 @@
     "title": "One Page Scroll Item",
     "category": "premium-blocks",
     "description": "Display a single item in a one page scroll block.",
-    "parent": ["premium/one-page-scroll"],
-    "keywords": ["one-page-scroll-item"],
-    "textdomain": "default",
+    "parent": [
+        "premium/one-page-scroll"
+    ],
+    "keywords": [
+        "one-page-scroll-item"
+    ],
+    "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
         "blockId": {
             "type": "string"

@@ -11,7 +11,7 @@
         "content",
         "accordion"
     ],
-    "textdomain": "default",
+    "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
         "blockId": {
             "type": "string"

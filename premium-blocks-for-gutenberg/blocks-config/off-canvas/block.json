@@ -12,7 +12,7 @@
         "sidebar",
         "slide-in"
     ],
-    "textdomain": "default",
+    "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
         "blockId": {
             "type": "string"

@@ -699,20 +699,7 @@ function register_block_pbg_instagram_feed_posts() {
 	);
 }
 
+
 register_block_pbg_instagram_feed_posts();
 
-/**
- * Exclude Instagram Feed Images from Optimole.
- * 
- * @param bool   $old_value Current status of replacement.
- * @param string $url       Image URL.
- * @return bool
- */
-function pbg_instagram_exclude_optimole( $old_value, $url ) {
-	if ( strpos( $url, 'cdninstagram.com' ) !== false || strpos( $url, 'instagram.com' ) !== false ) {
-		return true;
-	}
-	return $old_value;
-}
-add_filter( 'optml_dont_replace_url', 'pbg_instagram_exclude_optimole', 10, 2 );
 

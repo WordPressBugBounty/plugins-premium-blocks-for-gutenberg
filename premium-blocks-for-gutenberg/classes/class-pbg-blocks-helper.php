@@ -258,9 +258,28 @@ class PBG_Blocks_Helper
     // Enqueues styles that ensure compatibility with other plugins or themes.
     add_action( 'enqueue_block_assets', array( $this, 'enqueue_compatibility_styles' ) );
 
+	// Enqueues frontend compatibility styles for GeneratePress/Kadence theme.
+    add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_compatibility_styles' ), 10 );
+
     // Enqueue assets for the editor content.
     add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_content_assets' ));
+
+    add_filter( 'optml_dont_replace_url', array( $this, 'exclude_instagram_from_optimole' ), 10, 2 );
 	}
+
+  /**
+   * Exclude Instagram images from Optimole optimization.
+   *
+   * @param bool   $old_value Current status of replacement.
+   * @param string $url       Image URL.
+   * @return bool
+   */
+  public function exclude_instagram_from_optimole( $old_value, $url ) {
+    if ( strpos( $url, 'cdninstagram.com' ) !== false || strpos( $url, 'instagram.com' ) !== false ) {
+      return true;
+    }
+    return $old_value;
+  }
 
   public function enqueue_editor_content_assets() {
     if ( ! is_admin() ) return;
@@ -272,6 +291,58 @@ class PBG_Blocks_Helper
       PREMIUM_BLOCKS_VERSION,
       true
     );
+  }
+
+  /**
+   * Enqueues styles that ensure compatibility with GeneratePress/Kadence theme on FRONTEND
+   *
+   * @since 2.0.0
+   * @access public
+   * @return void
+   */
+  public function enqueue_frontend_compatibility_styles() {
+    // Only run on frontend, not in admin
+    if ( is_admin() ) {
+      return;
+    }
+
+    $themes_to_check = array( 'kadence', 'generatepress', 'astra' );
+    $template = strtolower( get_template() );
+    $stylesheet = strtolower( get_stylesheet() );
+    
+    // Add frontend compatibility styles only for GeneratePress/Kadence themes
+    if ( in_array( $template, $themes_to_check ) || in_array( $stylesheet, $themes_to_check ) ) {
+      $compatibility_css = "
+        /* Margin compatibility for containers inside tabs */
+        .premium-tabs-content .wp-block-premium-container,
+        .pbg-content-wrap .premium-tabs-content .wp-block-premium-container,
+        .premium-content-wrap .premium-tabs-content .wp-block-premium-container {
+          margin-left: unset !important;
+          margin-right: unset !important;
+        }
+        /* Line-height compatibility for headings */
+        [class*='premium-'] :is(h1, h2, h3, h4, h5, h6),
+        :is(h1, h2, h3, h4, h5, h6)[class*='premium-'] {
+          line-height: 1;
+        }
+
+		[class*='premium-'] .wp-block-premium-button a{
+		text-decoration: none !important;
+		}
+      ";
+
+      // Minify CSS if css is not empty and the minify method is available.
+      if ( ! empty( $compatibility_css ) && isset( $this->blocks_frontend_assets ) && method_exists( $this->blocks_frontend_assets, 'minify_css' ) ) {
+        $compatibility_css = $this->blocks_frontend_assets->minify_css( $compatibility_css );
+      }
+      // If we have compatibility CSS, add it inline
+      if ( ! empty( $compatibility_css ) ) {
+        // Inject CSS directly to ensure it loads regardless of asset generation settings
+        wp_register_style( 'pbg-frontend-compatibility', false );
+        wp_enqueue_style( 'pbg-frontend-compatibility' );
+        wp_add_inline_style( 'pbg-frontend-compatibility', $compatibility_css );
+      }
+    }
   }
 
   /**
@@ -310,6 +381,15 @@ class PBG_Blocks_Helper
         .premium-is-root-container.alignfull {
           max-width: none;
         }
+
+        .wp-block[class*='premium-'] :is(h1, h2, h3, h4, h5, h6) {
+          line-height: 1;
+        }
+
+		.wp-block[class*='premium-'] :where(.block-editor-block-list__layout.wp-block-group) {
+			margin-top: unset;
+			margin-bottom: unset;
+		}
       ";
     }
 

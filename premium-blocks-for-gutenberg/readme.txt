@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 2.3.8
+Stable tag: 2.3.9
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -147,6 +147,15 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.9 =
+- Added: Fetch account profile picture for Instagram block header.
+- Tweak: Updated text domains for blocks.
+- Tweak: Removed `mobile-detector.php` file for better optimization.
+- Fixed: Deprecated issues in Templates and Global Settings.
+- Fixed: Compatibility styles issues with themes, including GeneratePress.
+- Fixed: Border radius issue when adding an overlay image in the Modal block.
+- Fixed: Instagram image header conflict with Image optimization service by Optimole plugin.
+
 = 2.3.8 =
 - Fixed: HTML validation issue in Star Rating block.
 - Tweak: Updated editor dependencies and refined button block styles in the editor.

@@ -5,9 +5,13 @@
     "title": "Tab Item",
     "category": "premium-blocks",
     "description": "For making advanced tabs with content.",
-    "parent": ["premium/tabs"],
-    "keywords": ["tab"],
-    "textdomain": "default",
+    "parent": [
+        "premium/tabs"
+    ],
+    "keywords": [
+        "tab"
+    ],
+    "textdomain": "premium-blocks-for-gutenberg",
     "attributes": {
         "blockId": {
             "type": "string"

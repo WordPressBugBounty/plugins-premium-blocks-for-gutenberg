@@ -452,6 +452,33 @@ class PBG_Blocks_Integrations {
 			);
 		}
 
+		// Fetch account profile info (username + profile picture).
+		$profile_url = sprintf(
+			'https://graph.instagram.com/me?fields=id,username,profile_picture_url&access_token=%s',
+			$access_token
+		);
+
+		$profile_response = wp_remote_get(
+			$profile_url,
+			array(
+				'timeout'   => 30,
+				'sslverify' => false,
+			)
+		);
+
+		if ( ! is_wp_error( $profile_response ) && 200 === wp_remote_retrieve_response_code( $profile_response ) ) {
+			$profile_body = wp_remote_retrieve_body( $profile_response );
+			$profile_data = json_decode( $profile_body, true );
+
+			if ( isset( $profile_data['profile_picture_url'] ) ) {
+				$posts['profile_picture_url'] = $profile_data['profile_picture_url'];
+			}
+
+			if ( isset( $profile_data['username'] ) ) {
+				$posts['username'] = $profile_data['username'];
+			}
+		}
+
 		wp_send_json_success( $posts );
 	}
 

@@ -54,6 +54,28 @@ function get_premium_instagram_feed_header_css( $attributes, $unique_id ) {
  * @return string Returns the post content with the legacy widget added.
  */
 function render_block_pbg_instagram_feed_header( $attributes, $content, $block ) {
+	if ( strpos( $content, 'cdninstagram.com' ) !== false || strpos( $content, 'instagram.com' ) !== false ) {
+		if ( strpos( $content, 'no-optimole' ) === false ) {
+			$content = preg_replace_callback(
+				'/<img ([^>]+)>/i',
+				function ( $matches ) {
+					$attrs = $matches[1];
+					if ( strpos( $attrs, 'cdninstagram.com' ) !== false || strpos( $attrs, 'instagram.com' ) !== false ) {
+						if ( strpos( $attrs, 'no-optimole' ) === false ) {
+							if ( preg_match( '/class=["\']([^"\']+)["\']/i', $attrs, $class_matches ) ) {
+								$attrs = str_replace( $class_matches[0], 'class="' . $class_matches[1] . ' no-optimole"', $attrs );
+							} else {
+								$attrs .= ' class="no-optimole"';
+							}
+							$attrs .= ' data-no-lazy="1" data-opt-lazy-loaded="true" data-opt-optimize="0" data-opt-src=""';
+						}
+					}
+					return '<img ' . $attrs . '>';
+				},
+				$content
+			);
+		}
+	}
 	return $content;
 }
 
