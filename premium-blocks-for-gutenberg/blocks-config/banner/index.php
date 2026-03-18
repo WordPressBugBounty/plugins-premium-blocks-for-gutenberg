@@ -47,8 +47,11 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
 
 	// Image
 	$css->set_selector( $unique_id . ' .premium-banner__img_wrap .premium-banner__img' );
-  $css->pbg_render_range( $attr, 'customHeight', 'height', 'Desktop' );
+  	if ( $css->pbg_get_value( $attr, 'height' ) === 'custom' ) {
+        $css->pbg_render_range( $attr, 'customHeight', 'height', 'Desktop' );
+    }
 	$css->pbg_render_filters( $attr, 'filter' );
+	$css->pbg_render_range( $attr, 'width', 'width', 'Desktop', '', '!important' );
 
 	// Content background
 	$css->set_selector( $unique_id . ' .premium-banner__inner .premium-banner__content' );
@@ -93,7 +96,10 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
 
   // Image
 	$css->set_selector( $unique_id . ' .premium-banner__img_wrap .premium-banner__img' );
-  $css->pbg_render_range( $attr, 'customHeight', 'height', 'Tablet' );
+	if ( $css->pbg_get_value( $attr, 'height' ) === 'custom' ) {
+        $css->pbg_render_range( $attr, 'customHeight', 'height', 'Tablet' );
+    }
+	$css->pbg_render_range( $attr, 'width', 'width', 'Tablet', '', '!important' );
 
 	// Title wrapper - Text align
 	$css->set_selector( $unique_id . ' .premium-banner__title_wrap' );
@@ -128,7 +134,10 @@ function get_premium_banner_css_style( $attr, $unique_id ) {
 
   // Image
 	$css->set_selector( $unique_id . ' .premium-banner__img_wrap .premium-banner__img' );
-  $css->pbg_render_range( $attr, 'customHeight', 'height', 'Mobile' );
+	if ( $css->pbg_get_value( $attr, 'height' ) === 'custom' ) {
+        $css->pbg_render_range( $attr, 'customHeight', 'height', 'Mobile' );
+    }
+	$css->pbg_render_range( $attr, 'width', 'width', 'Mobile', '', '!important' );
 
 	// Title wrapper - Text align
 	$css->set_selector( $unique_id . ' .premium-banner__title_wrap' );

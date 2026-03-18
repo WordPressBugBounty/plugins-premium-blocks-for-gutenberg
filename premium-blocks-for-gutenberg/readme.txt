@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 2.3.9
+Stable tag: 2.3.10
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -147,6 +147,14 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.10 =
+- Added: Theme color support for controls, templates and global settings.
+- Tweak: Removed unused styles for compatibility.
+- Fixed: Space issue in Gallery when descriptions are long.
+- Fixed: Button padding issue in the editor.
+- Fixed: Image stretch issue in Banner block.
+- Fixed: Style issue when adding Icon Box inside Tabs block.
+
 = 2.3.9 =
 - Added: Fetch account profile picture for Instagram block header.
 - Tweak: Updated text domains for blocks.

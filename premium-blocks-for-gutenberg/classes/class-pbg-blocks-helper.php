@@ -2295,7 +2295,7 @@ class PBG_Blocks_Helper
 		$generate_css->pbg_add_css('assets/js/build/entrance-animation/editor/index.css');
 		$generate_css->pbg_add_css('assets/css/minified/blockseditor.min.css');
 		$generate_css->pbg_add_css('assets/css/minified/editorpanel.min.css');
-		$generate_css->pbg_add_css( 'assets/css/minified/template.min.css' );
+		// $generate_css->pbg_add_css( 'assets/css/minified/template.min.css' );
 		$is_rtl = is_rtl() ? true : false;
 		$is_rtl ? $generate_css->pbg_add_css('assets/css/minified/style-blocks-rtl.min.css') : '';
 
