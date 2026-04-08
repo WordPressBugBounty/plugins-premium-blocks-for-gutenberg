@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Server-side rendering of the `premium/form-checkbox` block.
  *
@@ -14,9 +15,10 @@
  *
  * @return string Returns the post content with the legacy widget added.
  */
-function render_block_pbg_form_checkbox( $attributes, $content, $block ) {
+function render_block_pbg_form_checkbox($attributes, $content, $block)
+{
 
-	return $content;
+    return $content;
 }
 
 
@@ -26,15 +28,16 @@ function render_block_pbg_form_checkbox( $attributes, $content, $block ) {
  * @uses render_block_pbg_form_checkbox()
  * @throws WP_Error An WP_Error exception parsing the block definition.
  */
-function register_block_pbg_form_checkbox() {
-	register_block_type(
-		'premium/form-checkbox',
-		array(
-			'render_callback' => 'render_block_pbg_form_checkbox',
-			'editor_style'    => 'premium-blocks-editor-css',
-			'editor_script'   => 'pbg-blocks-js',
-		)
-	);
+function register_block_pbg_form_checkbox()
+{
+    register_block_type(
+        'premium/form-checkbox',
+        array(
+            'render_callback' => 'render_block_pbg_form_checkbox',
+            'editor_style'    => 'premium-blocks-editor-css',
+            'editor_script'   => 'pbg-blocks-js',
+        )
+    );
 }
 
 register_block_pbg_form_checkbox();

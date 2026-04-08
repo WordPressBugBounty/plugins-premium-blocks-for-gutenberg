@@ -25,236 +25,124 @@ function get_premium_container_css_style($attr, $unique_id)
     $inner_width_value = $css->pbg_get_value($attr, 'innerWidth');
     $overlay_background_type = $css->pbg_get_value($attr, 'backgroundOverlay.backgroundType');
     $overlay_background_hover_type = $css->pbg_get_value($attr, 'backgroundOverlayHover.backgroundType');
-    $current_direction = explode( '-', $css->pbg_get_value($attr, 'direction', 'Desktop') ?? '' )[0];
-    $childsWidthValue = $css->pbg_get_value($attr, 'childsWidth', 'Desktop');
 
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-block-' . $unique_id );
-    $css->pbg_render_range($attr, 'minHeight', 'min-height', 'Desktop');
-
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap');
-    $css->pbg_render_value($attr, 'direction', 'flex-direction', 'Desktop');
-    $css->pbg_render_value($attr, 'alignItems', 'align-items', 'Desktop');
-    $css->pbg_render_value($attr, 'justifyItems', 'justify-content', 'Desktop');
-    $css->pbg_render_value($attr, 'wrapItems', 'flex-wrap', 'Desktop');
-    $css->pbg_render_value($attr, 'alignContent', 'align-content', 'Desktop');
-    $css->pbg_render_range($attr, 'columnGutter', 'column-gap', 'Desktop');
-    $css->pbg_render_range($attr, 'rowGutter', 'row-gap', 'Desktop');
-    if($inner_width_type === 'boxed'){
-      // Handling backward compatibility for innerWidth -- This can be removed after a few releases and keep the responsive line only
-      if(is_array($inner_width_value)){
-        $css->pbg_render_range($attr, 'innerWidth', '--inner-content-custom-width', 'Desktop', 'min(100vw,', ')');  
-      }else{
-        $css->pbg_render_range($attr, 'innerWidth', '--inner-content-custom-width', null, 'min(100vw,', 'px)');
-      }
-      $css->add_property('max-width', 'var(--inner-content-custom-width)');
-      $css->add_property('margin-left', 'auto');
-      $css->add_property('margin-right', 'auto');
-    }
-
-    if($childsWidthValue === "equal" && $current_direction === "row"){
-      $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *');
-      $css->add_property('flex', '1 1 0%');
-    }
-     
-    $css->set_selector(
-      ".premium-container-{$unique_id}.premium-is-root-container.alignnone, " .
-      ".premium-block-{$unique_id}.premium-is-root-container.alignnone, " .
-      ".premium-container-{$unique_id}:not(.premium-is-root-container), " .
-      ".premium-block-{$unique_id}:not(.premium-is-root-container)"
-    );
-    $css->pbg_render_range($attr, 'colWidth', 'width', 'Desktop', null, '!important'); // keep it !important to override the width set by the advanced tab.
-    $css->add_property('max-width', '100%');
-
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-top-shape svg , .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-top-shape svg');
-    $css->pbg_render_range($attr, 'shapeTop.width', 'width', 'Desktop');
-    $css->pbg_render_range($attr, 'shapeTop.height', 'height', 'Desktop');
-    $css->pbg_render_color($attr, 'shapeTop.color', 'fill');
-    
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-bottom-shape svg , .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-bottom-shape svg');
-    $css->pbg_render_range($attr, 'shapeBottom.width', 'width', 'Desktop');
-    $css->pbg_render_range($attr, 'shapeBottom.height', 'height', 'Desktop');
-    $css->pbg_render_color($attr, 'shapeBottom.color', 'fill');
-
+    // Non-responsive styles.
     $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-block-' . $unique_id);
-    $css->pbg_render_background($attr, 'backgroundOptions', 'Desktop');
-    $css->pbg_render_border($attr, 'border', 'Desktop');
-    $css->pbg_render_spacing($attr, 'padding', 'padding', 'Desktop');
-    if(!$is_root_container){
-      $css->pbg_render_spacing($attr, 'margin', 'margin', 'Desktop');
-    }
     $css->pbg_render_shadow($attr, 'boxShadow', 'box-shadow');
 
-    $css->set_selector('.wp-block-premium-container.premium-is-root-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-is-root-container.premium-block-' . $unique_id);
-    $css->pbg_render_range($attr, 'rootMarginTop', 'margin-top', 'Desktop');
-    $css->pbg_render_range($attr, 'rootMarginTop', 'margin-block-start', 'Desktop');
-    $css->pbg_render_range($attr, 'rootMarginBottom', 'margin-bottom', 'Desktop');
-    $css->pbg_render_range($attr, 'rootMarginBottom', 'margin-block-end', 'Desktop');
-    
     $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ':hover, .wp-block-premium-container.premium-block-' . $unique_id . ':hover');
-    $css->pbg_render_border($attr, 'borderHover', 'Desktop');
     $css->pbg_render_shadow($attr, 'boxShadowHover', 'box-shadow');
-    
+
     $css->set_selector('.premium-container-' . $unique_id . '::before , .premium-block-' . $unique_id . '::before');
-    $css->pbg_render_background($attr, 'backgroundOverlay', 'Desktop');
     $css->pbg_render_value($attr, 'transition', 'transition-duration', null, null, 's');
     $css->pbg_render_value($attr, 'transition', '-webkit-transition', null, null, 's');
     $css->pbg_render_value($attr, 'transition', '-o-transition', null, null, 's');
-    if($overlay_background_type === 'solid' || $overlay_background_type === 'gradient'){
-      $css->pbg_render_range($attr, 'overlayOpacity', 'opacity', null, 'calc(', ' / 100)');
-      $css->pbg_render_filters($attr, 'overlayFilter');
-      $css->pbg_render_value($attr, 'blend', 'mix-blend-mode');
+    if ($overlay_background_type === 'solid' || $overlay_background_type === 'gradient') {
+        $css->pbg_render_range($attr, 'overlayOpacity', 'opacity', null, 'calc(', ' / 100)');
+        $css->pbg_render_filters($attr, 'overlayFilter');
+        $css->pbg_render_value($attr, 'blend', 'mix-blend-mode');
     }
 
     $css->set_selector('.premium-container-' . $unique_id . ':hover::before , .premium-block-' . $unique_id . ':hover::before');
-    $css->pbg_render_background($attr, 'backgroundOverlayHover', 'Desktop');
-    if($overlay_background_type === 'solid' || $overlay_background_type === 'gradient' || $overlay_background_hover_type === 'solid' || $overlay_background_hover_type === 'gradient'){
-      $css->pbg_render_range($attr, 'hoverOverlayOpacity', 'opacity', null, 'calc(', ' / 100)');
-      $css->pbg_render_filters($attr, 'hoverOverlayFilter');
+    if ($overlay_background_type === 'solid' || $overlay_background_type === 'gradient' || $overlay_background_hover_type === 'solid' || $overlay_background_hover_type === 'gradient') {
+        $css->pbg_render_range($attr, 'hoverOverlayOpacity', 'opacity', null, 'calc(', ' / 100)');
+        $css->pbg_render_filters($attr, 'hoverOverlayFilter');
     }
 
+    // Shape colors (non-responsive).
+    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-top-shape svg , .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-top-shape svg');
+    $css->pbg_render_color($attr, 'shapeTop.color', 'fill');
+
+    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-bottom-shape svg , .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-bottom-shape svg');
+    $css->pbg_render_color($attr, 'shapeBottom.color', 'fill');
+
+    // Static display:flex for root containers (non-responsive).
     $css->set_selector('.wp-block-premium-container.premium-is-root-container.premium-container-' . $unique_id . ' .premium-container-inner-blocks-wrap , .wp-block-premium-container.premium-is-root-container.premium-block-' . $unique_id . ' .premium-container-inner-blocks-wrap');
     $css->add_property('display', 'flex');
 
-    $css->start_media_query('tablet');
+    // Responsive styles.
+    $css->render_responsive(function ($css, $device) use ($attr, $unique_id, $is_root_container, $inner_width_type, $inner_width_value) {
+        $current_direction = explode('-', $css->pbg_get_value($attr, 'direction', $device) ?? '')[0];
+        $childsWidthValue = $css->pbg_get_value($attr, 'childsWidth', $device);
 
-    $current_direction = explode( '-', $css->pbg_get_value($attr, 'direction', 'Tablet') ?? '' )[0];
-    $childsWidthValue = $css->pbg_get_value($attr, 'childsWidth', 'Tablet');
+        $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-block-' . $unique_id);
+        $css->pbg_render_range($attr, 'minHeight', 'min-height', $device);
 
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-block-' . $unique_id );
-    $css->pbg_render_range($attr, 'minHeight', 'min-height', 'Tablet');
-    
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap');
-    $css->pbg_render_value($attr, 'direction', 'flex-direction', 'Tablet');
-    $css->pbg_render_value($attr, 'alignItems', 'align-items', 'Tablet');
-    $css->pbg_render_value($attr, 'justifyItems', 'justify-content', 'Tablet');
-    $css->pbg_render_value($attr, 'wrapItems', 'flex-wrap', 'Tablet');
-    $css->pbg_render_value($attr, 'alignContent', 'align-content', 'Tablet');
-    $css->pbg_render_range($attr, 'columnGutter', 'column-gap', 'Tablet');
-    $css->pbg_render_range($attr, 'rowGutter', 'row-gap', 'Tablet');
-    if($inner_width_type === 'boxed'){
-      if(is_array($inner_width_value)){
-        $css->pbg_render_range($attr, 'innerWidth', '--inner-content-custom-width', 'Tablet', 'min(100vw,', ')');  
-      }
-    }
+        $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap');
+        $css->pbg_render_value($attr, 'direction', 'flex-direction', $device);
+        $css->pbg_render_value($attr, 'alignItems', 'align-items', $device);
+        $css->pbg_render_value($attr, 'justifyItems', 'justify-content', $device);
+        $css->pbg_render_value($attr, 'wrapItems', 'flex-wrap', $device);
+        $css->pbg_render_value($attr, 'alignContent', 'align-content', $device);
+        $css->pbg_render_range($attr, 'columnGutter', 'column-gap', $device);
+        $css->pbg_render_range($attr, 'rowGutter', 'row-gap', $device);
+        if ($inner_width_type === 'boxed') {
+            // Handling backward compatibility for innerWidth -- This can be removed after a few releases and keep the responsive line only
+            if (is_array($inner_width_value)) {
+                $css->pbg_render_range($attr, 'innerWidth', '--inner-content-custom-width', $device, 'min(100vw,', ')');
+            } else {
+                $css->pbg_render_range($attr, 'innerWidth', '--inner-content-custom-width', null, 'min(100vw,', 'px)');
+            }
+            $css->add_property('max-width', 'var(--inner-content-custom-width)');
+            $css->add_property('margin-left', 'auto');
+            $css->add_property('margin-right', 'auto');
+        }
+        $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *');
+        if ($device === 'Desktop') {
+            if ($childsWidthValue === "equal" && $current_direction === "row") {
+                $css->add_property('flex', '1 1 0%');
+            }
+        } else {
+            if ($childsWidthValue === "equal" && $current_direction === "row") {
+                $css->add_property('flex', '1 1 0%');
+            } else {
+                $css->add_property('flex', 'initial');
+            }
+        }
 
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *');
-    if($childsWidthValue === "equal" && $current_direction === "row"){
-      $css->add_property('flex', '1 1 0%');
-    }else{
-      $css->add_property('flex', 'initial');
-    }
+        $css->set_selector(
+            ".premium-container-{$unique_id}.premium-is-root-container.alignnone, " .
+        ".premium-block-{$unique_id}.premium-is-root-container.alignnone, " .
+        ".premium-container-{$unique_id}:not(.premium-is-root-container), " .
+        ".premium-block-{$unique_id}:not(.premium-is-root-container)"
+        );
+        $css->pbg_render_range($attr, 'colWidth', 'width', $device, null, '!important');
+        if ($device === 'Desktop') {
+            $css->add_property('max-width', '100%');
+        }
 
-    $css->set_selector(
-      ".premium-container-{$unique_id}.premium-is-root-container.alignnone, " .
-      ".premium-block-{$unique_id}.premium-is-root-container.alignnone, " .
-      ".premium-container-{$unique_id}:not(.premium-is-root-container), " .
-      ".premium-block-{$unique_id}:not(.premium-is-root-container)"
-    );
-    $css->pbg_render_range($attr, 'colWidth', 'width', 'Tablet', null, '!important');
+        $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-top-shape svg , .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-top-shape svg');
+        $css->pbg_render_range($attr, 'shapeTop.width', 'width', $device);
+        $css->pbg_render_range($attr, 'shapeTop.height', 'height', $device);
 
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-top-shape svg , .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-top-shape svg');
-    $css->pbg_render_range($attr, 'shapeTop.width', 'width', 'Tablet');
-    $css->pbg_render_range($attr, 'shapeTop.height', 'height', 'Tablet');
-    
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-bottom-shape svg , .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-bottom-shape svg');
-    $css->pbg_render_range($attr, 'shapeBottom.width', 'width', 'Tablet');
-    $css->pbg_render_range($attr, 'shapeBottom.height', 'height', 'Tablet');
-   
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-block-' . $unique_id);
-    $css->pbg_render_background($attr, 'backgroundOptions', 'Tablet');
-    $css->pbg_render_border($attr, 'border', 'Tablet');
-    $css->pbg_render_spacing($attr, 'padding', 'padding', 'Tablet');
-    if(!$is_root_container){
-      $css->pbg_render_spacing($attr, 'margin', 'margin', 'Tablet');
-    }
-    
-    $css->set_selector('.wp-block-premium-container.premium-is-root-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-is-root-container.premium-block-' . $unique_id);
-    $css->pbg_render_range($attr, 'rootMarginTop', 'margin-top', 'Tablet');
-    $css->pbg_render_range($attr, 'rootMarginTop', 'margin-block-start', 'Tablet');
-    $css->pbg_render_range($attr, 'rootMarginBottom', 'margin-bottom', 'Tablet');
-    $css->pbg_render_range($attr, 'rootMarginBottom', 'margin-block-end', 'Tablet');
+        $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-bottom-shape svg , .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-bottom-shape svg');
+        $css->pbg_render_range($attr, 'shapeBottom.width', 'width', $device);
+        $css->pbg_render_range($attr, 'shapeBottom.height', 'height', $device);
 
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ':hover, .wp-block-premium-container.premium-block-' . $unique_id . ':hover');
-    $css->pbg_render_border($attr, 'borderHover', 'Tablet');
+        $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-block-' . $unique_id);
+        $css->pbg_render_background($attr, 'backgroundOptions', $device);
+        $css->pbg_render_border($attr, 'border', $device);
+        $css->pbg_render_spacing($attr, 'padding', 'padding', $device);
+        if (!$is_root_container) {
+            $css->pbg_render_spacing($attr, 'margin', 'margin', $device);
+        }
 
-    $css->set_selector('.premium-container-' . $unique_id . '::before , .premium-block-' . $unique_id . '::before');
-    $css->pbg_render_background($attr, 'backgroundOverlay', 'Tablet');
+        $css->set_selector('.wp-block-premium-container.premium-is-root-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-is-root-container.premium-block-' . $unique_id);
+        $css->pbg_render_range($attr, 'rootMarginTop', 'margin-top', $device);
+        $css->pbg_render_range($attr, 'rootMarginTop', 'margin-block-start', $device);
+        $css->pbg_render_range($attr, 'rootMarginBottom', 'margin-bottom', $device);
+        $css->pbg_render_range($attr, 'rootMarginBottom', 'margin-block-end', $device);
 
-    $css->set_selector('.premium-container-' . $unique_id . ':hover::before , .premium-block-' . $unique_id . ':hover::before');
-    $css->pbg_render_background($attr, 'backgroundOverlayHover', 'Tablet');
+        $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ':hover, .wp-block-premium-container.premium-block-' . $unique_id . ':hover');
+        $css->pbg_render_border($attr, 'borderHover', $device);
 
-    $css->stop_media_query();
+        $css->set_selector('.premium-container-' . $unique_id . '::before , .premium-block-' . $unique_id . '::before');
+        $css->pbg_render_background($attr, 'backgroundOverlay', $device);
 
-    $css->start_media_query('mobile');
+        $css->set_selector('.premium-container-' . $unique_id . ':hover::before , .premium-block-' . $unique_id . ':hover::before');
+        $css->pbg_render_background($attr, 'backgroundOverlayHover', $device);
+    });
 
-    $current_direction = explode( '-', $css->pbg_get_value($attr, 'direction', 'Mobile') ?? '' )[0];
-    $childsWidthValue = $css->pbg_get_value($attr, 'childsWidth', 'Mobile');
-
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-block-' . $unique_id );
-    $css->pbg_render_range($attr, 'minHeight', 'min-height', 'Mobile');
-    
-
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap');
-    $css->pbg_render_value($attr, 'direction', 'flex-direction', 'Mobile');
-    $css->pbg_render_value($attr, 'alignItems', 'align-items', 'Mobile');
-    $css->pbg_render_value($attr, 'justifyItems', 'justify-content', 'Mobile');
-    $css->pbg_render_value($attr, 'wrapItems', 'flex-wrap', 'Mobile');
-    $css->pbg_render_value($attr, 'alignContent', 'align-content', 'Mobile');
-    $css->pbg_render_range($attr, 'columnGutter', 'column-gap', 'Mobile');
-    $css->pbg_render_range($attr, 'rowGutter', 'row-gap', 'Mobile');
-    if($inner_width_type === 'boxed'){
-      if(is_array($inner_width_value)){
-        $css->pbg_render_range($attr, 'innerWidth', '--inner-content-custom-width', 'Mobile', 'min(100vw,', ')');  
-      }
-    }
-
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *, .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-container-inner-blocks-wrap > *');
-    if($childsWidthValue === "equal" && $current_direction === "row"){
-      $css->add_property('flex', '1 1 0%');
-    }else{
-      $css->add_property('flex', 'initial');
-    }
-
-    $css->set_selector(
-      ".premium-container-{$unique_id}.premium-is-root-container.alignnone, " .
-      ".premium-block-{$unique_id}.premium-is-root-container.alignnone, " .
-      ".premium-container-{$unique_id}:not(.premium-is-root-container), " .
-      ".premium-block-{$unique_id}:not(.premium-is-root-container)"
-    );
-    $css->pbg_render_range($attr, 'colWidth', 'width', 'Mobile', null, '!important');
-
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-top-shape svg , .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-top-shape svg');
-    $css->pbg_render_range($attr, 'shapeTop.width', 'width', 'Mobile');
-    $css->pbg_render_range($attr, 'shapeTop.height', 'height', 'Mobile');
-    
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' > .premium-bottom-shape svg , .wp-block-premium-container.premium-block-' . $unique_id . ' > .premium-bottom-shape svg');
-    $css->pbg_render_range($attr, 'shapeBottom.width', 'width', 'Mobile');
-    $css->pbg_render_range($attr, 'shapeBottom.height', 'height', 'Mobile');
-    
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-block-' . $unique_id);
-    $css->pbg_render_background($attr, 'backgroundOptions', 'Mobile');
-    $css->pbg_render_border($attr, 'border', 'Mobile');
-    $css->pbg_render_spacing($attr, 'padding', 'padding', 'Mobile');
-    if(!$is_root_container){
-      $css->pbg_render_spacing($attr, 'margin', 'margin', 'Mobile');
-    }
-    
-    $css->set_selector('.wp-block-premium-container.premium-is-root-container.premium-container-' . $unique_id . ' , .wp-block-premium-container.premium-is-root-container.premium-block-' . $unique_id);
-    $css->pbg_render_range($attr, 'rootMarginTop', 'margin-top', 'Mobile');
-    $css->pbg_render_range($attr, 'rootMarginTop', 'margin-block-start', 'Mobile');
-    $css->pbg_render_range($attr, 'rootMarginBottom', 'margin-bottom', 'Mobile');
-    $css->pbg_render_range($attr, 'rootMarginBottom', 'margin-block-end', 'Mobile');
-
-    $css->set_selector('.wp-block-premium-container.premium-container-' . $unique_id . ':hover, .wp-block-premium-container.premium-block-' . $unique_id . ':hover');
-    $css->pbg_render_border($attr, 'borderHover', 'Mobile');
-    
-    $css->set_selector('.premium-container-' . $unique_id . '::before , .premium-block-' . $unique_id . '::before');
-    $css->pbg_render_background($attr, 'backgroundOverlay', 'Mobile');
-
-    $css->set_selector('.premium-container-' . $unique_id . ':hover::before , .premium-block-' . $unique_id . ':hover::before');
-    $css->pbg_render_background($attr, 'backgroundOverlayHover', 'Mobile');
-
-    $css->stop_media_query();
     return $css->css_output();
 }
 
@@ -273,50 +161,50 @@ function render_block_pbg_container($attributes, $content, $block)
     $global_features = apply_filters('pb_global_features', get_option('pbg_global_features', array()));
 
     if ($global_features['premium-equal-height'] && isset($attributes['equalHeight']) && $attributes['equalHeight']) {
-      add_filter(
-          'premium_equal_height_localize_script',
-          function ($data) use ($attributes) {
-            $allowedAttributes = ['customSelectors', 'equalHeightBlocks', 'equalHeightDevices'];
+        add_filter(
+            'premium_equal_height_localize_script',
+            function ($data) use ($attributes) {
+                $allowedAttributes = ['customSelectors', 'equalHeightBlocks', 'equalHeightDevices'];
 
-            $filteredAttributes = array_intersect_key(
-              $attributes,
-              array_flip($allowedAttributes)
-            );
+                $filteredAttributes = array_intersect_key(
+                    $attributes,
+                    array_flip($allowedAttributes)
+                );
 
-            $data[$attributes['block_id']] = array(
-                'attributes' => $filteredAttributes,
-            );
-            return $data;
-          }
-      );
+                $data[$attributes['block_id']] = array(
+                    'attributes' => $filteredAttributes,
+                );
+                return $data;
+            }
+        );
 
-      wp_enqueue_script(
-        'premium-equal-height-view',
-        PREMIUM_BLOCKS_URL . 'assets/js/build/equal-height/index.js',
-        array(),
-        PREMIUM_BLOCKS_VERSION,
-        true
-      );
+        wp_enqueue_script(
+            'premium-equal-height-view',
+            PREMIUM_BLOCKS_URL . 'assets/js/build/equal-height/index.js',
+            array(),
+            PREMIUM_BLOCKS_VERSION,
+            true
+        );
 
-      $media_query            = array();
-      $media_query['mobile']  = apply_filters('Premium_BLocks_mobile_media_query', '(max-width: 767px)');
-      $media_query['tablet']  = apply_filters('Premium_BLocks_tablet_media_query', '(max-width: 1024px)');
-      $media_query['desktop'] = apply_filters('Premium_BLocks_desktop_media_query', '(min-width: 1025px)');
+        $media_query            = array();
+        $media_query['mobile']  = apply_filters('Premium_BLocks_mobile_media_query', '(max-width: 767px)');
+        $media_query['tablet']  = apply_filters('Premium_BLocks_tablet_media_query', '(max-width: 1024px)');
+        $media_query['desktop'] = apply_filters('Premium_BLocks_desktop_media_query', '(min-width: 1025px)');
 
-      $data = apply_filters(
-        "premium_equal_height_localize_script",
-        array(
-          'breakPoints' => $media_query,
+        $data = apply_filters(
+            "premium_equal_height_localize_script",
+            array(
+            'breakPoints' => $media_query,
         )
-      );
+        );
 
-      wp_scripts()->add_data('premium-equal-height-view', 'before', array());
+        wp_scripts()->add_data('premium-equal-height-view', 'before', array());
 
-      wp_add_inline_script(
-          'premium-equal-height-view',
-          'var PBG_EqualHeight= ' . wp_json_encode($data) . ';',
-          'before'
-      );
+        wp_add_inline_script(
+            'premium-equal-height-view',
+            'var PBG_EqualHeight= ' . wp_json_encode($data) . ';',
+            'before'
+        );
     }
 
     return $content;

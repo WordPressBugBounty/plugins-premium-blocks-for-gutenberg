@@ -1,0 +1,15 @@
+# Build output
+/assets/js/build/
+/assets/css/
+
+# Dependencies
+/node_modules/
+/vendor/
+
+# Compiled files
+*.min.js
+*.min.css
+
+# Config files that should not be reformatted
+Gruntfile.js
+webpack.config.js

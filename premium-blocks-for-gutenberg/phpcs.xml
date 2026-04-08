@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<ruleset name="Premium Blocks for Gutenberg">
+    <description>PHP coding standards for Premium Blocks for Gutenberg plugin.</description>
+
+    <!-- ============================================================
+         What files to check
+    ============================================================ -->
+    <file>.</file>
+
+    <!-- Exclude everything that is not our code -->
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/assets/*</exclude-pattern>
+    <exclude-pattern>*/build/*</exclude-pattern>
+    <exclude-pattern>*.min.php</exclude-pattern>
+
+    <!-- ============================================================
+         How to run
+    ============================================================ -->
+    <!-- Only check PHP files -->
+    <arg name="extensions" value="php"/>
+
+    <!-- Show progress, sniff codes, colors -->
+    <arg value="ps"/>
+    <arg name="colors"/>
+
+    <!-- Run 8 parallel processes (like Elementor) -->
+    <arg name="parallel" value="8"/>
+
+    <!-- ============================================================
+         WordPress coding standards
+    ============================================================ -->
+    <rule ref="WordPress-Core"/>
+    <rule ref="WordPress-Extra">
+        <!-- File naming: we use class-based naming already, skip this -->
+        <exclude name="WordPress.Files.FileName"/>
+
+        <!-- Yoda conditions: team prefers natural order (x === null) -->
+        <exclude name="WordPress.PHP.YodaConditions"/>
+
+        <!-- Allow short array syntax [] instead of array() -->
+        <exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+    </rule>
+
+    <!-- Security rules — always enforced, no exceptions -->
+    <rule ref="WordPress.Security"/>
+
+    <!-- ============================================================
+         WordPress-specific config
+    ============================================================ -->
+    <config name="text_domain" value="premium-blocks-for-gutenberg"/>
+
+    <!-- Minimum WordPress version to support -->
+    <config name="minimum_wp_version" value="5.8"/>
+
+    <!-- ============================================================
+         PHP version compatibility
+    ============================================================ -->
+    <rule ref="PHPCompatibilityWP"/>
+
+    <!-- Minimum PHP version to support (matches plugin header) -->
+    <config name="testVersion" value="7.4-"/>
+
+</ruleset>

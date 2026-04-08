@@ -744,6 +744,62 @@ class Premium_Blocks_css {
 		return isset( $values[ $device ] ) && $values[ $device ] ? "{$values[$device]}" : '';
 	}
 
+	/**
+	 * Renders CSS rules for Desktop, Tablet, and Mobile devices in a single call.
+	 *
+	 * The callback receives ($css, $device) and should call set_selector() and
+	 * pbg_render_* methods using the provided $device parameter. Media queries
+	 * for Tablet and Mobile are handled automatically
+	 * 
+	 * @param callable $callback Function that receives ($css, $device).
+	 * @return $this
+	 */
+	public function render_responsive( $callback ) {
+		// Desktop — no media query wrapper needed.
+		$callback( $this, 'Desktop' );
+
+		// Tablet
+		$this->start_media_query( 'tablet' );
+		$callback( $this, 'Tablet' );
+		$this->stop_media_query();
+
+		// Mobile
+		$this->start_media_query( 'mobile' );
+		$callback( $this, 'Mobile' );
+		$this->stop_media_query();
+
+		return $this;
+	}
+
+	/**
+	 * Renders CSS rules for a single device only, wrapping Tablet/Mobile in their
+	 * respective media queries automatically. Use this when a style should only
+	 * apply on one breakpoint (e.g. display:none on mobile only).
+	 *
+	 * @param string   $device   'desktop', 'tablet', or 'mobile' (case-insensitive).
+	 * @param callable $callback function( $css, $device ) — receives the css instance
+	 *                           and the properly-cased device string ('Desktop'|'Tablet'|'Mobile').
+	 * @return $this
+	 */
+	public function render_device_only( $device, $callback ) {
+		switch ( strtolower( $device ) ) {
+			case 'tablet':
+				$this->start_media_query( 'tablet' );
+				$callback( $this, 'Tablet' );
+				$this->stop_media_query();
+				break;
+			case 'mobile':
+				$this->start_media_query( 'mobile' );
+				$callback( $this, 'Mobile' );
+				$this->stop_media_query();
+				break;
+			default: // 'desktop'
+				$callback( $this, 'Desktop' );
+				break;
+		}
+		return $this;
+	}
+
   // New Functions 
 
   public function pbg_render_value($attributes, $name, $property, $device = '', $prefix = '', $postfix = '', $enable_fallback = false) {

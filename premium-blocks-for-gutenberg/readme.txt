@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 2.3.10
+Stable tag: 2.3.11
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -147,6 +147,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.11 =
+- Fixed: WordPress 7 iframe editor compatibility for Modal, Off-Canvas, Heading, Lottie, One-Page-Scroll, Fancy Text, and Video Box blocks.
+- Fixed: Replaced deprecated __experimental component imports with stable API equivalents.
+- Fixed: RTL layout issues in templates modal, dashboard, and controls.
+- Fixed: Button block styling selectors compatibility.
+- Fixed: Dual Heading noise effect with padding and font-size.
+
 = 2.3.10 =
 - Added: Theme color support for controls, templates and global settings.
 - Tweak: Removed unused styles for compatibility.

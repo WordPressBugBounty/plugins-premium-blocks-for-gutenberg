@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Server-side rendering of the `premium/form-hidden` block.
  *
@@ -14,8 +15,9 @@
  *
  * @return string Returns the post content with the legacy widget added.
  */
-function render_block_pbg_form_hidden( $attributes, $content, $block ) {
-	return $content;
+function render_block_pbg_form_hidden($attributes, $content, $block)
+{
+    return $content;
 }
 
 
@@ -25,15 +27,16 @@ function render_block_pbg_form_hidden( $attributes, $content, $block ) {
  * @uses render_block_pbg_form_hidden()
  * @throws WP_Error An WP_Error exception parsing the block definition.
  */
-function register_block_pbg_form_hidden() {
-	register_block_type(
-		'premium/form-hidden',
-		array(
-			'render_callback' => 'render_block_pbg_form_hidden',
-			'editor_style'    => 'premium-blocks-editor-css',
-			'editor_script'   => 'pbg-blocks-js',
-		)
-	);
+function register_block_pbg_form_hidden()
+{
+    register_block_type(
+        'premium/form-hidden',
+        array(
+            'render_callback' => 'render_block_pbg_form_hidden',
+            'editor_style'    => 'premium-blocks-editor-css',
+            'editor_script'   => 'pbg-blocks-js',
+        )
+    );
 }
 
 register_block_pbg_form_hidden();

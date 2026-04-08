@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Register the icon block.
  *
@@ -16,47 +17,47 @@ function register_block_pbg_gallery()
             'render_callback' => function ($attributes, $content) {
 
                 wp_register_script(
-                  'pbg-isotope',
-                  PREMIUM_BLOCKS_URL . 'assets/js/lib/isotope.pkgd.min.js',
-                  array(),
-                  PREMIUM_BLOCKS_VERSION,
-                  true
+                    'pbg-isotope',
+                    PREMIUM_BLOCKS_URL . 'assets/js/lib/isotope.pkgd.min.js',
+                    array(),
+                    PREMIUM_BLOCKS_VERSION,
+                    true
                 );
 
                 wp_register_script(
-                  'pbg-images-loaded',
-                  PREMIUM_BLOCKS_URL . 'assets/js/lib/imageLoaded.min.js',
-                  array('jquery'),
-                  PREMIUM_BLOCKS_VERSION,
-                  true
+                    'pbg-images-loaded',
+                    PREMIUM_BLOCKS_URL . 'assets/js/lib/imageLoaded.min.js',
+                    array('jquery'),
+                    PREMIUM_BLOCKS_VERSION,
+                    true
                 );
 
-                if(isset($attributes['enableLightbox']) && $attributes['enableLightbox']){
+                if (isset($attributes['enableLightbox']) && $attributes['enableLightbox']) {
                     wp_register_script(
-                      'pbg-fslightbox',
-                      PREMIUM_BLOCKS_URL . 'assets/js/lib/fslightbox.js',
-                      array('jquery'),
-                      PREMIUM_BLOCKS_VERSION,
-                      true
+                        'pbg-fslightbox',
+                        PREMIUM_BLOCKS_URL . 'assets/js/lib/fslightbox.js',
+                        array('jquery'),
+                        PREMIUM_BLOCKS_VERSION,
+                        true
                     );
-                }else{
+                } else {
                     wp_register_script(
-                      'pbg-fslightbox',
-                      false,
+                        'pbg-fslightbox',
+                        false,
                     );
                 }
-               
+
                 wp_enqueue_script(
-                  'premium-gallery-view',
-                  PREMIUM_BLOCKS_URL . 'assets/js/build/gallery/index.js',
-                  array('wp-element', 'wp-i18n', 'pbg-images-loaded', 'pbg-isotope', 'pbg-fslightbox'),
-                  PREMIUM_BLOCKS_VERSION,
-                  true
+                    'premium-gallery-view',
+                    PREMIUM_BLOCKS_URL . 'assets/js/build/gallery/index.js',
+                    array('wp-element', 'wp-i18n', 'pbg-images-loaded', 'pbg-isotope', 'pbg-fslightbox'),
+                    PREMIUM_BLOCKS_VERSION,
+                    true
                 );
 
 
                 $unique_id     = rand(100, 10000);
-                $id            = 'premium-galley-' . esc_attr($unique_id);
+                $id            = 'premium-galley-' . esc_attr((string) $unique_id);
                 $block_id      = (! empty($attributes['blockId'])) ? $attributes['blockId'] : $id;
 
                 add_filter(
@@ -73,7 +74,7 @@ function register_block_pbg_gallery()
                 $media_query['mobile']  = apply_filters('Premium_BLocks_mobile_media_query', '(max-width: 767px)');
                 $media_query['tablet']  = apply_filters('Premium_BLocks_tablet_media_query', '(max-width: 1024px)');
                 $media_query['desktop'] = apply_filters('Premium_BLocks_desktop_media_query', '(min-width: 1025px)');
-                
+
                 $data =             apply_filters(
                     'premium_gallery_localize_script',
                     array(
@@ -89,43 +90,43 @@ function register_block_pbg_gallery()
                     'before'
                 );
 
-                /* 
+                /*
                   Handling new feature of WordPress 6.7.2 --> sizes='auto' for old versions that doesn't contain wp-image-{$id} class.
                   This workaround can be omitted after a few subsequent releases around 25/3/2025
                 */
-                if(isset($attributes['repeaterMedia']) && is_array($attributes['repeaterMedia'])){
+                if (isset($attributes['repeaterMedia']) && is_array($attributes['repeaterMedia'])) {
 
-                  if ( false === strpos( $content, '<img' ) ) {
-                    return $content;
-                  }
-
-                  $image_tag =  new WP_HTML_Tag_Processor($content);
-
-                  foreach ($attributes['repeaterMedia'] as $index => $media_item){
-                    // Skip if no image ID is provided
-                    if (! isset( $media_item['media']['id'] ) || empty($media_item['media']['id'])) {
-                      continue;
+                    if (false === strpos($content, '<img')) {
+                        return $content;
                     }
-                    
-                    $image_id = $media_item['media']['id'];
-              
-                    if (!$image_tag->next_tag(['tag_name' => 'img'])) {
-                      return $content;
-                    }  
-              
-                    $image_classnames = $image_tag->get_attribute('class') ?? '';
-              
-                    if (!str_contains($image_classnames, "wp-image-{$image_id}")) {
-                      // Clean up 
-                      $image_tag->remove_attribute('srcset');
-                      $image_tag->remove_attribute('sizes');
-                      
-                      // Add the wp-image class for automatically generate new srcset and sizes attributes
-                      $image_tag->add_class("wp-image-{$image_id}");
+
+                    $image_tag =  new WP_HTML_Tag_Processor($content);
+
+                    foreach ($attributes['repeaterMedia'] as $index => $media_item) {
+                        // Skip if no image ID is provided
+                        if (! isset($media_item['media']['id']) || empty($media_item['media']['id'])) {
+                            continue;
+                        }
+
+                        $image_id = $media_item['media']['id'];
+
+                        if (!$image_tag->next_tag(['tag_name' => 'img'])) {
+                            return $content;
+                        }
+
+                        $image_classnames = $image_tag->get_attribute('class') ?? '';
+
+                        if (!str_contains($image_classnames, "wp-image-{$image_id}")) {
+                            // Clean up
+                            $image_tag->remove_attribute('srcset');
+                            $image_tag->remove_attribute('sizes');
+
+                            // Add the wp-image class for automatically generate new srcset and sizes attributes
+                            $image_tag->add_class("wp-image-{$image_id}");
+                        }
                     }
-                  }
-              
-                  return $image_tag->get_updated_html();
+
+                    return $image_tag->get_updated_html();
                 }
 
                 return $content;

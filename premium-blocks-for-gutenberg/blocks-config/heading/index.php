@@ -54,44 +54,9 @@ function get_premium_heading_css_style($attr, $unique_id)
   $css->set_selector($unique_id . ' .premium-title-style9-letter');
   $css->pbg_render_color($attr, 'titleStyles[0].titleColor', 'color');
 	
-	// Align.
-  $css->set_selector($unique_id);
-  $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
-  $css->pbg_render_range($attr, 'rotateHeading', 'transform', 'Desktop', 'rotate(', ')');
-
-  $css->set_selector($unique_id . ' .premium-title-container');
-  $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Desktop');
-
-  $css->set_selector($unique_id . ' .premium-title-container .premium-title-header');
-  $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Desktop');
-  $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Desktop');
-
-  $css->set_selector($unique_id . ' .premium-title-header.top');
-  $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Desktop'); 
-	
-  $css->set_selector($unique_id . ' .premium-title-header .premium-title-text-title, ' . $unique_id . ' .premium-title-header .premium-letters-container');
-  $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
-
   $title_border_type = $attr['titleBorder']['borderType'] ?? "";
-  $css->set_selector($unique_id . ' .default .premium-title-header');
-  $css->pbg_render_border($attr, 'titleBorder', 'Desktop');
 
-  $css->set_selector($unique_id . ' .style1 .premium-title-header');
-  $css->pbg_render_border($attr, 'titleBorder', 'Desktop');
-  $css->add_property('border-left-style', $title_border_type === 'none' ? 'solid' : $title_border_type);
-
-  $css->set_selector($unique_id . ' .style2, ' . $unique_id . ' .style3, ' . $unique_id . ' .style4, ' . $unique_id . ' .style5, ' . $unique_id . ' .style6');
-  $css->pbg_render_border($attr, 'titleBorder', 'Desktop');
-  $css->add_property('border-bottom-style', $title_border_type === 'none' ? 'solid' : $title_border_type);
-
-	// Style for icon.
-  $css->set_selector( 
-    "{$unique_id} .premium-title-icon, " .
-    "{$unique_id} .premium-lottie-animation svg, " .
-    "{$unique_id} .premium-title-svg-class svg"
-  );
-  $css->pbg_render_background($attr, 'iconBG', 'Desktop');
-
+  // Non-responsive icon/hover colors.
   $css->set_selector( 
     "{$unique_id} .premium-title-icon, " .
     "{$unique_id} .premium-title-icon:not(.icon-type-fe) svg, " .
@@ -102,33 +67,12 @@ function get_premium_heading_css_style($attr, $unique_id)
   $css->pbg_render_color($attr, 'iconColor', 'color');
   $css->pbg_render_color($attr, 'iconColor', 'fill');
 
-  $css->set_selector($unique_id . ' .premium-title-style7-inner-title');
-  $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Desktop'); 
-
-  $css->set_selector( 
-    "{$unique_id} .premium-title-icon, " .
-    "{$unique_id} .premium-title-header img, " .
-    "{$unique_id} .premium-lottie-animation svg, " .
-    "{$unique_id} .premium-title-svg-class svg" 
-  );
-  $css->pbg_render_spacing($attr, 'iconPadding', 'padding', 'Desktop');
-  $css->pbg_render_spacing($attr, 'iconMargin', 'margin', 'Desktop');
-  $css->pbg_render_border($attr, 'iconBorder', 'Desktop');
-
-  $css->set_selector( 
-    "{$unique_id} .premium-title-icon svg, " .
-    "{$unique_id} .premium-title-svg-class svg" 
-  );
-  $css->pbg_render_range($attr, 'iconSize', 'width', 'Desktop', null, '!important');
-  $css->pbg_render_range($attr, 'iconSize', 'height', 'Desktop', null, '!important');
-
   $css->set_selector( 
     "{$unique_id} .premium-title-icon:hover, " .
     "{$unique_id} .premium-lottie-animation:hover svg, " .
     "{$unique_id} .premium-title-svg-class:hover svg"
   );
   $css->pbg_render_color($attr, 'borderHoverColor', 'border-color');
-  $css->pbg_render_background($attr, 'iconHoverBG', 'Desktop');
 
   $css->set_selector( 
     "{$unique_id} .premium-title-icon:hover, " .
@@ -138,26 +82,12 @@ function get_premium_heading_css_style($attr, $unique_id)
   );
   $css->pbg_render_color($attr, 'iconHoverColor', 'color');
   $css->pbg_render_color($attr, 'iconHoverColor', 'fill');
-	// image style
-  $css->set_selector($unique_id . ' .premium-title-header img');
-  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Desktop', null, '!important');
 
-  $css->set_selector($unique_id . ' .premium-title-header .premium-lottie-animation svg');
-  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Desktop', null, '!important');
-  $css->pbg_render_range($attr, 'imgWidth', 'height', 'Desktop', null, '!important');
-
-	// stripeStyles
-  $css->set_selector($unique_id . ' .premium-title-style7-stripe__wrap');
-  $css->pbg_render_range($attr, 'stripeTopSpacing', 'margin-top', 'Desktop');
-  $css->pbg_render_range($attr, 'stripeBottomSpacing', 'margin-bottom', 'Desktop');
-	$css->pbg_render_align_self($attr, 'stripeAlign', 'justify-content', 'Desktop');
-
+  // Non-responsive stripe color.
   $css->set_selector($unique_id . ' .premium-title-style7-stripe-span');
   $css->pbg_render_color($attr, 'titleStyles[0].stripeColor', 'background-color', null, ' !important');
-  $css->pbg_render_range($attr, 'stripeWidth', 'width', 'Desktop');
-  $css->pbg_render_range($attr, 'stripeHeight', 'height', 'Desktop');
 
-	// background text
+  // Non-responsive background text styles.
   $css->set_selector($unique_id . ' .premium-title-bg-text:before');
   $css->pbg_render_color($attr, 'textStyles[0].textBackColor', 'color');
   $css->pbg_render_color($attr, 'strokeStyles[0].strokeColor', '-webkit-text-stroke-color');
@@ -165,18 +95,10 @@ function get_premium_heading_css_style($attr, $unique_id)
   $css->pbg_render_value($attr, 'blend', 'mix-blend-mode');
   $css->pbg_render_range($attr, 'zIndex', 'z-index');
   $css->pbg_render_value($attr, 'textWidth', 'width');
-  $css->pbg_render_range($attr, 'verticalText', 'top', 'Desktop');
-  $css->pbg_render_range($attr, 'horizontalText', 'left', 'Desktop');
-  $css->pbg_render_range($attr, 'rotateText', 'transform', 'Desktop', 'rotate(', ')!important');
-  $css->pbg_render_range($attr, 'strokeFull', '-webkit-text-stroke-width', 'Desktop');
-  $css->pbg_render_typography($attr, 'textTypography', 'Desktop');
 
   $css->set_selector($unique_id . ' .premium-title-container .premium-title-header .premium-headingc-true.premium-headings-true' );
   $css->pbg_render_color($attr, 'titleStyles[0].strokeColor', '-webkit-text-stroke-color');
   $css->pbg_render_color($attr, 'titleStyles[0].strokeFill', '-webkit-text-fill-color');
-
-  $css->set_selector($unique_id . ' .premium-title-container:not(.style8) .premium-title-header .premium-title-text-title:not(.premium-headinga-true)' );
-  $css->pbg_render_background($attr, 'clipBackground', 'Desktop');
 
   $css->set_selector($unique_id . ' .premium-title-container-noise-true .premium-title-text-title:before' );
   $css->pbg_render_range($attr, 'noiseColor1', 'text-shadow', null, '1px 0');
@@ -184,195 +106,106 @@ function get_premium_heading_css_style($attr, $unique_id)
   $css->set_selector($unique_id . ' .premium-title-container-noise-true .premium-title-text-title:after' );
   $css->pbg_render_range($attr, 'noiseColor2', 'text-shadow', null, '-1px 0');
 
-	$css->start_media_query('tablet');
-
 	// Align.
-	$css->set_selector($unique_id);
-  $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
-  $css->pbg_render_range($attr, 'rotateHeading', 'transform', 'Tablet', 'rotate(', ')');
-
-  $css->set_selector($unique_id . ' .premium-title-container');
-  $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Tablet');
-
-  $css->set_selector($unique_id . ' .premium-title-header');
-  $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Tablet');
-  $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Tablet');
-
-  $css->set_selector($unique_id . ' .premium-title-header.top');
-  $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Tablet'); 
-
-	$css->set_selector($unique_id . ' .premium-title-header .premium-title-text-title, ' . $unique_id . ' .premium-title-header .premium-letters-container');
-  $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
-
-  $css->set_selector($unique_id . ' .default .premium-title-header');
-  $css->pbg_render_border($attr, 'titleBorder', 'Tablet');
-
   $css->set_selector($unique_id . ' .style1 .premium-title-header');
-  $css->pbg_render_border($attr, 'titleBorder', 'Tablet');
+  $css->add_property('border-left-style', $title_border_type === 'none' ? 'solid' : $title_border_type);
 
   $css->set_selector($unique_id . ' .style2, ' . $unique_id . ' .style3, ' . $unique_id . ' .style4, ' . $unique_id . ' .style5, ' . $unique_id . ' .style6');
-  $css->pbg_render_border($attr, 'titleBorder', 'Tablet');
+  $css->add_property('border-bottom-style', $title_border_type === 'none' ? 'solid' : $title_border_type);
 
-	// Style for icon.
-	$css->set_selector( 
-    "{$unique_id} .premium-title-icon, " .
-    "{$unique_id} .premium-lottie-animation svg, " .
-    "{$unique_id} .premium-title-svg-class svg"
-  );
-  $css->pbg_render_background($attr, 'iconBG', 'Tablet');
+  // Responsive styles.
+  $css->render_responsive( function( $css, $device ) use ( $attr, $unique_id, $title_border_type ) {
+    $css->set_selector($unique_id);
+    $css->pbg_render_value($attr, 'align', 'text-align', $device);
+    $css->pbg_render_range($attr, 'rotateHeading', 'transform', $device, 'rotate(', ')');
 
-  $css->set_selector($unique_id . ' .premium-title-style7-inner-title');
-  $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Tablet'); 
+    $css->set_selector($unique_id . ' .premium-title-container');
+    $css->pbg_render_spacing($attr, 'titleMargin', 'margin', $device);
 
-	$css->set_selector( 
-    "{$unique_id} .premium-title-icon, " .
-    "{$unique_id} .premium-title-header img, " .
-    "{$unique_id} .premium-lottie-animation svg, " .
-    "{$unique_id} .premium-title-svg-class svg" 
-  );
-  $css->pbg_render_spacing($attr, 'iconPadding', 'padding', 'Tablet');
-  $css->pbg_render_spacing($attr, 'iconMargin', 'margin', 'Tablet');
-  $css->pbg_render_border($attr, 'iconBorder', 'Tablet');
+    $css->set_selector($unique_id . ' .premium-title-container .premium-title-header');
+    $css->pbg_render_spacing($attr, 'titlePadding', 'padding', $device);
+    $css->pbg_render_align_self($attr, 'align', 'justify-content', $device);
 
-  $css->set_selector( 
-    "{$unique_id} .premium-title-icon svg, " .
-    "{$unique_id} .premium-title-svg-class svg" 
-  );
-  $css->pbg_render_range($attr, 'iconSize', 'width', 'Tablet', null, '!important');
-  $css->pbg_render_range($attr, 'iconSize', 'height', 'Tablet', null, '!important');
+    $css->set_selector($unique_id . ' .premium-title-header.top');
+    $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', $device);
 
-  $css->set_selector( 
-    "{$unique_id} .premium-title-icon:hover, " .
-    "{$unique_id} .premium-lottie-animation:hover svg, " .
-    "{$unique_id} .premium-title-svg-class:hover svg"
-  );
-  $css->pbg_render_background($attr, 'iconHoverBG', 'Tablet');
+    $css->set_selector($unique_id . ' .premium-title-header .premium-title-text-title, ' . $unique_id . ' .premium-title-header .premium-letters-container');
+    $css->pbg_render_typography($attr, 'titleTypography', $device);
 
-	// image style
-	$css->set_selector($unique_id . ' .premium-title-header img');
-  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Tablet', null, '!important');
+    $css->set_selector($unique_id . ' .default .premium-title-header');
+    $css->pbg_render_border($attr, 'titleBorder', $device);
 
-  $css->set_selector($unique_id . ' .premium-title-header .premium-lottie-animation svg');
-  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Tablet', null, '!important');
-  $css->pbg_render_range($attr, 'imgWidth', 'height', 'Tablet', null, '!important');
+    $css->set_selector($unique_id . ' .style1 .premium-title-header');
+    $css->pbg_render_border($attr, 'titleBorder', $device);
 
-	// stripeStyles
-	$css->set_selector($unique_id . ' .premium-title-style7-stripe__wrap');
-  $css->pbg_render_range($attr, 'stripeTopSpacing', 'margin-top', 'Tablet');
-  $css->pbg_render_range($attr, 'stripeBottomSpacing', 'margin-bottom', 'Tablet');
-	$css->pbg_render_align_self($attr, 'stripeAlign', 'justify-content', 'Tablet');
+    $css->set_selector($unique_id . ' .style2, ' . $unique_id . ' .style3, ' . $unique_id . ' .style4, ' . $unique_id . ' .style5, ' . $unique_id . ' .style6');
+    $css->pbg_render_border($attr, 'titleBorder', $device);
 
-  $css->set_selector($unique_id . ' .premium-title-style7-stripe-span');
-  $css->pbg_render_range($attr, 'stripeWidth', 'width', 'Tablet');
-  $css->pbg_render_range($attr, 'stripeHeight', 'height', 'Tablet');
+    // Style for icon.
+    $css->set_selector( 
+      "{$unique_id} .premium-title-icon, " .
+      "{$unique_id} .premium-lottie-animation svg, " .
+      "{$unique_id} .premium-title-svg-class svg"
+    );
+    $css->pbg_render_background($attr, 'iconBG', $device);
 
-	// background text
-	$css->set_selector($unique_id . ' .premium-title-bg-text:before');
-  $css->pbg_render_range($attr, 'verticalText', 'top', 'Tablet');
-  $css->pbg_render_range($attr, 'horizontalText', 'left', 'Tablet');
-  $css->pbg_render_range($attr, 'rotateText', 'transform', 'Tablet', 'rotate(', ')!important');
-  $css->pbg_render_range($attr, 'strokeFull', '-webkit-text-stroke-width', 'Tablet');
-  $css->pbg_render_typography($attr, 'textTypography', 'Tablet');
+    $css->set_selector($unique_id . ' .premium-title-style7-inner-title');
+    $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', $device);
 
-  $css->set_selector($unique_id . ' .premium-title-container:not(.style8) .premium-title-header .premium-title-text-title:not(.premium-headinga-true)' );
-  $css->pbg_render_background($attr, 'clipBackground', 'Tablet');
+    $css->set_selector( 
+      "{$unique_id} .premium-title-icon, " .
+      "{$unique_id} .premium-title-header img, " .
+      "{$unique_id} .premium-lottie-animation svg, " .
+      "{$unique_id} .premium-title-svg-class svg" 
+    );
+    $css->pbg_render_spacing($attr, 'iconPadding', 'padding', $device);
+    $css->pbg_render_spacing($attr, 'iconMargin', 'margin', $device);
+    $css->pbg_render_border($attr, 'iconBorder', $device);
 
-	$css->stop_media_query();
+    $css->set_selector( 
+      "{$unique_id} .premium-title-icon svg, " .
+      "{$unique_id} .premium-title-svg-class svg" 
+    );
+    $css->pbg_render_range($attr, 'iconSize', 'width', $device, null, '!important');
+    $css->pbg_render_range($attr, 'iconSize', 'height', $device, null, '!important');
 
-	$css->start_media_query('mobile');
+    $css->set_selector( 
+      "{$unique_id} .premium-title-icon:hover, " .
+      "{$unique_id} .premium-lottie-animation:hover svg, " .
+      "{$unique_id} .premium-title-svg-class:hover svg"
+    );
+    $css->pbg_render_background($attr, 'iconHoverBG', $device);
 
-	// Align.
-	$css->set_selector($unique_id);
-  $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
-  $css->pbg_render_range($attr, 'rotateHeading', 'transform', 'Mobile', 'rotate(', ')');
+    // image style
+    $css->set_selector($unique_id . ' .premium-title-header img');
+    $css->pbg_render_range($attr, 'imgWidth', 'width', $device, null, '!important');
 
-  $css->set_selector($unique_id . ' .premium-title-container');
-  $css->pbg_render_spacing($attr, 'titleMargin', 'margin', 'Mobile');
+    $css->set_selector($unique_id . ' .premium-title-header .premium-lottie-animation svg');
+    $css->pbg_render_range($attr, 'imgWidth', 'width', $device, null, '!important');
+    $css->pbg_render_range($attr, 'imgWidth', 'height', $device, null, '!important');
 
-  $css->set_selector($unique_id . ' .premium-title-header');
-  $css->pbg_render_spacing($attr, 'titlePadding', 'padding', 'Mobile');
-  $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Mobile');
+    // stripeStyles
+    $css->set_selector($unique_id . ' .premium-title-style7-stripe__wrap');
+    $css->pbg_render_range($attr, 'stripeTopSpacing', 'margin-top', $device);
+    $css->pbg_render_range($attr, 'stripeBottomSpacing', 'margin-bottom', $device);
+    $css->pbg_render_align_self($attr, 'stripeAlign', 'justify-content', $device);
 
-  $css->set_selector($unique_id . ' .premium-title-header.top');
-  $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Mobile'); 
+    $css->set_selector($unique_id . ' .premium-title-style7-stripe-span');
+    $css->pbg_render_range($attr, 'stripeWidth', 'width', $device);
+    $css->pbg_render_range($attr, 'stripeHeight', 'height', $device);
 
-	$css->set_selector($unique_id . ' .premium-title-header .premium-title-text-title, ' . $unique_id . ' .premium-title-header .premium-letters-container');
-  $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');
+    // background text
+    $css->set_selector($unique_id . ' .premium-title-bg-text:before');
+    $css->pbg_render_range($attr, 'verticalText', 'top', $device);
+    $css->pbg_render_range($attr, 'horizontalText', 'left', $device);
+    $css->pbg_render_range($attr, 'rotateText', 'transform', $device, 'rotate(', ')!important');
+    $css->pbg_render_range($attr, 'strokeFull', '-webkit-text-stroke-width', $device);
+    $css->pbg_render_typography($attr, 'textTypography', $device);
 
-  $css->set_selector($unique_id . ' .default .premium-title-header');
-  $css->pbg_render_border($attr, 'titleBorder', 'Mobile');
+    $css->set_selector($unique_id . ' .premium-title-container:not(.style8) .premium-title-header .premium-title-text-title:not(.premium-headinga-true)' );
+    $css->pbg_render_background($attr, 'clipBackground', $device);
+  } );
 
-  $css->set_selector($unique_id . ' .style1 .premium-title-header');
-  $css->pbg_render_border($attr, 'titleBorder', 'Mobile');
-
-  $css->set_selector($unique_id . ' .style2, ' . $unique_id . ' .style3, ' . $unique_id . ' .style4, ' . $unique_id . ' .style5, ' . $unique_id . ' .style6');
-  $css->pbg_render_border($attr, 'titleBorder', 'Mobile');
-
-	// Style for icon.
-	$css->set_selector( 
-    "{$unique_id} .premium-title-icon, " .
-    "{$unique_id} .premium-lottie-animation svg, " .
-    "{$unique_id} .premium-title-svg-class svg"
-  );
-  $css->pbg_render_background($attr, 'iconBG', 'Mobile');
-
-  $css->set_selector($unique_id . ' .premium-title-style7-inner-title');
-  $css->pbg_render_align_self($attr, 'iconAlign', 'align-items', 'Mobile'); 
-
-	$css->set_selector( 
-    "{$unique_id} .premium-title-icon, " .
-    "{$unique_id} .premium-title-header img, " .
-    "{$unique_id} .premium-lottie-animation svg, " .
-    "{$unique_id} .premium-title-svg-class svg" 
-  );
-  $css->pbg_render_spacing($attr, 'iconPadding', 'padding', 'Mobile');
-  $css->pbg_render_spacing($attr, 'iconMargin', 'margin', 'Mobile');
-  $css->pbg_render_border($attr, 'iconBorder', 'Mobile');
-
-  $css->set_selector( 
-    "{$unique_id} .premium-title-icon svg, " .
-    "{$unique_id} .premium-title-svg-class svg" 
-  );
-  $css->pbg_render_range($attr, 'iconSize', 'width', 'Mobile', null, '!important');
-  $css->pbg_render_range($attr, 'iconSize', 'height', 'Mobile', null, '!important');
-
-  $css->set_selector( 
-    "{$unique_id} .premium-title-icon:hover, " .
-    "{$unique_id} .premium-lottie-animation:hover svg, " .
-    "{$unique_id} .premium-title-svg-class:hover svg"
-  );
-  $css->pbg_render_background($attr, 'iconHoverBG', 'Mobile');
-
-	// image style
-	$css->set_selector($unique_id . ' .premium-title-header img');
-  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Mobile', null, '!important');
-
-  $css->set_selector($unique_id . ' .premium-title-header .premium-lottie-animation svg');
-  $css->pbg_render_range($attr, 'imgWidth', 'width', 'Mobile', null, '!important');
-  $css->pbg_render_range($attr, 'imgWidth', 'height', 'Mobile', null, '!important');
-
-	// stripeStyles
-	$css->set_selector($unique_id . ' .premium-title-style7-stripe__wrap');
-  $css->pbg_render_range($attr, 'stripeTopSpacing', 'margin-top', 'Mobile');
-  $css->pbg_render_range($attr, 'stripeBottomSpacing', 'margin-bottom', 'Mobile');
-	$css->pbg_render_align_self($attr, 'stripeAlign', 'justify-content', 'Mobile');
-
-  $css->set_selector($unique_id . ' .premium-title-style7-stripe-span');
-  $css->pbg_render_range($attr, 'stripeWidth', 'width', 'Mobile');
-  $css->pbg_render_range($attr, 'stripeHeight', 'height', 'Mobile');
-
-	// background text
-	$css->set_selector($unique_id . ' .premium-title-bg-text:before');
-  $css->pbg_render_range($attr, 'verticalText', 'top', 'Mobile');
-  $css->pbg_render_range($attr, 'horizontalText', 'left', 'Mobile');
-  $css->pbg_render_range($attr, 'rotateText', 'transform', 'Mobile', 'rotate(', ')!important');
-  $css->pbg_render_range($attr, 'strokeFull', '-webkit-text-stroke-width', 'Mobile');
-  $css->pbg_render_typography($attr, 'textTypography', 'Mobile');
-
-  $css->set_selector($unique_id . ' .premium-title-container:not(.style8) .premium-title-header .premium-title-text-title:not(.premium-headinga-true)' );
-  $css->pbg_render_background($attr, 'clipBackground', 'Mobile');
-
-	$css->stop_media_query();
 	return $css->css_output();
 }
 

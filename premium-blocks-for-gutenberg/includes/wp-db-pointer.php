@@ -44,7 +44,7 @@ add_action(
 
                                 position:
                                     {
-                                        edge: 'left',
+                                        edge: '<?php echo esc_js( is_rtl() ? "right" : "left" ); ?>',
                                         align: 'center'
                                     },
 

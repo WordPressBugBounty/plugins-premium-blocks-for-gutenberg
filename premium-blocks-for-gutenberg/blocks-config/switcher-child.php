@@ -16,28 +16,11 @@ function get_premium_switcher_child_css( $attributes, $unique_id ) {
 	$css       = new Premium_Blocks_css();
 	$unique_id = $attributes['blockId'];
 
-	// Desktop styles
-	$css->set_selector( '.' . $unique_id );
-	$css->pbg_render_spacing( $attributes, 'padding', 'padding', 'Desktop' );
-	$css->pbg_render_spacing( $attributes, 'margin', 'margin', 'Desktop' );
-
-	// Tablet styles
-	$css->start_media_query( 'tablet' );
-	
-	$css->set_selector( '.' . $unique_id );
-	$css->pbg_render_spacing( $attributes, 'padding', 'padding', 'Tablet' );
-	$css->pbg_render_spacing( $attributes, 'margin', 'margin', 'Tablet' );
-
-	$css->stop_media_query();
-
-	// Mobile styles
-	$css->start_media_query( 'mobile' );
-
-	$css->set_selector( '.' . $unique_id );
-	$css->pbg_render_spacing( $attributes, 'padding', 'padding', 'Mobile' );
-	$css->pbg_render_spacing( $attributes, 'margin', 'margin', 'Mobile' );
-
-	$css->stop_media_query();
+	$css->render_responsive( function( $css, $device ) use ( $attributes, $unique_id ) {
+		$css->set_selector( '.' . $unique_id );
+		$css->pbg_render_spacing( $attributes, 'padding', 'padding', $device );
+		$css->pbg_render_spacing( $attributes, 'margin', 'margin', $device );
+	} );
 
 	return $css->css_output();
 }

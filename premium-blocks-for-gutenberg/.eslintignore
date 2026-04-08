@@ -1,0 +1,6 @@
+/node_modules/
+/vendor/
+/assets/js/build/
+/assets/css/
+Gruntfile.js
+webpack.config.js

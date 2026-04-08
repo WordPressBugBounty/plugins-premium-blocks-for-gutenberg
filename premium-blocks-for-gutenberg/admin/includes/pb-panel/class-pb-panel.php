@@ -51,15 +51,9 @@ if (! class_exists('Pb_Panel')) {
 		 */
 		public function __construct()
 		{
-			add_action('wp_ajax_nopriv_pb-panel-update-option', array($this, 'update_option'));
-
 			add_action('wp_ajax_pb-panel-update-option', array($this, 'update_option'));
 
-			add_action('wp_ajax_nopriv_pb-panel-update-settings', array($this, 'update_settings'));
-
 			add_action('wp_ajax_pb-panel-update-settings', array($this, 'update_settings'));
-
-			add_action('wp_ajax_nopriv_pb-panel-update-global-features', array($this, 'update_global_features'));
 
 			add_action('wp_ajax_pb-panel-update-global-features', array($this, 'update_global_features'));
 
@@ -263,6 +257,10 @@ if (! class_exists('Pb_Panel')) {
 		{
 			check_ajax_referer('pb-panel', 'nonce');
 
+			if (!current_user_can('manage_options')) {
+				wp_send_json_error(array('message' => 'Unauthorized'), 403);
+			}
+
 			$value   = isset($_POST['value']) ? json_decode(stripslashes($_POST['value']), true) : array();
 			$options = apply_filters('pb_options', get_option('pb_options', array()));
 			// $options = get_option( 'pb_options' );
@@ -292,6 +290,10 @@ if (! class_exists('Pb_Panel')) {
 		{
 			check_ajax_referer('pb-panel', 'nonce');
 
+			if (!current_user_can('manage_options')) {
+				wp_send_json_error(array('message' => 'Unauthorized'), 403);
+			}
+
 			$value    = isset($_POST['value']) ? json_decode(stripslashes($_POST['value']), true) : array();
 			$Settings = apply_filters('pb_settings', get_option('pbg_global_features', array()));
 			$Settings = ! is_array($Settings) ? array() : $Settings;
@@ -314,6 +316,10 @@ if (! class_exists('Pb_Panel')) {
     public function update_settings()
     {
       check_ajax_referer('pb-panel', 'nonce');
+
+      if (!current_user_can('manage_options')) {
+        wp_send_json_error(array('message' => 'Unauthorized'), 403);
+      }
 
       $value    = isset($_POST['value']) ? json_decode(stripslashes($_POST['value']), true) : array();
       $Settings = apply_filters('pb_settings', get_option('pbg_blocks_settings', array()));
@@ -405,6 +411,10 @@ if (! class_exists('Pb_Panel')) {
 		{
 			check_ajax_referer('pb-panel', 'nonce');
 
+			if (!current_user_can('manage_options')) {
+				wp_send_json_error(array('message' => 'Unauthorized'), 403);
+			}
+
 			$value    = isset($_POST['value']) ? json_decode(stripslashes($_POST['value']), true) : array();
 			$Settings = apply_filters('pb_performance_options', get_option('pbg_performance_options', array()));
 			$Settings = ! is_array($Settings) ? array() : $Settings;
@@ -432,6 +442,10 @@ if (! class_exists('Pb_Panel')) {
 		public function update_integrations_options()
 		{
 			check_ajax_referer('pb-panel', 'nonce');
+
+			if (!current_user_can('manage_options')) {
+				wp_send_json_error(array('message' => 'Unauthorized'), 403);
+			}
 
 			$value   = isset($_POST['value']) ? json_decode(stripslashes($_POST['value']), true) : array();
 			$options = apply_filters('pb_integrations_options', get_option('pbg_integrations_options', array()));

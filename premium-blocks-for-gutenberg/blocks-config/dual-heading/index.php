@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Server-side rendering of the `pbg/dual-heading` block.
  *
@@ -12,150 +13,89 @@
  *
  * @access public
  *
- * @param string $attr option attribute.
+ * @param array $attr option attribute.
  * @param string $unique_id option For block ID.
  */
-function get_premium_dual_heading_css_style( $attr, $unique_id ) {
-	$css = new Premium_Blocks_css();
+function get_premium_dual_heading_css_style($attr, $unique_id)
+{
+    $css = new Premium_Blocks_css();
 
-  $css->set_selector( $unique_id );
-  $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
-  $css->pbg_render_border($attr, 'containerBorder', 'Desktop');
-  $css->pbg_render_background($attr, 'background', 'Desktop');
-  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Desktop');
-  $css->pbg_render_range($attr, 'rotate', 'transform', 'Desktop', 'rotate(', ')');
-  if(isset($attr['rotate']) && !empty($attr['rotate'])){
-		$css->add_property( 'transform-origin', ($attr['transform_origin_x'] ?? '') . ' ' . ($attr['transform_origin_y'] ?? ''));
-	}
-  
-  $css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
-  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Desktop');
+    $css->set_selector($unique_id);
+    $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
+    $css->pbg_render_border($attr, 'containerBorder', 'Desktop');
+    $css->pbg_render_background($attr, 'background', 'Desktop');
+    $css->pbg_render_spacing($attr, 'padding', 'padding', 'Desktop');
+    $css->pbg_render_range($attr, 'rotate', 'transform', 'Desktop', 'rotate(', ')');
+    if (isset($attr['rotate']) && !empty($attr['rotate'])) {
+        $css->add_property('transform-origin', ($attr['transform_origin_x'] ?? '') . ' ' . ($attr['transform_origin_y'] ?? ''));
+    }
 
-	$css->set_selector( $unique_id . '.premium-mask-yes .premium-dheading-block__title span::after' );
-  $css->pbg_render_color($attr, 'mask_color', 'background-color');
-	
-  $css->set_selector( $unique_id . ' .premium-mask-span' );
-  $css->pbg_render_spacing($attr, 'mask_padding', 'padding', 'Desktop');
+    // Non-responsive color/stroke styles.
+    $css->set_selector($unique_id . '.premium-mask-yes .premium-dheading-block__title span::after');
+    $css->pbg_render_color($attr, 'mask_color', 'background-color');
 
-	// First Style FontSize.
-  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-  $css->pbg_render_typography( $attr, 'firstTypography', 'Desktop');
-  $css->pbg_render_border($attr, 'firstBorder', 'Desktop');
-  $css->pbg_render_spacing($attr, 'firstPadding', 'padding', 'Desktop');
-  $css->pbg_render_spacing($attr, 'firstMargin', 'margin', 'Desktop');
+    $css->set_selector($unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headings-true.premium-dheading-block__first');
+    $css->pbg_render_color($attr, 'firstStrokeColor', '-webkit-text-stroke-color');
+    $css->pbg_render_color($attr, 'firstStrokeFill', '-webkit-text-fill-color');
 
-  $css->set_selector( $unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__first:not(.premium-headinga-true)' );
-  $css->pbg_render_background($attr, 'firstBackgroundOptions', 'Desktop');
+    $css->set_selector($unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headinga-true.premium-dheading-block__first');
+    $css->pbg_render_range($attr, 'firstStyles[0].firstAnimGradientSpeed', 'animation-duration', null, null, 's');
 
-  $css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headings-true.premium-dheading-block__first' );
-  $css->pbg_render_color($attr, 'firstStrokeColor', '-webkit-text-stroke-color');
-  $css->pbg_render_color($attr, 'firstStrokeFill', '-webkit-text-fill-color');
+    $css->set_selector($unique_id . ' .premium-dheading-first-noise-true.premium-dheading-block__first:before');
+    $css->pbg_render_range($attr, 'firstNoiseColor1', 'text-shadow', null, '1px 0');
 
-  $css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headinga-true.premium-dheading-block__first' );
-  $css->pbg_render_range($attr, 'firstStyles[0].firstAnimGradientSpeed', 'animation-duration', null, null, 's');
+    $css->set_selector($unique_id . ' .premium-dheading-first-noise-true.premium-dheading-block__first:after');
+    $css->pbg_render_range($attr, 'firstNoiseColor2', 'text-shadow', null, '-1px 0');
 
-  $css->set_selector( $unique_id . ' .premium-dheading-first-noise-true.premium-dheading-block__first:before' );
-  $css->pbg_render_range($attr, 'firstNoiseColor1', 'text-shadow', null, '1px 0');
+    $css->set_selector($unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headings-true.premium-dheading-block__second');
+    $css->pbg_render_color($attr, 'secondStrokeColor', '-webkit-text-stroke-color');
+    $css->pbg_render_color($attr, 'secondStrokeFill', '-webkit-text-fill-color');
 
-  $css->set_selector( $unique_id . ' .premium-dheading-first-noise-true.premium-dheading-block__first:after' );
-  $css->pbg_render_range($attr, 'firstNoiseColor2', 'text-shadow', null, '-1px 0');
+    $css->set_selector($unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headinga-true.premium-dheading-block__second');
+    $css->pbg_render_range($attr, 'secondStyles[0].secondAnimGradientSpeed', 'animation-duration', null, null, 's');
 
-	// Second Style FontSize.
-  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-  $css->pbg_render_typography($attr, 'secondTypography', 'Desktop');
-  $css->pbg_render_border($attr, 'secondBorder', 'Desktop');
-  $css->pbg_render_spacing($attr, 'secondPadding', 'padding', 'Desktop');
-  $css->pbg_render_spacing($attr, 'secondMargin', 'margin', 'Desktop');
+    $css->set_selector($unique_id . ' .premium-dheading-second-noise-true.premium-dheading-block__second:before');
+    $css->pbg_render_range($attr, 'secondNoiseColor1', 'text-shadow', null, '1px 0');
 
-  $css->set_selector( $unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__second:not(.premium-headinga-true)' );
-  $css->pbg_render_background($attr, 'secondBackgroundOptions', 'Desktop');
+    $css->set_selector($unique_id . ' .premium-dheading-second-noise-true.premium-dheading-block__second:after');
+    $css->pbg_render_range($attr, 'secondNoiseColor2', 'text-shadow', null, '-1px 0');
 
-  $css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headings-true.premium-dheading-block__second' );
-  $css->pbg_render_color($attr, 'secondStrokeColor', '-webkit-text-stroke-color');
-  $css->pbg_render_color($attr, 'secondStrokeFill', '-webkit-text-fill-color');
+    $css->render_responsive(function ($css, $device) use ($attr, $unique_id) {
+        $css->set_selector($unique_id);
+        $css->pbg_render_value($attr, 'align', 'text-align', $device);
+        $css->pbg_render_border($attr, 'containerBorder', $device);
+        $css->pbg_render_background($attr, 'background', $device);
+        $css->pbg_render_spacing($attr, 'padding', 'padding', $device);
+        $css->pbg_render_range($attr, 'rotate', 'transform', $device, 'rotate(', ')');
 
-   $css->set_selector( $unique_id . ' .premium-dheading-block__title .premium-headingc-true.premium-headinga-true.premium-dheading-block__second' );
-  $css->pbg_render_range($attr, 'secondStyles[0].secondAnimGradientSpeed', 'animation-duration', null, null, 's');
+        $css->set_selector("body .entry-content {$unique_id}.premium-dheading-block__container");
+        $css->pbg_render_spacing($attr, 'margin', 'margin', $device);
 
-  $css->set_selector( $unique_id . ' .premium-dheading-second-noise-true.premium-dheading-block__second:before' );
-  $css->pbg_render_range($attr, 'secondNoiseColor1', 'text-shadow', null, '1px 0');
+        $css->set_selector($unique_id . ' .premium-mask-span');
+        $css->pbg_render_spacing($attr, 'mask_padding', 'padding', $device);
 
-  $css->set_selector( $unique_id . ' .premium-dheading-second-noise-true.premium-dheading-block__second:after' );
-  $css->pbg_render_range($attr, 'secondNoiseColor2', 'text-shadow', null, '-1px 0');
+        // First part.
+        $css->set_selector($unique_id . '> .premium-dheading-block__wrap > .premium-dheading-block__title > .premium-dheading-block__first');
+        $css->pbg_render_typography($attr, 'firstTypography', $device);
+        $css->pbg_render_border($attr, 'firstBorder', $device);
+        $css->pbg_render_spacing($attr, 'firstPadding', 'padding', $device);
+        $css->pbg_render_spacing($attr, 'firstMargin', 'margin', $device);
 
-	$css->start_media_query( 'tablet' );
+        $css->set_selector($unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__first:not(.premium-headinga-true)');
+        $css->pbg_render_background($attr, 'firstBackgroundOptions', $device);
 
-	$css->set_selector( $unique_id );
-  $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
-  $css->pbg_render_border($attr, 'containerBorder', 'Tablet');
-  $css->pbg_render_background($attr, 'background', 'Tablet');
-  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Tablet');
-  $css->pbg_render_range($attr, 'rotate', 'transform', 'Tablet', 'rotate(', ')');
- 
-  $css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
-  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Tablet');
+        // Second part.
+        $css->set_selector($unique_id . '> .premium-dheading-block__wrap > .premium-dheading-block__title > .premium-dheading-block__second');
+        $css->pbg_render_typography($attr, 'secondTypography', $device);
+        $css->pbg_render_border($attr, 'secondBorder', $device);
+        $css->pbg_render_spacing($attr, 'secondPadding', 'padding', $device);
+        $css->pbg_render_spacing($attr, 'secondMargin', 'margin', $device);
 
-	$css->set_selector( $unique_id . ' .premium-mask-span' );
-  $css->pbg_render_spacing($attr, 'mask_padding', 'padding', 'Tablet');
+        $css->set_selector($unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__second:not(.premium-headinga-true)');
+        $css->pbg_render_background($attr, 'secondBackgroundOptions', $device);
+    });
 
-	// First Style FontSize.
-  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-  $css->pbg_render_typography( $attr, 'firstTypography', 'Tablet');
-  $css->pbg_render_border($attr, 'firstBorder', 'Tablet');
-  $css->pbg_render_spacing($attr, 'firstPadding', 'padding', 'Tablet');
-  $css->pbg_render_spacing($attr, 'firstMargin', 'margin', 'Tablet');
-
-  $css->set_selector( $unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__first:not(.premium-headinga-true)' );
-  $css->pbg_render_background($attr, 'firstBackgroundOptions', 'Tablet');
-
-	// Second Style FontSizeTablet.
-	$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-  $css->pbg_render_typography($attr, 'secondTypography', 'Tablet');
-  $css->pbg_render_border($attr, 'secondBorder', 'Tablet');
-  $css->pbg_render_spacing($attr, 'secondPadding', 'padding', 'Tablet');
-  $css->pbg_render_spacing($attr, 'secondMargin', 'margin', 'Tablet');
-
-  $css->set_selector( $unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__second:not(.premium-headinga-true)' );
-  $css->pbg_render_background($attr, 'secondBackgroundOptions', 'Tablet');
-
-	$css->stop_media_query();
-	$css->start_media_query( 'mobile' );
-
-	$css->set_selector( $unique_id );
-  $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
-  $css->pbg_render_border($attr, 'containerBorder', 'Mobile');
-  $css->pbg_render_background($attr, 'background', 'Mobile');
-  $css->pbg_render_spacing($attr, 'padding', 'padding', 'Mobile');
-  $css->pbg_render_range($attr, 'rotate', 'transform', 'Mobile', 'rotate(', ')');
-
-  $css->set_selector( "body .entry-content {$unique_id}.premium-dheading-block__container" );
-  $css->pbg_render_spacing($attr, 'margin', 'margin', 'Mobile');
-	
-  $css->set_selector( $unique_id . ' .premium-mask-span' );
-  $css->pbg_render_spacing($attr, 'mask_padding', 'padding', 'Mobile');
-
-	// First Style FontSize.
-  $css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__first' );
-  $css->pbg_render_typography( $attr, 'firstTypography', 'Mobile');
-  $css->pbg_render_border($attr, 'firstBorder', 'Mobile');
-  $css->pbg_render_spacing($attr, 'firstPadding', 'padding', 'Mobile');
-  $css->pbg_render_spacing($attr, 'firstMargin', 'margin', 'Mobile');
-
-  $css->set_selector( $unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__first:not(.premium-headinga-true)' );
-  $css->pbg_render_background($attr, 'firstBackgroundOptions', 'Mobile');
-
-	// Second Style FontSizeMobil.
-	$css->set_selector( $unique_id . '> .premium-dheading-block__wrap' . ' > .premium-dheading-block__title' . ' > .premium-dheading-block__second' );
-  $css->pbg_render_typography($attr, 'secondTypography', 'Mobile');
-  $css->pbg_render_border($attr, 'secondBorder', 'Mobile');
-  $css->pbg_render_spacing($attr, 'secondPadding', 'padding', 'Mobile');
-  $css->pbg_render_spacing($attr, 'secondMargin', 'margin', 'Mobile');
-
-  $css->set_selector( $unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__second:not(.premium-headinga-true)' );
-  $css->pbg_render_background($attr, 'secondBackgroundOptions', 'Mobile');
-
-	$css->stop_media_query();
-	return $css->css_output();
+    return $css->css_output();
 }
 
 /**
@@ -167,11 +107,12 @@ function get_premium_dual_heading_css_style( $attr, $unique_id ) {
  *
  * @return string Returns the post content with the legacy widget added.
  */
-function render_block_pbg_dual_heading( $attributes, $content, $block ) {
+function render_block_pbg_dual_heading($attributes, $content, $block)
+{
     $block_helpers = pbg_blocks_helper();
 
     // Enqueue required styles and scripts.
-    if ( $block_helpers->it_is_not_amp() ) {
+    if ($block_helpers->it_is_not_amp()) {
         // Load Waypoints library
         wp_enqueue_script(
             'pbg-waypoints-heading',
@@ -180,7 +121,7 @@ function render_block_pbg_dual_heading( $attributes, $content, $block ) {
             PREMIUM_BLOCKS_VERSION,
             true
         );
-        
+
         // Load custom JavaScript without jQuery as a dependency
         wp_enqueue_script(
             'pbg-dual-heading',
@@ -204,16 +145,17 @@ function render_block_pbg_dual_heading( $attributes, $content, $block ) {
  * @uses render_block_pbg_dual_heading()
  * @throws WP_Error An WP_Error exception parsing the block definition.
  */
-function register_block_pbg_dual_heading() {
-	if ( ! function_exists( 'register_block_type' ) ) {
-		return;
-	}
-	register_block_type(
-		PREMIUM_BLOCKS_PATH . '/blocks-config/dual-heading',
-		array(
-			'render_callback' => 'render_block_pbg_dual_heading',
-		)
-	);
+function register_block_pbg_dual_heading()
+{
+    if (! function_exists('register_block_type')) {
+        return;
+    }
+    register_block_type(
+        PREMIUM_BLOCKS_PATH . '/blocks-config/dual-heading',
+        array(
+            'render_callback' => 'render_block_pbg_dual_heading',
+        )
+    );
 }
 
 register_block_pbg_dual_heading();

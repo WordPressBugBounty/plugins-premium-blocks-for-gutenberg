@@ -17,76 +17,30 @@ function get_premium_instagram_feed_posts_css( $attr, $unique_id ) {
 	$layout_style = $css->pbg_get_value( $attr, 'layoutStyle' );
 	$click_action = $css->pbg_get_value( $attr, 'clickAction' );
 
-	// Desktop Styles.
-
-	// Container.
+	// Non-responsive: shadows, colors, filters.
 	$css->set_selector( ".{$unique_id} .pbg-insta-feed" );
 	$css->pbg_render_shadow( $attr, 'containerShadow', 'box-shadow' );
-	$css->pbg_render_background( $attr, 'containerBackground', 'Desktop' );
-	$css->pbg_render_border( $attr, 'containerBorder', 'Desktop' );
-	$css->pbg_render_spacing( $attr, 'containerMargin', 'margin', 'Desktop' );
-	$css->pbg_render_spacing( $attr, 'containerPadding', 'padding', 'Desktop' );
-
-	$css->set_selector( ".{$unique_id} .pbg-insta-feed-grid" );
-	$css->pbg_render_range( $attr, 'imagesInRow', 'grid-template-columns', 'Desktop', 'repeat(', ', 1fr)' );
-	$css->pbg_render_range( $attr, 'postsGap', 'gap', 'Desktop' );
-
-	if ( 'masonry' === $layout_style ) {
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-masonry" );
-		$css->pbg_render_range( $attr, 'postsGap', 'margin-right', 'Desktop', '-' );
-		$css->pbg_render_range( $attr, 'postsGap', 'margin-bottom', 'Desktop', '-' );
-
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap" );
-		$css->pbg_render_range( $attr, 'imagesInRow', 'width', 'Desktop', 'calc(100% / ', ')' );
-		$css->pbg_render_range( $attr, 'postsGap', 'padding-right', 'Desktop' );
-		$css->pbg_render_range( $attr, 'postsGap', 'padding-bottom', 'Desktop' );
-	}
 
 	$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-media" );
 	$css->pbg_render_shadow( $attr, 'photoShadow', 'box-shadow' );
 	$css->pbg_render_filters( $attr, 'photoFilter' );
-	$css->pbg_render_border( $attr, 'photoBorder', 'Desktop' );
-	$css->pbg_render_spacing( $attr, 'photoMargin', 'margin', 'Desktop' );
-	$css->pbg_render_spacing( $attr, 'photoPadding', 'padding', 'Desktop' );
 
 	$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-media:hover" );
 	$css->pbg_render_shadow( $attr, 'photoHoverShadow', 'box-shadow' );
 	$css->pbg_render_filters( $attr, 'photoHoverFilter' );
-	$css->pbg_render_border( $attr, 'photoHoverBorder', 'Desktop' );
-	$css->pbg_render_spacing( $attr, 'photoHoverMargin', 'margin', 'Desktop' );
 
-	// Image Height.
-	if ( 'masonry' !== $layout_style ) {
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-media img" );
-		$css->pbg_render_range( $attr, 'columnHeight', 'height', 'Desktop' );
-	}
-
-	// Caption.
+	// Caption non-responsive.
 	$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-caption" );
-	$css->pbg_render_typography( $attr, 'captionTypography', 'Desktop' );
-	$css->pbg_render_spacing( $attr, 'captionPadding', 'padding', 'Desktop' );
 	$css->pbg_render_color( $attr, 'captionColor', 'color' );
 	$css->pbg_render_shadow( $attr, 'captionShadow', 'text-shadow' );
 
 	$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap.overlay-caption .pbg-insta-feed-caption" );
 	$css->pbg_render_color( $attr, 'overlayColor', 'background-color' );
 
-	// Lightbox.
+	// Lightbox non-responsive.
 	if ( 'lightBox' === $click_action ) {
 		$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme" );
 		$css->pbg_render_color( $attr, 'lightBoxOverlayColor', 'background-color' );
-
-		$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme .fslightbox-slide-btn" );
-		$css->pbg_render_range( $attr, 'lightBoxArrowsBorderRadius', 'border-radius', 'Desktop' );
-		$css->pbg_render_spacing( $attr, 'lightBoxArrowsPadding', 'padding', 'Desktop' );
-		$css->pbg_render_background( $attr, 'lightBoxArrowsBackground', 'Desktop' );
-
-		$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme .fslightbox-slide-btn:hover" );
-		$css->pbg_render_background( $attr, 'lightBoxArrowsHoverBackground', 'Desktop' );
-
-		$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme .fslightbox-slide-btn svg" );
-		$css->pbg_render_range( $attr, 'lightBoxArrowsSize', 'width', 'Desktop' );
-		$css->pbg_render_range( $attr, 'lightBoxArrowsSize', 'height', 'Desktop' );
 
 		$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme .fslightbox-slide-btn svg path" );
 		$css->pbg_render_color( $attr, 'lightBoxArrowsColor', 'fill' );
@@ -95,195 +49,94 @@ function get_premium_instagram_feed_posts_css( $attr, $unique_id ) {
 		$css->pbg_render_color( $attr, 'lightBoxArrowsHColor', 'fill' );
 	}
 
-	// Carousel.
+	// Carousel non-responsive.
 	if ( 'carousel' === $layout_style ) {
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow" );
-		$css->pbg_render_range( $attr, 'arrowsBorderRadius', 'border-radius', 'Desktop' );
-		$css->pbg_render_spacing( $attr, 'arrowsPadding', 'padding', 'Desktop' );
-		$css->pbg_render_background( $attr, 'arrowsBackground', 'Desktop' );
-
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow:hover" );
-		$css->pbg_render_background( $attr, 'arrowsHoverBackground', 'Desktop' );
-
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow.splide__arrow--next" );
-		$css->pbg_render_range( $attr, 'arrowsPosition', 'right', 'Desktop' );
-
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow.splide__arrow--prev" );
-		$css->pbg_render_range( $attr, 'arrowsPosition', 'left', 'Desktop' );
-
 		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow svg" );
 		$css->pbg_render_color( $attr, 'arrowsColor', 'fill' );
-		$css->pbg_render_range( $attr, 'arrowsSize', 'width', 'Desktop' );
-		$css->pbg_render_range( $attr, 'arrowsSize', 'height', 'Desktop' );
 
 		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow:hover svg" );
 		$css->pbg_render_color( $attr, 'arrowsHoverColor', 'fill' );
 	}
 
-	$css->start_media_query( 'tablet' );
-	// Tablet Styles.
+	$css->render_responsive( function( $css, $device ) use ( $attr, $unique_id, $layout_style, $click_action ) {
+		// Container.
+		$css->set_selector( ".{$unique_id} .pbg-insta-feed" );
+		$css->pbg_render_background( $attr, 'containerBackground', $device );
+		$css->pbg_render_border( $attr, 'containerBorder', $device );
+		$css->pbg_render_spacing( $attr, 'containerMargin', 'margin', $device );
+		$css->pbg_render_spacing( $attr, 'containerPadding', 'padding', $device );
 
-	// Container.
-	$css->set_selector( ".{$unique_id} .pbg-insta-feed" );
-	$css->pbg_render_background( $attr, 'containerBackground', 'Tablet' );
-	$css->pbg_render_border( $attr, 'containerBorder', 'Tablet' );
-	$css->pbg_render_spacing( $attr, 'containerMargin', 'margin', 'Tablet' );
-	$css->pbg_render_spacing( $attr, 'containerPadding', 'padding', 'Tablet' );
+		$css->set_selector( ".{$unique_id} .pbg-insta-feed-grid" );
+		$css->pbg_render_range( $attr, 'imagesInRow', 'grid-template-columns', $device, 'repeat(', ', 1fr)' );
+		$css->pbg_render_range( $attr, 'postsGap', 'gap', $device );
 
-	$css->set_selector( ".{$unique_id} .pbg-insta-feed-grid" );
-	$css->pbg_render_range( $attr, 'imagesInRow', 'grid-template-columns', 'Tablet', 'repeat(', ', 1fr)' );
-	$css->pbg_render_range( $attr, 'postsGap', 'gap', 'Tablet' );
+		if ( 'masonry' === $layout_style ) {
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed-masonry" );
+			$css->pbg_render_range( $attr, 'postsGap', 'margin-right', $device, '-' );
+			$css->pbg_render_range( $attr, 'postsGap', 'margin-bottom', $device, '-' );
 
-	if ( 'masonry' === $layout_style ) {
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-masonry" );
-		$css->pbg_render_range( $attr, 'postsGap', 'margin-right', 'Tablet', '-' );
-		$css->pbg_render_range( $attr, 'postsGap', 'margin-bottom', 'Tablet', '-' );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap" );
+			$css->pbg_render_range( $attr, 'imagesInRow', 'width', $device, 'calc(100% / ', ')' );
+			$css->pbg_render_range( $attr, 'postsGap', 'padding-right', $device );
+			$css->pbg_render_range( $attr, 'postsGap', 'padding-bottom', $device );
+		}
 
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap" );
-		$css->pbg_render_range( $attr, 'imagesInRow', 'width', 'Tablet', 'calc(100% / ', ')' );
-		$css->pbg_render_range( $attr, 'postsGap', 'padding-right', 'Tablet' );
-		$css->pbg_render_range( $attr, 'postsGap', 'padding-bottom', 'Tablet' );
-	}
+		$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-media" );
+		$css->pbg_render_border( $attr, 'photoBorder', $device );
+		$css->pbg_render_spacing( $attr, 'photoMargin', 'margin', $device );
+		$css->pbg_render_spacing( $attr, 'photoPadding', 'padding', $device );
 
-	$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-media" );
-	$css->pbg_render_border( $attr, 'photoBorder', 'Tablet' );
-	$css->pbg_render_spacing( $attr, 'photoMargin', 'margin', 'Tablet' );
-	$css->pbg_render_spacing( $attr, 'photoPadding', 'padding', 'Tablet' );
+		$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-media:hover" );
+		$css->pbg_render_border( $attr, 'photoHoverBorder', $device );
+		$css->pbg_render_spacing( $attr, 'photoHoverMargin', 'margin', $device );
 
-	$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-media:hover" );
-	$css->pbg_render_border( $attr, 'photoHoverBorder', 'Tablet' );
-	$css->pbg_render_spacing( $attr, 'photoHoverMargin', 'margin', 'Tablet' );
+		// Image Height.
+		if ( 'masonry' !== $layout_style ) {
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-media img" );
+			$css->pbg_render_range( $attr, 'columnHeight', 'height', $device );
+		}
 
-	// Image Height.
-	if ( 'masonry' !== $layout_style ) {
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-media img" );
-		$css->pbg_render_range( $attr, 'columnHeight', 'height', 'Tablet' );
-	}
+		// Caption.
+		$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-caption" );
+		$css->pbg_render_typography( $attr, 'captionTypography', $device );
+		$css->pbg_render_spacing( $attr, 'captionPadding', 'padding', $device );
 
-	// Caption.
-	$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-caption" );
-	$css->pbg_render_typography( $attr, 'captionTypography', 'Tablet' );
-	$css->pbg_render_spacing( $attr, 'captionPadding', 'padding', 'Tablet' );
+		// Lightbox.
+		if ( 'lightBox' === $click_action ) {
+			$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme .fslightbox-slide-btn" );
+			$css->pbg_render_range( $attr, 'lightBoxArrowsBorderRadius', 'border-radius', $device );
+			$css->pbg_render_spacing( $attr, 'lightBoxArrowsPadding', 'padding', $device );
+			$css->pbg_render_background( $attr, 'lightBoxArrowsBackground', $device );
 
-	// Lightbox.
-	if ( 'lightBox' === $click_action ) {
-		$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme .fslightbox-slide-btn" );
-		$css->pbg_render_range( $attr, 'lightBoxArrowsBorderRadius', 'border-radius', 'Tablet' );
-		$css->pbg_render_spacing( $attr, 'lightBoxArrowsPadding', 'padding', 'Tablet' );
-		$css->pbg_render_background( $attr, 'lightBoxArrowsBackground', 'Tablet' );
+			$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme .fslightbox-slide-btn:hover" );
+			$css->pbg_render_background( $attr, 'lightBoxArrowsHoverBackground', $device );
 
-		$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme .fslightbox-slide-btn:hover" );
-		$css->pbg_render_background( $attr, 'lightBoxArrowsHoverBackground', 'Tablet' );
+			$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme .fslightbox-slide-btn svg" );
+			$css->pbg_render_range( $attr, 'lightBoxArrowsSize', 'width', $device );
+			$css->pbg_render_range( $attr, 'lightBoxArrowsSize', 'height', $device );
+		}
 
-		$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme .fslightbox-slide-btn svg" );
-		$css->pbg_render_range( $attr, 'lightBoxArrowsSize', 'width', 'Tablet' );
-		$css->pbg_render_range( $attr, 'lightBoxArrowsSize', 'height', 'Tablet' );
-	}
+		// Carousel.
+		if ( 'carousel' === $layout_style ) {
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow" );
+			$css->pbg_render_range( $attr, 'arrowsBorderRadius', 'border-radius', $device );
+			$css->pbg_render_spacing( $attr, 'arrowsPadding', 'padding', $device );
+			$css->pbg_render_background( $attr, 'arrowsBackground', $device );
 
-	// Carousel.
-	if ( 'carousel' === $layout_style ) {
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow" );
-		$css->pbg_render_range( $attr, 'arrowsBorderRadius', 'border-radius', 'Tablet' );
-		$css->pbg_render_spacing( $attr, 'arrowsPadding', 'padding', 'Tablet' );
-		$css->pbg_render_background( $attr, 'arrowsBackground', 'Tablet' );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow:hover" );
+			$css->pbg_render_background( $attr, 'arrowsHoverBackground', $device );
 
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow:hover" );
-		$css->pbg_render_background( $attr, 'arrowsHoverBackground', 'Tablet' );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow.splide__arrow--next" );
+			$css->pbg_render_range( $attr, 'arrowsPosition', 'right', $device );
 
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow.splide__arrow--next" );
-		$css->pbg_render_range( $attr, 'arrowsPosition', 'right', 'Tablet' );
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow.splide__arrow--prev" );
+			$css->pbg_render_range( $attr, 'arrowsPosition', 'left', $device );
 
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow.splide__arrow--prev" );
-		$css->pbg_render_range( $attr, 'arrowsPosition', 'left', 'Tablet' );
-
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow svg" );
-		$css->pbg_render_range( $attr, 'arrowsSize', 'width', 'Tablet' );
-		$css->pbg_render_range( $attr, 'arrowsSize', 'height', 'Tablet' );
-	}
-
-	$css->stop_media_query();
-	$css->start_media_query( 'mobile' );
-	// Mobile Styles.
-
-	// Container.
-	$css->set_selector( ".{$unique_id} .pbg-insta-feed" );
-	$css->pbg_render_background( $attr, 'containerBackground', 'Mobile' );
-	$css->pbg_render_border( $attr, 'containerBorder', 'Mobile' );
-	$css->pbg_render_spacing( $attr, 'containerMargin', 'margin', 'Mobile' );
-	$css->pbg_render_spacing( $attr, 'containerPadding', 'padding', 'Mobile' );
-
-	$css->set_selector( ".{$unique_id} .pbg-insta-feed-grid" );
-	$css->pbg_render_range( $attr, 'imagesInRow', 'grid-template-columns', 'Mobile', 'repeat(', ', 1fr)' );
-	$css->pbg_render_range( $attr, 'postsGap', 'gap', 'Mobile' );
-
-	if ( 'masonry' === $layout_style ) {
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-masonry" );
-		$css->pbg_render_range( $attr, 'postsGap', 'margin-right', 'Mobile', '-' );
-		$css->pbg_render_range( $attr, 'postsGap', 'margin-bottom', 'Mobile', '-' );
-
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap" );
-		$css->pbg_render_range( $attr, 'imagesInRow', 'width', 'Mobile', 'calc(100% / ', ')' );
-		$css->pbg_render_range( $attr, 'postsGap', 'padding-right', 'Mobile' );
-		$css->pbg_render_range( $attr, 'postsGap', 'padding-bottom', 'Mobile' );
-	}
-
-	$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-media" );
-	$css->pbg_render_border( $attr, 'photoBorder', 'Mobile' );
-	$css->pbg_render_spacing( $attr, 'photoMargin', 'margin', 'Mobile' );
-	$css->pbg_render_spacing( $attr, 'photoPadding', 'padding', 'Mobile' );
-
-	$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-media:hover" );
-	$css->pbg_render_border( $attr, 'photoHoverBorder', 'Mobile' );
-	$css->pbg_render_spacing( $attr, 'photoHoverMargin', 'margin', 'Mobile' );
-
-	// Image Height.
-	if ( 'masonry' !== $layout_style ) {
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-media img" );
-		$css->pbg_render_range( $attr, 'columnHeight', 'height', 'Mobile' );
-	}
-
-	// Caption.
-	$css->set_selector( ".{$unique_id} .pbg-insta-feed-wrap .pbg-insta-feed-caption" );
-	$css->pbg_render_typography( $attr, 'captionTypography', 'Mobile' );
-	$css->pbg_render_spacing( $attr, 'captionPadding', 'padding', 'Mobile' );
-
-	// Lightbox.
-	if ( 'lightBox' === $click_action ) {
-		$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme .fslightbox-slide-btn" );
-		$css->pbg_render_range( $attr, 'lightBoxArrowsBorderRadius', 'border-radius', 'Mobile' );
-		$css->pbg_render_spacing( $attr, 'lightBoxArrowsPadding', 'padding', 'Mobile' );
-		$css->pbg_render_background( $attr, 'lightBoxArrowsBackground', 'Mobile' );
-
-		$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme .fslightbox-slide-btn:hover" );
-		$css->pbg_render_background( $attr, 'lightBoxArrowsHoverBackground', 'Mobile' );
-
-		$css->set_selector( ".{$unique_id}.pbg-insta-feed-fslightbox-theme .fslightbox-slide-btn svg" );
-		$css->pbg_render_range( $attr, 'lightBoxArrowsSize', 'width', 'Mobile' );
-		$css->pbg_render_range( $attr, 'lightBoxArrowsSize', 'height', 'Mobile' );
-	}
-
-	// Carousel.
-	if ( 'carousel' === $layout_style ) {
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow" );
-		$css->pbg_render_range( $attr, 'arrowsBorderRadius', 'border-radius', 'Mobile' );
-		$css->pbg_render_spacing( $attr, 'arrowsPadding', 'padding', 'Mobile' );
-		$css->pbg_render_background( $attr, 'arrowsBackground', 'Mobile' );
-
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow:hover" );
-		$css->pbg_render_background( $attr, 'arrowsHoverBackground', 'Mobile' );
-
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow.splide__arrow--next" );
-		$css->pbg_render_range( $attr, 'arrowsPosition', 'right', 'Mobile' );
-
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow.splide__arrow--prev" );
-		$css->pbg_render_range( $attr, 'arrowsPosition', 'left', 'Mobile' );
-
-		$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow svg" );
-		$css->pbg_render_range( $attr, 'arrowsSize', 'width', 'Mobile' );
-		$css->pbg_render_range( $attr, 'arrowsSize', 'height', 'Mobile' );
-	}
-
-	$css->stop_media_query();
+			$css->set_selector( ".{$unique_id} .pbg-insta-feed-carousel .splide__arrows .splide__arrow svg" );
+			$css->pbg_render_range( $attr, 'arrowsSize', 'width', $device );
+			$css->pbg_render_range( $attr, 'arrowsSize', 'height', $device );
+		}
+	} );
 
 	return $css->css_output();
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Server-side rendering of the `premium/instagram-feed-header` block.
  *
@@ -12,36 +13,21 @@
  * @param string $unique_id  Unique block ID.
  * @return string Generated CSS.
  */
-function get_premium_instagram_feed_header_css( $attributes, $unique_id ) {
-	$css = new Premium_Blocks_css();
+function get_premium_instagram_feed_header_css($attributes, $unique_id)
+{
+    $css = new Premium_Blocks_css();
 
-	// Desktop styles.
-	$css->set_selector( '.' . $unique_id );
-	$css->pbg_render_background( $attributes, 'background', 'Desktop' );
-	$css->pbg_render_border( $attributes, 'border', 'Desktop' );
-	$css->pbg_render_spacing( $attributes, 'padding', 'padding', 'Desktop' );
-	$css->pbg_render_spacing( $attributes, 'margin', 'margin', 'Desktop' );
-	$css->pbg_render_shadow( $attributes, 'boxShadow', 'box-shadow' );
+    $css->pbg_render_shadow($attributes, 'boxShadow', 'box-shadow');
 
-	// Tablet responsive styles.
-	$css->start_media_query( 'tablet' );
-	$css->set_selector( '.' . $unique_id );
-	$css->pbg_render_background( $attributes, 'background', 'Tablet' );
-	$css->pbg_render_border( $attributes, 'border', 'Tablet' );
-	$css->pbg_render_spacing( $attributes, 'padding', 'padding', 'Tablet' );
-	$css->pbg_render_spacing( $attributes, 'margin', 'margin', 'Tablet' );
-	$css->stop_media_query();
+    $css->render_responsive(function ($css, $device) use ($attributes, $unique_id) {
+        $css->set_selector('.' . $unique_id);
+        $css->pbg_render_background($attributes, 'background', $device);
+        $css->pbg_render_border($attributes, 'border', $device);
+        $css->pbg_render_spacing($attributes, 'padding', 'padding', $device);
+        $css->pbg_render_spacing($attributes, 'margin', 'margin', $device);
+    });
 
-	// Mobile responsive styles.
-	$css->start_media_query( 'mobile' );
-	$css->set_selector( '.' . $unique_id );
-	$css->pbg_render_background( $attributes, 'background', 'Mobile' );
-	$css->pbg_render_border( $attributes, 'border', 'Mobile' );
-	$css->pbg_render_spacing( $attributes, 'padding', 'padding', 'Mobile' );
-	$css->pbg_render_spacing( $attributes, 'margin', 'margin', 'Mobile' );
-	$css->stop_media_query();
-
-	return $css->css_output();
+    return $css->css_output();
 }
 
 /**
@@ -53,30 +39,31 @@ function get_premium_instagram_feed_header_css( $attributes, $unique_id ) {
  *
  * @return string Returns the post content with the legacy widget added.
  */
-function render_block_pbg_instagram_feed_header( $attributes, $content, $block ) {
-	if ( strpos( $content, 'cdninstagram.com' ) !== false || strpos( $content, 'instagram.com' ) !== false ) {
-		if ( strpos( $content, 'no-optimole' ) === false ) {
-			$content = preg_replace_callback(
-				'/<img ([^>]+)>/i',
-				function ( $matches ) {
-					$attrs = $matches[1];
-					if ( strpos( $attrs, 'cdninstagram.com' ) !== false || strpos( $attrs, 'instagram.com' ) !== false ) {
-						if ( strpos( $attrs, 'no-optimole' ) === false ) {
-							if ( preg_match( '/class=["\']([^"\']+)["\']/i', $attrs, $class_matches ) ) {
-								$attrs = str_replace( $class_matches[0], 'class="' . $class_matches[1] . ' no-optimole"', $attrs );
-							} else {
-								$attrs .= ' class="no-optimole"';
-							}
-							$attrs .= ' data-no-lazy="1" data-opt-lazy-loaded="true" data-opt-optimize="0" data-opt-src=""';
-						}
-					}
-					return '<img ' . $attrs . '>';
-				},
-				$content
-			);
-		}
-	}
-	return $content;
+function render_block_pbg_instagram_feed_header($attributes, $content, $block)
+{
+    if (strpos($content, 'cdninstagram.com') !== false || strpos($content, 'instagram.com') !== false) {
+        if (strpos($content, 'no-optimole') === false) {
+            $content = preg_replace_callback(
+                '/<img ([^>]+)>/i',
+                function ($matches) {
+                    $attrs = $matches[1];
+                    if (strpos($attrs, 'cdninstagram.com') !== false || strpos($attrs, 'instagram.com') !== false) {
+                        if (strpos($attrs, 'no-optimole') === false) {
+                            if (preg_match('/class=["\']([^"\']+)["\']/i', $attrs, $class_matches)) {
+                                $attrs = str_replace($class_matches[0], 'class="' . $class_matches[1] . ' no-optimole"', $attrs);
+                            } else {
+                                $attrs .= ' class="no-optimole"';
+                            }
+                            $attrs .= ' data-no-lazy="1" data-opt-lazy-loaded="true" data-opt-optimize="0" data-opt-src=""';
+                        }
+                    }
+                    return '<img ' . $attrs . '>';
+                },
+                $content
+            );
+        }
+    }
+    return $content;
 }
 
 
@@ -86,13 +73,14 @@ function render_block_pbg_instagram_feed_header( $attributes, $content, $block )
  * @uses render_block_pbg_instagram_feed_header()
  * @throws WP_Error An WP_Error exception parsing the block definition.
  */
-function register_block_pbg_instagram_feed_header() {
-	register_block_type(
-		PREMIUM_BLOCKS_PATH . 'blocks-config/instagram-feed-header',
-		array(
-			'render_callback' => 'render_block_pbg_instagram_feed_header',
-		)
-	);
+function register_block_pbg_instagram_feed_header()
+{
+    register_block_type(
+        PREMIUM_BLOCKS_PATH . 'blocks-config/instagram-feed-header',
+        array(
+            'render_callback' => 'render_block_pbg_instagram_feed_header',
+        )
+    );
 }
 
 register_block_pbg_instagram_feed_header();

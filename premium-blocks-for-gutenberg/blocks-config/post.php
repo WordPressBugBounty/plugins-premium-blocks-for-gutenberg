@@ -1027,88 +1027,41 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 			
       $is_advanced_border = $css->pbg_get_value($attr, 'advancedBorder');
       
-      $css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
-      $css->pbg_render_value($attr, 'columns', 'width', 'Desktop', 'calc(100% / ', ')');
-      $css->pbg_render_range($attr, 'columnGap', 'padding-right', 'Desktop', 'calc( ', ' / 2 )');
-      $css->pbg_render_range($attr, 'columnGap', 'padding-left', 'Desktop', 'calc( ', ' / 2 )');
-      $css->pbg_render_spacing($attr, 'margin', 'padding', 'Desktop');
-
-      $css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
-      $css->pbg_render_range($attr, 'columnGap', 'margin-right', 'Desktop', 'calc( -', ' / 2 )');
-      $css->pbg_render_range($attr, 'columnGap', 'margin-left', 'Desktop', 'calc( -', ' / 2 )');
-      $css->pbg_render_range($attr, 'rowGap', 'row-gap', 'Desktop');
-			
       $css->set_selector( '.' . $unique_id . ' .premium-blog-thumbnail-container:before , .' . $unique_id . ' .premium-blog-thumbnail-container:after' );
       $css->pbg_render_color($attr, 'plusColor', 'background-color');
 			
       $css->set_selector( '.' . $unique_id . ' .premium-blog-post-link:before, .' . $unique_id . ' .premium-blog-post-link:after' );
       $css->pbg_render_color($attr, 'borderedColor', 'border-color');
 		
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-skin-modern .premium-blog-content-wrapper' );
-      $css->pbg_render_range($attr, 'contentOffset', 'top', 'Desktop');
-			
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-author-thumbnail' );
-      $css->pbg_render_range($attr, 'authorImgPosition', 'top', 'Desktop');
-			
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container.premium-blog-skin-banner .premium-blog-content-wrapper' );
-      $css->pbg_render_value($attr, 'verticalAlign', 'justify-content', 'Desktop');
-			
       $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
       $css->pbg_render_shadow($attr, 'boxShadow', 'box-shadow');
       $css->pbg_render_color($attr, 'ContainerBackground', 'background-color');
-      $css->pbg_render_border($attr, 'border', 'Desktop');
-      $css->pbg_render_spacing($attr, 'padding', 'padding', 'Desktop');
 			if ( $is_advanced_border ) {
         $css->pbg_render_value($attr, 'advancedBorderValue', 'border-radius', null, null, '!important');
 			}
-		
-      $css->set_selector( '.' . $unique_id . ' .post-categories , .'. $unique_id . '  .premium-blog-post-tags-container, .' . $unique_id . ' .premium-blog-entry-meta');
-      $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Desktop');
-
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-inner-container');
-      $css->pbg_render_align_self($attr, 'align', 'align-items', 'Desktop');
 
       $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
       $css->pbg_render_color($attr, 'contentBackground', 'background-color');
       $css->pbg_render_shadow($attr, 'contentBoxShadow', 'box-shadow');
-      $css->pbg_render_value($attr, 'align', 'text-align', 'Desktop');
-      $css->pbg_render_spacing($attr, 'contentPadding', 'padding', 'Desktop');
-      $css->pbg_render_spacing($attr, 'contentBoxMargin', 'margin', 'Desktop');
 
       $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
-      $css->pbg_render_typography( $attr, 'contentTypography', 'Desktop' );
-      $css->pbg_render_spacing($attr, 'contentMargin', 'margin', 'Desktop');
       $css->pbg_render_color($attr, 'contentColor', 'color');
       
       // Title Styles
       $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title' );
-      $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
-      $css->pbg_render_range($attr, 'titleBottomSpacing', 'margin-bottom', 'Desktop');
       $css->pbg_render_color($attr, 'titleColor', 'color');
-
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title > *' );
-      $css->pbg_render_typography($attr, 'titleTypography', 'Desktop');
 
       $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title:hover' );
       $css->pbg_render_color($attr, 'titleHoverColor', 'color');
 
       // Shape Styles
       $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-bottom-shape svg' );
-      $css->pbg_render_range($attr, 'shapeBottom.width', 'width', 'Desktop');
-      $css->pbg_render_range($attr, 'shapeBottom.height', 'height', 'Desktop');
       $css->pbg_render_color($attr, 'shapeBottom.color', 'fill');
 
 			// Meta
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data, .' . $unique_id . ' .premium-blog-meta-data a' );
-      $css->pbg_render_typography( $attr, 'metaTypography', 'Desktop' );
-
       $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data' );
       $css->pbg_render_color($attr, 'metaColor', 'color');
       $css->pbg_render_color($attr, 'metaColor', 'fill');
-
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data :is(svg, svg .cls-1)');
-      $css->pbg_render_range($attr, 'metaTypography.fontSize', 'width', 'Desktop');
-      $css->pbg_render_range($attr, 'metaTypography.fontSize', 'height', 'Desktop');
 
       $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data:has(a):hover' );
       $css->pbg_render_color($attr, 'metaHoverColor', 'color');
@@ -1129,9 +1082,6 @@ if ( ! class_exists( 'PBG_Post' ) ) {
         $css->pbg_render_filters($attr, 'Hoverfilter');
       }
 
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-thumbnail-container img');
-      $css->pbg_render_range($attr, 'height', 'height', 'Desktop', null, '!important');
-
       $css->set_selector( '.' . $unique_id . ' .premium-blog-thumbnail-overlay  , .' . $unique_id . ' .premium-blog-framed-effect , .' . $unique_id . ' .premium-blog-bordered-effect, .' . $unique_id . ' .premium-blog-squares-effect:before , .' . $unique_id . ' .premium-blog-squares-effect:after , .' . $unique_id . '  .premium-blog-squares-square-container:before, .' . $unique_id . ' .premium-blog-squares-square-container:after' );
       $css->pbg_render_color($attr, 'colorOverlay', 'background-color');
 
@@ -1142,36 +1092,23 @@ if ( ! class_exists( 'PBG_Post' ) ) {
       $css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link' );
       $css->pbg_render_color($attr, 'buttonColor', 'color');
       $css->pbg_render_color($attr, 'buttonBackground', 'background-color');
-      $css->pbg_render_range($attr, 'buttonSpacing', 'margin-top', 'Desktop');
-      $css->pbg_render_typography( $attr, 'btnTypography', 'Desktop' );
-      $css->pbg_render_border($attr, 'btnBorder', 'Desktop');
-      $css->pbg_render_spacing($attr, 'btnPadding', 'padding', 'Desktop');
 
       $css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link:hover' );
       $css->pbg_render_color($attr, 'buttonhover', 'color');
       $css->pbg_render_color($attr, 'hoverBackground', 'background-color');
-      $css->pbg_render_border($attr, 'btnBorderHover', 'Desktop');
 
       // Carousel Styles
       $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
       $css->pbg_render_color($attr, 'arrowBack', 'background-color');
       $css->pbg_render_range($attr, 'borderRadius', 'border-radius', null, null, 'px');
-      $css->pbg_render_spacing($attr, 'arrowPadding', 'padding', 'Desktop');
 			
       $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow svg' );
       $css->pbg_render_range($attr, 'arrowSize', 'width', null, null, 'px');
       $css->pbg_render_range($attr, 'arrowSize', 'height', null, null, 'px');
       $css->pbg_render_color($attr, 'arrowColor', 'fill');
-
-      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--prev, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--next');
-      $css->pbg_render_range($attr, 'arrowPosition', 'left', 'Desktop');
-			
-      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--next, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--prev');
-      $css->pbg_render_range($attr, 'arrowPosition', 'right', 'Desktop');
       
       $css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
       $css->pbg_render_color($attr, 'dotsColor', 'background-color');
-      $css->pbg_render_spacing($attr, 'dotMargin', 'margin', 'Desktop');
       
 			$css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page.is-active' );
       $css->pbg_render_color($attr, 'dotsActiveColor', 'background-color');
@@ -1180,9 +1117,6 @@ if ( ! class_exists( 'PBG_Post' ) ) {
       $css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
       $css->pbg_render_color($attr, 'catColor', 'color');
       $css->pbg_render_color($attr, 'backCat', 'background-color');
-      $css->pbg_render_typography( $attr, 'catTypography', 'Desktop' );
-      $css->pbg_render_border($attr, 'catBorder', 'Desktop');
-      $css->pbg_render_spacing($attr, 'catPadding', 'padding', 'Desktop');
 
       // Categories Hover Styles For Banner
       $css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a:hover' );
@@ -1190,324 +1124,172 @@ if ( ! class_exists( 'PBG_Post' ) ) {
       $css->pbg_render_color($attr, 'backHoverCat', 'background-color');
       
       // Pagination
-      $css->set_selector( '.' . $unique_id .' .premium-blog-pagination-container');
-      $css->pbg_render_align_self($attr, 'paginationPosition', 'justify-content', 'Desktop');
-
       $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers');
       $css->pbg_render_color($attr, 'paginationColor', 'color');
       $css->pbg_render_color($attr, 'paginationBackColor', 'background-color');
-      $css->pbg_render_border($attr, 'paginationBorder', 'Desktop');
-      $css->pbg_render_typography( $attr, 'paginationTypography', 'Desktop' );
-      $css->pbg_render_spacing($attr, 'paginationPadding', 'padding', 'Desktop');
-      $css->pbg_render_spacing($attr, 'paginationMargin', 'margin', 'Desktop');
 			
 			// Pagination Hover
       $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers:hover');
       $css->pbg_render_color($attr, 'paginationHoverColor', 'color');
       $css->pbg_render_color($attr, 'paginationHoverback', 'background-color');
-      $css->pbg_render_border($attr, 'paginationHoverBorder', 'Desktop');
 			
 			// Pagination Active
       $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.page-numbers.current');
       $css->pbg_render_color($attr, 'paginationActiveColor', 'color');
       $css->pbg_render_color($attr, 'paginationActiveBack', 'background-color');
-      $css->pbg_render_border($attr, 'paginationActiveBorder', 'Desktop');
 
       // Filter Tabs
-      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list');
-      $css->pbg_render_value($attr, 'filtersAlign', 'justify-content', 'Desktop');
-      $css->pbg_render_range($attr, 'filtersSpacingBottom', 'margin-bottom', 'Desktop');
-      $css->pbg_render_range($attr, 'filtersGap', 'gap', 'Desktop');
-
       $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item');
       $css->pbg_render_color($attr, 'filtersColor', 'color');
       $css->pbg_render_shadow($attr, 'filtersShadow', 'text-shadow');
       $css->pbg_render_shadow($attr, 'filtersBoxShadow', 'box-shadow');
       $css->pbg_render_background($attr, 'filtersBack');
-      $css->pbg_render_typography( $attr, 'filtersTypography', 'Desktop' );
-      $css->pbg_render_border($attr, 'filtersBorder', 'Desktop');
-      $css->pbg_render_spacing($attr, 'filtersPadding', 'padding', 'Desktop');
 
       $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item:hover');
       $css->pbg_render_color($attr, 'filtersHoverColor', 'color');
       $css->pbg_render_shadow($attr, 'filtersHoverShadow', 'text-shadow');
       $css->pbg_render_shadow($attr, 'filtersHoverBoxShadow', 'box-shadow');
       $css->pbg_render_background($attr, 'filtersHoverBack');
-      $css->pbg_render_border($attr, 'filtersHoverBorder', 'Desktop');
 
       $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item.active');
       $css->pbg_render_color($attr, 'filtersActiveColor', 'color');
       $css->pbg_render_shadow($attr, 'filtersActiveShadow', 'text-shadow');
       $css->pbg_render_shadow($attr, 'filtersActiveBoxShadow', 'box-shadow');
       $css->pbg_render_background($attr, 'filtersActiveBack');
-      $css->pbg_render_border($attr, 'filtersActiveBorder', 'Desktop');
-			
-      // Tablet
-			$css->start_media_query( 'tablet' );
-			
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-skin-modern .premium-blog-content-wrapper' );
-      $css->pbg_render_range($attr, 'contentOffset', 'top', 'Tablet');
 
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-author-thumbnail' );
-      $css->pbg_render_range($attr, 'authorImgPosition', 'top', 'Tablet');
-			
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container.premium-blog-skin-banner .premium-blog-content-wrapper' );
-      $css->pbg_render_value($attr, 'verticalAlign', 'justify-content', 'Tablet');
+      $css->render_responsive( function( $css, $device ) use ( $attr, $unique_id ) {
 
-      $css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
-      $css->pbg_render_value($attr, 'columns', 'width', 'Tablet', 'calc(100% / ', ')');
-      $css->pbg_render_range($attr, 'columnGap', 'padding-right', 'Tablet', 'calc( ', ' / 2 )');
-      $css->pbg_render_range($attr, 'columnGap', 'padding-left', 'Tablet', 'calc( ', ' / 2 )');
-      $css->pbg_render_spacing($attr, 'margin', 'padding', 'Tablet');
+        $css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
+        $css->pbg_render_value($attr, 'columns', 'width', $device, 'calc(100% / ', ')');
+        $css->pbg_render_range($attr, 'columnGap', 'padding-right', $device, 'calc( ', ' / 2 )');
+        $css->pbg_render_range($attr, 'columnGap', 'padding-left', $device, 'calc( ', ' / 2 )');
+        $css->pbg_render_spacing($attr, 'margin', 'padding', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
-      $css->pbg_render_range($attr, 'columnGap', 'margin-right', 'Tablet', 'calc( -', ' / 2 )');
-      $css->pbg_render_range($attr, 'columnGap', 'margin-left', 'Tablet', 'calc( -', ' / 2 )');
-      $css->pbg_render_range($attr, 'rowGap', 'row-gap', 'Tablet');
+        $css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
+        $css->pbg_render_range($attr, 'columnGap', 'margin-right', $device, 'calc( -', ' / 2 )');
+        $css->pbg_render_range($attr, 'columnGap', 'margin-left', $device, 'calc( -', ' / 2 )');
+        $css->pbg_render_range($attr, 'rowGap', 'row-gap', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
-      $css->pbg_render_border($attr, 'border', 'Tablet');
-      $css->pbg_render_spacing($attr, 'padding', 'padding', 'Tablet');
-			
-      $css->set_selector( '.' . $unique_id . ' .post-categories , .'. $unique_id . '  .premium-blog-post-tags-container, .' . $unique_id . ' .premium-blog-entry-meta');
-      $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Tablet');
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-skin-modern .premium-blog-content-wrapper' );
+        $css->pbg_render_range($attr, 'contentOffset', 'top', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-inner-container');
-      $css->pbg_render_align_self($attr, 'align', 'align-items', 'Tablet');
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-author-thumbnail' );
+        $css->pbg_render_range($attr, 'authorImgPosition', 'top', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
-      $css->pbg_render_value($attr, 'align', 'text-align', 'Tablet');
-      $css->pbg_render_spacing($attr, 'contentPadding', 'padding', 'Tablet');
-      $css->pbg_render_spacing($attr, 'contentBoxMargin', 'margin', 'Tablet');
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container.premium-blog-skin-banner .premium-blog-content-wrapper' );
+        $css->pbg_render_value($attr, 'verticalAlign', 'justify-content', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
-      $css->pbg_render_typography( $attr, 'contentTypography', 'Tablet' );
-      $css->pbg_render_spacing($attr, 'contentMargin', 'margin', 'Tablet');
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
+        $css->pbg_render_border($attr, 'border', $device);
+        $css->pbg_render_spacing($attr, 'padding', 'padding', $device);
 
-			// Title Styles
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title' );
-      $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
-      $css->pbg_render_range($attr, 'titleBottomSpacing', 'margin-bottom', 'Tablet');
+        $css->set_selector( '.' . $unique_id . ' .post-categories , .'. $unique_id . '  .premium-blog-post-tags-container, .' . $unique_id . ' .premium-blog-entry-meta');
+        $css->pbg_render_align_self($attr, 'align', 'justify-content', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title > *' );
-      $css->pbg_render_typography($attr, 'titleTypography', 'Tablet');
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-inner-container');
+        $css->pbg_render_align_self($attr, 'align', 'align-items', $device);
 
-      // Shape Styles
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-bottom-shape svg' );
-      $css->pbg_render_range($attr, 'shapeBottom.width', 'width', 'Tablet');
-      $css->pbg_render_range($attr, 'shapeBottom.height', 'height', 'Tablet');
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
+        $css->pbg_render_value($attr, 'align', 'text-align', $device);
+        $css->pbg_render_spacing($attr, 'contentPadding', 'padding', $device);
+        $css->pbg_render_spacing($attr, 'contentBoxMargin', 'margin', $device);
 
-			// Meta
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data, .' . $unique_id . ' .premium-blog-meta-data a' );
-      $css->pbg_render_typography( $attr, 'metaTypography', 'Tablet' );
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
+        $css->pbg_render_typography( $attr, 'contentTypography', $device );
+        $css->pbg_render_spacing($attr, 'contentMargin', 'margin', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data :is(svg, svg .cls-1)');
-      $css->pbg_render_range($attr, 'metaTypography.fontSize', 'width', 'Tablet');
-      $css->pbg_render_range($attr, 'metaTypography.fontSize', 'height', 'Tablet');
-			
-			// Image
-			$css->set_selector( '.' . $unique_id . ' .premium-blog-thumbnail-container img');
-      $css->pbg_render_range($attr, 'height', 'height', 'Tablet', null, '!important');
+        // Title Styles
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title' );
+        $css->pbg_render_typography($attr, 'titleTypography', $device);
+        $css->pbg_render_range($attr, 'titleBottomSpacing', 'margin-bottom', $device);
 
-      // Excerpt Link Styles
-			$css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link' );
-      $css->pbg_render_range($attr, 'buttonSpacing', 'margin-top', 'Tablet');
-      $css->pbg_render_typography( $attr, 'btnTypography', 'Tablet' );
-      $css->pbg_render_border($attr, 'btnBorder', 'Tablet');
-      $css->pbg_render_spacing($attr, 'btnPadding', 'padding', 'Tablet');
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title > *' );
+        $css->pbg_render_typography($attr, 'titleTypography', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link:hover' );
-      $css->pbg_render_border($attr, 'btnBorderHover', 'Tablet');
+        // Shape Styles
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-bottom-shape svg' );
+        $css->pbg_render_range($attr, 'shapeBottom.width', 'width', $device);
+        $css->pbg_render_range($attr, 'shapeBottom.height', 'height', $device);
 
-      // Categories Styles For Banner
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
-      $css->pbg_render_typography( $attr, 'catTypography', 'Tablet' );
-      $css->pbg_render_border($attr, 'catBorder', 'Tablet');
-      $css->pbg_render_spacing($attr, 'catPadding', 'padding', 'Tablet');
+        // Meta
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data, .' . $unique_id . ' .premium-blog-meta-data a' );
+        $css->pbg_render_typography( $attr, 'metaTypography', $device );
 
-      // Pagination
-      $css->set_selector( '.' . $unique_id .' .premium-blog-pagination-container');
-      $css->pbg_render_align_self($attr, 'paginationPosition', 'justify-content', 'Tablet');
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data :is(svg, svg .cls-1)');
+        $css->pbg_render_range($attr, 'metaTypography.fontSize', 'width', $device);
+        $css->pbg_render_range($attr, 'metaTypography.fontSize', 'height', $device);
 
-      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers');
-      $css->pbg_render_border($attr, 'paginationBorder', 'Tablet');
-      $css->pbg_render_typography( $attr, 'paginationTypography', 'Tablet' );
-      $css->pbg_render_spacing($attr, 'paginationPadding', 'padding', 'Tablet');
-      $css->pbg_render_spacing($attr, 'paginationMargin', 'margin', 'Tablet');
-			
-			// Pagination Hover
-      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers:hover');
-      $css->pbg_render_border($attr, 'paginationHoverBorder', 'Tablet');
-			
-			// Pagination Active
-      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.page-numbers.current');
-      $css->pbg_render_border($attr, 'paginationActiveBorder', 'Tablet');
+        // Image
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-thumbnail-container img');
+        $css->pbg_render_range($attr, 'height', 'height', $device, null, '!important');
 
-      // Filter Tabs
-      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list');
-      $css->pbg_render_value($attr, 'filtersAlign', 'align-self', 'Tablet');
-      $css->pbg_render_value($attr, 'filtersAlign', 'justify-content', 'Tablet');
-      $css->pbg_render_range($attr, 'filtersSpacingBottom', 'margin-bottom', 'Tablet');
-      $css->pbg_render_range($attr, 'filtersGap', 'gap', 'Tablet');
+        // Excerpt Link Styles
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link' );
+        $css->pbg_render_range($attr, 'buttonSpacing', 'margin-top', $device);
+        $css->pbg_render_typography( $attr, 'btnTypography', $device );
+        $css->pbg_render_border($attr, 'btnBorder', $device);
+        $css->pbg_render_spacing($attr, 'btnPadding', 'padding', $device);
 
-      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item');
-      $css->pbg_render_typography( $attr, 'filtersTypography', 'Tablet' );
-      $css->pbg_render_border($attr, 'filtersBorder', 'Tablet');
-      $css->pbg_render_spacing($attr, 'filtersPadding', 'padding', 'Tablet');
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link:hover' );
+        $css->pbg_render_border($attr, 'btnBorderHover', $device);
 
-      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item:hover');
-      $css->pbg_render_border($attr, 'filtersHoverBorder', 'Tablet');
+        // Categories Styles For Banner
+        $css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
+        $css->pbg_render_typography( $attr, 'catTypography', $device );
+        $css->pbg_render_border($attr, 'catBorder', $device);
+        $css->pbg_render_spacing($attr, 'catPadding', 'padding', $device);
 
-      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item.active');
-      $css->pbg_render_border($attr, 'filtersActiveBorder', 'Tablet');
+        // Pagination
+        $css->set_selector( '.' . $unique_id .' .premium-blog-pagination-container');
+        $css->pbg_render_align_self($attr, 'paginationPosition', 'justify-content', $device);
 
-      // Carousel Styles
-      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
-      $css->pbg_render_spacing($attr, 'arrowPadding', 'padding', 'Tablet');
-			
-      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--prev, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--next');
-      $css->pbg_render_range($attr, 'arrowPosition', 'left', 'Tablet');
-			
-      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--next, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--prev');
-      $css->pbg_render_range($attr, 'arrowPosition', 'right', 'Tablet');
+        $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers');
+        $css->pbg_render_border($attr, 'paginationBorder', $device);
+        $css->pbg_render_typography( $attr, 'paginationTypography', $device );
+        $css->pbg_render_spacing($attr, 'paginationPadding', 'padding', $device);
+        $css->pbg_render_spacing($attr, 'paginationMargin', 'margin', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
-      $css->pbg_render_spacing($attr, 'dotMargin', 'margin', 'Tablet');
+        // Pagination Hover
+        $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers:hover');
+        $css->pbg_render_border($attr, 'paginationHoverBorder', $device);
 
-      // Mobile
-			$css->stop_media_query();
-			$css->start_media_query( 'mobile' );
+        // Pagination Active
+        $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.page-numbers.current');
+        $css->pbg_render_border($attr, 'paginationActiveBorder', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-skin-modern .premium-blog-content-wrapper' );
-      $css->pbg_render_range($attr, 'contentOffset', 'top', 'Mobile');
-			
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-author-thumbnail' );
-      $css->pbg_render_range($attr, 'authorImgPosition', 'top', 'Mobile');
-			
-			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container.premium-blog-skin-banner .premium-blog-content-wrapper' );
-      $css->pbg_render_value($attr, 'verticalAlign', 'justify-content', 'Mobile');
+        // Filter Tabs
+        $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list');
+        $css->pbg_render_value($attr, 'filtersAlign', 'align-self', $device);
+        $css->pbg_render_value($attr, 'filtersAlign', 'justify-content', $device);
+        $css->pbg_render_range($attr, 'filtersSpacingBottom', 'margin-bottom', $device);
+        $css->pbg_render_range($attr, 'filtersGap', 'gap', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-post-grid .premium-blog-post-outer-container' );
-      $css->pbg_render_value($attr, 'columns', 'width', 'Mobile', 'calc(100% / ', ')');
-      $css->pbg_render_range($attr, 'columnGap', 'padding-right', 'Mobile', 'calc( ', ' / 2 )');
-      $css->pbg_render_range($attr, 'columnGap', 'padding-left', 'Mobile', 'calc( ', ' / 2 )');
-      $css->pbg_render_spacing($attr, 'margin', 'padding', 'Mobile');
+        $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item');
+        $css->pbg_render_typography( $attr, 'filtersTypography', $device );
+        $css->pbg_render_border($attr, 'filtersBorder', $device);
+        $css->pbg_render_spacing($attr, 'filtersPadding', 'padding', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-post-grid.premium-blog-wrap' );
-      $css->pbg_render_range($attr, 'columnGap', 'margin-right', 'Mobile', 'calc( -', ' / 2 )');
-      $css->pbg_render_range($attr, 'columnGap', 'margin-left', 'Mobile', 'calc( -', ' / 2 )');
-      $css->pbg_render_range($attr, 'rowGap', 'row-gap', 'Mobile');   
+        $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item:hover');
+        $css->pbg_render_border($attr, 'filtersHoverBorder', $device);
 
-			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container' );
-      $css->pbg_render_border($attr, 'border', 'Tablet');
-      $css->pbg_render_spacing($attr, 'padding', 'padding', 'Tablet');
-			
-      $css->set_selector( '.' . $unique_id . ' .post-categories , .'. $unique_id . '  .premium-blog-post-tags-container, .' . $unique_id . ' .premium-blog-entry-meta');
-      $css->pbg_render_align_self($attr, 'align', 'justify-content', 'Mobile');
+        $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item.active');
+        $css->pbg_render_border($attr, 'filtersActiveBorder', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-inner-container');
-      $css->pbg_render_align_self($attr, 'align', 'align-items', 'Mobile');
+        // Carousel Styles
+        $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
+        $css->pbg_render_spacing($attr, 'arrowPadding', 'padding', $device);
 
-			$css->set_selector( '.' . $unique_id . ' .premium-blog-post-container > .premium-blog-content-wrapper ' );
-      $css->pbg_render_value($attr, 'align', 'text-align', 'Mobile');
-      $css->pbg_render_spacing($attr, 'contentPadding', 'padding', 'Mobile');
-      $css->pbg_render_spacing($attr, 'contentBoxMargin', 'margin', 'Mobile');
+        $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--prev, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--next');
+        $css->pbg_render_range($attr, 'arrowPosition', 'left', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-content-wrapper-inner p' );
-      $css->pbg_render_typography( $attr, 'contentTypography', 'Mobile' );
-      $css->pbg_render_spacing($attr, 'contentMargin', 'margin', 'Mobile');
+        $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--next, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--prev');
+        $css->pbg_render_range($attr, 'arrowPosition', 'right', $device);
 
-      // Title Styles
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title' );
-      $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');
-      $css->pbg_render_range($attr, 'titleBottomSpacing', 'margin-bottom', 'Mobile');
+        $css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
+        $css->pbg_render_spacing($attr, 'dotMargin', 'margin', $device);
 
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-blog-entry-title > *' );
-      $css->pbg_render_typography($attr, 'titleTypography', 'Mobile');
+      } );
 
-      // Shape Styles
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-post-container .premium-bottom-shape svg' );
-      $css->pbg_render_range($attr, 'shapeBottom.width', 'width', 'Mobile');
-      $css->pbg_render_range($attr, 'shapeBottom.height', 'height', 'Mobile');
-			
-			// Meta
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data, .' . $unique_id . ' .premium-blog-meta-data a' );
-      $css->pbg_render_typography( $attr, 'metaTypography', 'Mobile' );
-
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-meta-data :is(svg, svg .cls-1)');
-      $css->pbg_render_range($attr, 'metaTypography.fontSize', 'width', 'Mobile');
-      $css->pbg_render_range($attr, 'metaTypography.fontSize', 'height', 'Mobile');
-
-			// Image
-			$css->set_selector( '.' . $unique_id . ' .premium-blog-thumbnail-container img');
-      $css->pbg_render_range($attr, 'height', 'height', 'Mobile', null, '!important');
-
-      // Excerpt Link Styles
-			$css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link' );
-      $css->pbg_render_range($attr, 'buttonSpacing', 'margin-top', 'Mobile');
-      $css->pbg_render_typography( $attr, 'btnTypography', 'Mobile' );
-      $css->pbg_render_border($attr, 'btnBorder', 'Mobile');
-      $css->pbg_render_spacing($attr, 'btnPadding', 'padding', 'Mobile');
-
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-content-wrapper .premium-blog-excerpt-link:hover' );
-      $css->pbg_render_border($attr, 'btnBorderHover', 'Mobile');
-
-      // Categories Styles For Banner
-      $css->set_selector( '.' . $unique_id . ' .premium-blog-cats-container a' );
-      $css->pbg_render_typography( $attr, 'catTypography', 'Mobile' );
-      $css->pbg_render_border($attr, 'catBorder', 'Mobile');
-      $css->pbg_render_spacing($attr, 'catPadding', 'padding', 'Mobile');
-      
-      // Pagination
-      $css->set_selector( '.' . $unique_id .' .premium-blog-pagination-container');
-      $css->pbg_render_align_self($attr, 'paginationPosition', 'justify-content', 'Mobile');
-
-      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers');
-      $css->pbg_render_border($attr, 'paginationBorder', 'Mobile');
-      $css->pbg_render_typography( $attr, 'paginationTypography', 'Mobile' );
-      $css->pbg_render_spacing($attr, 'paginationPadding', 'padding', 'Mobile');
-      $css->pbg_render_spacing($attr, 'paginationMargin', 'margin', 'Mobile');
-			
-			// Pagination Hover
-      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container .page-numbers:hover');
-      $css->pbg_render_border($attr, 'paginationHoverBorder', 'Mobile');
-			
-			// Pagination Active
-      $css->set_selector('.' . $unique_id . ' .premium-blog-pagination-container span.page-numbers.current');
-      $css->pbg_render_border($attr, 'paginationActiveBorder', 'Mobile');
-
-      // Filter Tabs
-      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list');
-      $css->pbg_render_value($attr, 'filtersAlign', 'align-self', 'Mobile');
-      $css->pbg_render_value($attr, 'filtersAlign', 'justify-content', 'Mobile');
-      $css->pbg_render_range($attr, 'filtersSpacingBottom', 'margin-bottom', 'Mobile');
-      $css->pbg_render_range($attr, 'filtersGap', 'gap', 'Mobile');
-
-      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item');
-      $css->pbg_render_typography( $attr, 'filtersTypography', 'Mobile' );
-      $css->pbg_render_border($attr, 'filtersBorder', 'Mobile');
-      $css->pbg_render_spacing($attr, 'filtersPadding', 'padding', 'Mobile');
-
-      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item:hover');
-      $css->pbg_render_border($attr, 'filtersHoverBorder', 'Mobile');
-
-      $css->set_selector( '.' . $unique_id .' .premium-post-grid-taxonomy-filter-list-item.active');
-      $css->pbg_render_border($attr, 'filtersActiveBorder', 'Mobile');
-			
-      // Carousel Styles
-      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows .splide__arrow' );
-      $css->pbg_render_spacing($attr, 'arrowPadding', 'padding', 'Mobile');
-			
-      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--prev, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--next');
-      $css->pbg_render_range($attr, 'arrowPosition', 'left', 'Mobile');
-			
-      $css->set_selector( '.' . $unique_id . ' .splide .splide__arrows.splide__arrows--ltr .splide__arrow--next, .' . $unique_id . ' .splide .splide__arrows.splide__arrows--rtl .splide__arrow--prev');
-      $css->pbg_render_range($attr, 'arrowPosition', 'right', 'Mobile');
-
-      $css->set_selector( '.' . $unique_id . ' .splide .splide__pagination .splide__pagination__page' );
-      $css->pbg_render_spacing($attr, 'dotMargin', 'margin', 'Mobile');
-
-			$css->stop_media_query();
 			return $css->css_output();
 		}
 	}
