@@ -4,7 +4,7 @@
     "version": "0.1.0",
     "name": "premium/video-box",
     "title": "Video Box",
-    "description": "Embed YouTube, Vimeo, Dailymotion, or upload a Custom Video using Premium Video Box Block.zz",
+    "description": "Embed YouTube, Vimeo, Dailymotion, or upload a Custom Video using Premium Video Box Block.",
     "keywords": ["video", "youtube", "vimeo", "dailymotion", "custom video"],
     "category": "premium-blocks",
     "attributes": {

@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 2.3.11
+Stable tag: 2.3.12
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -147,6 +147,19 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.12 =
+- Added: Inherit/Custom query type toggle in Post Grid and Post Carousel.
+- Added: Show Meta Icons toggle in Post Grid and Post Carousel inspectors.
+- Added: SVG icon selection via Media Library in modal prompt when JSON uploads are disabled.
+- Added: List-view label fallbacks — Heading shows title, Button shows text, Image shows alt/caption, List Item shows item text.
+- Tweak: Centralized list-view label() handler via blocks.
+- Fixed: Modal block — guard against null body when accessing classList in the WP7 iframe editor.
+- Fixed: Premium responsive hidden classes (desktop/tablet/mobile) now apply to dynamic blocks.
+- Fixed: Button block — global typography no longer overrides button-size font-size.
+- Fixed: Theme compatibility — OceanWP, Astra and GeneratePress.
+- Fixed: Instagram Feed Posts content overflow.
+- Fixed: Video Box description typo + edit.js refactor + VideoSandbox.
+
 = 2.3.11 =
 - Fixed: WordPress 7 iframe editor compatibility for Modal, Off-Canvas, Heading, Lottie, One-Page-Scroll, Fancy Text, and Video Box blocks.
 - Fixed: Replaced deprecated __experimental component imports with stable API equivalents.

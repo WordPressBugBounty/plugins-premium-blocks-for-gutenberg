@@ -665,7 +665,9 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 
       ?>
         <div class="premium-blog-post-author premium-blog-meta-data">
+            <?php if ( ! isset( $attributes['showMetaIcons'] ) || ! empty( $attributes['showMetaIcons'] ) ) : ?>
             <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 22 24" aria-hidden="true"><path id="Author" class="cls-1" d="m0,20.63c0,2.74,5.72,3.36,11,3.37,5.28,0,11-.62,11-3.37,0-3.63-3.93-4.85-7.25-5.96-.24-.07-1.25-.67-1.25-2.23,1.65-1.56,3.4-4.11,3.4-6.61,0-3.83-2.71-5.84-5.9-5.84s-5.9,2-5.9,5.84c0,2.5,1.75,5.05,3.4,6.61,0,1.56-1.01,2.15-1.25,2.23-3.32,1.11-7.25,2.33-7.25,5.96Z"/></svg>
+            <?php endif; ?>
             <?php echo get_the_author_posts_link(); ?>
         </div>
       <?php
@@ -693,7 +695,9 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 
       ?>
         <div class="premium-blog-post-time premium-blog-meta-data">
+          <?php if ( ! isset( $attributes['showMetaIcons'] ) || ! empty( $attributes['showMetaIcons'] ) ) : ?>
           <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path id="Date" class="cls-1" d="m20.93,6.54c-.07-.9-.23-1.64-.57-2.32-.56-1.11-1.47-2.01-2.57-2.57-.68-.35-1.42-.5-2.32-.57-.89-.07-1.99-.07-3.41-.07h-2.11c-1.42,0-2.51,0-3.41.07-.9.07-1.64.23-2.32.57-1.11.56-2.01,1.47-2.57,2.57-.35.68-.5,1.42-.57,2.32-.07.89-.07,1.99-.07,3.41v2.11c0,1.42,0,2.51.07,3.41.07.9.23,1.64.57,2.32.56,1.11,1.47,2.01,2.57,2.57.68.35,1.42.5,2.32.57.89.07,1.99.07,3.41.07h2.11c1.42,0,2.51,0,3.41-.07.9-.07,1.64-.23,2.32-.57,1.11-.56,2.01-1.47,2.57-2.57.35-.68.5-1.42.57-2.32.07-.89.07-1.99.07-3.41v-2.11c0-1.42,0-2.51-.07-3.41Zm-4.72,9.92c-.2.19-.45.29-.71.29s-.51-.1-.71-.29l-4.5-4.5c-.18-.19-.29-.44-.29-.71v-5c0-.55.45-1,1-1s1,.45,1,1v4.59l4.21,4.2c.39.39.39,1.03,0,1.42Z"/></svg>
+          <?php endif; ?>
           <span><?php echo esc_html( get_the_date() ); ?></span>
         </div>
       <?php
@@ -746,7 +750,9 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 
       ?>
         <div class="premium-blog-post-categories premium-blog-meta-data">
+          <?php if ( ! isset( $attributes['showMetaIcons'] ) || ! empty( $attributes['showMetaIcons'] ) ) : ?>
           <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path id="Categories" class="cls-1" d="m2,4c0,.55.45,1,1,1h16c.55,0,1-.45,1-1s-.45-1-1-1H3c-.55,0-1,.45-1,1Zm0,5c0,.55.45,1,1,1h11c.55,0,1-.45,1-1s-.45-1-1-1H3c-.55,0-1,.45-1,1Zm0,5h0c0-.55.45-1,1-1h16c.55,0,1,.45,1,1h0c0,.55-.45,1-1,1H3c-.55,0-1-.45-1-1Zm1,6c-.55,0-1-.45-1-1s.45-1,1-1h7c.55,0,1,.45,1,1s-.45,1-1,1H3Z"/></svg>
+          <?php endif; ?>
           <?php echo wp_kses_post( implode( ',&nbsp;', $terms ) ); ?>
         </div>
       <?php
@@ -793,7 +799,9 @@ if ( ! class_exists( 'PBG_Post' ) ) {
 
       ?>
         <div class="premium-blog-post-comments premium-blog-meta-data">
+          <?php if ( ! isset( $attributes['showMetaIcons'] ) || ! empty( $attributes['showMetaIcons'] ) ) : ?>
           <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path id="Comments" class="cls-1" d="m11,0C5.03,0,0,4.38,0,10c0,2.63,1.45,5.01,3.48,6.71,1.79,1.49,4.11,2.52,6.52,2.74v1.55c0,.33.16.64.44.83.27.18.62.22.93.1,1.76-.71,4.37-2.14,6.55-4.13,2.17-1.97,4.08-4.64,4.08-7.8C22,4.38,16.97,0,11,0Zm-5,11.5c-.83,0-1.5-.67-1.5-1.5s.67-1.5,1.5-1.5,1.5.67,1.5,1.5-.67,1.5-1.5,1.5Zm5,0c-.83,0-1.5-.67-1.5-1.5s.67-1.5,1.5-1.5,1.5.67,1.5,1.5-.67,1.5-1.5,1.5Zm5,0c-.83,0-1.5-.67-1.5-1.5s.67-1.5,1.5-1.5,1.5.67,1.5,1.5-.67,1.5-1.5,1.5Z"/></svg>
+          <?php endif; ?>
           <?php 
             comments_popup_link( 
               $comments_strings['no-comments'], 

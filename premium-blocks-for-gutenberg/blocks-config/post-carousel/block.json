@@ -109,6 +109,10 @@
                 "taxQuery": {}
             }
         },
+        "queryType": {
+            "type": "string",
+            "default": "custom"
+        },
         "authorFilterRule": {
             "type": "string",
             "default": "author__in"
@@ -427,6 +431,10 @@
             "default": true
         },
         "showComments": {
+            "type": "boolean",
+            "default": true
+        },
+        "showMetaIcons": {
             "type": "boolean",
             "default": true
         },

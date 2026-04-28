@@ -25,10 +25,10 @@ function get_premium_button_css_style($attr, $unique_id)
 
     $css->set_selector(
         ".{$unique_id} .premium-button .premium-button-icon, " .
-        ".{$unique_id} .premium-button .premium-button-icon:not(.icon-type-fe) svg, " .
-        ".{$unique_id} .premium-button .premium-button-icon:not(.icon-type-fe) svg *, " .
-        ".{$unique_id} .premium-button .premium-button-svg-class svg, " .
-        ".{$unique_id} .premium-button .premium-button-svg-class svg *"
+            ".{$unique_id} .premium-button .premium-button-icon:not(.icon-type-fe) svg, " .
+            ".{$unique_id} .premium-button .premium-button-icon:not(.icon-type-fe) svg *, " .
+            ".{$unique_id} .premium-button .premium-button-svg-class svg, " .
+            ".{$unique_id} .premium-button .premium-button-svg-class svg *"
     );
     $css->pbg_render_color($attr, 'btnStyles[0].textColor', 'color');
     $css->pbg_render_color($attr, 'btnStyles[0].textColor', 'fill');
@@ -37,17 +37,17 @@ function get_premium_button_css_style($attr, $unique_id)
 
     $css->set_selector(
         ".{$unique_id} .premium-button:hover .premium-button-icon, " .
-        ".{$unique_id} .premium-button:hover .premium-button-icon:not(.icon-type-fe) svg *, " .
-        ".{$unique_id} .premium-button:hover .premium-button-svg-class svg, " .
-        ".{$unique_id} .premium-button:hover .premium-button-svg-class svg *"
+            ".{$unique_id} .premium-button:hover .premium-button-icon:not(.icon-type-fe) svg *, " .
+            ".{$unique_id} .premium-button:hover .premium-button-svg-class svg, " .
+            ".{$unique_id} .premium-button:hover .premium-button-svg-class svg *"
     );
     $css->pbg_render_color($attr, 'iconHoverColor', 'color');
     $css->pbg_render_color($attr, 'iconHoverColor', 'fill');
 
     $css->set_selector(
         ".{$unique_id} .premium-button:hover .premium-button-icon, " .
-        ".{$unique_id} .premium-button:hover .premium-button-svg-class svg, " .
-        ".{$unique_id} .premium-button:hover .premium-lottie-animation svg"
+            ".{$unique_id} .premium-button:hover .premium-button-svg-class svg, " .
+            ".{$unique_id} .premium-button:hover .premium-lottie-animation svg"
     );
     $css->pbg_render_color($attr, 'borderHoverColor', 'border-color');
 
@@ -71,18 +71,18 @@ function get_premium_button_css_style($attr, $unique_id)
         // Hover effect pseudo-element background.
         $css->set_selector(
             ".{$unique_id}.premium-button__slide .premium-button::before, " .
-            ".{$unique_id}.premium-button__shutter .premium-button::before, " .
-            ".{$unique_id}.premium-button__radial .premium-button::before"
+                ".{$unique_id}.premium-button__shutter .premium-button::before, " .
+                ".{$unique_id}.premium-button__radial .premium-button::before"
         );
         $css->pbg_render_background($attr, 'backgroundHoverOptions', $device);
 
         $css->set_selector('.' . $unique_id . ' .premium-button:hover');
-        $css->pbg_render_background($attr, 'backgroundHoverOptions', $device);
+        $css->pbg_render_background($attr, 'backgroundHoverOptions', $device, '!important');
 
         // Icon SVG size.
         $css->set_selector(
             ".{$unique_id} .premium-button .premium-button-icon svg, " .
-            ".{$unique_id} .premium-button .premium-button-svg-class svg"
+                ".{$unique_id} .premium-button .premium-button-svg-class svg"
         );
         $css->pbg_render_range($attr, 'iconSize', 'width', $device, null, '!important');
         $css->pbg_render_range($attr, 'iconSize', 'height', $device, null, '!important');
@@ -97,25 +97,25 @@ function get_premium_button_css_style($attr, $unique_id)
         // Icon hover background.
         $css->set_selector(
             ".{$unique_id} .premium-button:hover .premium-button-icon, " .
-            ".{$unique_id} .premium-button:hover .premium-button-svg-class svg, " .
-            ".{$unique_id} .premium-button:hover .premium-lottie-animation svg"
+                ".{$unique_id} .premium-button:hover .premium-button-svg-class svg, " .
+                ".{$unique_id} .premium-button:hover .premium-lottie-animation svg"
         );
         $css->pbg_render_background($attr, 'iconHoverBG', $device);
 
         // Icon normal background.
         $css->set_selector(
             ".{$unique_id} .premium-button .premium-button-icon, " .
-            ".{$unique_id} .premium-button .premium-button-svg-class svg, " .
-            ".{$unique_id} .premium-button .premium-lottie-animation svg"
+                ".{$unique_id} .premium-button .premium-button-svg-class svg, " .
+                ".{$unique_id} .premium-button .premium-lottie-animation svg"
         );
         $css->pbg_render_background($attr, 'iconBG', $device);
 
         // Icon border, padding, margin.
         $css->set_selector(
             ".{$unique_id} .premium-button .premium-button-icon, " .
-            ".{$unique_id} .premium-button img, " .
-            ".{$unique_id} .premium-button .premium-button-svg-class svg, " .
-            ".{$unique_id} .premium-button .premium-lottie-animation svg"
+                ".{$unique_id} .premium-button img, " .
+                ".{$unique_id} .premium-button .premium-button-svg-class svg, " .
+                ".{$unique_id} .premium-button .premium-lottie-animation svg"
         );
         $css->pbg_render_border($attr, 'iconBorder', $device);
         $css->pbg_render_spacing($attr, 'iconPadding', 'padding', $device);
@@ -124,7 +124,7 @@ function get_premium_button_css_style($attr, $unique_id)
         // Icon SVG background.
         $css->set_selector(
             ".{$unique_id} .premium-button .premium-button-icon svg, " .
-            ".{$unique_id} .premium-button .premium-button-icon svg *"
+                ".{$unique_id} .premium-button .premium-button-icon svg *"
         );
         $css->pbg_render_background($attr, 'iconBackground', $device);
     });

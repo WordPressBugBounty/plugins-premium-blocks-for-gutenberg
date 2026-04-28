@@ -99,10 +99,10 @@ class PBG_Blocks_Helper
 	 */
 	public $support_links_blocks = array();
 
-  /**
-   * Content has premium blocks
-   */
-  public $has_premium_blocks = false;
+	/**
+	 * Content has premium blocks
+	 */
+	public $has_premium_blocks = false;
 
 	/**
 	 * Integrations Settings
@@ -116,52 +116,52 @@ class PBG_Blocks_Helper
 	public $preview = false;
 	public $file_generation = false;
 
-  private static $pbg_attributes = array(
-    'pbgHorizontalOrientation' => array(
-      'type'    => 'object',
-      'default' => array(
-        'Desktop' => 'left',
-        'Tablet'  => '',
-        'Mobile'  => '',
-      ),
-    ),
-    'pbgHorizontalOffset' => array(
-      'type'    => 'object',
-      'default' => array(
-        'Desktop' => 0,
-        'Tablet'  => '',
-        'Mobile'  => '',
-        'unit'    => array(
-          'Desktop' => 'px',
-          'Tablet'  => 'px',
-          'Mobile'  => 'px',
-        ),
-      ),
-    ),
-    'pbgVerticalOrientation' => array(
-      'type'    => 'object',
-      'default' => array(
-        'Desktop' => 'top',
-        'Tablet'  => '',
-        'Mobile'  => '',
-      ),
-    ),
-    'pbgVerticalOffset' => array(
-      'type'    => 'object',
-      'default' => array(
-        'Desktop' => 0,
-        'Tablet'  => '',
-        'Mobile'  => '',
-        'unit'    => array(
-          'Desktop' => 'px',
-          'Tablet'  => 'px',
-          'Mobile'  => 'px',
-        ),
-      ),
-    ),
-  );
-  
-  /**
+	private static $pbg_attributes = array(
+		'pbgHorizontalOrientation' => array(
+			'type'    => 'object',
+			'default' => array(
+				'Desktop' => 'left',
+				'Tablet'  => '',
+				'Mobile'  => '',
+			),
+		),
+		'pbgHorizontalOffset' => array(
+			'type'    => 'object',
+			'default' => array(
+				'Desktop' => 0,
+				'Tablet'  => '',
+				'Mobile'  => '',
+				'unit'    => array(
+					'Desktop' => 'px',
+					'Tablet'  => 'px',
+					'Mobile'  => 'px',
+				),
+			),
+		),
+		'pbgVerticalOrientation' => array(
+			'type'    => 'object',
+			'default' => array(
+				'Desktop' => 'top',
+				'Tablet'  => '',
+				'Mobile'  => '',
+			),
+		),
+		'pbgVerticalOffset' => array(
+			'type'    => 'object',
+			'default' => array(
+				'Desktop' => 0,
+				'Tablet'  => '',
+				'Mobile'  => '',
+				'unit'    => array(
+					'Desktop' => 'px',
+					'Tablet'  => 'px',
+					'Mobile'  => 'px',
+				),
+			),
+		),
+	);
+
+	/**
 	 * Constructor for the class
 	 */
 	public function __construct()
@@ -217,6 +217,9 @@ class PBG_Blocks_Helper
 		add_action('wp_head', array($this, 'add_blocks_frontend_inline_styles'), 80);
 
 		add_filter('render_block', array($this, 'add_block_style'), 9, 2);
+
+		add_filter('render_block', array($this, 'add_responsive_hidden_classes'), 10, 2);
+
 		// Add custom breakpoints.
 		add_filter('Premium_BLocks_mobile_media_query', array($this, 'mobile_breakpoint'), 1);
 		add_filter('Premium_BLocks_tablet_media_query', array($this, 'tablet_breakpoint'), 1);
@@ -229,13 +232,13 @@ class PBG_Blocks_Helper
 		add_action('wp_ajax_premium_form_submit', array($this, 'premium_form_submit'));
 		add_action('wp_ajax_nopriv_premium_form_submit', array($this, 'premium_form_submit'));
 
-    // Add AJAX handlers for post filtering tabs
-    add_action( 'wp_ajax_pbg_filter_posts', array( $this, 'ajax_filter_posts' ) );
-    add_action( 'wp_ajax_nopriv_pbg_filter_posts', array( $this, 'ajax_filter_posts' ) );
+		// Add AJAX handlers for post filtering tabs
+		add_action('wp_ajax_pbg_filter_posts', array($this, 'ajax_filter_posts'));
+		add_action('wp_ajax_nopriv_pbg_filter_posts', array($this, 'ajax_filter_posts'));
 
-    // Add AJAX handlers for post pagination
-    add_action( 'wp_ajax_pbg_paginate_posts', array( $this, 'ajax_paginate_posts' ) );
-    add_action( 'wp_ajax_nopriv_pbg_paginate_posts', array( $this, 'ajax_paginate_posts' ) );
+		// Add AJAX handlers for post pagination
+		add_action('wp_ajax_pbg_paginate_posts', array($this, 'ajax_paginate_posts'));
+		add_action('wp_ajax_nopriv_pbg_paginate_posts', array($this, 'ajax_paginate_posts'));
 
 		// Get mailchimp lists.
 		add_action('wp_ajax_premium_blocks_get_mailchimp_lists', array($this, 'premium_get_mailchimp_lists'));
@@ -252,67 +255,70 @@ class PBG_Blocks_Helper
 			add_action('init', array($this, 'init_admin_features'));
 		}
 
-    // Check and enqueue global responsive option CSS
-    add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_global_responsive_option_css' ), 999 );
+		// Check and enqueue global responsive option CSS
+		add_action('wp_enqueue_scripts', array($this, 'enqueue_global_responsive_option_css'), 999);
 
-    // Enqueues styles that ensure compatibility with other plugins or themes.
-    add_action( 'enqueue_block_assets', array( $this, 'enqueue_compatibility_styles' ) );
+		// Enqueues styles that ensure compatibility with other plugins or themes.
+		add_action('enqueue_block_assets', array($this, 'enqueue_compatibility_styles'));
 
-	// Enqueues frontend compatibility styles for GeneratePress/Kadence theme.
-    add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_compatibility_styles' ), 10 );
+		// Enqueues frontend compatibility styles for GeneratePress/Kadence theme.
+		add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_compatibility_styles'), 10);
 
-    // Enqueue assets for the editor content.
-    add_action( 'enqueue_block_assets', array( $this, 'enqueue_editor_content_assets' ));
+		// Enqueue assets for the editor content.
+		add_action('enqueue_block_assets', array($this, 'enqueue_editor_content_assets'));
 
-    add_filter( 'optml_dont_replace_url', array( $this, 'exclude_instagram_from_optimole' ), 10, 2 );
+		add_filter('optml_dont_replace_url', array($this, 'exclude_instagram_from_optimole'), 10, 2);
 	}
 
-  /**
-   * Exclude Instagram images from Optimole optimization.
-   *
-   * @param bool   $old_value Current status of replacement.
-   * @param string $url       Image URL.
-   * @return bool
-   */
-  public function exclude_instagram_from_optimole( $old_value, $url ) {
-    if ( strpos( $url, 'cdninstagram.com' ) !== false || strpos( $url, 'instagram.com' ) !== false ) {
-      return true;
-    }
-    return $old_value;
-  }
+	/**
+	 * Exclude Instagram images from Optimole optimization.
+	 *
+	 * @param bool   $old_value Current status of replacement.
+	 * @param string $url       Image URL.
+	 * @return bool
+	 */
+	public function exclude_instagram_from_optimole($old_value, $url)
+	{
+		if (strpos($url, 'cdninstagram.com') !== false || strpos($url, 'instagram.com') !== false) {
+			return true;
+		}
+		return $old_value;
+	}
 
-  public function enqueue_editor_content_assets() {
-    if ( ! is_admin() ) return;
+	public function enqueue_editor_content_assets()
+	{
+		if (! is_admin()) return;
 
-    wp_enqueue_script(
-      'pbg-isotope-editor',
-      PREMIUM_BLOCKS_URL . 'assets/js/lib/isotope.pkgd.min.js',
-      array(),
-      PREMIUM_BLOCKS_VERSION,
-      true
-    );
-  }
+		wp_enqueue_script(
+			'pbg-isotope-editor',
+			PREMIUM_BLOCKS_URL . 'assets/js/lib/isotope.pkgd.min.js',
+			array(),
+			PREMIUM_BLOCKS_VERSION,
+			true
+		);
+	}
 
-  /**
-   * Enqueues styles that ensure compatibility with GeneratePress/Kadence theme on FRONTEND
-   *
-   * @since 2.0.0
-   * @access public
-   * @return void
-   */
-  public function enqueue_frontend_compatibility_styles() {
-    // Only run on frontend, not in admin
-    if ( is_admin() ) {
-      return;
-    }
+	/**
+	 * Enqueues styles that ensure compatibility with GeneratePress/Kadence theme on FRONTEND
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function enqueue_frontend_compatibility_styles()
+	{
+		// Only run on frontend, not in admin
+		if (is_admin()) {
+			return;
+		}
 
-    $themes_to_check = array( 'kadence', 'generatepress', 'astra' );
-    $template = strtolower( get_template() );
-    $stylesheet = strtolower( get_stylesheet() );
-    
-    // Add frontend compatibility styles only for GeneratePress/Kadence themes
-    if ( in_array( $template, $themes_to_check ) || in_array( $stylesheet, $themes_to_check ) ) {
-      $compatibility_css = "
+		$themes_to_check = array('kadence', 'generatepress', 'astra');
+		$template = strtolower(get_template());
+		$stylesheet = strtolower(get_stylesheet());
+
+		// Add frontend compatibility styles only for GeneratePress/Kadence themes
+		if (in_array($template, $themes_to_check) || in_array($stylesheet, $themes_to_check)) {
+			$compatibility_css = "
         /* Margin compatibility for containers inside tabs */
         .premium-tabs-content .wp-block-premium-container,
         .pbg-content-wrap .premium-tabs-content .wp-block-premium-container,
@@ -329,40 +335,75 @@ class PBG_Blocks_Helper
 		[class*='premium-'] .wp-block-premium-button a{
 		text-decoration: none !important;
 		}
+
+		[class*='premium-'] a{
+		text-decoration: none !important;
+		}
+
+        /* Override Astra theme box-shadow on buttons inside premium blocks */
+        [class*='premium-'] button,
+        [class*='premium-'] input[type='button'],
+        [class*='premium-'] input[type='reset'],
+        [class*='premium-'] input[type='submit'],
+        [class*='premium-'] a:where(.wp-block-button__link) {
+          box-shadow: none !important;
+        }
       ";
 
-      // Minify CSS if css is not empty and the minify method is available.
-      if ( ! empty( $compatibility_css ) && isset( $this->blocks_frontend_assets ) && method_exists( $this->blocks_frontend_assets, 'minify_css' ) ) {
-        $compatibility_css = $this->blocks_frontend_assets->minify_css( $compatibility_css );
-      }
-      // If we have compatibility CSS, add it inline
-      if ( ! empty( $compatibility_css ) ) {
-        // Inject CSS directly to ensure it loads regardless of asset generation settings
-        wp_register_style( 'pbg-frontend-compatibility', false );
-        wp_enqueue_style( 'pbg-frontend-compatibility' );
-        wp_add_inline_style( 'pbg-frontend-compatibility', $compatibility_css );
-      }
-    }
-  }
+			// Minify CSS if css is not empty and the minify method is available.
+			if (! empty($compatibility_css) && isset($this->blocks_frontend_assets) && method_exists($this->blocks_frontend_assets, 'minify_css')) {
+				$compatibility_css = $this->blocks_frontend_assets->minify_css($compatibility_css);
+			}
+			// If we have compatibility CSS, add it inline
+			if (! empty($compatibility_css)) {
+				// Inject CSS directly to ensure it loads regardless of asset generation settings
+				wp_register_style('pbg-frontend-compatibility', false);
+				wp_enqueue_style('pbg-frontend-compatibility');
+				wp_add_inline_style('pbg-frontend-compatibility', $compatibility_css);
+			}
+		}
 
-  /**
-   * Enqueues styles that ensure compatibility with other plugins or themes
-   *
-   * @since 2.0.0
-   * @access public
-   * @return void
-   */
-  public function enqueue_compatibility_styles() {
-    if( ! is_admin() ) {
-      return;
-    }
+		// OceanWP theme: remove text-decoration and outline on links inside premium blocks
+		if ($template === 'oceanwp' || $stylesheet === 'oceanwp') {
+			$oceanwp_css = "
+			[class*='premium-'] a {
+				text-decoration: none !important;
+				outline: 0 !important;
+			}
+				[class*='premium-'] a:focus {
+				outline: 0 !important;
+			}
+				/* Line-height compatibility for headings */
+			[class*='premium-'] :is(h1, h2, h3, h4, h5, h6),
+			:is(h1, h2, h3, h4, h5, h6)[class*='premium-'] {
+			line-height: 1;
+			}
+			";
+			wp_register_style('pbg-oceanwp-compatibility', false);
+			wp_enqueue_style('pbg-oceanwp-compatibility');
+			wp_add_inline_style('pbg-oceanwp-compatibility', $oceanwp_css);
+		}
+	}
 
-    $themes_to_check = array( 'Kadence', 'GeneratePress' );
-    $compatibility_css = '';
-    
-    // We adding compatibility styles only in admin area for editor to handle compatibility with GeneratePress Theme.
-    if ( in_array( wp_get_theme()->get('Name'), $themes_to_check ) || in_array( get_template(), $themes_to_check ) || in_array( get_stylesheet(), $themes_to_check ) ) {
-      $compatibility_css .= "
+	/**
+	 * Enqueues styles that ensure compatibility with other plugins or themes
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function enqueue_compatibility_styles()
+	{
+		if (! is_admin()) {
+			return;
+		}
+
+		$themes_to_check = array('Kadence', 'GeneratePress');
+		$compatibility_css = '';
+
+		// We adding compatibility styles only in admin area for editor to handle compatibility with GeneratePress Theme.
+		if (in_array(wp_get_theme()->get('Name'), $themes_to_check) || in_array(get_template(), $themes_to_check) || in_array(get_stylesheet(), $themes_to_check)) {
+			$compatibility_css .= "
         html :where(.wp-block[class*='premium-']) {
           margin-top: unset;
           margin-bottom: unset;
@@ -391,106 +432,109 @@ class PBG_Blocks_Helper
 			margin-bottom: unset;
 		}
       ";
-    }
+		}
 
-    // Minify CSS if css is not empty and the minify method is available.
-    if ( ! empty( $compatibility_css ) && isset( $this->blocks_frontend_assets ) && method_exists( $this->blocks_frontend_assets, 'minify_css' ) ) {
-      $compatibility_css = $this->blocks_frontend_assets->minify_css( $compatibility_css );
-    }
-    
-    // If we have compatibility CSS, add it inline
-    if ( ! empty( $compatibility_css ) ) {
-      wp_register_style( 'pbg-compatibility', false );
-      wp_enqueue_style( 'pbg-compatibility' );
-      wp_add_inline_style( 'pbg-compatibility', $compatibility_css );
-    }
-  }
+		// Minify CSS if css is not empty and the minify method is available.
+		if (! empty($compatibility_css) && isset($this->blocks_frontend_assets) && method_exists($this->blocks_frontend_assets, 'minify_css')) {
+			$compatibility_css = $this->blocks_frontend_assets->minify_css($compatibility_css);
+		}
 
-  /**
-   * Enqueue global responsive option CSS if premium blocks are present
-   */
-  public function enqueue_global_responsive_option_css() {
-    if ($this->has_premium_blocks || $this->content_has_premium_blocks()) {
-      add_action('wp_head', array($this, 'inject_responsive_css'), 100);
-    }
-  }
-  
-  /**
-   * Check if the current page/post contains premium blocks
-   *
-   * @return bool True if premium blocks are found, false otherwise.
-   */
-  private function content_has_premium_blocks() {
-    global $post;
-      
-    // Handle singular posts/pages
-    if (is_singular() && $post && has_blocks($post->post_content)) {
-      if ($this->parse_blocks_for_premium($post->post_content)) {
-        $this->has_premium_blocks = true;
-        return true;
-      }
-    }
-      
-    // Note: Query loop posts are always excluded (archive/home/search pages)
-    // This prevents checking individual posts in blog archives
-    
-    // Check FSE templates (home, single, archive, etc.)
-    if (function_exists('get_block_template')) {
-      $template = null;
-      
-      // Get the appropriate template based on context
-      if (is_front_page() || is_home()) {
-        $template = get_block_template(get_stylesheet() . '//home');
-        if (!$template) {
-          $template = get_block_template(get_stylesheet() . '//index');
-        }
-      } elseif (is_singular()) {
-        $template_slug = get_page_template_slug();
-        if ($template_slug) {
-          $template = get_block_template(get_stylesheet() . '//' . str_replace('.html', '', $template_slug));
-        } else {
-          $post_type = get_post_type();
-          $template = get_block_template(get_stylesheet() . '//single-' . $post_type);
-          if (!$template) {
-            $template = get_block_template(get_stylesheet() . '//singular');
-          }
-        }
-      } elseif (is_archive()) {
-        $template = get_block_template(get_stylesheet() . '//archive');
-      }
-      
-      // Fallback to index template
-      if (!$template) {
-        $template = get_block_template(get_stylesheet() . '//index');
-      }
-      
-      if ($template && !empty($template->content) && $this->parse_blocks_for_premium($template->content)) {
-        $this->has_premium_blocks = true;
-        return true;
-      }
-    }
+		// If we have compatibility CSS, add it inline
+		if (! empty($compatibility_css)) {
+			wp_register_style('pbg-compatibility', false);
+			wp_enqueue_style('pbg-compatibility');
+			wp_add_inline_style('pbg-compatibility', $compatibility_css);
+		}
+	}
 
-    $this->has_premium_blocks = false;
-    return false;
-  }
-  
-  /**
-   * Parse content to detect premium blocks
-   *
-   * @param string $content The content to parse.
-   * @return bool True if premium blocks are found, false otherwise.
-   */
-  private function parse_blocks_for_premium($content) {
-    if (empty($content)) {
-      return false;
-    }
-      
-    $blocks = parse_blocks($content);
-    return $this->has_premium_block_recursive($blocks);
-  }
-  
-  /**
-   * Generic recursive block processor that handles reusable blocks and inner blocks.
+	/**
+	 * Enqueue global responsive option CSS if premium blocks are present
+	 */
+	public function enqueue_global_responsive_option_css()
+	{
+		if ($this->has_premium_blocks || $this->content_has_premium_blocks()) {
+			add_action('wp_head', array($this, 'inject_responsive_css'), 100);
+		}
+	}
+
+	/**
+	 * Check if the current page/post contains premium blocks
+	 *
+	 * @return bool True if premium blocks are found, false otherwise.
+	 */
+	private function content_has_premium_blocks()
+	{
+		global $post;
+
+		// Handle singular posts/pages
+		if (is_singular() && $post && has_blocks($post->post_content)) {
+			if ($this->parse_blocks_for_premium($post->post_content)) {
+				$this->has_premium_blocks = true;
+				return true;
+			}
+		}
+
+		// Note: Query loop posts are always excluded (archive/home/search pages)
+		// This prevents checking individual posts in blog archives
+
+		// Check FSE templates (home, single, archive, etc.)
+		if (function_exists('get_block_template')) {
+			$template = null;
+
+			// Get the appropriate template based on context
+			if (is_front_page() || is_home()) {
+				$template = get_block_template(get_stylesheet() . '//home');
+				if (!$template) {
+					$template = get_block_template(get_stylesheet() . '//index');
+				}
+			} elseif (is_singular()) {
+				$template_slug = get_page_template_slug();
+				if ($template_slug) {
+					$template = get_block_template(get_stylesheet() . '//' . str_replace('.html', '', $template_slug));
+				} else {
+					$post_type = get_post_type();
+					$template = get_block_template(get_stylesheet() . '//single-' . $post_type);
+					if (!$template) {
+						$template = get_block_template(get_stylesheet() . '//singular');
+					}
+				}
+			} elseif (is_archive()) {
+				$template = get_block_template(get_stylesheet() . '//archive');
+			}
+
+			// Fallback to index template
+			if (!$template) {
+				$template = get_block_template(get_stylesheet() . '//index');
+			}
+
+			if ($template && !empty($template->content) && $this->parse_blocks_for_premium($template->content)) {
+				$this->has_premium_blocks = true;
+				return true;
+			}
+		}
+
+		$this->has_premium_blocks = false;
+		return false;
+	}
+
+	/**
+	 * Parse content to detect premium blocks
+	 *
+	 * @param string $content The content to parse.
+	 * @return bool True if premium blocks are found, false otherwise.
+	 */
+	private function parse_blocks_for_premium($content)
+	{
+		if (empty($content)) {
+			return false;
+		}
+
+		$blocks = parse_blocks($content);
+		return $this->has_premium_block_recursive($blocks);
+	}
+
+	/**
+	 * Generic recursive block processor that handles reusable blocks and inner blocks.
 	 * Executes a callback function on each block.
 	 *
 	 * @param array    $blocks   The blocks to traverse.
@@ -505,7 +549,7 @@ class PBG_Blocks_Helper
 		foreach ($blocks as $block) {
 			// Execute callback on current block
 			$result = call_user_func($callback, $block, $context);
-			
+
 			// early return if callback indicates to stop traversal.
 			if ($result === true) {
 				return true;
@@ -527,10 +571,10 @@ class PBG_Blocks_Helper
 			if ($block['blockName'] === 'core/template-part') {
 				$theme = $block['attrs']['theme'] ?? get_stylesheet();
 				$slug = $block['attrs']['slug'] ?? '';
-				
+
 				if (!empty($slug)) {
 					$template_part = get_block_template($theme . '//' . $slug, 'wp_template_part');
-					
+
 					if ($template_part && !empty($template_part->content)) {
 						$template_blocks = parse_blocks($template_part->content);
 						$result = $this->process_blocks_recursive($template_blocks, $callback, $context);
@@ -554,58 +598,59 @@ class PBG_Blocks_Helper
 	}
 
 	/**
-   * Recursively check for premium blocks (handles nested blocks and reusable blocks)
-   *
-   * @param array $blocks The blocks to check.
-   * @return bool True if premium blocks are found, false otherwise.
-   */
-  private function has_premium_block_recursive($blocks)
-  {
-    return $this->process_blocks_recursive($blocks, function($block) {
-      // Check if block is a premium block
-      if (!empty($block['blockName']) && $this->is_premium_block($block['blockName'])) {
-        return true;
-      }
-      return false;
-    });
-  }
-  
-  /**
-   * Check if a specific block exists in the blocks array.
-   *
-   * @param string $block_name The block name to search for.
-   * @param array  $blocks     The blocks to search in.
-   *
-   * @return bool True if block is found, false otherwise.
-   */
-  private function pbg_has_block($block_name, $blocks)
-  {
-    return $this->process_blocks_recursive($blocks, function($block) use ($block_name) {
-      if ($block['blockName'] === $block_name) {
-        return true;
-      }
-      return false;
-    });
-  }
+	 * Recursively check for premium blocks (handles nested blocks and reusable blocks)
+	 *
+	 * @param array $blocks The blocks to check.
+	 * @return bool True if premium blocks are found, false otherwise.
+	 */
+	private function has_premium_block_recursive($blocks)
+	{
+		return $this->process_blocks_recursive($blocks, function ($block) {
+			// Check if block is a premium block
+			if (!empty($block['blockName']) && $this->is_premium_block($block['blockName'])) {
+				return true;
+			}
+			return false;
+		});
+	}
 
 	/**
-   * Inject the responsive CSS
-   */
-  public function inject_responsive_css() {
-    // Prevent duplicate injection
-    static $injected = false;
+	 * Check if a specific block exists in the blocks array.
+	 *
+	 * @param string $block_name The block name to search for.
+	 * @param array  $blocks     The blocks to search in.
+	 *
+	 * @return bool True if block is found, false otherwise.
+	 */
+	private function pbg_has_block($block_name, $blocks)
+	{
+		return $this->process_blocks_recursive($blocks, function ($block) use ($block_name) {
+			if ($block['blockName'] === $block_name) {
+				return true;
+			}
+			return false;
+		});
+	}
 
-    if ($injected) {
-      return;
-    }
+	/**
+	 * Inject the responsive CSS
+	 */
+	public function inject_responsive_css()
+	{
+		// Prevent duplicate injection
+		static $injected = false;
 
-    $injected = true;
-    
-    $layout_settings = get_option('pbg_global_layout', array());
-    $tablet_bp = $layout_settings['tablet_breakpoint'] ?? 1024;
-    $mobile_bp = $layout_settings['mobile_breakpoint'] ?? 767;
-    
-    $custom_css = "
+		if ($injected) {
+			return;
+		}
+
+		$injected = true;
+
+		$layout_settings = get_option('pbg_global_layout', array());
+		$tablet_bp = $layout_settings['tablet_breakpoint'] ?? 1024;
+		$mobile_bp = $layout_settings['mobile_breakpoint'] ?? 767;
+
+		$custom_css = "
     @media (min-width: " . ($tablet_bp + 1) . "px) {
         .premium-desktop-hidden { display: none !important; }
     }
@@ -617,98 +662,102 @@ class PBG_Blocks_Helper
     }
     ";
 
-    // Minify CSS if the minify method is available.
-		if ( isset( $this->blocks_frontend_assets ) && method_exists( $this->blocks_frontend_assets, 'minify_css' ) ) {
-			$custom_css = $this->blocks_frontend_assets->minify_css( $custom_css );
+		// Minify CSS if the minify method is available.
+		if (isset($this->blocks_frontend_assets) && method_exists($this->blocks_frontend_assets, 'minify_css')) {
+			$custom_css = $this->blocks_frontend_assets->minify_css($custom_css);
 		}
 
-		?>
-		<style id="pbg-global-responsive-option-css"><?php echo $custom_css; ?></style>
-		<?php
-  }
+?>
+		<style id="pbg-global-responsive-option-css">
+			<?php echo $custom_css; ?>
+		</style>
+<?php
+	}
 
-  /**
-   * AJAX handler for filtering posts
-   */
-  public function ajax_filter_posts() {
-    // Verify nonce for security
-    if ( ! wp_verify_nonce( $_POST['nonce'], 'pbg_filter_posts' ) ) {
-      wp_die( 'Security check failed' );
-    }
+	/**
+	 * AJAX handler for filtering posts
+	 */
+	public function ajax_filter_posts()
+	{
+		// Verify nonce for security
+		if (! wp_verify_nonce($_POST['nonce'], 'pbg_filter_posts')) {
+			wp_die('Security check failed');
+		}
 
-    $attributes = json_decode( stripslashes( $_POST['attributes'] ), true );
-    $filter_term = sanitize_text_field( $_POST['filter_term'] );
-    $page = intval( $_POST['page'] ) ?: 1;
+		$attributes = json_decode(stripslashes($_POST['attributes']), true);
+		$filter_term = sanitize_text_field($_POST['filter_term']);
+		$page = intval($_POST['page']) ?: 1;
 
-    if ( $filter_term && $filter_term !== '*' ) {
-      $filter_taxonomy = $attributes['filterTaxonomy'] ?? '';
-      $filter_query = array(
-        'taxonomy' => $filter_taxonomy,
-        'terms' => array( intval( $filter_term ) ),
-      );
+		if ($filter_term && $filter_term !== '*') {
+			$filter_taxonomy = $attributes['filterTaxonomy'] ?? '';
+			$filter_query = array(
+				'taxonomy' => $filter_taxonomy,
+				'terms' => array(intval($filter_term)),
+			);
 
-      $attributes['query']['filterQuery'] = $filter_query;
-    } else {
-      if ( isset( $attributes['query']['filterQuery'] ) ) {
-        unset( $attributes['query']['filterQuery'] );
-      }
-    }
+			$attributes['query']['filterQuery'] = $filter_query;
+		} else {
+			if (isset($attributes['query']['filterQuery'])) {
+				unset($attributes['query']['filterQuery']);
+			}
+		}
 
-    // Get filtered query
-    $query = self::get_query( $attributes, 'grid', $page );
+		// Get filtered query
+		$query = self::get_query($attributes, 'grid', $page);
 
-    // Check if PBG_Post class exists (block might be deactivated)
-    if ( ! class_exists( 'PBG_Post' ) ) {
-      wp_send_json_error( array( 'message' => esc_html__( 'Post block is not available.', 'premium-blocks-for-gutenberg' ) ) );
-      return;
-    }
+		// Check if PBG_Post class exists (block might be deactivated)
+		if (! class_exists('PBG_Post')) {
+			wp_send_json_error(array('message' => esc_html__('Post block is not available.', 'premium-blocks-for-gutenberg')));
+			return;
+		}
 
-    // Generate HTML
-    ob_start();
-    PBG_Post::get_instance()->posts_articles_markup( $query, $attributes, 'grid' );
-    $posts_html = ob_get_clean();
-    $pagination_html = PBG_Post::get_instance()->render_pagination( $query, $attributes, $page );
+		// Generate HTML
+		ob_start();
+		PBG_Post::get_instance()->posts_articles_markup($query, $attributes, 'grid');
+		$posts_html = ob_get_clean();
+		$pagination_html = PBG_Post::get_instance()->render_pagination($query, $attributes, $page);
 
-    // Return response
-    wp_send_json_success( array(
-      'posts_html' => $posts_html,
-      'pagination_html' => $pagination_html,
-    ) );
-  }
+		// Return response
+		wp_send_json_success(array(
+			'posts_html' => $posts_html,
+			'pagination_html' => $pagination_html,
+		));
+	}
 
-  /**
-   * AJAX handler for filtering posts
-   */
-  public function ajax_paginate_posts() {
-    // Verify nonce for security
-    if ( ! wp_verify_nonce( $_POST['nonce'], 'pbg_paginate_posts' ) ) {
-      wp_die( 'Security check failed' );
-    }
+	/**
+	 * AJAX handler for filtering posts
+	 */
+	public function ajax_paginate_posts()
+	{
+		// Verify nonce for security
+		if (! wp_verify_nonce($_POST['nonce'], 'pbg_paginate_posts')) {
+			wp_die('Security check failed');
+		}
 
-    $attributes = json_decode( stripslashes( $_POST['attributes'] ), true );
-    $page = intval( $_POST['page'] ) ?: 1;
+		$attributes = json_decode(stripslashes($_POST['attributes']), true);
+		$page = intval($_POST['page']) ?: 1;
 
-    // Get filtered query
-    $query = self::get_query( $attributes, 'grid', $page );
+		// Get filtered query
+		$query = self::get_query($attributes, 'grid', $page);
 
-    // Check if PBG_Post class exists (block might be deactivated)
-    if ( ! class_exists( 'PBG_Post' ) ) {
-      wp_send_json_error( array( 'message' => esc_html__( 'Post block is not available.', 'premium-blocks-for-gutenberg' ) ) );
-      return;
-    }
+		// Check if PBG_Post class exists (block might be deactivated)
+		if (! class_exists('PBG_Post')) {
+			wp_send_json_error(array('message' => esc_html__('Post block is not available.', 'premium-blocks-for-gutenberg')));
+			return;
+		}
 
-    // Generate HTML
-    ob_start();
-    PBG_Post::get_instance()->posts_articles_markup( $query, $attributes, 'grid' );
-    $posts_html = ob_get_clean();
-    $pagination_html = PBG_Post::get_instance()->render_pagination( $query, $attributes, $page );
+		// Generate HTML
+		ob_start();
+		PBG_Post::get_instance()->posts_articles_markup($query, $attributes, 'grid');
+		$posts_html = ob_get_clean();
+		$pagination_html = PBG_Post::get_instance()->render_pagination($query, $attributes, $page);
 
-    // Return response
-    wp_send_json_success( array(
-      'posts_html' => $posts_html,
-      'pagination_html' => $pagination_html,
-    ) );
-  }
+		// Return response
+		wp_send_json_success(array(
+			'posts_html' => $posts_html,
+			'pagination_html' => $pagination_html,
+		));
+	}
 
 	/**
 	 * Update post meta
@@ -1187,8 +1236,8 @@ class PBG_Blocks_Helper
 		);
 
 		$form_blocks = array();
-		
-		$this->process_blocks_recursive($inner_blocks, function($block) use ($form_fields_blocks, &$form_blocks) {
+
+		$this->process_blocks_recursive($inner_blocks, function ($block) use ($form_fields_blocks, &$form_blocks) {
 			// Check if block is form field block
 			if (in_array($block['blockName'], $form_fields_blocks, true)) {
 				$form_blocks[$block['attrs']['blockId']] = array(
@@ -1236,7 +1285,7 @@ class PBG_Blocks_Helper
 			'premium/banner'                => array(
 				'name'       => 'banner',
 				'style_func' => 'get_premium_banner_css_style',
-        'media_style_func' => 'get_premium_banner_media_css',
+				'media_style_func' => 'get_premium_banner_media_css',
 			),
 			'premium/bullet-list'           => array(
 				'name'       => 'bullet-list',
@@ -1301,7 +1350,7 @@ class PBG_Blocks_Helper
 			'premium/modal'                 => array(
 				'name'       => 'Modal',
 				'style_func' => 'get_premium_modal_css_style',
-        'media_style_func' => 'get_premium_modal_media_css',
+				'media_style_func' => 'get_premium_modal_media_css',
 			),
 			'premium/image-separator'       => array(
 				'name'       => 'image-separator',
@@ -1367,14 +1416,14 @@ class PBG_Blocks_Helper
 			'premium/post-carousel'         => array(
 				'name'       => 'post-carousel',
 				'style_func' => array('PBG_Post', 'get_premium_post_css_style'),
-        'media_style_func' => array('PBG_Post', 'get_premium_post_media_css'),
+				'media_style_func' => array('PBG_Post', 'get_premium_post_media_css'),
 			),
 			'premium/post-grid'             => array(
 				'name'       => 'post-grid',
 				'style_func' => array('PBG_Post', 'get_premium_post_css_style'),
-        'media_style_func' => array('PBG_Post', 'get_premium_post_media_css'),
+				'media_style_func' => array('PBG_Post', 'get_premium_post_media_css'),
 			),
-		
+
 			'premium/svg-draw'              => array(
 				'name'       => 'svg-draw',
 				'style_func' => 'get_premium_svg_draw_css_style',
@@ -1438,7 +1487,7 @@ class PBG_Blocks_Helper
 			'premium/tabs'           => array(
 				'name'       => 'tabs',
 				'style_func' => 'get_premium_tabs_css_style',
-        'media_style_func' => 'get_premium_tabs_media_css',
+				'media_style_func' => 'get_premium_tabs_media_css',
 			),
 			'premium/tab-item'           => array(
 				'name'       => 'tab-item',
@@ -1448,10 +1497,10 @@ class PBG_Blocks_Helper
 				'name'       => 'off-canvas',
 				'style_func' => 'get_premium_off_canvas_css',
 			),
-      'premium/one-page-scroll'        => array(
+			'premium/one-page-scroll'        => array(
 				'name'       => 'one-page-scroll',
 				'style_func' => 'get_premium_one_page_scroll_css',
-        'media_style_func' => 'get_premium_one_page_scroll_media_css',
+				'media_style_func' => 'get_premium_one_page_scroll_media_css',
 			),
 			'premium/one-page-scroll-item'   => array(
 				'name'       => 'one-page-scroll-item',
@@ -1532,7 +1581,7 @@ class PBG_Blocks_Helper
 	public function regenerate_assets_files()
 	{
 		$global_settings = apply_filters('pb_settings', get_option('pbg_blocks_settings', array()));
-		
+
 		// Only force regeneration if user clicked "Regenerate Assets" button
 		// Otherwise, get_css_url() handles everything with smart hash comparison
 		return isset($global_settings['premium-regenrate-assets']) && $global_settings['premium-regenrate-assets'];
@@ -1587,16 +1636,16 @@ class PBG_Blocks_Helper
 			}
 
 			if (! file_exists(PREMIUM_BLOCKS_PATH . "assets/css/minified/{$slug}.min.css")) {
-        if ($slug === 'post-grid' || $slug=== 'post-carousel') {
-			    $this->add_block_css("assets/css/minified/post.min.css");
-        }else{
-			    continue;
-		    }
+				if ($slug === 'post-grid' || $slug === 'post-carousel') {
+					$this->add_block_css("assets/css/minified/post.min.css");
+				} else {
+					continue;
+				}
 			}
 
-      if ($slug !== 'post-grid' && $slug !== 'post-carousel') {
-			  $this->add_block_css("assets/css/minified/{$slug}.min.css");
-      }
+			if ($slug !== 'post-grid' && $slug !== 'post-carousel') {
+				$this->add_block_css("assets/css/minified/{$slug}.min.css");
+			}
 		}
 	}
 
@@ -1609,7 +1658,7 @@ class PBG_Blocks_Helper
 	 */
 	private function register_animation_blocks($blocks)
 	{
-		$this->process_blocks_recursive($blocks, function($block) {
+		$this->process_blocks_recursive($blocks, function ($block) {
 			$this->register_block_data($block);
 		});
 	}
@@ -1625,12 +1674,12 @@ class PBG_Blocks_Helper
 		$this->add_blocks_assets();
 		$this->blocks_frontend_assets->set_post_id(get_the_ID());
 		$this->blocks_frontend_assets->add_inline_css($this->get_custom_block_css());
-		
+
 		// Check if assets need to be regenerated (user clicked button or smart detection)
 		if ($this->regenerate_assets_files()) {
 			// Force regeneration (either by user request or smart detection)
 			$css_url = $this->blocks_frontend_assets->force_rewrite_css_file();
-			
+
 			// Reset the regeneration flag if it was set by user clicking "Regenerate Assets" button
 			$global_settings = apply_filters('pb_settings', get_option('pbg_blocks_settings', array()));
 			if (isset($global_settings['premium-regenrate-assets']) && $global_settings['premium-regenrate-assets']) {
@@ -1646,7 +1695,7 @@ class PBG_Blocks_Helper
 			// Normal operation - use smart hash-based regeneration
 			$css_url = $this->blocks_frontend_assets->get_css_url();
 		}
-		
+
 		if (! empty($css_url)) {
 			$version = get_post_meta(get_the_ID(), '_premium_css_version', true);
 
@@ -1707,7 +1756,7 @@ class PBG_Blocks_Helper
 			if ($sidebar === 'wp_inactive_widgets' || $sidebar === 'array_version' || empty($widgets) || !is_array($widgets)) {
 				continue;
 			}
-			
+
 			foreach ($widgets as $widget_id) {
 				// Check if this is a block widget
 				if (strpos($widget_id, 'block-') === 0) {
@@ -1721,7 +1770,7 @@ class PBG_Blocks_Helper
 				}
 			}
 		}
-		
+
 		return $active_blocks;
 	}
 
@@ -1831,43 +1880,43 @@ class PBG_Blocks_Helper
 			}
 		}
 
-    $pbg_width_type = $css->pbg_get_value($attrs, 'pbgWidthType', 'Desktop');
-    $pbg_position = $css->pbg_get_value($attrs, 'pbgPosition', 'Desktop');
-    $pbg_horizontal_orientation = $css->pbg_get_value($attrs, 'pbgHorizontalOrientation', 'Desktop');
-    $pbg_vertical_orientation = $css->pbg_get_value($attrs, 'pbgVerticalOrientation', 'Desktop');
+		$pbg_width_type = $css->pbg_get_value($attrs, 'pbgWidthType', 'Desktop');
+		$pbg_position = $css->pbg_get_value($attrs, 'pbgPosition', 'Desktop');
+		$pbg_horizontal_orientation = $css->pbg_get_value($attrs, 'pbgHorizontalOrientation', 'Desktop');
+		$pbg_vertical_orientation = $css->pbg_get_value($attrs, 'pbgVerticalOrientation', 'Desktop');
 
-    $pbg_width_migrated = $css->pbg_get_value($attrs, 'pbgWidthMigrated');
-    
-    /**
-     * Only use custom width if explicitly set to "custom" or if it's an old block (no migration flag) and has custom width (backward compatibility).
-    */
-    $pbg_custom_width = $css->pbg_get_value($attrs, 'pbgWidth', 'Desktop');
-    $should_use_custom_width = ($pbg_width_type === 'custom') || (!$pbg_width_migrated && empty($pbg_width_type) && !empty($pbg_custom_width));
+		$pbg_width_migrated = $css->pbg_get_value($attrs, 'pbgWidthMigrated');
+
+		/**
+		 * Only use custom width if explicitly set to "custom" or if it's an old block (no migration flag) and has custom width (backward compatibility).
+		 */
+		$pbg_custom_width = $css->pbg_get_value($attrs, 'pbgWidth', 'Desktop');
+		$should_use_custom_width = ($pbg_width_type === 'custom') || (!$pbg_width_migrated && empty($pbg_width_type) && !empty($pbg_custom_width));
 
 		$css->set_selector(".{$block_id}");
 		$css->pbg_render_spacing($attrs, 'blockPadding', 'padding', 'Desktop', null, '!important');
-    if( in_array( $pbg_width_type, array('100%','auto') ) ){
-      $css->pbg_render_value($attrs, 'pbgWidthType', 'width', 'Desktop', null, '!important');
-    }
-    if( $should_use_custom_width ){
-      $css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Desktop', null, '!important');
-      $align = $css->pbg_get_value($attrs, 'align', 'Desktop');
-      if ( $align === 'center' ) {
-          $css->add_property('margin-left', 'auto !important');
-          $css->add_property('margin-right', 'auto !important');
-      } elseif ( $align === 'right' ) {
-          $css->add_property('margin-left', 'auto !important');
-          $css->add_property('margin-right', '0 !important');
-      } elseif ( $align === 'left' ) {
-          $css->add_property('margin-left', '0 !important');
-          $css->add_property('margin-right', 'auto !important');
-      }
-    }
-    $css->pbg_render_value($attrs, 'pbgPosition', 'position', 'Desktop', null, '!important');
-    if( $pbg_position === 'absolute' || $pbg_position === 'fixed' ){
-      $css->pbg_render_range($attrs, 'pbgHorizontalOffset', $pbg_horizontal_orientation, 'Desktop', null, '!important');
-      $css->pbg_render_range($attrs, 'pbgVerticalOffset', $pbg_vertical_orientation, 'Desktop', null, '!important');
-    }
+		if (in_array($pbg_width_type, array('100%', 'auto'))) {
+			$css->pbg_render_value($attrs, 'pbgWidthType', 'width', 'Desktop', null, '!important');
+		}
+		if ($should_use_custom_width) {
+			$css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Desktop', null, '!important');
+			$align = $css->pbg_get_value($attrs, 'align', 'Desktop');
+			if ($align === 'center') {
+				$css->add_property('margin-left', 'auto !important');
+				$css->add_property('margin-right', 'auto !important');
+			} elseif ($align === 'right') {
+				$css->add_property('margin-left', 'auto !important');
+				$css->add_property('margin-right', '0 !important');
+			} elseif ($align === 'left') {
+				$css->add_property('margin-left', '0 !important');
+				$css->add_property('margin-right', 'auto !important');
+			}
+		}
+		$css->pbg_render_value($attrs, 'pbgPosition', 'position', 'Desktop', null, '!important');
+		if ($pbg_position === 'absolute' || $pbg_position === 'fixed') {
+			$css->pbg_render_range($attrs, 'pbgHorizontalOffset', $pbg_horizontal_orientation, 'Desktop', null, '!important');
+			$css->pbg_render_range($attrs, 'pbgVerticalOffset', $pbg_vertical_orientation, 'Desktop', null, '!important');
+		}
 		$css->pbg_render_value($attrs, 'pbgzIndex', 'z-index', null, null, '!important');
 
 		$css->set_selector(":root:has(.{$block_id}) .{$block_id}");
@@ -1876,50 +1925,50 @@ class PBG_Blocks_Helper
 		// Tablet.
 		$css->start_media_query('tablet');
 
-    $pbg_width_type = $css->pbg_get_value($attrs, 'pbgWidthType', 'Tablet', true);
-    $pbg_position = $css->pbg_get_value($attrs, 'pbgPosition', 'Tablet', true);
-    $pbg_horizontal_orientation = $css->pbg_get_value($attrs, 'pbgHorizontalOrientation', 'Tablet', true);
-    $pbg_vertical_orientation = $css->pbg_get_value($attrs, 'pbgVerticalOrientation', 'Tablet', true);
+		$pbg_width_type = $css->pbg_get_value($attrs, 'pbgWidthType', 'Tablet', true);
+		$pbg_position = $css->pbg_get_value($attrs, 'pbgPosition', 'Tablet', true);
+		$pbg_horizontal_orientation = $css->pbg_get_value($attrs, 'pbgHorizontalOrientation', 'Tablet', true);
+		$pbg_vertical_orientation = $css->pbg_get_value($attrs, 'pbgVerticalOrientation', 'Tablet', true);
 
-    // Backward compatibility: Only apply custom width for old blocks (before migration flag existed)
-    $pbg_custom_width = $css->pbg_get_value($attrs, 'pbgWidth', 'Tablet');
-    $should_use_custom_width = ($pbg_width_type === 'custom') || (!$pbg_width_migrated && empty($pbg_width_type) && !empty($pbg_custom_width));
+		// Backward compatibility: Only apply custom width for old blocks (before migration flag existed)
+		$pbg_custom_width = $css->pbg_get_value($attrs, 'pbgWidth', 'Tablet');
+		$should_use_custom_width = ($pbg_width_type === 'custom') || (!$pbg_width_migrated && empty($pbg_width_type) && !empty($pbg_custom_width));
 
 		$css->set_selector(".{$block_id}");
 		$css->pbg_render_spacing($attrs, 'blockPadding', 'padding', 'Tablet', null, '!important');
-		if( in_array( $pbg_width_type, array('100%','auto') ) ){
-      $css->pbg_render_value($attrs, 'pbgWidthType', 'width', 'Tablet', null, '!important');
-    }
-    if( $should_use_custom_width ){
-      $css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Tablet', null, '!important');
-      $align = $css->pbg_get_value($attrs, 'align', 'Tablet', true);
-      if ( $align === 'center' ) {
-          $css->add_property('margin-left', 'auto !important');
-          $css->add_property('margin-right', 'auto !important');
-      } elseif ( $align === 'right' ) {
-          $css->add_property('margin-left', 'auto !important');
-          $css->add_property('margin-right', '0 !important');
-      } elseif ( $align === 'left' ) {
-          $css->add_property('margin-left', '0 !important');
-          $css->add_property('margin-right', 'auto !important');
-      }
-    }
-    $css->pbg_render_value($attrs, 'pbgPosition', 'position', 'Tablet', null, '!important');
-    if( $pbg_position === 'absolute' || $pbg_position === 'fixed' ){
-      if($pbg_horizontal_orientation === 'left'){
-        $css->add_property('right', 'auto !important');
-      }else{
-        $css->add_property('left', 'auto !important');
-      }
+		if (in_array($pbg_width_type, array('100%', 'auto'))) {
+			$css->pbg_render_value($attrs, 'pbgWidthType', 'width', 'Tablet', null, '!important');
+		}
+		if ($should_use_custom_width) {
+			$css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Tablet', null, '!important');
+			$align = $css->pbg_get_value($attrs, 'align', 'Tablet', true);
+			if ($align === 'center') {
+				$css->add_property('margin-left', 'auto !important');
+				$css->add_property('margin-right', 'auto !important');
+			} elseif ($align === 'right') {
+				$css->add_property('margin-left', 'auto !important');
+				$css->add_property('margin-right', '0 !important');
+			} elseif ($align === 'left') {
+				$css->add_property('margin-left', '0 !important');
+				$css->add_property('margin-right', 'auto !important');
+			}
+		}
+		$css->pbg_render_value($attrs, 'pbgPosition', 'position', 'Tablet', null, '!important');
+		if ($pbg_position === 'absolute' || $pbg_position === 'fixed') {
+			if ($pbg_horizontal_orientation === 'left') {
+				$css->add_property('right', 'auto !important');
+			} else {
+				$css->add_property('left', 'auto !important');
+			}
 
-      if($pbg_vertical_orientation === 'top'){
-        $css->add_property('bottom', 'auto !important');
-      }else{
-        $css->add_property('top', 'auto !important');
-      }
-      $css->pbg_render_range($attrs, 'pbgHorizontalOffset', $pbg_horizontal_orientation, 'Tablet', null, '!important', true);
-      $css->pbg_render_range($attrs, 'pbgVerticalOffset', $pbg_vertical_orientation, 'Tablet', null, '!important', true);
-    }
+			if ($pbg_vertical_orientation === 'top') {
+				$css->add_property('bottom', 'auto !important');
+			} else {
+				$css->add_property('top', 'auto !important');
+			}
+			$css->pbg_render_range($attrs, 'pbgHorizontalOffset', $pbg_horizontal_orientation, 'Tablet', null, '!important', true);
+			$css->pbg_render_range($attrs, 'pbgVerticalOffset', $pbg_vertical_orientation, 'Tablet', null, '!important', true);
+		}
 
 		$css->set_selector(":root:has(.{$block_id}) .{$block_id}");
 		$css->pbg_render_spacing($attrs, 'blockMargin', 'margin', 'Tablet');
@@ -1929,50 +1978,50 @@ class PBG_Blocks_Helper
 		// Mobile.
 		$css->start_media_query('mobile');
 
-    $pbg_width_type = $css->pbg_get_value($attrs, 'pbgWidthType', 'Mobile', true);
-    $pbg_position = $css->pbg_get_value($attrs, 'pbgPosition', 'Mobile', true);
+		$pbg_width_type = $css->pbg_get_value($attrs, 'pbgWidthType', 'Mobile', true);
+		$pbg_position = $css->pbg_get_value($attrs, 'pbgPosition', 'Mobile', true);
 		$pbg_horizontal_orientation = $css->pbg_get_value($attrs, 'pbgHorizontalOrientation', 'Mobile', true);
-    $pbg_vertical_orientation = $css->pbg_get_value($attrs, 'pbgVerticalOrientation', 'Mobile', true);
+		$pbg_vertical_orientation = $css->pbg_get_value($attrs, 'pbgVerticalOrientation', 'Mobile', true);
 
-    // Backward compatibility: Only apply custom width for old blocks (before migration flag existed)
-    $pbg_custom_width = $css->pbg_get_value($attrs, 'pbgWidth', 'Mobile');
-    $should_use_custom_width = ($pbg_width_type === 'custom') || (!$pbg_width_migrated && empty($pbg_width_type) && !empty($pbg_custom_width));
+		// Backward compatibility: Only apply custom width for old blocks (before migration flag existed)
+		$pbg_custom_width = $css->pbg_get_value($attrs, 'pbgWidth', 'Mobile');
+		$should_use_custom_width = ($pbg_width_type === 'custom') || (!$pbg_width_migrated && empty($pbg_width_type) && !empty($pbg_custom_width));
 
 		$css->set_selector(".{$block_id}");
 		$css->pbg_render_spacing($attrs, 'blockPadding', 'padding', 'Mobile', null, '!important');
-		if( in_array( $pbg_width_type, array('100%','auto') ) ){
-      $css->pbg_render_value($attrs, 'pbgWidthType', 'width', 'Mobile', null, '!important');
-    }
-    if( $should_use_custom_width ){
-      $css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Mobile', null, '!important');
-      $align = $css->pbg_get_value($attrs, 'align', 'Mobile', true);
-      if ( $align === 'center' ) {
-          $css->add_property('margin-left', 'auto !important');
-          $css->add_property('margin-right', 'auto !important');
-      } elseif ( $align === 'right' ) {
-          $css->add_property('margin-left', 'auto !important');
-          $css->add_property('margin-right', '0 !important');
-      } elseif ( $align === 'left' ) {
-          $css->add_property('margin-left', '0 !important');
-          $css->add_property('margin-right', 'auto !important');
-      }
-    }
-    $css->pbg_render_value($attrs, 'pbgPosition', 'position', 'Mobile', null, '!important');
-    if( $pbg_position === 'absolute' || $pbg_position === 'fixed' ){
-      if($pbg_horizontal_orientation === 'left'){
-        $css->add_property('right', 'auto !important');
-      }else{
-        $css->add_property('left', 'auto !important');
-      }
+		if (in_array($pbg_width_type, array('100%', 'auto'))) {
+			$css->pbg_render_value($attrs, 'pbgWidthType', 'width', 'Mobile', null, '!important');
+		}
+		if ($should_use_custom_width) {
+			$css->pbg_render_range($attrs, 'pbgWidth', 'width', 'Mobile', null, '!important');
+			$align = $css->pbg_get_value($attrs, 'align', 'Mobile', true);
+			if ($align === 'center') {
+				$css->add_property('margin-left', 'auto !important');
+				$css->add_property('margin-right', 'auto !important');
+			} elseif ($align === 'right') {
+				$css->add_property('margin-left', 'auto !important');
+				$css->add_property('margin-right', '0 !important');
+			} elseif ($align === 'left') {
+				$css->add_property('margin-left', '0 !important');
+				$css->add_property('margin-right', 'auto !important');
+			}
+		}
+		$css->pbg_render_value($attrs, 'pbgPosition', 'position', 'Mobile', null, '!important');
+		if ($pbg_position === 'absolute' || $pbg_position === 'fixed') {
+			if ($pbg_horizontal_orientation === 'left') {
+				$css->add_property('right', 'auto !important');
+			} else {
+				$css->add_property('left', 'auto !important');
+			}
 
-      if($pbg_vertical_orientation === 'top'){
-        $css->add_property('bottom', 'auto !important');
-      }else{
-        $css->add_property('top', 'auto !important');
-      }
-      $css->pbg_render_range($attrs, 'pbgHorizontalOffset', $pbg_horizontal_orientation, 'Mobile', null, '!important', true);
-      $css->pbg_render_range($attrs, 'pbgVerticalOffset', $pbg_vertical_orientation, 'Mobile', null, '!important', true);
-    }
+			if ($pbg_vertical_orientation === 'top') {
+				$css->add_property('bottom', 'auto !important');
+			} else {
+				$css->add_property('top', 'auto !important');
+			}
+			$css->pbg_render_range($attrs, 'pbgHorizontalOffset', $pbg_horizontal_orientation, 'Mobile', null, '!important', true);
+			$css->pbg_render_range($attrs, 'pbgVerticalOffset', $pbg_vertical_orientation, 'Mobile', null, '!important', true);
+		}
 
 		$css->set_selector(":root:has(.{$block_id}) .{$block_id}");
 		$css->pbg_render_spacing($attrs, 'blockMargin', 'margin', 'Mobile');
@@ -2007,10 +2056,10 @@ class PBG_Blocks_Helper
 		}
 		$block_data = $blocks_names[$block_name];
 		$style_func = $block_data['style_func'];
-    $media_style_func = $block_data['media_style_func'] ?? null;
+		$media_style_func = $block_data['media_style_func'] ?? null;
 
 		$attr       = $this->get_block_attributes($block);
-    
+
 		if (! empty($style_func)) {
 			$unique_id = $this->get_block_unique_id($block_name, $attr);
 			if (is_array($style_func)) {
@@ -2036,25 +2085,25 @@ class PBG_Blocks_Helper
 			}
 		}
 
-    if( ! empty($media_style_func) ){
-      // Handle class-based callbacks (e.g., array('PBG_Post', 'method'))
-      if (is_array($media_style_func)) {
-        $class = $media_style_func[0];
-        // Check if class exists before trying to use it (block might be deactivated)
-        if (! is_string($class) || ! class_exists($class)) {
-          return;
-        }
-        $instance = $class::get_instance();
-        $media_style_func = array($instance, $media_style_func[1]);
-      }
-      
-      if( is_callable($media_style_func) ){
-        $media_css = call_user_func( $media_style_func );
-        if( ! empty( $media_css ) ){
-          $this->add_custom_block_css( $media_css );
-        }
-      }
-    }
+		if (! empty($media_style_func)) {
+			// Handle class-based callbacks (e.g., array('PBG_Post', 'method'))
+			if (is_array($media_style_func)) {
+				$class = $media_style_func[0];
+				// Check if class exists before trying to use it (block might be deactivated)
+				if (! is_string($class) || ! class_exists($class)) {
+					return;
+				}
+				$instance = $class::get_instance();
+				$media_style_func = array($instance, $media_style_func[1]);
+			}
+
+			if (is_callable($media_style_func)) {
+				$media_css = call_user_func($media_style_func);
+				if (! empty($media_css)) {
+					$this->add_custom_block_css($media_css);
+				}
+			}
+		}
 
 		$extra_options_css = $this->get_extra_options_css($unique_id, $block_name, $attr);
 		if (! empty($extra_options_css)) {
@@ -2071,7 +2120,7 @@ class PBG_Blocks_Helper
 	 */
 	public function add_blocks_dynamic_css($blocks)
 	{
-		$this->process_blocks_recursive($blocks ?? array(), function($block) {
+		$this->process_blocks_recursive($blocks ?? array(), function ($block) {
 			// Check if premium block by block name.
 			$block_name = $block['blockName'];
 
@@ -2102,6 +2151,56 @@ class PBG_Blocks_Helper
 				// Remove all style tags and their contents from the block content.
 				$block_content = preg_replace('/<style(?:\s+(?:class|id)="[^"]*")*>(.*?)<\/style>/s', '', $block_content);
 			}
+		}
+
+		return $block_content;
+	}
+
+	/**
+	 * Inject responsive hidden classes (premium-desktop-hidden, premium-tablet-hidden,
+	 * premium-mobile-hidden) into the outermost tag of dynamic blocks.
+	 *
+	 * Static blocks get these classes via the JS blocks.getSaveContent.extraProps filter;
+	 * dynamic blocks (render_callback) never pass through that filter, so their saved HTML
+	 * never contains the classes. This filter closes that gap for all premium blocks.
+	 *
+	 * @param string $block_content Rendered block HTML.
+	 * @param array  $block         Block data including attrs.
+	 * @return string Modified block HTML.
+	 */
+	public function add_responsive_hidden_classes($block_content, $block)
+	{
+		if (! $this->is_premium_block($block['blockName']) || empty($block_content)) {
+			return $block_content;
+		}
+
+		$attrs   = $block['attrs'] ?? array();
+		$classes = array();
+
+		if (! empty($attrs['hideDesktop'])) {
+			$classes[] = 'premium-desktop-hidden';
+		}
+		if (! empty($attrs['hideTablet'])) {
+			$classes[] = 'premium-tablet-hidden';
+		}
+		if (! empty($attrs['hideMobile'])) {
+			$classes[] = 'premium-mobile-hidden';
+		}
+
+		if (empty($classes)) {
+			return $block_content;
+		}
+
+		if (! class_exists('WP_HTML_Tag_Processor')) {
+			return $block_content;
+		}
+
+		$tag = new WP_HTML_Tag_Processor($block_content);
+		if ($tag->next_tag()) {
+			foreach ($classes as $class) {
+				$tag->add_class($class);
+			}
+			$block_content = $tag->get_updated_html();
 		}
 
 		return $block_content;
@@ -2161,7 +2260,7 @@ class PBG_Blocks_Helper
 			return;
 		}
 
-    if ($this->global_features['premium-entrance-animation'] && isset($attrs['entranceAnimation']) && isset($attrs['entranceAnimation']['animation']) && $this->check_if_any_value_not_empty($attrs['entranceAnimation']['animation'])) {
+		if ($this->global_features['premium-entrance-animation'] && isset($attrs['entranceAnimation']) && isset($attrs['entranceAnimation']['animation']) && $this->check_if_any_value_not_empty($attrs['entranceAnimation']['animation'])) {
 			$this->entrance_animation_blocks[$attrs['entranceAnimation']['clientId']] = $attrs['entranceAnimation'];
 		}
 
@@ -2217,12 +2316,12 @@ class PBG_Blocks_Helper
 			}
 		}
 
-    // Append pbg attributes to default attributes.
-    foreach (self::$pbg_attributes as $key => $value) {
-      if (isset($value['default'])) {
-					$default_attrs[$key] = $value['default'];
-      }
-    }
+		// Append pbg attributes to default attributes.
+		foreach (self::$pbg_attributes as $key => $value) {
+			if (isset($value['default'])) {
+				$default_attrs[$key] = $value['default'];
+			}
+		}
 
 		// Merge default attributes with block attributes.
 		$attr = wp_parse_args($block['attrs'], $default_attrs);
@@ -2336,14 +2435,12 @@ class PBG_Blocks_Helper
 					$generate_css->pbg_add_css('assets/css/minified/instagram-feed-header.min.css');
 					$generate_css->pbg_add_css('assets/css/minified/instagram-feed-posts.min.css');
 				}
-				if ('post-carousel' === $slug || 'post-grid' === $slug ) {
+				if ('post-carousel' === $slug || 'post-grid' === $slug) {
 					$generate_css->pbg_add_css('assets/css/minified/post.min.css');
-				} 
-				if('post-carousel'=== $slug){
-				$generate_css->pbg_add_css('assets/css/minified/splide.min.css');
-
 				}
-				elseif ('form' === $slug) {
+				if ('post-carousel' === $slug) {
+					$generate_css->pbg_add_css('assets/css/minified/splide.min.css');
+				} elseif ('form' === $slug) {
 					$generate_css->pbg_add_css('assets/css/minified/form-toggle.min.css');
 					$generate_css->pbg_add_css('assets/css/minified/form-checkbox.min.css');
 					$generate_css->pbg_add_css('assets/css/minified/form-radio.min.css');
@@ -2352,10 +2449,10 @@ class PBG_Blocks_Helper
 					$generate_css->pbg_add_css('assets/css/minified/form-select.min.css');
 				}
 
-        
-        if( $slug !== 'post-grid' && $slug !== 'post-carousel' ){
-          $generate_css->pbg_add_css("assets/css/minified/{$slug}.min.css");
-        }
+
+				if ($slug !== 'post-grid' && $slug !== 'post-carousel') {
+					$generate_css->pbg_add_css("assets/css/minified/{$slug}.min.css");
+				}
 			}
 		}
 
@@ -2443,7 +2540,7 @@ class PBG_Blocks_Helper
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * Get authors
 	 *
@@ -2531,15 +2628,15 @@ class PBG_Blocks_Helper
 			'JsonUploadEnabled' => $allow_json,
 		);
 
-    $is_maps_enabled = self::$blocks['maps'];
+		$is_maps_enabled = self::$blocks['maps'];
 		$api_key         = isset(self::$config['premium-map-key']) ? self::$config['premium-map-key'] : '';
 		$use_js_api      = isset(self::$config['premium-map-api']) ? self::$config['premium-map-api'] : true;
 
-		if ($is_maps_enabled ) {
+		if ($is_maps_enabled) {
 			$settings_data['googleMaps'] = array(
-        'apiKey'    => $api_key,
-        'useJsApi'  => $use_js_api,
-      );
+				'apiKey'    => $api_key,
+				'useJsApi'  => $use_js_api,
+			);
 		}
 
 		// PBG.
@@ -2626,7 +2723,7 @@ class PBG_Blocks_Helper
 
 		$is_rtl = is_rtl() ? true : false;
 
-		if ($is_rtl && ( $this->has_premium_blocks || $this->content_has_premium_blocks() )) {
+		if ($is_rtl && ($this->has_premium_blocks || $this->content_has_premium_blocks())) {
 			wp_enqueue_style(
 				'pbg-style',
 				PREMIUM_BLOCKS_URL . 'assets/css/minified/style-blocks-rtl.min.css',
@@ -2706,10 +2803,10 @@ class PBG_Blocks_Helper
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/form-textarea.php';
 				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/form-select.php';
 			} elseif ($slug === 'one-page-scroll') {
-        require_once PREMIUM_BLOCKS_PATH . 'blocks-config/one-page-scroll-item/index.php';
-      } elseif ($slug === 'post-carousel' || $slug === 'post-grid') {
-        require_once PREMIUM_BLOCKS_PATH . 'blocks-config/post.php';
-      }
+				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/one-page-scroll-item/index.php';
+			} elseif ($slug === 'post-carousel' || $slug === 'post-grid') {
+				require_once PREMIUM_BLOCKS_PATH . 'blocks-config/post.php';
+			}
 		}
 	}
 
@@ -2801,10 +2898,10 @@ class PBG_Blocks_Helper
 
 				$data = array_merge($data, [$tax]);
 
-        $terms = get_terms( array(
-            'taxonomy' => $tax_slug,
-            'hide_empty' => true,
-        ) );
+				$terms = get_terms(array(
+					'taxonomy' => $tax_slug,
+					'hide_empty' => true,
+				));
 
 				$related_tax = array();
 
@@ -2814,7 +2911,7 @@ class PBG_Blocks_Helper
 							'id'    => $t_obj->term_id,
 							'name'  => $t_obj->name,
 							'child' => get_term_children($t_obj->term_id, $tax_slug),
-              'count' => $t_obj->count,
+							'count' => $t_obj->count,
 						);
 					}
 					$return_array[$post_type]['terms'][$tax_slug] = $related_tax;
@@ -2935,6 +3032,53 @@ class PBG_Blocks_Helper
 			'orderby'        => (isset($attributes['query']['orderBy'])) ? $attributes['query']['orderBy'] : 'date',
 			'paged'          => 1,
 		);
+		// When "Inherit" query type is selected, derive filters from the current archive context.
+		if (! empty($attributes['queryType']) && 'inherit' === $attributes['queryType']) {
+			$queried_object = get_queried_object();
+
+			if (is_category() || is_tag() || is_tax()) {
+				$query_args['tax_query'] = array(
+					array(
+						'taxonomy' => $queried_object->taxonomy,
+						'field'    => 'term_id',
+						'terms'    => $queried_object->term_id,
+					),
+				);
+				// Use the post types registered for this taxonomy, not the block default.
+				$tax_obj = get_taxonomy($queried_object->taxonomy);
+				if ($tax_obj && ! empty($tax_obj->object_type)) {
+					$query_args['post_type'] = $tax_obj->object_type;
+				}
+			} elseif (is_post_type_archive()) {
+				$query_args['post_type'] = get_query_var('post_type');
+			} elseif (is_author()) {
+				$query_args['author'] = $queried_object->ID;
+			} elseif (is_day()) {
+				$query_args['year']     = get_query_var('year');
+				$query_args['monthnum'] = get_query_var('monthnum');
+				$query_args['day']      = get_query_var('day');
+			} elseif (is_month()) {
+				$query_args['year']     = get_query_var('year');
+				$query_args['monthnum'] = get_query_var('monthnum');
+			} elseif (is_year()) {
+				$query_args['year'] = get_query_var('year');
+			} elseif (is_search()) {
+				$query_args['s'] = get_search_query();
+			} elseif (is_singular()) {
+				// On a single post/product/CPT page, show only the current item.
+				$query_args['post_type']      = get_post_type();
+				$query_args['post__in']       = array(get_the_ID());
+				$query_args['posts_per_page'] = 1;
+			}
+
+			if (isset($attributes['pagination']) && true === $attributes['pagination']) {
+				$query_args['paged'] = $page;
+			}
+
+			$query_args = apply_filters("pbg_post_query_args_{$block_type}", $query_args, $attributes);
+			return new WP_Query($query_args);
+		}
+
 		$excluded_posts = array();
 		if (! empty($attributes['query']['exclude'])) {
 			if ($attributes['postFilterRule'] === 'post__in') {
@@ -2944,7 +3088,7 @@ class PBG_Blocks_Helper
 			}
 		}
 
-		if ( isset($attributes['query']['offset']) && 0 !== $attributes['query']['offset'] ) {
+		if (isset($attributes['query']['offset']) && 0 !== $attributes['query']['offset']) {
 			$query_args['offset'] = $attributes['query']['offset'];
 		}
 		if ($attributes['query']['sticky']) {
@@ -2962,11 +3106,11 @@ class PBG_Blocks_Helper
 			$query_args[$attributes['authorFilterRule']] = $attributes['query']['author'];
 		}
 
-    /**
-     * Backwards compatibility for older versions.
-     * handling categories filter. 
-     * This can be removed after few releases as we have added this in taxQuery.
-     */
+		/**
+		 * Backwards compatibility for older versions.
+		 * handling categories filter. 
+		 * This can be removed after few releases as we have added this in taxQuery.
+		 */
 		if (isset($attributes['categories']) && ! empty(array_filter($attributes['categories']))) {
 			$query_args['tax_query'][] = array(
 				'taxonomy' => 'category',
@@ -2978,31 +3122,31 @@ class PBG_Blocks_Helper
 
 		// Handle taxonomy queries
 		if (isset($attributes['query']['taxQuery']) && !empty($attributes['query']['taxQuery'])) {
-			foreach ($attributes['query']['taxQuery'] as $taxonomy => $tax_data) {		
-        if (!empty($tax_data) && is_array($tax_data) && isset($tax_data['terms']) && ! empty($tax_data['terms'])) {
-          $query_args['tax_query'][] = array(
-            'taxonomy' => $taxonomy,
-            'field'    => 'term_id',
-            'terms'    => $tax_data['terms'],
-            'operator' => $tax_data['operator'] ?? 'IN',
-          );
-        }
+			foreach ($attributes['query']['taxQuery'] as $taxonomy => $tax_data) {
+				if (!empty($tax_data) && is_array($tax_data) && isset($tax_data['terms']) && ! empty($tax_data['terms'])) {
+					$query_args['tax_query'][] = array(
+						'taxonomy' => $taxonomy,
+						'field'    => 'term_id',
+						'terms'    => $tax_data['terms'],
+						'operator' => $tax_data['operator'] ?? 'IN',
+					);
+				}
 			}
 		}
 
-    // Handle filter query
-    if (isset($attributes['query']['filterQuery']) && !empty($attributes['query']['filterQuery'])) {
-      $filter_query = $attributes['query']['filterQuery'];
-      $filter_taxonomy = $filter_query['taxonomy'] ?? '';
-      $filter_terms = $filter_query['terms'] ?? array();
-      if (!empty($filter_terms) && is_array($filter_terms)) {
-        $query_args['tax_query'][] = array(
-          'taxonomy' => $filter_taxonomy,
-          'field'    => 'term_id',
-          'terms'    => $filter_terms,
-          'operator' => 'IN',
-        );
-      }
+		// Handle filter query
+		if (isset($attributes['query']['filterQuery']) && !empty($attributes['query']['filterQuery'])) {
+			$filter_query = $attributes['query']['filterQuery'];
+			$filter_taxonomy = $filter_query['taxonomy'] ?? '';
+			$filter_terms = $filter_query['terms'] ?? array();
+			if (!empty($filter_terms) && is_array($filter_terms)) {
+				$query_args['tax_query'][] = array(
+					'taxonomy' => $filter_taxonomy,
+					'field'    => 'term_id',
+					'terms'    => $filter_terms,
+					'operator' => 'IN',
+				);
+			}
 		}
 
 		if (isset($attributes['pagination']) && true === $attributes['pagination']) {
