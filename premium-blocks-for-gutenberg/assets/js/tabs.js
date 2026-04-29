@@ -30,52 +30,105 @@ function initTabs() {
             Math.min(activeIndex, tabItemList.length - 1)
         );
 
-        const isAccordionActive =
+        const shouldAccordion = () =>
             (getCurrentDevice() === "Tablet" &&
                 tabBlock.classList.contains("premium-accordion-tabs-tablet")) ||
             (getCurrentDevice() === "Mobile" &&
                 tabBlock.classList.contains("premium-accordion-tabs-mobile"));
 
+        const hasAccordionOption =
+            tabBlock.classList.contains("premium-accordion-tabs-tablet") ||
+            tabBlock.classList.contains("premium-accordion-tabs-mobile");
+
         // Initialize active states
         setActiveTab(tabItemList, validActiveIndex);
         setActiveTab(tabContentList, validActiveIndex);
 
-        // Setup auto navigation if enabled
-        if (
-            autoChange &&
-            !isAccordionActive &&
-            tabItemList.length > 1 &&
-            delay > 0
-        ) {
-            runAutoNavigation(
-                tabItemList,
-                tabContentList,
-                delay,
-                validActiveIndex
-            );
+        let autoNavIntervalId = null;
+        let accordionInitialized = false;
+
+        // --- Desktop tab click handlers (always attached, guarded) ---
+        tabItemList.forEach((tabItem, tabIndex) => {
+            tabItem.addEventListener("click", (e) => {
+                if (shouldAccordion()) return;
+                e.preventDefault();
+                setActiveTab(tabItemList, tabIndex);
+                setActiveTab(tabContentList, tabIndex);
+            });
+        });
+
+        function startAutoNav() {
+            if (autoChange && tabItemList.length > 1 && delay > 0) {
+                autoNavIntervalId = runAutoNavigation(
+                    tabItemList,
+                    tabContentList,
+                    delay,
+                    validActiveIndex
+                );
+            }
         }
 
-        if (isAccordionActive) {
-            contentWrap.remove();
-            changeToAccordion(
-                tabList,
-                tabItemList,
-                tabContentList,
-                accordionItemList,
-                validActiveIndex,
-                durationTime
-            );
+        function stopAutoNav() {
+            if (autoNavIntervalId) {
+                clearInterval(autoNavIntervalId);
+                autoNavIntervalId = null;
+            }
+        }
+
+        // --- Mode switching ---
+        function activateAccordionMode() {
+            stopAutoNav();
+            if (contentWrap) contentWrap.style.display = "none";
+            accordionItemList.forEach((item) => (item.style.display = ""));
+
+            if (!accordionInitialized) {
+                changeToAccordion(
+                    tabList,
+                    tabItemList,
+                    tabContentList,
+                    accordionItemList,
+                    validActiveIndex,
+                    durationTime
+                );
+                accordionInitialized = true;
+            }
+        }
+
+        function activateTabMode() {
+            if (contentWrap) contentWrap.style.display = "";
+            accordionItemList.forEach((item) => (item.style.display = "none"));
+
+            // Re-sync active tab state
+            setActiveTab(tabItemList, validActiveIndex);
+            setActiveTab(tabContentList, validActiveIndex);
+            startAutoNav();
+        }
+
+        // --- Initial setup ---
+        if (shouldAccordion()) {
+            activateAccordionMode();
         } else {
-            accordionItemList.forEach((accordionItem) => {
-                accordionItem.remove();
-            });
-            tabItemList.forEach((tabItem, tabIndex) => {
-                tabItem.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    setActiveTab(tabItemList, tabIndex);
-                    setActiveTab(tabContentList, tabIndex);
-                });
-            });
+            accordionItemList.forEach((item) => (item.style.display = "none"));
+            startAutoNav();
+        }
+
+        // --- Resize listener for switching modes ---
+        if (hasAccordionOption) {
+            const { breakPoints } = PBG_TABS;
+            const queries = [
+                window.matchMedia(breakPoints.tablet),
+                window.matchMedia(breakPoints.mobile),
+            ];
+
+            const handleResize = () => {
+                if (shouldAccordion()) {
+                    activateAccordionMode();
+                } else {
+                    activateTabMode();
+                }
+            };
+
+            queries.forEach((mq) => mq.addEventListener("change", handleResize));
         }
     });
 }
@@ -117,9 +170,22 @@ function changeToAccordion(
         window.premiumCountUpInit();
     }
 
+    // Re-initialize accordion blocks inside cloned content
+    const clonedAccordions = tabList.querySelectorAll('[data-pbg-accordion-init]');
+    clonedAccordions.forEach((acc) => {
+        acc.removeAttribute('data-pbg-accordion-init');
+    });
+
+    if (window.premiumAccordionInit) {
+        window.premiumAccordionInit();
+    }
+
     tabItemList.forEach((tabItem, _) => {
         tabItem.addEventListener("click", function (e) {
             e.preventDefault();
+
+            // Ignore clicks originating from inside accordion content (nested blocks)
+            if (e.target.closest('.premium-accordion-tab-content')) return;
 
             if (isAnimating) {
                 return;
@@ -194,26 +260,24 @@ function changeToAccordion(
 }
 
 function runAutoNavigation(navItems, contentItems, time, activeIndex) {
-    if (!navItems?.length || !contentItems?.length) return;
-
-    let intervalId;
-
-    const stopAutoNavigation = () => {
-        if (intervalId) {
-            clearInterval(intervalId);
-            intervalId = null;
-        }
-    };
+    if (!navItems?.length || !contentItems?.length) return null;
 
     navItems.forEach((item) => {
-        item.addEventListener("click", stopAutoNavigation, { once: true });
+        item.addEventListener("click", () => {
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+        }, { once: true });
     });
 
-    intervalId = setInterval(() => {
+    let intervalId = setInterval(() => {
         activeIndex = (activeIndex + 1) % navItems.length;
         setActiveTab(navItems, activeIndex);
         setActiveTab(contentItems, activeIndex);
     }, time * 1000);
+
+    return intervalId;
 }
 
 function setActiveTab(elements, currentIndex) {

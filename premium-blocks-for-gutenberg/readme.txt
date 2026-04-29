@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 2.3.12
+Stable tag: 2.3.13
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -147,6 +147,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.13 =
+- Fixed: Accordion block — prevent multiple initializations when nested inside a Tabs block.
+- Tweak: Removed unused variables flagged by CodeQL static analysis.
+
 = 2.3.12 =
 - Added: Inherit/Custom query type toggle in Post Grid and Post Carousel.
 - Added: Show Meta Icons toggle in Post Grid and Post Carousel inspectors.

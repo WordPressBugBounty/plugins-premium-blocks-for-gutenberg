@@ -115,6 +115,9 @@
     };
 
     const initAccordion = (accordion, settings) => {
+        if (accordion.dataset.pbgAccordionInit) return;
+        accordion.dataset.pbgAccordionInit = 'true';
+
         const { collapse_others = true, expand_first_item = true } =
             settings || {};
 
@@ -202,14 +205,16 @@
         const accordionSettings = window?.pbg_accordion || {};
 
         Object.keys(accordionSettings).forEach((blockId) => {
-            const accordion = document.querySelector(`.${blockId}`);
+            const accordions = document.querySelectorAll(`.${blockId}`);
 
-            if (accordion) {
+            accordions.forEach((accordion) => {
                 const settings = accordionSettings[blockId];
                 initAccordion(accordion, settings);
-            }
+            });
         });
     };
+
+    window.premiumAccordionInit = initAccordions;
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", initAccordions);
