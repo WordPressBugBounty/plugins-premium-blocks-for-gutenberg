@@ -370,6 +370,10 @@
         "arrowActiveBack": {
             "type": "string",
             "default": ""
+        },
+        "faqSchema": {
+            "type": "boolean",
+            "default": false
         }
     },
     "editorScript": "pbg-blocks-js",

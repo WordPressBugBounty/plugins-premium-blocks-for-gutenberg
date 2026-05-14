@@ -204,6 +204,13 @@ function get_premium_heading_css_style($attr, $unique_id)
 
     $css->set_selector($unique_id . ' .premium-title-container:not(.style8) .premium-title-header .premium-title-text-title:not(.premium-headinga-true)' );
     $css->pbg_render_background($attr, 'clipBackground', $device);
+
+    $clip    = isset($attr['titleStyles'][0]['clip']) && $attr['titleStyles'][0]['clip'];
+    $clip_bg = isset($attr['clipBackground']['backgroundType']) && $attr['clipBackground']['backgroundType'];
+    if ($clip && ! $clip_bg) {
+      $css->set_selector($unique_id . ' .premium-title-container:not(.style8) .premium-title-header .premium-title-text-title');
+      $css->add_property('-webkit-text-fill-color', ! empty($attr['titleStyles'][0]['titleColor']) ? $attr['titleStyles'][0]['titleColor'] : 'currentColor');
+    }
   } );
 
 	return $css->css_output();

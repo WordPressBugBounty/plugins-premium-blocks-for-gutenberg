@@ -152,6 +152,49 @@ function render_block_pbg_accordion($attributes, $content, $block)
         }
     }
 
+    $faq_schema = ! empty( $attributes['faqSchema'] );
+
+    if ( $faq_schema ) {
+        $entities = array();
+
+        foreach ( $block->inner_blocks as $item ) {
+            if ( 'premium/accordion-item' !== $item->name ) {
+                continue;
+            }
+
+            $html = $item->render();
+
+            preg_match( '/class="[^"]*premium-accordion__title_text[^"]*"[^>]*>(.*?)<\//s', $html, $title_match );
+            $title = isset( $title_match[1] ) ? trim( wp_strip_all_tags( $title_match[1] ) ) : '';
+
+            preg_match( '/class="[^"]*premium-accordion__desc[^"]*"[^>]*>(.*?)<\/p>/s', $html, $desc_match );
+            $description = isset( $desc_match[1] ) ? trim( wp_strip_all_tags( $desc_match[1] ) ) : '';
+
+            if ( '' === $title ) {
+                continue;
+            }
+
+            $entities[] = array(
+                '@type'          => 'Question',
+                'name'           => $title,
+                'acceptedAnswer' => array(
+                    '@type' => 'Answer',
+                    'text'  => $description,
+                ),
+            );
+        }
+
+        if ( ! empty( $entities ) ) {
+            $schema = array(
+                '@context'   => 'https://schema.org',
+                '@type'      => 'FAQPage',
+                'mainEntity' => $entities,
+            );
+
+            $content .= '<script type="application/ld+json" class="premium-blocks-faq-schema">' . wp_json_encode( $schema ) . '</script>';
+        }
+    }
+
     return $content;
 }
 

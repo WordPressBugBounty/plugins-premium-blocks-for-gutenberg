@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 2.3.13
+Stable tag: 2.3.15
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -147,6 +147,19 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.15 =
+- Fixed: Image block style issue.
+
+= 2.3.14 =
+- Added: Icon Picker modal with search and category filtering, replacing the legacy icon picker across blocks.
+- Added: FAQ Schema toggle in Accordion block to output JSON-LD structured data.
+- Fixed: PHP 8.4 compatibility — resolved deprecation in URL open helper.
+- Fixed: Display Conditions — date comparison, location guards, and returning-visitor cookie handling.
+- Fixed: Display Conditions — validate timezone cookie against known identifiers (security hardening).
+- Fixed: Gallery block — image URL handling, width calculation, and item padding/margin.
+- Fixed: Modal block — padding issue on mobile devices.
+- Fixed: Heading and Dual Heading — restore visible text when clipped with no background.
+
 = 2.3.13 =
 - Fixed: Accordion block — prevent multiple initializations when nested inside a Tabs block.
 - Tweak: Removed unused variables flagged by CodeQL static analysis.

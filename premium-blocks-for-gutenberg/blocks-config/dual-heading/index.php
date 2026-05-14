@@ -84,6 +84,13 @@ function get_premium_dual_heading_css_style($attr, $unique_id)
         $css->set_selector($unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__first:not(.premium-headinga-true)');
         $css->pbg_render_background($attr, 'firstBackgroundOptions', $device);
 
+        $first_clip  = isset($attr['firstStyles'][0]['firstClip']) && $attr['firstStyles'][0]['firstClip'];
+        $first_bg    = isset($attr['firstBackgroundOptions']['backgroundType']) && $attr['firstBackgroundOptions']['backgroundType'];
+        if ($first_clip && ! $first_bg) {
+            $css->set_selector($unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__first');
+            $css->add_property('-webkit-text-fill-color', ! empty($attr['firstStyles'][0]['firstColor']) ? $attr['firstStyles'][0]['firstColor'] : 'currentColor');
+        }
+
         // Second part.
         $css->set_selector($unique_id . '> .premium-dheading-block__wrap > .premium-dheading-block__title > .premium-dheading-block__second');
         $css->pbg_render_typography($attr, 'secondTypography', $device);
@@ -93,6 +100,13 @@ function get_premium_dual_heading_css_style($attr, $unique_id)
 
         $css->set_selector($unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__second:not(.premium-headinga-true)');
         $css->pbg_render_background($attr, 'secondBackgroundOptions', $device);
+
+        $second_clip = isset($attr['secondStyles'][0]['secondClip']) && $attr['secondStyles'][0]['secondClip'];
+        $second_bg   = isset($attr['secondBackgroundOptions']['backgroundType']) && $attr['secondBackgroundOptions']['backgroundType'];
+        if ($second_clip && ! $second_bg) {
+            $css->set_selector($unique_id . ' .premium-dheading-block__wrap .premium-dheading-block__title .premium-dheading-block__second');
+            $css->add_property('-webkit-text-fill-color', ! empty($attr['secondStyles'][0]['secondColor']) ? $attr['secondStyles'][0]['secondColor'] : 'currentColor');
+        }
     });
 
     return $css->css_output();
@@ -117,7 +131,7 @@ function render_block_pbg_dual_heading($attributes, $content, $block)
         wp_enqueue_script(
             'pbg-waypoints-heading',
             PREMIUM_BLOCKS_URL . 'assets/js/lib/jquery.waypoints.js',
-            array( 'jquery' ),
+            array('jquery'),
             PREMIUM_BLOCKS_VERSION,
             true
         );
@@ -126,7 +140,7 @@ function render_block_pbg_dual_heading($attributes, $content, $block)
         wp_enqueue_script(
             'pbg-dual-heading',
             PREMIUM_BLOCKS_URL . 'assets/js/minified/dual-heading.min.js',
-            array( 'pbg-waypoints-heading' ), // Remove 'jquery' from here
+            array('pbg-waypoints-heading'), // Remove 'jquery' from here
             PREMIUM_BLOCKS_VERSION,
             true
         );
