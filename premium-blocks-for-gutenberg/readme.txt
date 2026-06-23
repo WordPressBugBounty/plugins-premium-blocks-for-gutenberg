@@ -3,9 +3,9 @@ Contributors: leap13
 Tags: blocks, gutenberg, block editor, gutenberg addons
 Donate link: https://leap13.com
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 2.3.15
+Stable tag: 2.3.16
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -147,6 +147,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.16 =
+- Tweak: Declared compatibility with WordPress 7.0 (Tested up to 7.0).
+- Fixed: Image block — Save/Update button no longer stays active due to default naturalWidth/naturalHeight attribute values.
+
 = 2.3.15 =
 - Fixed: Image block style issue.
 
