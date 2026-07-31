@@ -320,6 +320,20 @@
                 }
             },
             "isStyle": true
+        },
+        "highlightedShapeHeight": {
+            "type": "object",
+            "default": {
+                "Desktop": 20,
+                "Tablet": "",
+                "Mobile": "",
+                "unit": {
+                    "Desktop": "px",
+                    "Tablet": "px",
+                    "Mobile": "px"
+                }
+            },
+            "isStyle": true
         }
     },
     "editorScript": "pbg-blocks-js",

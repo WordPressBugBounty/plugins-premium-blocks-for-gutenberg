@@ -1262,6 +1262,12 @@ class PBG_Blocks_Helper
 	 */
 	public function add_block_style_in_template_parts($content, $block)
 	{
+		$block_name = $block['blockName'] ?? null;
+
+		if (! $this->is_premium_block($block_name)) {
+			return $content;
+		}
+
 		$this->add_blocks_assets(array($block));
 		return $content;
 	}
@@ -1628,10 +1634,21 @@ class PBG_Blocks_Helper
 	public function add_css($blocks)
 	{
 		// Add block css file to the frontend assets.
+		// Collect every block name present in the tree in a single pass, then
+		// look each registry entry up with isset() instead of re-walking the
+		// tree once per entry (pbg_has_block() is a full recursive traversal).
+		$present_block_names = array();
+		$this->process_blocks_recursive($blocks, function ($block) use (&$present_block_names) {
+			if (! empty($block['blockName'])) {
+				$present_block_names[$block['blockName']] = true;
+			}
+			return false;
+		});
+
 		$blocks_names = $this->get_premium_blocks_names();
 		foreach ($blocks_names as $name => $block) {
 			$slug = $block['name'];
-			if (! $this->pbg_has_block($name, $blocks)) {
+			if (! isset($present_block_names[$name])) {
 				continue;
 			}
 
@@ -2234,7 +2251,7 @@ class PBG_Blocks_Helper
 	 */
 	public function is_premium_block($block_name)
 	{
-		if ($block_name !== null && strpos($block_name, 'premium/') !== false) {
+		if ($block_name !== null && strpos($block_name, 'premium/') === 0) {
 			return true;
 		} else {
 			return false;

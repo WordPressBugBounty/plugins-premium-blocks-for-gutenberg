@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 2.3.16
+Stable tag: 2.3.17
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -147,6 +147,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.17 =
+- Added: Fancy Text block — Height control for the highlighted shape.
+- Fixed: Gallery block — images now load correctly in Safari when the gallery is placed inside a Tabs block.
+- Fixed: Gallery block — metro layout no longer leaves a gap at the end of each row due to rounding.
+- Fixed: Entrance animations — elements now animate reliably when scrolled into view instead of firing off-screen.
+- Tweak: Improved frontend performance by limiting template part assets.
+
 = 2.3.16 =
 - Tweak: Declared compatibility with WordPress 7.0 (Tested up to 7.0).
 - Fixed: Image block — Save/Update button no longer stays active due to default naturalWidth/naturalHeight attribute values.

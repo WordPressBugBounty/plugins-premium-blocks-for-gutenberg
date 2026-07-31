@@ -54,6 +54,9 @@ function get_premium_fancy_text_css_style($attr, $unique_id)
     $css->pbg_render_color($attr, 'PreStyles[0].textColor', 'color', null, '!important');
     $css->pbg_render_color($attr, 'PreStyles[0].textBGColor', 'background-color', null, '!important');
 
+    $css->set_selector('.' . $unique_id . ' .premium-fancy-text-highlighted .premium-fancy-text-title-highlighted svg');
+    $css->pbg_render_range($attr, 'highlightedShapeHeight', 'height', 'Desktop', 'calc(100% + ', ')', false);
+
     $css->set_selector('.' . $unique_id . ' .premium-fancy-text-highlighted .premium-fancy-text-title-highlighted svg path');
     $css->pbg_render_color($attr, 'highlightedShapeColor', 'stroke', null, '!important');
 
@@ -82,6 +85,9 @@ function get_premium_fancy_text_css_style($attr, $unique_id)
 
         $css->set_selector('.' . $unique_id . '> .premium-fancy-text > .premium-fancy-text-title-slide');
         $css->pbg_render_value($attr, 'fancyTextAlign', 'text-align', $device);
+
+        $css->set_selector('.' . $unique_id . ' .premium-fancy-text-highlighted .premium-fancy-text-title-highlighted svg');
+        $css->pbg_render_range($attr, 'highlightedShapeHeight', 'height', $device, 'calc(100% + ', ')', false);
 
         $css->set_selector('.' . $unique_id . ' .premium-fancy-text-highlighted .premium-fancy-text-title-highlighted svg path');
         $css->pbg_render_range($attr, 'highlightedShapeWidth', 'stroke-width', $device, null, '!important');
