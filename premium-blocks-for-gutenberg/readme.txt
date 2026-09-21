@@ -2,10 +2,10 @@
 Contributors: leap13
 Tags: blocks, gutenberg, block editor, gutenberg addons
 Donate link: https://leap13.com
-Requires at least: 5.0
-Tested up to: 7.0
+Requires at least: 6.6
+Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 2.3.17
+Stable tag: 2.3.18
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -115,7 +115,7 @@ Optimize your WordPress website performance with lightning-fast loading times us
 
 = Minimum Requirements =
 
-* WordPress 4.5 or greater
+* WordPress 6.6 or greater
 * PHP version 5.4 or greater
 * MySQL version 5.0 or greater
 
@@ -147,6 +147,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.18 =
+- Fixed: Improved Global Settings security and stability.
+
 = 2.3.17 =
 - Added: Fancy Text block — Height control for the highlighted shape.
 - Fixed: Gallery block — images now load correctly in Safari when the gallery is placed inside a Tabs block.

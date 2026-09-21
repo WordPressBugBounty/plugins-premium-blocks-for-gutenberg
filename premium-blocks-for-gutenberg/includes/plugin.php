@@ -156,6 +156,7 @@ if ( ! class_exists( 'PBG_Plugin' ) ) {
 		 * @return void
 		 */
 		public function init_files() {
+			require_once PREMIUM_BLOCKS_PATH . 'includes/class-pbg-css-sanitizer.php';
 			require_once PREMIUM_BLOCKS_PATH . 'classes/class-pbg-assets-generator.php';
 
 		if ( is_admin() ) {

@@ -35,6 +35,32 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 		public $block_helpers;
 
 		/**
+		 * Global settings option names.
+		 */
+		const SETTINGS = array(
+			'pbg_global_typography',
+			'pbg_global_colors',
+			'pbg_custom_colors',
+			'pbg_global_color_palette',
+			'pbg_global_color_palettes',
+			'pbg_global_layout',
+			'pbg_global_colors_to_default',
+			'pbg_global_typography_to_default',
+		);
+
+		/**
+		 * Option name => PBG_CSS_Sanitizer method.
+		 */
+		const SANITIZERS = array(
+			'pbg_global_typography'     => 'global_typography',
+			'pbg_global_colors'         => 'global_colors',
+			'pbg_custom_colors'         => 'color_list',
+			'pbg_global_color_palette'  => 'color_palette',
+			'pbg_global_color_palettes' => 'color_palettes',
+			'pbg_global_layout'         => 'global_layout',
+		);
+
+		/**
 		 * Initiator
 		 */
 		public static function get_instance() {
@@ -54,29 +80,27 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 			add_action( 'enqueue_block_assets', array( $this, 'pbg_frontend_global_styles' ), 999 );
 			add_filter( 'render_block', array( $this, 'add_data_attr_to_native_blocks' ), 10, 2 );
 			add_filter( 'body_class', array( $this, 'add_body_class' ) );
-			add_filter( 'rest_endpoints', array( $this, 'filter_rest_endpoints' ) );
+
+			// Stored values are sanitized every time they are read, so a value saved before the sanitize callbacks existed is never rendered.
+			foreach ( self::SANITIZERS as $option => $sanitizer ) {
+				add_filter( "option_{$option}", array( 'PBG_CSS_Sanitizer', $sanitizer ) );
+			}
 		}
 
 		/**
-		 * Filter REST Endpoints
+		 * Read only copy of the global settings, used by the editor preview of users who can not manage them.
 		 *
-		 * @param array $endpoints Endpoints.
+		 * The settings are saved through the core /wp/v2/settings route, which requires manage_options.
+		 *
 		 * @return array
 		 */
-		public function filter_rest_endpoints( $endpoints ) {
-			if ( isset( $endpoints['/wp/v2/settings'] ) ) {
-				if ( isset( $endpoints['/wp/v2/settings'][0] ) ) {
-					$endpoints['/wp/v2/settings'][0]['permission_callback'] = function () {
-						return current_user_can( 'edit_posts' );
-					};
-				}
-				if ( isset( $endpoints['/wp/v2/settings'][1] ) ) {
-					$endpoints['/wp/v2/settings'][1]['permission_callback'] = function () {
-						return current_user_can( 'edit_posts' );
-					};
-				}
+		public function get_global_settings_for_editor() {
+			$settings = array();
+			foreach ( self::SETTINGS as $option ) {
+				$settings[ $option ] = get_option( $option );
 			}
-			return $endpoints;
+
+			return $settings;
 		}
 
 		/**
@@ -408,11 +432,11 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 			$global_colors = get_option( 'pbg_global_colors', $default_value );
 			$css           = new Premium_Blocks_css();
 			$css->set_selector( ':root' );
-			$css->add_property( '--pbg-global-color1', $css->render_color( $global_colors['colors'][0]['color'] ) );
-			$css->add_property( '--pbg-global-color2', $css->render_color( $global_colors['colors'][1]['color'] ) );
-			$css->add_property( '--pbg-global-color3', $css->render_color( $global_colors['colors'][2]['color'] ) );
-			$css->add_property( '--pbg-global-color4', $css->render_color( $global_colors['colors'][3]['color'] ) );
-			$css->add_property( '--pbg-global-color5', $css->render_color( $global_colors['colors'][4]['color'] ) );
+			// Palette colors are strict hex / rgb(a) / hsl(a) values, anything else is not rendered.
+			for ( $i = 0; $i < 5; $i++ ) {
+				$color = PBG_CSS_Sanitizer::color( $global_colors['colors'][ $i ]['color'] ?? '' );
+				$css->add_property( '--pbg-global-color' . ( $i + 1 ), $css->render_color( $color ) );
+			}
 
 			$css->set_selector( '[class*="wp-block-premium"]' );
 			$css->add_property( 'color', 'var(--pbg-global-color3)' );
@@ -471,19 +495,23 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 				'type'       => 'object',
 				'properties' => array(
 					'fontWeight'     => array(
-						'type' => 'string',
+						'type'    => 'string',
+						'pattern' => '^(|Default|normal|bold|bolder|lighter|[0-9]{1,4})$',
 					),
 					'fontStyle'      => array(
 						'type' => 'string',
+						'enum' => array_merge( PBG_CSS_Sanitizer::UNSET_VALUES, PBG_CSS_Sanitizer::FONT_STYLES ),
 					),
 					'textTransform'  => array(
 						'type' => 'string',
+						'enum' => array_merge( PBG_CSS_Sanitizer::UNSET_VALUES, PBG_CSS_Sanitizer::TEXT_TRANSFORMS ),
 					),
 					'fontFamily'     => array(
 						'type' => 'string',
 					),
 					'textDecoration' => array(
 						'type' => 'string',
+						'enum' => array_merge( PBG_CSS_Sanitizer::UNSET_VALUES, PBG_CSS_Sanitizer::TEXT_DECORATIONS ),
 					),
 					'fontSize'       => array(
 						'type'       => 'object',
@@ -523,8 +551,9 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 				'pbg_global_typography',
 				array(
 					'type'         => 'object',
+					'sanitize_callback' => array( 'PBG_CSS_Sanitizer', 'global_typography' ),
 					'description'  => __( 'Config Premium Blocks For Gutenberg Global Typography Settings', 'premium-blocks-for-gutenberg' ),
-					'capability'   => 'edit_posts',
+					'capability'   => 'manage_options',
 					'show_in_rest' => array(
 						'schema' => array(
 							'properties' => array(
@@ -548,8 +577,9 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 				'pbg_global_colors',
 				array(
 					'type'         => 'object',
+					'sanitize_callback' => array( 'PBG_CSS_Sanitizer', 'global_colors' ),
 					'description'  => __( 'Config Premium Blocks For Gutenberg Global Colors Settings', 'premium-blocks-for-gutenberg' ),
-					'capability'   => 'edit_posts',
+					'capability'   => 'manage_options',
 					'show_in_rest' => array(
 						'schema' => array(
 							'properties' => array(
@@ -623,8 +653,9 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 				'pbg_custom_colors',
 				array(
 					'type'         => 'array',
+					'sanitize_callback' => array( 'PBG_CSS_Sanitizer', 'color_list' ),
 					'description'  => __( 'Config Premium Blocks For Gutenberg Global Colors Settings', 'premium-blocks-for-gutenberg' ),
-					'capability'   => 'edit_posts',
+					'capability'   => 'manage_options',
 					'show_in_rest' => array(
 						'schema' => array(
 							'items' => array(
@@ -654,8 +685,8 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 				array(
 					'type'              => 'string',
 					'description'       => __( 'Config Premium Blocks For Gutenberg Global Color Palette Settings', 'premium-blocks-for-gutenberg' ),
-					'sanitize_callback' => 'sanitize_text_field',
-					'capability'        => 'edit_posts',
+					'sanitize_callback' => array( 'PBG_CSS_Sanitizer', 'color_palette' ),
+					'capability'        => 'manage_options',
 					'show_in_rest'      => true,
 					'default'           => 'theme',
 				)
@@ -667,8 +698,9 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 				'pbg_global_color_palettes',
 				array(
 					'type'         => 'array',
+					'sanitize_callback' => array( 'PBG_CSS_Sanitizer', 'color_palettes' ),
 					'description'  => __( 'Config Premium Blocks For Gutenberg Global Colors Settings', 'premium-blocks-for-gutenberg' ),
-					'capability'   => 'edit_posts',
+					'capability'   => 'manage_options',
 					'show_in_rest' => array(
 						'schema' => array(
 							'items' => array(
@@ -716,8 +748,9 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 				'pbg_global_layout',
 				array(
 					'type'         => 'object',
+					'sanitize_callback' => array( 'PBG_CSS_Sanitizer', 'global_layout' ),
 					'description'  => __( 'Config Premium Blocks For Gutenberg Global Layout Settings', 'premium-blocks-for-gutenberg' ),
-					'capability'   => 'edit_posts',
+					'capability'   => 'manage_options',
 					'show_in_rest' => array(
 						'schema' => array(
 							'properties' => array(
@@ -752,7 +785,7 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 				array(
 					'type'         => 'boolean',
 					'description'  => __( 'Config Premium Blocks For Gutenberg Global Colors Settings', 'premium-blocks-for-gutenberg' ),
-					'capability'   => 'edit_posts',
+					'capability'   => 'manage_options',
 					'show_in_rest' => true,
 					'default'      => false,
 				)
@@ -765,7 +798,7 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 				array(
 					'type'         => 'boolean',
 					'description'  => __( 'Config Premium Blocks For Gutenberg Global Typography Settings', 'premium-blocks-for-gutenberg' ),
-					'capability'   => 'edit_posts',
+					'capability'   => 'manage_options',
 					'show_in_rest' => true,
 					'default'      => false,
 				)
@@ -813,6 +846,9 @@ if ( ! class_exists( 'Pbg_Global_Settings' ) ) {
 					'apiData'       => apply_filters( 'pb_settings', get_option( 'pbg_blocks_settings', array() ) ),
 					'isBlockTheme'  => wp_is_block_theme(),
 					'isWidgetsPage' => ( 'widgets.php' === $page_now ),
+					// Global settings are saved through the core settings route, only users who can manage options can change them.
+					'canManage'     => current_user_can( 'manage_options' ),
+					'settings'      => $this->get_global_settings_for_editor(),
 				)
 			);
 		}

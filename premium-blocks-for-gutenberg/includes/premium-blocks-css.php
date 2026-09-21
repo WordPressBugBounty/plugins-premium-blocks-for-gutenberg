@@ -232,7 +232,13 @@ class Premium_Blocks_css {
 	public function add_rule( $property, $value, $prefix = null ) {
 		$format = is_null( $prefix ) ? '%1$s:%2$s;' : '%3$s%1$s:%2$s;';
 		if ( ! empty( $value ) || is_numeric( $value ) ) {
-			$this->_css .= sprintf( $format, $property, $value, $prefix );
+			// Escaping layer: a value can never leave its declaration, its rule or the style element.
+			$property = PBG_CSS_Sanitizer::property( $property );
+			$value    = PBG_CSS_Sanitizer::declaration_value( $value );
+			if ( '' === $property || ( empty( $value ) && ! is_numeric( $value ) ) ) {
+				return $this;
+			}
+			$this->_css .= sprintf( $format, $property, $value, is_null( $prefix ) ? null : PBG_CSS_Sanitizer::property( $prefix ) );
 		}
 		return $this;
 	}
@@ -362,7 +368,7 @@ class Premium_Blocks_css {
 	private function add_selector_rules_to_output() {
 		if ( ! empty( $this->_css ) ) {
 			$this->prepare_selector_output();
-			$selector_output = sprintf( '%1$s{%2$s}', $this->_selector_output, $this->_css );
+			$selector_output = sprintf( '%1$s{%2$s}', PBG_CSS_Sanitizer::selector( $this->_selector_output ), $this->_css );
 
 			if ( $this->has_media_query() ) {
 				// Add the current selector's rules to the media query output.
@@ -384,7 +390,10 @@ class Premium_Blocks_css {
 		if ( empty( $color ) || 'px' === $color || 'Default' === $color ) {
 			return false;
 		}
-		return $color;
+		// Only real css colors are rendered: hex, rgb(a), hsl(a), keywords, css variables and gradients.
+		$color = PBG_CSS_Sanitizer::css_color( $color );
+
+		return '' === $color ? false : $color;
 	}
 
 	/**
@@ -1181,11 +1190,12 @@ class Premium_Blocks_css {
     $this->pbg_render_range($font, 'letterSpacing', 'letter-spacing', $device, null, $postfix);
 		
 		// Cache font properties to avoid repeated isset/empty checks
-		$text_decoration = $font['textDecoration'] ?? '';
-		$text_transform = $font['textTransform'] ?? '';
-		$font_weight = $font['fontWeight'] ?? '';
-		$font_style = $font['fontStyle'] ?? 'normal';
-		$font_family = $font['fontFamily'] ?? '';
+		// Every value is checked against its css keyword list, anything else is not rendered.
+		$text_decoration = PBG_CSS_Sanitizer::keyword( $font['textDecoration'] ?? '', PBG_CSS_Sanitizer::TEXT_DECORATIONS );
+		$text_transform = PBG_CSS_Sanitizer::keyword( $font['textTransform'] ?? '', PBG_CSS_Sanitizer::TEXT_TRANSFORMS );
+		$font_weight = PBG_CSS_Sanitizer::font_weight( $font['fontWeight'] ?? '' );
+		$font_style = PBG_CSS_Sanitizer::keyword( $font['fontStyle'] ?? 'normal', PBG_CSS_Sanitizer::FONT_STYLES );
+		$font_family = PBG_CSS_Sanitizer::font_family( $font['fontFamily'] ?? '' );
 		
 		// Render text decoration and transform
 		if ( ! empty( $text_decoration ) ) {

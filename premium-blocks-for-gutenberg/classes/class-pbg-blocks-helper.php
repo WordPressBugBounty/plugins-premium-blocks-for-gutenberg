@@ -647,8 +647,8 @@ class PBG_Blocks_Helper
 		$injected = true;
 
 		$layout_settings = get_option('pbg_global_layout', array());
-		$tablet_bp = $layout_settings['tablet_breakpoint'] ?? 1024;
-		$mobile_bp = $layout_settings['mobile_breakpoint'] ?? 767;
+		$tablet_bp = absint($layout_settings['tablet_breakpoint'] ?? 1024);
+		$mobile_bp = absint($layout_settings['mobile_breakpoint'] ?? 767);
 
 		$custom_css = "
     @media (min-width: " . ($tablet_bp + 1) . "px) {
@@ -669,7 +669,7 @@ class PBG_Blocks_Helper
 
 ?>
 		<style id="pbg-global-responsive-option-css">
-			<?php echo $custom_css; ?>
+			<?php echo PBG_CSS_Sanitizer::style_tag_content($custom_css); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- css built from integers. ?>
 		</style>
 <?php
 	}
@@ -1534,7 +1534,7 @@ class PBG_Blocks_Helper
 	public function mobile_breakpoint($breakpoint)
 	{
 		$layout_settings = get_option('pbg_global_layout', array());
-		$breakpoint      = isset($layout_settings['mobile_breakpoint']) ? '(max-width: ' . $layout_settings['mobile_breakpoint'] . 'px)' : $breakpoint;
+		$breakpoint      = isset($layout_settings['mobile_breakpoint']) ? '(max-width: ' . absint($layout_settings['mobile_breakpoint']) . 'px)' : $breakpoint;
 
 		return $breakpoint;
 	}
@@ -1548,7 +1548,7 @@ class PBG_Blocks_Helper
 	public function tablet_breakpoint($breakpoint)
 	{
 		$layout_settings = get_option('pbg_global_layout', array());
-		$breakpoint      = isset($layout_settings['tablet_breakpoint']) ? '(max-width: ' . $layout_settings['tablet_breakpoint'] . 'px)' : $breakpoint;
+		$breakpoint      = isset($layout_settings['tablet_breakpoint']) ? '(max-width: ' . absint($layout_settings['tablet_breakpoint']) . 'px)' : $breakpoint;
 		return $breakpoint;
 	}
 
@@ -1561,7 +1561,7 @@ class PBG_Blocks_Helper
 	public function desktop_breakpoint($breakpoint)
 	{
 		$layout_settings = get_option('pbg_global_layout', array());
-		$breakpoint      = isset($layout_settings['tablet_breakpoint']) ? '(min-width: ' . ($layout_settings['tablet_breakpoint'] + 1) . 'px)' : $breakpoint;
+		$breakpoint      = isset($layout_settings['tablet_breakpoint']) ? '(min-width: ' . (absint($layout_settings['tablet_breakpoint']) + 1) . 'px)' : $breakpoint;
 		return $breakpoint;
 	}
 
@@ -1620,7 +1620,8 @@ class PBG_Blocks_Helper
 		$this->blocks_frontend_assets->add_inline_css($this->get_custom_block_css());
 		$inline_css = $this->blocks_frontend_assets->get_inline_css();
 		if (! empty($inline_css)) {
-			echo '<style id="pbg-blocks-frontend-inline-css">' . $inline_css . '</style>';
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- css, tags and "<" are stripped.
+			echo '<style id="pbg-blocks-frontend-inline-css">' . PBG_CSS_Sanitizer::style_tag_content($inline_css) . '</style>';
 		}
 	}
 
@@ -1800,6 +1801,7 @@ class PBG_Blocks_Helper
 	 */
 	public function get_block_unique_id($block_name, $attributes)
 	{
+		$attributes   = $this->sanitize_block_ids($attributes);
 		$unique_id    = '';
 		$blocks_names = $this->get_premium_blocks_names();
 		$block_data   = $blocks_names[$block_name] ?? array();
@@ -1867,6 +1869,26 @@ class PBG_Blocks_Helper
 				break;
 		}
 		return $unique_id;
+	}
+
+	/**
+	 * Block ids are written into css selectors, only identifier characters are kept.
+	 *
+	 * @param array $attributes The block attributes.
+	 *
+	 * @return array
+	 */
+	public function sanitize_block_ids($attributes)
+	{
+		if (! is_array($attributes)) {
+			return array();
+		}
+		foreach (array('blockId', 'block_id') as $key) {
+			if (isset($attributes[$key])) {
+				$attributes[$key] = PBG_CSS_Sanitizer::slug($attributes[$key]);
+			}
+		}
+		return $attributes;
 	}
 
 	/**
@@ -2075,7 +2097,7 @@ class PBG_Blocks_Helper
 		$style_func = $block_data['style_func'];
 		$media_style_func = $block_data['media_style_func'] ?? null;
 
-		$attr       = $this->get_block_attributes($block);
+		$attr       = $this->sanitize_block_ids($this->get_block_attributes($block));
 
 		if (! empty($style_func)) {
 			$unique_id = $this->get_block_unique_id($block_name, $attr);

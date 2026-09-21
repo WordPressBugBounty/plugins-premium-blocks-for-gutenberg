@@ -102,7 +102,8 @@ if ( ! class_exists( 'Pbg_Assets_Generator' ) ) {
 			$merged_style .= $this->inline_css;
 
 			if ( ! empty( $merged_style ) ) {
-				return $this->minify_css( $merged_style );
+				// Nothing that can close the style element is allowed to reach the page or the generated file.
+				return PBG_CSS_Sanitizer::style_tag_content( $this->minify_css( $merged_style ) );
 			} else {
 				return false;
 			}
