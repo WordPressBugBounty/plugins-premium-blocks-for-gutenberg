@@ -167,6 +167,7 @@ if ( ! class_exists( 'PBG_Plugin' ) ) {
 			
 			require_once PREMIUM_BLOCKS_PATH . 'admin/includes/pb-panel/class-pb-panel.php';
 
+			require_once PREMIUM_BLOCKS_PATH . 'classes/class-pbg-post-query.php';
 			require_once PREMIUM_BLOCKS_PATH . 'classes/class-pbg-blocks-helper.php';
 
 			require_once PREMIUM_BLOCKS_PATH . 'classes/class-pbg-blocks-integrations.php';

@@ -1,1 +1,13 @@
-<?php return array('dependencies' => array('lodash', 'react', 'react-dom', 'react-jsx-runtime', 'wp-components', 'wp-element', 'wp-i18n', 'wp-notices'), 'version' => '0361466a769adf172acc');
+<?php return array(
+	'dependencies' => array(
+		'lodash',
+		'react',
+		'react-dom',
+		'react-jsx-runtime',
+		'wp-components',
+		'wp-element',
+		'wp-i18n',
+		'wp-notices'
+	),
+	'version' => '061d0cf7b26883689db7'
+);

@@ -101,7 +101,7 @@
                 scrollToTop,
                 activeFilterTab,
                 enableFirstFilter,
-            } = blocks[blockId]?.attributes ?? {};
+            } = parseAttributes(blocks[blockId]);
 
             const { filterItems, postPagination } = selectors;
 
@@ -134,6 +134,20 @@
     }
 
     /**
+     * The block attributes, printed by the server as a signed JSON string so they can be
+     * sent back unchanged. Pages cached before that change still carry an object.
+     */
+    function parseAttributes(block) {
+        const attributes = block?.attributes;
+        if (typeof attributes !== "string") return attributes ?? {};
+        try {
+            return JSON.parse(attributes);
+        } catch (error) {
+            return {};
+        }
+    }
+
+    /**
      * Get Posts by AJAX
      */
     function fetchPosts(
@@ -153,10 +167,15 @@
         const formData = new FormData();
         formData.append("action", action);
         formData.append("nonce", nonce);
+        // Sent exactly as the server printed them: the signature covers this string.
+        const { attributes, signature } = blocks[blockId];
         formData.append(
             "attributes",
-            JSON.stringify(blocks[blockId].attributes),
+            typeof attributes === "string"
+                ? attributes
+                : JSON.stringify(attributes),
         );
+        formData.append("signature", signature ?? "");
 
         // Add additional parameters
         Object.entries(params).forEach(([key, value]) => {

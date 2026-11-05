@@ -675,24 +675,48 @@ class PBG_Blocks_Helper
 	}
 
 	/**
+	 * The block attributes an AJAX request carries, accepted only with the signature the page printed with them.
+	 *
+	 * The nonce proves nothing by itself: for visitors who are not logged in it is the same for everyone, and it
+	 * is printed on every page with a Post Grid. Without the signature a visitor could send any query arguments.
+	 *
+	 * @return array
+	 */
+	private function signed_ajax_attributes()
+	{
+		$json      = isset($_POST['attributes']) ? wp_unslash($_POST['attributes']) : '';
+		$signature = isset($_POST['signature']) ? wp_unslash($_POST['signature']) : '';
+
+		if (! PBG_Post_Query::verify($json, $signature)) {
+			wp_send_json_error(
+				array('message' => esc_html__('This request did not come from a Post Grid on this site. Reload the page and try again.', 'premium-blocks-for-gutenberg')),
+				403
+			);
+		}
+
+		$attributes = json_decode($json, true);
+
+		return is_array($attributes) ? $attributes : array();
+	}
+
+	/**
 	 * AJAX handler for filtering posts
 	 */
 	public function ajax_filter_posts()
 	{
-		// Verify nonce for security
-		if (! wp_verify_nonce($_POST['nonce'], 'pbg_filter_posts')) {
+		if (! wp_verify_nonce($_POST['nonce'] ?? '', 'pbg_filter_posts')) {
 			wp_die('Security check failed');
 		}
 
-		$attributes = json_decode(stripslashes($_POST['attributes']), true);
-		$filter_term = sanitize_text_field($_POST['filter_term']);
-		$page = intval($_POST['page']) ?: 1;
+		$attributes  = $this->signed_ajax_attributes();
+		$filter_term = sanitize_text_field(wp_unslash($_POST['filter_term'] ?? ''));
+		$page        = max(1, absint($_POST['page'] ?? 1));
 
 		if ($filter_term && $filter_term !== '*') {
 			$filter_taxonomy = $attributes['filterTaxonomy'] ?? '';
 			$filter_query = array(
 				'taxonomy' => $filter_taxonomy,
-				'terms' => array(intval($filter_term)),
+				'terms' => array(absint($filter_term)),
 			);
 
 			$attributes['query']['filterQuery'] = $filter_query;
@@ -729,13 +753,12 @@ class PBG_Blocks_Helper
 	 */
 	public function ajax_paginate_posts()
 	{
-		// Verify nonce for security
-		if (! wp_verify_nonce($_POST['nonce'], 'pbg_paginate_posts')) {
+		if (! wp_verify_nonce($_POST['nonce'] ?? '', 'pbg_paginate_posts')) {
 			wp_die('Security check failed');
 		}
 
-		$attributes = json_decode(stripslashes($_POST['attributes']), true);
-		$page = intval($_POST['page']) ?: 1;
+		$attributes = $this->signed_ajax_attributes();
+		$page       = max(1, absint($_POST['page'] ?? 1));
 
 		// Get filtered query
 		$query = self::get_query($attributes, 'grid', $page);
@@ -2891,30 +2914,7 @@ class PBG_Blocks_Helper
 	 */
 	public static function get_post_types()
 	{
-
-		$post_types = get_post_types(
-			array(
-				'public'       => true,
-				'show_in_rest' => true,
-			),
-			'objects'
-		);
-
-		$options = array();
-
-		foreach ($post_types as $post_type) {
-
-			if ('attachment' === $post_type->name) {
-				continue;
-			}
-
-			$options[] = array(
-				'value' => $post_type->name,
-				'label' => $post_type->label,
-			);
-		}
-
-		return apply_filters('pbg_loop_post_types', $options);
+		return PBG_Post_Query::allowed_post_types();
 	}
 
 	public function get_all_taxonomy()
@@ -3062,139 +3062,8 @@ class PBG_Blocks_Helper
 	 */
 	public static function get_query($attributes, $block_type, $page = 1)
 	{
-		// Block type is grid/masonry/carousel/timeline.
-		$query_args     = array(
-			'posts_per_page' => (isset($attributes['query']['perPage'])) ? $attributes['query']['perPage'] : 6,
-			'post_status'    => 'publish',
-			'post_type'      => (isset($attributes['query']['postType'])) ? $attributes['query']['postType'] : 'post',
-			'order'          => (isset($attributes['query']['order'])) ? $attributes['query']['order'] : 'desc',
-			'orderby'        => (isset($attributes['query']['orderBy'])) ? $attributes['query']['orderBy'] : 'date',
-			'paged'          => 1,
-		);
-		// When "Inherit" query type is selected, derive filters from the current archive context.
-		if (! empty($attributes['queryType']) && 'inherit' === $attributes['queryType']) {
-			$queried_object = get_queried_object();
-
-			if (is_category() || is_tag() || is_tax()) {
-				$query_args['tax_query'] = array(
-					array(
-						'taxonomy' => $queried_object->taxonomy,
-						'field'    => 'term_id',
-						'terms'    => $queried_object->term_id,
-					),
-				);
-				// Use the post types registered for this taxonomy, not the block default.
-				$tax_obj = get_taxonomy($queried_object->taxonomy);
-				if ($tax_obj && ! empty($tax_obj->object_type)) {
-					$query_args['post_type'] = $tax_obj->object_type;
-				}
-			} elseif (is_post_type_archive()) {
-				$query_args['post_type'] = get_query_var('post_type');
-			} elseif (is_author()) {
-				$query_args['author'] = $queried_object->ID;
-			} elseif (is_day()) {
-				$query_args['year']     = get_query_var('year');
-				$query_args['monthnum'] = get_query_var('monthnum');
-				$query_args['day']      = get_query_var('day');
-			} elseif (is_month()) {
-				$query_args['year']     = get_query_var('year');
-				$query_args['monthnum'] = get_query_var('monthnum');
-			} elseif (is_year()) {
-				$query_args['year'] = get_query_var('year');
-			} elseif (is_search()) {
-				$query_args['s'] = get_search_query();
-			} elseif (is_singular()) {
-				// On a single post/product/CPT page, show only the current item.
-				$query_args['post_type']      = get_post_type();
-				$query_args['post__in']       = array(get_the_ID());
-				$query_args['posts_per_page'] = 1;
-			}
-
-			if (isset($attributes['pagination']) && true === $attributes['pagination']) {
-				$query_args['paged'] = $page;
-			}
-
-			$query_args = apply_filters("pbg_post_query_args_{$block_type}", $query_args, $attributes);
-			return new WP_Query($query_args);
-		}
-
-		$excluded_posts = array();
-		if (! empty($attributes['query']['exclude'])) {
-			if ($attributes['postFilterRule'] === 'post__in') {
-				$query_args['post__in'] = $attributes['query']['exclude'];
-			} else {
-				$excluded_posts = $attributes['query']['exclude'];
-			}
-		}
-
-		if (isset($attributes['query']['offset']) && 0 !== $attributes['query']['offset']) {
-			$query_args['offset'] = $attributes['query']['offset'];
-		}
-		if ($attributes['query']['sticky']) {
-			$excluded_posts = array_merge($excluded_posts, get_option('sticky_posts'));
-		}
-
-		if ($attributes['currentPost']) {
-			array_push($excluded_posts, get_the_id());
-		}
-
-		$query_args['post__not_in'] = $excluded_posts;
-
-		if (! empty($attributes['query']['author'])) {
-
-			$query_args[$attributes['authorFilterRule']] = $attributes['query']['author'];
-		}
-
-		/**
-		 * Backwards compatibility for older versions.
-		 * handling categories filter. 
-		 * This can be removed after few releases as we have added this in taxQuery.
-		 */
-		if (isset($attributes['categories']) && ! empty(array_filter($attributes['categories']))) {
-			$query_args['tax_query'][] = array(
-				'taxonomy' => 'category',
-				'field'    => 'term_id',
-				'terms'    => array_filter($attributes['categories']),
-				'operator' => str_replace("'", '', $attributes['categoryFilterRule'] ?? "'IN'"),
-			);
-		}
-
-		// Handle taxonomy queries
-		if (isset($attributes['query']['taxQuery']) && !empty($attributes['query']['taxQuery'])) {
-			foreach ($attributes['query']['taxQuery'] as $taxonomy => $tax_data) {
-				if (!empty($tax_data) && is_array($tax_data) && isset($tax_data['terms']) && ! empty($tax_data['terms'])) {
-					$query_args['tax_query'][] = array(
-						'taxonomy' => $taxonomy,
-						'field'    => 'term_id',
-						'terms'    => $tax_data['terms'],
-						'operator' => $tax_data['operator'] ?? 'IN',
-					);
-				}
-			}
-		}
-
-		// Handle filter query
-		if (isset($attributes['query']['filterQuery']) && !empty($attributes['query']['filterQuery'])) {
-			$filter_query = $attributes['query']['filterQuery'];
-			$filter_taxonomy = $filter_query['taxonomy'] ?? '';
-			$filter_terms = $filter_query['terms'] ?? array();
-			if (!empty($filter_terms) && is_array($filter_terms)) {
-				$query_args['tax_query'][] = array(
-					'taxonomy' => $filter_taxonomy,
-					'field'    => 'term_id',
-					'terms'    => $filter_terms,
-					'operator' => 'IN',
-				);
-			}
-		}
-
-		if (isset($attributes['pagination']) && true === $attributes['pagination']) {
-			$query_args['posts_per_page'] = $attributes['query']['perPage'];
-			$query_args['paged']          = $page;
-		}
-
-		$query_args = apply_filters("pbg_post_query_args_{$block_type}", $query_args, $attributes);
-		return new WP_Query($query_args);
+		// Block type is grid/masonry/carousel/timeline. Every argument is checked in PBG_Post_Query first.
+		return new WP_Query(PBG_Post_Query::build_args(is_array($attributes) ? $attributes : array(), $block_type, $page));
 	}
 
 	public function add_custom_block_css($css)

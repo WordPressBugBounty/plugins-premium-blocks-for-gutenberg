@@ -21,6 +21,13 @@ class PBG_Display_Conditions
     private static $instance = null;
 
     /**
+     * Excerpts built by filter_excerpt_early(), by post ID, until filter_excerpt_late() restores them.
+     *
+     * @var array
+     */
+    private $excerpt_results = array();
+
+    /**
      * Creates and returns an instance of the class
      *
      * @since 1.0.0
@@ -46,9 +53,14 @@ class PBG_Display_Conditions
         // Enqueue Editor Assets.
         add_action('enqueue_block_editor_assets', array($this, 'pbg_editor'));
 
-        // Block Render Callback.
-        if (! is_admin()) {
+        // admin-ajax.php runs with is_admin() true, but its public actions ( Post Grid pagination and filters ) render for visitors.
+        if (! is_admin() || wp_doing_ajax()) {
             add_filter('render_block', array($this, 'pbg_render_block'), 10, 2);
+            add_filter('get_the_excerpt', array($this, 'filter_excerpt_early'), 1, 2);
+            add_filter('get_the_excerpt', array($this, 'filter_excerpt_late'), PHP_INT_MAX, 2);
+        }
+
+        if (! is_admin()) {
             add_action('wp_footer', array($this, 'set_returning_visitor_cookie'));
         }
 
@@ -69,27 +81,215 @@ class PBG_Display_Conditions
      */
     public function pbg_render_block($block_content, $block)
     {
+        return $this->should_render_block($block) ? $block_content : '';
+    }
+
+    /**
+     * Whether a block's Display Conditions allow it to be shown in the current request.
+     *
+     * The only place this decision is made: the render_block filter and the excerpt filters both use it.
+     *
+     * @param array    $block   Parsed block.
+     * @param int|null $post_id Post the block belongs to. Defaults to the current post.
+     *
+     * @return bool
+     */
+    public function should_render_block(array $block, $post_id = null): bool
+    {
         $display_conditions = $block['attrs']['displayConditions'] ?? array();
 
-        if (empty($display_conditions) || empty($display_conditions['conditions'] ?? array()) || ! $display_conditions['enabled'] || (defined('REST_REQUEST') && REST_REQUEST && isset($_REQUEST['context']) && 'edit' === sanitize_key(wp_unslash($_REQUEST['context'])))) {
-            return $block_content;
+        if (empty($display_conditions['enabled']) || empty($display_conditions['conditions']) || ! is_array($display_conditions['conditions'])) {
+            return true;
+        }
+
+        if ($this->is_editor_request($post_id)) {
+            return true;
         }
 
         // Check if any condition value is empty
         foreach ($display_conditions['conditions'] as $condition) {
             if (empty($condition['value'])) {
-                return $block_content;
+                return true;
             }
         }
 
-        $operator           = $display_conditions['operator'] ?? 'and';
-        $display_conditions = $this->get_conditions_result($display_conditions['conditions'], $operator, 'show');
+        $operator = $display_conditions['operator'] ?? 'and';
 
-        if (! $display_conditions) {
-            return '';
+        return (bool) $this->get_conditions_result($display_conditions['conditions'], $operator, 'show');
+    }
+
+    /**
+     * Whether this is a REST request made for editing, by a user who may edit the content.
+     *
+     * The context parameter alone proves nothing, anyone can put it in a query string.
+     *
+     * @param int|null $post_id Post being edited. Defaults to the current post.
+     *
+     * @return bool
+     */
+    private function is_editor_request($post_id = null)
+    {
+        if (! defined('REST_REQUEST') || ! REST_REQUEST || ! isset($_REQUEST['context']) || 'edit' !== sanitize_key(wp_unslash($_REQUEST['context']))) {
+            return false;
         }
 
-        return $block_content;
+        $post_id = $post_id ?: get_the_ID();
+
+        return $post_id ? current_user_can('edit_post', $post_id) : current_user_can('edit_posts');
+    }
+
+    /**
+     * Remove every block the decider rejects, at any depth, keeping the rest serializable.
+     *
+     * @param array    $blocks  Parsed blocks.
+     * @param callable $decider Receives a parsed block, returns whether to keep it.
+     *
+     * @return array
+     */
+    public static function filter_blocks(array $blocks, callable $decider): array
+    {
+        $filtered = array();
+
+        foreach ($blocks as $block) {
+            if (call_user_func($decider, $block)) {
+                $filtered[] = self::filter_inner_blocks($block, $decider);
+            }
+        }
+
+        return $filtered;
+    }
+
+    /**
+     * Filter one block's inner blocks.
+     *
+     * innerContent holds one null per inner block and serialize_block() walks the two lists in step,
+     * so a removed block must lose its placeholder as well.
+     *
+     * @param array    $block   Parsed block.
+     * @param callable $decider Receives a parsed block, returns whether to keep it.
+     *
+     * @return array
+     */
+    private static function filter_inner_blocks(array $block, callable $decider)
+    {
+        if (empty($block['innerBlocks'])) {
+            return $block;
+        }
+
+        $inner_blocks  = array();
+        $inner_content = array();
+        $index         = 0;
+
+        foreach ($block['innerContent'] as $chunk) {
+            if (is_string($chunk)) {
+                $inner_content[] = $chunk;
+                continue;
+            }
+
+            $inner_block = $block['innerBlocks'][ $index++ ];
+
+            if (call_user_func($decider, $inner_block)) {
+                $inner_blocks[]  = self::filter_inner_blocks($inner_block, $decider);
+                $inner_content[] = null;
+            }
+        }
+
+        $block['innerBlocks']  = $inner_blocks;
+        $block['innerContent'] = $inner_content;
+
+        return $block;
+    }
+
+    /**
+     * Build automatic excerpts without the blocks this request may not show.
+     *
+     * Core skips render_block for wrapper blocks ( Group, Columns, Column ) in excerpts and renders only their
+     * children, so a condition on a wrapper is never checked. Every excerpt consumer goes through this filter:
+     * REST, feeds, search, oEmbed, the Post Grid and Post Carousel blocks, themes and the Post Excerpt block.
+     *
+     * Posts where nothing is hidden are left to core, so their excerpts do not change.
+     *
+     * @param string       $text Manual excerpt, or an empty string.
+     * @param WP_Post|null $post Post.
+     *
+     * @return string
+     */
+    public function filter_excerpt_early($text, $post = null)
+    {
+        $post = get_post($post);
+
+        // Looks for the attribute only: json_decode also accepts "enabled": true or "enabled":1, which a stricter match would let leak.
+        if (! ($post instanceof WP_Post) || '' !== trim((string) $text) || false === strpos($post->post_content, 'displayConditions') || $this->is_editor_request($post->ID)) {
+            return $text;
+        }
+
+        /**
+         * Filters whether to drop every block with enabled Display Conditions from excerpts, without evaluating them.
+         *
+         * Conditions such as Location, Time Range and Returning Visitor depend on the visitor, but feeds, REST
+         * responses and page caches can store the first visitor's result. Return true for excerpts that are the
+         * same for everyone.
+         *
+         * @param bool    $strip Whether to remove the blocks without evaluating. Default false.
+         * @param WP_Post $post  Post.
+         */
+        if (apply_filters('pbg_display_conditions_strip_from_excerpt', false, $post)) {
+            $decider = function ($block) {
+                return empty($block['attrs']['displayConditions']['enabled']);
+            };
+        } else {
+            $post_id = $post->ID;
+            $decider = function ($block) use ($post_id) {
+                return $this->should_render_block($block, $post_id);
+            };
+        }
+
+        // The Page, Post and Post Format conditions read the current post, which get_the_excerpt( $id ) does not set.
+        $current_post    = $GLOBALS['post'] ?? null;
+        $GLOBALS['post'] = $post;
+        $blocks          = parse_blocks($post->post_content);
+        $filtered        = self::filter_blocks($blocks, $decider);
+        $GLOBALS['post'] = $current_post;
+
+        if ($filtered === $blocks) {
+            return $text;
+        }
+
+        // wp_trim_excerpt() reads the content from the post it is given, so this is core's excerpt of the remaining blocks.
+        // WP_Post::filter() reloads the post from the database unless its filter is already "raw".
+        $visible_post               = clone $post;
+        $visible_post->post_content = serialize_blocks($filtered);
+        $visible_post->filter       = 'raw';
+
+        $excerpt = wp_trim_excerpt('', $visible_post);
+
+        $this->excerpt_results[ $post->ID ] = $excerpt;
+
+        return $excerpt;
+    }
+
+    /**
+     * Put back the excerpt built by filter_excerpt_early().
+     *
+     * When that excerpt is empty, core's wp_trim_excerpt() at priority 10 regenerates one from the full content.
+     *
+     * @param string       $text Excerpt.
+     * @param WP_Post|null $post Post.
+     *
+     * @return string
+     */
+    public function filter_excerpt_late($text, $post = null)
+    {
+        $post = get_post($post);
+
+        if (! ($post instanceof WP_Post) || ! array_key_exists($post->ID, $this->excerpt_results)) {
+            return $text;
+        }
+
+        $excerpt = $this->excerpt_results[ $post->ID ];
+        unset($this->excerpt_results[ $post->ID ]);
+
+        return $excerpt;
     }
 
     /**

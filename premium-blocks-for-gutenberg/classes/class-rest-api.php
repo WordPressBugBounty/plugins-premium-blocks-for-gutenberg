@@ -97,7 +97,13 @@ if ( ! class_exists( 'PBG_Rest_API' ) ) {
                   array(
                       'get_callback'    => array( $this, 'get_excerpt' ),
                       'update_callback' => null,
-                      'schema'          => null,
+                      'schema'          => array(
+                          'description' => __( 'Trimmed post excerpt.', 'premium-blocks-for-gutenberg' ),
+                          'type'        => array( 'string', 'null' ),
+                          // "edit" because the Post Grid and Post Carousel editors load posts with context=edit.
+                          'context'     => array( 'view', 'embed', 'edit' ),
+                          'readonly'    => true,
+                      ),
                   )
               );
             }
@@ -232,6 +238,7 @@ if ( ! class_exists( 'PBG_Rest_API' ) ) {
          * @since 0.0.1
          */
         public function get_excerpt( $object, $field_name, $request ) {
+            // Must stay on get_the_excerpt(): PBG_Display_Conditions::filter_excerpt_early() removes hidden blocks there.
             $excerpt = wp_trim_words( get_the_excerpt( $object['id'] ) );
             if ( ! $excerpt ) {
                 $excerpt = null;

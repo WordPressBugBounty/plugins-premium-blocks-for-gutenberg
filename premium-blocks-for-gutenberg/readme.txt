@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 2.3.18
+Stable tag: 2.3.19
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -147,6 +147,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.19 =
+- Security: Display Conditions are now enforced in automatic excerpts (REST API, RSS and Atom feeds, search, archives, Post Grid and Post Carousel) and in Post Grid pagination and filter requests. Excerpts may become shorter or empty where they previously included hidden blocks.
+- Security: Post Grid pagination and filter requests now run only the query saved in the block, and every query setting is validated before use. Previously a crafted request could list draft and private posts.
+- Purge page and feed caches after updating.
+
 = 2.3.18 =
 - Fixed: Improved Global Settings security and stability.
 

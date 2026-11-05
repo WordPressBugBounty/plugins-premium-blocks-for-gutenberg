@@ -157,9 +157,8 @@ if ( ! class_exists( 'PBG_Post' ) ) {
             }
 
             $data['blocks'][$attributes['blockId']] = array_merge(
-              array(
-              'attributes' => $attributes,
-              ),
+              // The attributes as a signed JSON string: the script sends them back exactly as printed.
+              PBG_Post_Query::signed_attributes( $attributes ),
               $nonces
             );
             return $data;
