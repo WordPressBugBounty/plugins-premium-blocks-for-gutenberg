@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 2.3.21
+Stable tag: 2.3.22
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -147,6 +147,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.22 =
+- Fix: Heading, Button, Star Ratings, Text and One Page Scroll blocks translated with WPML no longer show as invalid in the editor.
+- Fix: The Form block's default success and error messages can now be translated.
+
 = 2.3.21 =
 - Security: Improved the security of the Form block.
 - Fix: Form success and error messages appear again after submitting.

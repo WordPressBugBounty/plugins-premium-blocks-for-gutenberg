@@ -99,6 +99,34 @@ class PBG_Form_Config {
 	}
 
 	/**
+	 * The success and error messages in the site's language when the block left them at their defaults.
+	 *
+	 * The editor does not store an attribute that equals its block.json default, so a translated post has
+	 * no message attribute for WPML to translate. The default is passed through __() instead, which WPML
+	 * String Translation and the plugin's .mo files cover. A message the user typed is kept as saved.
+	 * The English strings must stay identical to the defaults in blocks-config/form/block.json.
+	 *
+	 * @param array $attributes Block attributes, with block.json defaults applied.
+	 * @param array $saved      The attributes stored in the block comment ($block->parsed_block['attrs']).
+	 *
+	 * @return array
+	 */
+	public static function translate_default_messages( array $attributes, array $saved ) {
+		$defaults = array(
+			'successMessage' => __( 'Thank you for your message. It has been sent.', 'premium-blocks-for-gutenberg' ),
+			'errorMessage'   => __( 'There was an error trying to send your message. Please try again later.', 'premium-blocks-for-gutenberg' ),
+		);
+
+		foreach ( $defaults as $name => $message ) {
+			if ( ! array_key_exists( $name, $saved ) ) {
+				$attributes[ $name ] = $message;
+			}
+		}
+
+		return $attributes;
+	}
+
+	/**
 	 * Which form field feeds which Mailchimp merge tag.
 	 *
 	 * Forms saved before mapped fields existed only have a first name field and a last name field.

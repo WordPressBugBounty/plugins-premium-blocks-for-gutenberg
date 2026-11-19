@@ -11,7 +11,9 @@
         </gutenberg-block>
         <gutenberg-block type="premium/button" translate="1">
             <xpath>//a/@href</xpath>
-            <xpath>//a</xpath>
+            <xpath>//*[contains(@class,'premium-button-text-edit')]</xpath>
+            <xpath>//a[contains(@class,'premium-button') and not(contains(@class,'premium-button-text-edit')) and not(.//*[contains(@class,'premium-button-text-edit')])]</xpath>
+            <key name="btnText" />
         </gutenberg-block>
         <gutenberg-block type="premium/countup" translate="1">
             <xpath>//p</xpath>
@@ -22,7 +24,11 @@
             <xpath>//a/@href</xpath>
         </gutenberg-block>
         <gutenberg-block type="premium/heading" translate="1">
-            <xpath>//span</xpath>
+            <xpath>//span[contains(@class,'premium-title-text-title')]</xpath>
+            <xpath>//*[contains(@class,'premium-title-container') or contains(@class,'premium-title-text-title')]/@title</xpath>
+            <xpath>//*[@data-backgroundtext]/@data-backgroundtext</xpath>
+            <key name="title" />
+            <key name="BackText" />
         </gutenberg-block>
         <gutenberg-block type="premium/icon" translate="1">
             <xpath>//a/@href</xpath>
@@ -57,11 +63,14 @@
             <key name="uploadCaption" />
         </gutenberg-block>
         <gutenberg-block type="premium/fancy-text" translate="1">
-            <xpath>//span</xpath>
+            <xpath>//span[contains(@class,'premium-fancy-text-prefix-text')]</xpath>
+            <xpath>//span[contains(@class,'premium-fancy-text-suffix-text')]</xpath>
+            <xpath>//span[contains(@class,'premium-fancy-text-title-highlighted')]</xpath>
             <xpath>//li</xpath>
             <xpath>//*[@data-strings]/@data-strings</xpath>
             <key name="prefix" />
             <key name="suffix" />
+            <key name="highlightedText" />
             <key name="repeaterFancyText">
                 <key name="*">
                     <key name="title" />
@@ -73,6 +82,28 @@
             <key name="buttonText" />
             <key name="successMessage" />
             <key name="errorMessage" />
+        </gutenberg-block>
+        <gutenberg-block type="premium/star-ratings" translate="1">
+            <xpath>//span[contains(@class,'premium-star-ratings-title')]</xpath>
+            <key name="rateTitle" />
+        </gutenberg-block>
+        <gutenberg-block type="premium/text" translate="1">
+            <xpath>//*[contains(@class,'premium-text-wrap')]</xpath>
+            <key name="text" />
+        </gutenberg-block>
+        <gutenberg-block type="premium/one-page-scroll" translate="1">
+            <xpath>//li[contains(@class,'pbg-one-page-scroll-menu-item')]</xpath>
+            <xpath>//*[contains(@class,'pbg-one-page-scroll-dot__tooltip')]</xpath>
+            <key name="menuItems">
+                <key name="*">
+                    <key name="label" />
+                </key>
+            </key>
+            <key name="navDots">
+                <key name="*">
+                    <key name="tooltip" />
+                </key>
+            </key>
         </gutenberg-block>
         <gutenberg-block type="premium/lottie" translate="1">
             <xpath>//a/@href</xpath>
