@@ -913,90 +913,36 @@ class PBG_Blocks_Helper
 			wp_send_json_error(array('message' => esc_html__('Form id is not set.', 'premium-blocks-for-gutenberg')));
 		}
 
-		// reCAPTCHA settings.
-		$recaptcha_settings      = json_decode(wp_unslash($_POST['recaptcha_settings']), true);
-		$recaptcha_enabled       = isset($recaptcha_settings['enabled']) ? $recaptcha_settings['enabled'] : false;
-		$recaptcha_version       = isset($recaptcha_settings['version']) ? $recaptcha_settings['version'] : '';
-		$recaptcha_response      = isset($recaptcha_settings['response']) ? $recaptcha_settings['response'] : '';
-		$recaptcha_v2_secret_key = $this->integrations_settings['premium-recaptcha-v2-secret'];
-		$recaptcha_v3_secret_key = $this->integrations_settings['premium-recaptcha-v3-secret'];
+		// What the form does is decided by the saved block, never by the request. The nonce is not a secret.
+		$config = $this->form_config_from_request();
 
-		// Check if reCAPTCHA is enabled.
-		if ($recaptcha_enabled) {
-			// Check if reCAPTCHA version is v2.
-			if ($recaptcha_version == 'v2') {
-				// Check if reCAPTCHA response is empty.
-				if (empty($recaptcha_response)) {
-					wp_send_json_error(array('message' => esc_html__('Please verify reCAPTCHA.', 'premium-blocks-for-gutenberg')));
-				}
-				// Verify reCAPTCHA.
-				$recaptcha_response = wp_remote_get(
-					'https://www.google.com/recaptcha/api/siteverify',
-					array(
-						'body' => array(
-							'secret'   => $recaptcha_v2_secret_key,
-							'response' => $recaptcha_response,
-							'remoteip' => $_SERVER['REMOTE_ADDR'],
-						),
-					)
-				);
-				$recaptcha_response = json_decode(wp_remote_retrieve_body($recaptcha_response));
-				// Check if reCAPTCHA response is success.
-				if (! $recaptcha_response->success) {
-					wp_send_json_error(array('message' => esc_html__('reCAPTCHA verification failed.', 'premium-blocks-for-gutenberg')));
-				}
-			}
-			// Check if reCAPTCHA version is v3.
-			if ($recaptcha_version == 'v3') {
-				// Check if reCAPTCHA response is empty.
-				if (empty($recaptcha_response)) {
-					wp_send_json_error(array('message' => esc_html__('Please verify reCAPTCHA.', 'premium-blocks-for-gutenberg')));
-				}
-				// Verify reCAPTCHA.
-				$recaptcha_response = wp_remote_get(
-					'https://www.google.com/recaptcha/api/siteverify',
-					array(
-						'body' => array(
-							'secret'   => $recaptcha_v3_secret_key,
-							'response' => $recaptcha_response,
-							'remoteip' => $_SERVER['REMOTE_ADDR'],
-						),
-					)
-				);
-				$recaptcha_response = json_decode(wp_remote_retrieve_body($recaptcha_response));
-				// Check if reCAPTCHA response is success.
-				if (! $recaptcha_response->success) {
-					wp_send_json_error(array('message' => esc_html__('reCAPTCHA verification failed.', 'premium-blocks-for-gutenberg')));
-				}
-			}
-		}
-		// Get submit actions.
-		$submit_actions = json_decode(wp_unslash($_POST['submit_actions']), true);
-		foreach ($submit_actions as $action => $value) {
+		$this->verify_form_recaptcha($config['recaptcha']);
+
+		foreach ($config['submitActions'] as $action => $value) {
 			if (! $value) {
 				continue;
 			}
 			switch ($action) {
 				case 'sendEmail':
-					$email_response = $this->send_email();
+					$email_response = $this->send_email($config['email']);
 					if (! $email_response['success']) {
 						wp_send_json_error(array('message' => $email_response['message']));
 					}
 					break;
 				case 'mailchimp':
-					$mailchimp_response = $this->mailchimp_subscribe();
+					$mailchimp_response = $this->mailchimp_subscribe($config['mailchimp']);
 					if (! $mailchimp_response['success']) {
 						wp_send_json_error(array('message' => $mailchimp_response['message']));
 					}
 					break;
 				case 'mailerlite':
-					$mailerlite_response = $this->mailerlite_subscribe();
+					$mailerlite_response = $this->mailerlite_subscribe($config['mailerlite']);
 					if (! $mailerlite_response['success']) {
 						wp_send_json_error(array('message' => $mailerlite_response['message']));
 					}
 					break;
 				case 'fluentcrm':
-					$fluentcrm_response = $this->fluentcrm_subscribe();
+					$fluentcrm_response = $this->fluentcrm_subscribe($config['fluentcrm']);
 					if (! $fluentcrm_response['success']) {
 						wp_send_json_error(array('message' => $fluentcrm_response['message']));
 					}
@@ -1009,27 +955,146 @@ class PBG_Blocks_Helper
 	}
 
 	/**
-	 * FluentCRM Subscribe
+	 * The settings of the form being submitted, as this site sealed them when the form rendered.
+	 *
+	 * Answers 403 unless the config is one this site sealed, for the form the request names, recently enough,
+	 * and the content it came from is unchanged and still published (or the user could publish it).
+	 *
+	 * @return array
 	 */
-	function fluentcrm_subscribe()
+	private function form_config_from_request()
+	{
+		$refuse = function ($message) {
+			wp_send_json_error(array('message' => $message), 403);
+		};
+		$reload = esc_html__('This request did not come from a form on this site. Reload the page and try again.', 'premium-blocks-for-gutenberg');
+
+		$config = PBG_Form_Config::open(isset($_POST['form_config']) ? wp_unslash($_POST['form_config']) : '');
+		if (null === $config) {
+			$refuse($reload);
+		}
+
+		// A config belongs to one form: it can not be sent as another form's.
+		$form_id = isset($_POST['form_id']) && is_string($_POST['form_id']) ? sanitize_text_field(wp_unslash($_POST['form_id'])) : '';
+		if ('' === $form_id || ! hash_equals((string) $config['blockId'], $form_id)) {
+			$refuse($reload);
+		}
+
+		// The page that printed the config printed the nonce with it, so a config older than a nonce can be
+		// has no page left that could submit it.
+		$max_age = (int) apply_filters('pbg_form_config_max_age', (int) apply_filters('nonce_life', DAY_IN_SECONDS, 'pbg_form_nonce'));
+		if (PBG_Form_Config::expired($config, $max_age)) {
+			$refuse($reload);
+		}
+
+		// A form in a post stops working with settings the post no longer has: edited, unpublished or deleted.
+		$post = $config['postId'] ? get_post($config['postId']) : null;
+		if ($config['postId']) {
+			if (! $post || ! hash_equals(md5((string) get_post_field('post_content', $post->ID, 'raw')), (string) $config['content'])) {
+				$refuse($reload);
+			}
+			if (! $config['draft'] && 'publish' !== get_post_status($post)) {
+				$refuse($reload);
+			}
+		}
+
+		// A form in a draft or a preview works only for users who could publish it.
+		if ($config['draft']) {
+			$type = $post ? get_post_type_object($post->post_type) : null;
+			if (! current_user_can($type ? $type->cap->publish_posts : 'publish_posts')) {
+				$refuse(esc_html__('This form is not published yet.', 'premium-blocks-for-gutenberg'));
+			}
+		}
+
+		return $config;
+	}
+
+	/**
+	 * What the visitor typed for one of the submit actions, as strings. Settings are never read from here.
+	 *
+	 * @param string $key Request field, e.g. mailchimp_settings.
+	 *
+	 * @return array
+	 */
+	private function form_request_values($key)
+	{
+		$values = isset($_POST[$key]) ? json_decode(wp_unslash($_POST[$key]), true) : array();
+		$values = is_array($values) ? $values : array();
+
+		return array_map('strval', array_filter($values, 'is_scalar'));
+	}
+
+	/**
+	 * Enforce reCAPTCHA when the saved block asks for it. Only the response token comes from the request.
+	 *
+	 * @param array $recaptcha enabled and version, from the saved block.
+	 *
+	 * @return void
+	 */
+	private function verify_form_recaptcha($recaptcha)
+	{
+		if (empty($recaptcha['enabled'])) {
+			return;
+		}
+
+		$values   = $this->form_request_values('recaptcha_settings');
+		$response = isset($values['response']) ? $values['response'] : '';
+
+		if ('' === $response) {
+			wp_send_json_error(array('message' => esc_html__('Please verify reCAPTCHA.', 'premium-blocks-for-gutenberg')));
+		}
+
+		// The same choice the page makes: v3 only when a v3 site key exists, otherwise the v2 widget.
+		$use_v3 = 'v3' === $recaptcha['version'] && ! empty($this->integrations_settings['premium-recaptcha-v3-site-key']);
+		$secret = $this->integrations_settings[$use_v3 ? 'premium-recaptcha-v3-secret' : 'premium-recaptcha-v2-secret'] ?? '';
+		$failed = array('message' => esc_html__('reCAPTCHA verification failed.', 'premium-blocks-for-gutenberg'));
+
+		// Fails closed: without a secret key, an answer from Google, or "success": true in it, nothing is sent.
+		if (! is_string($secret) || '' === $secret) {
+			wp_send_json_error($failed);
+		}
+
+		$request = wp_remote_get(
+			'https://www.google.com/recaptcha/api/siteverify',
+			array(
+				'body' => array(
+					'secret'   => $secret,
+					'response' => $response,
+					'remoteip' => isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'])) : '',
+				),
+			)
+		);
+
+		if (is_wp_error($request) || 200 !== (int) wp_remote_retrieve_response_code($request)) {
+			wp_send_json_error($failed);
+		}
+
+		$result = json_decode(wp_remote_retrieve_body($request), true);
+
+		if (! is_array($result) || ! isset($result['success']) || true !== $result['success']) {
+			wp_send_json_error($failed);
+		}
+	}
+
+	/**
+	 * FluentCRM Subscribe
+	 *
+	 * @param array $settings Lists and tags, from the saved block.
+	 */
+	function fluentcrm_subscribe($settings)
 	{
 		// Check if fluentcrm plugin is active.
 		if (! function_exists('FluentCrm')) {
 			wp_send_json_error(array('message' => esc_html__('FluentCRM plugin is not active.', 'premium-blocks-for-gutenberg')));
 		}
 
-		// Check if fluentcrm settings is set.
-		if (! isset($_POST['fluentcrm_settings'])) {
-			wp_send_json_error(array('message' => esc_html__('FluentCRM settings is not set.', 'premium-blocks-for-gutenberg')));
-		}
-
-		// FluentCRM settings.
-		$fluentcrm_settings = json_decode(wp_unslash($_POST['fluentcrm_settings']), true);
-		$email              = $fluentcrm_settings['email'] ?? '';
-		$first_name         = $fluentcrm_settings['firstName'] ?? '';
-		$last_name          = $fluentcrm_settings['lastName'] ?? '';
-		$lists              = $fluentcrm_settings['lists'] ?? '';
-		$tags               = $fluentcrm_settings['tags'] ?? '';
+		// The visitor supplies only their own address and name.
+		$values     = $this->form_request_values('fluentcrm_settings');
+		$email      = $values['email'] ?? '';
+		$first_name = $values['firstName'] ?? '';
+		$last_name  = $values['lastName'] ?? '';
+		$lists      = $settings['lists'];
+		$tags       = $settings['tags'];
 
 		// Check if email is empty.
 		if (empty($email)) {
@@ -1070,24 +1135,20 @@ class PBG_Blocks_Helper
 	}
 	/**
 	 * Mailerlite Subscribe
+	 *
+	 * @param array $settings Token type, custom token and group, from the saved block.
 	 */
-	function mailerlite_subscribe()
+	function mailerlite_subscribe($settings)
 	{
-		// Check if mailerlite settings is set.
-		if (! isset($_POST['mailerlite_settings'])) {
-			wp_send_json_error(array('message' => esc_html__('Mailerlite settings is not set.', 'premium-blocks-for-gutenberg')));
-		}
+		// The visitor supplies only their own address and name.
+		$values    = $this->form_request_values('mailerlite_settings');
+		$api_token = $this->integrations_settings['premium-mailerlite-api-token'] ?? '';
+		$group_id  = $settings['groupId'];
+		$email     = $values['email'] ?? '';
+		$name      = $values['name'] ?? '';
 
-		// Mailerlite settings.
-		$mailerlite_settings = json_decode(wp_unslash($_POST['mailerlite_settings']), true);
-		$api_token           = $this->integrations_settings['premium-mailerlite-api-token'] ?? '';
-		$api_token_type      = $mailerlite_settings['apiToken'] ?? '';
-		$group_id            = $mailerlite_settings['groupId'] ?? '';
-		$email               = $mailerlite_settings['email'] ?? '';
-		$name                = $mailerlite_settings['name'] ?? '';
-
-		if ('custom' === $api_token_type) {
-			$api_token = $mailerlite_settings['apiToken'] ?? '';
+		if ('custom' === $settings['apiTokenType']) {
+			$api_token = $settings['apiToken'];
 		}
 
 		// Check if API token is empty.
@@ -1107,24 +1168,27 @@ class PBG_Blocks_Helper
 
 	/**
 	 * Mailchimp Subscribe
+	 *
+	 * @param array $settings Key type, custom key, list and mapped fields, from the saved block.
 	 */
-	function mailchimp_subscribe()
+	function mailchimp_subscribe($settings)
 	{
-		// Check if mailchimp settings is set.
-		if (! isset($_POST['mailchimp_settings'])) {
-			wp_send_json_error(array('message' => esc_html__('Mailchimp settings is not set.', 'premium-blocks-for-gutenberg')));
+		// The visitor supplies only the values of the form fields.
+		$values        = $this->form_request_values('mailchimp_settings');
+		$api_key       = $this->integrations_settings['premium-mailchimp-api-key'] ?? '';
+		$list_id       = $settings['listId'];
+		$mapped_fields = $settings['mappedFields'];
+		$email         = $values['email'] ?? '';
+
+		if ('custom' === $settings['apiKeyType']) {
+			$api_key = $settings['apiKey'];
 		}
 
-		// Mailchimp settings.
-		$mailchimp_settings = json_decode(wp_unslash($_POST['mailchimp_settings']), true);
-		$api_key            = $this->integrations_settings['premium-mailchimp-api-key'] ?? '';
-		$api_key_type       = $mailchimp_settings['apiKeyType'] ?? '';
-		$list_id            = $mailchimp_settings['listId'] ?? '';
-		$mapped_fields      = $mailchimp_settings['mappedFields'] ?? array();
-		$email              = $mailchimp_settings['email'] ?? '';
-
-		if ('custom' === $api_key_type) {
-			$api_key = $mailchimp_settings['apiKey'] ?? '';
+		// Every mapped field gets a value, so a field the visitor left out is sent empty.
+		foreach ($mapped_fields as $field) {
+			if ('' !== $field['field_name'] && ! isset($values[$field['field_name']])) {
+				$values[$field['field_name']] = '';
+			}
 		}
 
 		// Check if API key is empty.
@@ -1143,37 +1207,33 @@ class PBG_Blocks_Helper
 		}
 
 		// Mailchimp API URL.
-		$response = PBG_Blocks_Integrations::get_instance()->add_mailchimp_subscriber($mailchimp_settings, $api_key, $list_id, $mapped_fields, $email);
+		$response = PBG_Blocks_Integrations::get_instance()->add_mailchimp_subscriber($values, $api_key, $list_id, $mapped_fields, $email);
 
 		return $response;
 	}
 
 	/**
 	 * Sent Email
+	 *
+	 * @param array $email_settings Recipient, subject and headers, from the saved block.
 	 */
-	function send_email()
+	function send_email($email_settings)
 	{
 		// Check if form data is set.
 		if (! isset($_POST['form_data'])) {
 			wp_send_json_error(array('message' => esc_html__('Form data is not set.', 'premium-blocks-for-gutenberg')));
 		}
 
-		// Check if email settings is set.
-		if (! isset($_POST['email_settings'])) {
-			wp_send_json_error(array('message' => esc_html__('Email settings is not set.', 'premium-blocks-for-gutenberg')));
-		}
+		$to_email  = $email_settings['to'];
+		$subject   = $email_settings['subject'];
+		$reply_to  = $email_settings['replyTo'];
+		$cc        = $email_settings['cc'];
+		$bcc       = $email_settings['bcc'];
+		$from_name = $email_settings['fromName'];
 
-		// Email settings.
-		$email_settings = json_decode(wp_unslash($_POST['email_settings']), true);
-		$to_email       = isset($email_settings['to']) ? $email_settings['to'] : '';
-		$subject        = isset($email_settings['subject']) ? $email_settings['subject'] : '';
-		$reply_to       = isset($email_settings['replyTo']) ? $email_settings['replyTo'] : '';
-		$cc             = isset($email_settings['cc']) ? $email_settings['cc'] : '';
-		$bcc            = isset($email_settings['bcc']) ? $email_settings['bcc'] : '';
-		$from_name      = isset($email_settings['fromName']) ? $email_settings['fromName'] : '';
-
-		// Get form data.
+		// Get form data: the only part of the email the visitor writes.
 		$form_data = json_decode(wp_unslash($_POST['form_data']), true);
+		$form_data = is_array($form_data) ? $form_data : array();
 
 		// Mail body.
 		$mail_body = '<div style="width: 100%;"><table style="width: 100%; border: 1px solid #ddd; border-collapse: collapse;"><tbody>';
@@ -1181,7 +1241,7 @@ class PBG_Blocks_Helper
 		foreach ($form_data as $key => $value) {
 			// Check if value is array.
 			if (is_array($value)) {
-				$value = implode(', ', $value);
+				$value = implode(', ', array_filter($value, 'is_scalar'));
 			}
 			$mail_body .= '<tr><td style="border: 1px solid #ddd; padding: 10px;">' . esc_html($key) . '</td><td style="border: 1px solid #ddd; padding: 10px;">' . esc_html($value) . '</td></tr>';
 		}

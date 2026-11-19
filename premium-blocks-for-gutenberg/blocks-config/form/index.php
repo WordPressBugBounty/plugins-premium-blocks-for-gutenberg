@@ -326,14 +326,29 @@ function render_block_pbg_form($attributes, $content, $block)
     $id            = 'premium-form-' . esc_attr((string) $unique_id);
     $block_id      = (! empty($attributes['blockId'])) ? $attributes['blockId'] : $id;
     $inner_blocks  = $block_helpers->get_form_inner_blocks($block->parsed_block['innerBlocks']);
+    // Where this form is, sealed with its settings (PBG_Form_Config::from_attributes()). A preview or an
+    // unpublished post: whoever wrote it may not be allowed to publish a form. A form found in the current
+    // post's content is tied to that content, so its settings stop working when the post is edited.
+    // The content as saved, not the copy on the global post, which other plugins may have changed in memory.
+    $current_post  = get_post();
+    $saved_content = $current_post ? (string) get_post_field('post_content', $current_post->ID, 'raw') : '';
+    $in_post       = '' !== $saved_content && false !== strpos($saved_content, (string) $block_id);
+    $binding       = array(
+        'blockId' => $block_id,
+        'draft'   => is_preview() || ($current_post && 'publish' !== get_post_status($current_post)),
+        'postId'  => $in_post ? $current_post->ID : 0,
+        'content' => $in_post ? md5($saved_content) : '',
+    );
 
 
     add_filter(
         'premium_form_localize_script',
-        function ($data) use ($block_id, $attributes, $inner_blocks) {
+        function ($data) use ($block_id, $attributes, $inner_blocks, $binding) {
             $data['forms'][$block_id] = array(
                 'innerBlocks' => $inner_blocks,
-                'attributes'  => $attributes,
+                // API keys stay on the server. What a submission does travels sealed in "config".
+                'attributes'  => PBG_Form_Config::public_attributes($attributes),
+                'config'      => PBG_Form_Config::seal(PBG_Form_Config::from_attributes($attributes, $binding)),
             );
             return $data;
         }

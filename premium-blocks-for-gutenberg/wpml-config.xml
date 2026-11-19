@@ -49,9 +49,30 @@
             <xpath>//a/@href</xpath>
             <xpath>//p</xpath>
         </gutenberg-block>
-        <gutenberg-block type="premium/video-box" translate="0"></gutenberg-block>
+        <gutenberg-block type="premium/video-box" translate="1">
+            <xpath>//*[contains(@class,'premium-video-box__desc_text')]</xpath>
+            <xpath>//*[contains(@class,'premium-video-box__caption_text')]</xpath>
+            <key name="description" />
+            <key name="caption" />
+            <key name="uploadCaption" />
+        </gutenberg-block>
         <gutenberg-block type="premium/fancy-text" translate="1">
             <xpath>//span</xpath>
+            <xpath>//li</xpath>
+            <xpath>//*[@data-strings]/@data-strings</xpath>
+            <key name="prefix" />
+            <key name="suffix" />
+            <key name="repeaterFancyText">
+                <key name="*">
+                    <key name="title" />
+                </key>
+            </key>
+        </gutenberg-block>
+        <gutenberg-block type="premium/form" translate="1">
+            <xpath>//button/span</xpath>
+            <key name="buttonText" />
+            <key name="successMessage" />
+            <key name="errorMessage" />
         </gutenberg-block>
         <gutenberg-block type="premium/lottie" translate="1">
             <xpath>//a/@href</xpath>

@@ -5,7 +5,7 @@ Donate link: https://leap13.com
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 2.3.20
+Stable tag: 2.3.21
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -34,7 +34,7 @@ With Premium Blocks for Gutenberg, you get a free, comprehensive collection of a
 - SVG Draw Effects.
 - Post Grid & Carousel – Showcase posts and custom types.
 - One-Page Scroll.
-- Translation Ready – Fully WPML compatible.
+- Translation Ready – Compatible with [WPML](https://wpml.org/plugin/premium-blocks-for-gutenberg/).
 
 ### Flexbox Container Gutenberg Block
 Effortlessly create complex, responsive layouts using the power of Flexbox. Arrange elements side-by-side, stack them vertically, or even distribute them evenly with ultimate control and flexibility inside your Gutenberg editor.
@@ -147,6 +147,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 
 == Changelog ==
+= 2.3.21 =
+- Security: Improved the security of the Form block.
+- Fix: Form success and error messages appear again after submitting.
+- Fix: More texts can now be translated with WPML in the Fancy Text, Video Box and Form blocks.
+
 = 2.3.20 =
 - Fix: Container block was forced to a 100px minimum height on the frontend when it was empty or held only small or dynamic content. An empty Container that should stay visible now needs a Min Height set.
 
